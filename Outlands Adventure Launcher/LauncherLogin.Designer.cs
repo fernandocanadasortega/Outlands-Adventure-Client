@@ -89,6 +89,8 @@
             this.ImageGradient = new System.Windows.Forms.Panel();
             this.EventsPanel = new System.Windows.Forms.Panel();
             this.EventText = new System.Windows.Forms.Label();
+            this.EventPasswordCode = new System.Windows.Forms.TextBox();
+            this.EventSendButton = new System.Windows.Forms.Label();
             this.EventExitButton = new System.Windows.Forms.Label();
             this.ConfigurationPanel = new System.Windows.Forms.Panel();
             this.SelectClientIdiom = new System.Windows.Forms.Panel();
@@ -300,8 +302,8 @@
             this.RegisterLabel.TabIndex = 0;
             this.RegisterLabel.Text = "Crear una cuenta";
             this.RegisterLabel.Click += new System.EventHandler(this.RegisterLabel_Click);
-            this.RegisterLabel.MouseEnter += new System.EventHandler(this.RegisterLabel_MouseEnter);
-            this.RegisterLabel.MouseLeave += new System.EventHandler(this.RegisterLabel_MouseLeave);
+            this.RegisterLabel.MouseEnter += new System.EventHandler(this.Register_LoginProblems_MouseEnter);
+            this.RegisterLabel.MouseLeave += new System.EventHandler(this.Register_LoginProblems_MouseLeave);
             // 
             // LoginProblems
             // 
@@ -314,8 +316,8 @@
             this.LoginProblems.TabIndex = 9;
             this.LoginProblems.Text = "¿Problemas al iniciar sesión?";
             this.LoginProblems.Click += new System.EventHandler(this.LoginProblems_Click);
-            this.LoginProblems.MouseEnter += new System.EventHandler(this.LoginProblems_MouseEnter);
-            this.LoginProblems.MouseLeave += new System.EventHandler(this.LoginProblems_MouseLeave);
+            this.LoginProblems.MouseEnter += new System.EventHandler(this.Register_LoginProblems_MouseEnter);
+            this.LoginProblems.MouseLeave += new System.EventHandler(this.Register_LoginProblems_MouseLeave);
             // 
             // RegisterPanel
             // 
@@ -891,10 +893,12 @@
             // 
             this.EventsPanel.BackColor = System.Drawing.Color.Black;
             this.EventsPanel.Controls.Add(this.EventText);
+            this.EventsPanel.Controls.Add(this.EventPasswordCode);
+            this.EventsPanel.Controls.Add(this.EventSendButton);
             this.EventsPanel.Controls.Add(this.EventExitButton);
-            this.EventsPanel.Location = new System.Drawing.Point(291, 280);
+            this.EventsPanel.Location = new System.Drawing.Point(291, 260);
             this.EventsPanel.Name = "EventsPanel";
-            this.EventsPanel.Size = new System.Drawing.Size(800, 150);
+            this.EventsPanel.Size = new System.Drawing.Size(800, 185);
             this.EventsPanel.TabIndex = 14;
             this.EventsPanel.Visible = false;
             // 
@@ -904,10 +908,39 @@
             this.EventText.ForeColor = System.Drawing.Color.White;
             this.EventText.Location = new System.Drawing.Point(40, 25);
             this.EventText.Name = "EventText";
-            this.EventText.Size = new System.Drawing.Size(720, 65);
+            this.EventText.Size = new System.Drawing.Size(720, 70);
             this.EventText.TabIndex = 0;
-            this.EventText.Text = "label1";
+            this.EventText.Text = "Hemos mandado un código a tu correo electrónico, dirígete a tu correo e introduce" +
+    " el código para confirmar tu cuenta";
             this.EventText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // EventPasswordCode
+            // 
+            this.EventPasswordCode.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventPasswordCode.ForeColor = System.Drawing.Color.Black;
+            this.EventPasswordCode.Location = new System.Drawing.Point(298, 95);
+            this.EventPasswordCode.MaxLength = 8;
+            this.EventPasswordCode.Name = "EventPasswordCode";
+            this.EventPasswordCode.Size = new System.Drawing.Size(203, 29);
+            this.EventPasswordCode.TabIndex = 15;
+            this.EventPasswordCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.EventPasswordCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EventPasswordCode_KeyUp);
+            // 
+            // EventSendButton
+            // 
+            this.EventSendButton.BackColor = System.Drawing.Color.Transparent;
+            this.EventSendButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EventSendButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventSendButton.ForeColor = System.Drawing.Color.White;
+            this.EventSendButton.Location = new System.Drawing.Point(265, 142);
+            this.EventSendButton.Name = "EventSendButton";
+            this.EventSendButton.Size = new System.Drawing.Size(125, 31);
+            this.EventSendButton.TabIndex = 16;
+            this.EventSendButton.Text = "ENVIAR";
+            this.EventSendButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EventSendButton.Click += new System.EventHandler(this.EventSendButton_Click);
+            this.EventSendButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
+            this.EventSendButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
             // EventExitButton
             // 
@@ -915,15 +948,15 @@
             this.EventExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EventExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EventExitButton.ForeColor = System.Drawing.Color.White;
-            this.EventExitButton.Location = new System.Drawing.Point(337, 110);
+            this.EventExitButton.Location = new System.Drawing.Point(405, 142);
             this.EventExitButton.Name = "EventExitButton";
             this.EventExitButton.Size = new System.Drawing.Size(125, 31);
             this.EventExitButton.TabIndex = 14;
             this.EventExitButton.Text = "CERRAR";
             this.EventExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.EventExitButton.Click += new System.EventHandler(this.EventExitButton_Click);
-            this.EventExitButton.MouseEnter += new System.EventHandler(this.EventExitButton_MouseEnter);
-            this.EventExitButton.MouseLeave += new System.EventHandler(this.EventExitButton_MouseLeave);
+            this.EventExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
+            this.EventExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
             // ConfigurationPanel
             // 
@@ -1065,6 +1098,7 @@
             this.ImagePanel.ResumeLayout(false);
             this.ImageGradient.ResumeLayout(false);
             this.EventsPanel.ResumeLayout(false);
+            this.EventsPanel.PerformLayout();
             this.ConfigurationPanel.ResumeLayout(false);
             this.SelectClientIdiom.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1142,6 +1176,8 @@
         private System.Windows.Forms.Panel EventsPanel;
         private System.Windows.Forms.Label EventText;
         private System.Windows.Forms.Label EventExitButton;
+        private System.Windows.Forms.TextBox EventPasswordCode;
+        private System.Windows.Forms.Label EventSendButton;
     }
 }
 

@@ -693,8 +693,12 @@ namespace Outlands_Adventure_Launcher
 
                 if (registerAvaible)
                 {
-                    EventText.Text = "Hemos mandado un mensaje a tu correo electrónico, dirígete a tu correo y confirma tu cuenta, una vez" +
-                        " confirmado podrás acceder al juego";
+                    EventText.Location = new Point(40, 5);
+                    EventPasswordCode.Visible = true;
+                    EventSendButton.Visible = true;
+                    EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+
+                    EventText.Text = "Hemos mandado un código de confirmación a tu correo electrónico, dirígete a tu correo e introduce el código para confirmar tu cuenta";
 
                     targetPanel = "login";
 
@@ -890,15 +894,28 @@ namespace Outlands_Adventure_Launcher
 
                 if (usernameLost)
                 {
+                    EventText.Location = new Point(40, 25);
+                    EventPasswordCode.Visible = false;
+                    EventSendButton.Visible = false;
+                    EventExitButton.Location = new Point(237, 105);
+
                     // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
                     EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
                             "nuestra base de datos te mandaremos un recordatorio de tu nombre de usuario";
                 }
                 else if (passwordLost)
                 {
+                    EventText.Location = new Point(40, 9);
+                    EventPasswordCode.Visible = true;
+                    EventSendButton.Visible = true;
+                    EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+
                     // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
                     EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
-                            "nuestra base de datos te mandaremos formulario para que cambies tu contraseña";
+                            "nuestra base de datos te enviaremos un código de confirmación para que reestablezcas tu contraseña";
+
+                    SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
+                           " Outlands Adventure");
                 }
 
                 targetPanel = "login";
@@ -949,7 +966,7 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion
 
-        #region Exit Button
+        #region Configuration Exit Button
         private void ExitButton_MouseEnter(object sender, EventArgs e)
         {
             ConfigurationExitButton.Font = new Font("Oxygen", 12, FontStyle.Bold);
@@ -1065,10 +1082,6 @@ namespace Outlands_Adventure_Launcher
             {
                 HideSelectIdiomPanel();
             }
-            else
-            {
-                CheckTargetPanel();
-            }
         }
 
         private void CheckTargetPanel()
@@ -1137,16 +1150,16 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion
 
-        #region Create New Account (Login Panel)
+        #region Create New Account and Login Problems (Login Panel)
         // These methods manage new account button when mouse enter, exit and click on it
-        private void RegisterLabel_MouseEnter(object sender, EventArgs e)
+        private void Register_LoginProblems_MouseEnter(object sender, EventArgs e)
         {
-            RegisterLabel.Font = new Font("Oxygen", 9, FontStyle.Bold);
+            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Bold);
         }
 
-        private void RegisterLabel_MouseLeave(object sender, EventArgs e)
+        private void Register_LoginProblems_MouseLeave(object sender, EventArgs e)
         {
-            RegisterLabel.Font = new Font("Oxygen", 9, FontStyle.Regular);
+            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Regular);
         }
 
         // Reset all values
@@ -1161,19 +1174,6 @@ namespace Outlands_Adventure_Launcher
             targetPanel = "register";
 
             NewEmailTextbox.Focus();
-        }
-        #endregion
-
-        #region Login Problems (Login Panel)
-        // These methods manage login problems button when mouse enter, exit and click on it
-        private void LoginProblems_MouseEnter(object sender, EventArgs e)
-        {
-            LoginProblems.Font = new Font("Oxygen", 9, FontStyle.Bold);
-        }
-
-        private void LoginProblems_MouseLeave(object sender, EventArgs e)
-        {
-            LoginProblems.Font = new Font("Oxygen", 9, FontStyle.Regular);
         }
 
         private void LoginProblems_Click(object sender, EventArgs e)
@@ -1289,20 +1289,46 @@ namespace Outlands_Adventure_Launcher
 
         #region Events Panel
 
-        #region Exit Button
-        private void EventExitButton_MouseEnter(object sender, EventArgs e)
+        #region Send and Exit Event Button
+        private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
         {
-            EventExitButton.Font = new Font("Oxygen", 12, FontStyle.Bold);
+            ((Label) sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
         }
 
-        private void EventExitButton_MouseLeave(object sender, EventArgs e)
+        private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
         {
-            EventExitButton.Font = new Font("Oxygen", 12, FontStyle.Regular);
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
+        }
+
+        private void EventSendButton_Click(object sender, EventArgs e)
+        {
+            CheckHashResumes();
         }
 
         private void EventExitButton_Click(object sender, EventArgs e)
         {
             CheckTargetPanel();
+        }
+
+        private void EventPasswordCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CheckHashResumes();
+            }
+        }
+
+        private void CheckHashResumes()
+        {
+            if (Hash_SHA2.VerifyResume(EventPasswordCode.Text))
+            {
+                MessageBox.Show("The hashes are the same");
+                CheckTargetPanel();
+            }
+            else
+            {
+                MessageBox.Show("The hashes are NOT the same.");
+            }
         }
         #endregion
 

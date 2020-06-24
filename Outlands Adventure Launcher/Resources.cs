@@ -7,20 +7,14 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Net.Mail;
+using System.Threading;
+using System.Security.Cryptography;
+using System.Data.Linq;
 
 namespace Outlands_Adventure_Launcher
 {
-    static class ModifyProgressBarColor
-    {
-        // Do not work well, Do not use it
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr w, IntPtr l);
-        public static void SetState(this ProgressBar pBar, int state)
-        {
-            SendMessage(pBar.Handle, 1040, (IntPtr)state, IntPtr.Zero);
-        }
-    }
-
+    #region Password Strenght
     static class PasswordStrength
     {
         public enum PasswordScore
@@ -92,6 +86,100 @@ namespace Outlands_Adventure_Launcher
                     NewPasswordStrengthLabel.Text = "Muy fuerte";
                     break;
             }
+        }
+    }
+    #endregion Password Strenght
+
+    #region Send Email
+    static class SendEmail
+    {
+        public static void SendNewEmail(TextBox emailTextBox, string emailSubject)
+        {
+            string confirmationCode = CreateConfirmationCode.CreateCode();
+            Hash_SHA2.InitialiceVariables(confirmationCode);
+
+            try
+            {
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+                MailMessage mail = new MailMessage();
+
+                mail.From = new MailAddress("outlandsadventure@gmail.com");
+                mail.To.Add(emailTextBox.Text);
+                mail.Subject = emailSubject;
+
+                mail.IsBodyHtml = true;
+                string htmlBody = "<p><h2> Su código de confimación es </h2></p> <br/>" +
+                    "<p><h1>" + confirmationCode + "</h1></p>";
+                mail.Body = htmlBody;
+
+                smtpServer.Port = 587;
+                smtpServer.UseDefaultCredentials = false;
+                smtpServer.Credentials = new System.Net.NetworkCredential("outlandsadventure@gmail.com", "Outlands_Client_Password");
+                smtpServer.EnableSsl = true;
+                smtpServer.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
+    #endregion Send Email
+
+    #region Confimation Code
+    static class CreateConfirmationCode
+    {
+        static readonly int codeLenght = 8;
+
+        public static string CreateCode()
+        {
+            string confirmationCode = "";
+            Random randomNumber = new System.Random();
+
+            for (int currentCodeCharacter = 0; currentCodeCharacter < codeLenght; currentCodeCharacter++)
+            {
+                confirmationCode += ((char)GiveMeANumber(randomNumber)).ToString();
+            }
+
+            return confirmationCode;
+        }
+
+        private static int GiveMeANumber(Random randomNumber)
+        {
+            List<int> exclude = new List<int>() { 58, 59, 60, 61, 62, 63, 64 };
+            var range = Enumerable.Range(1, 100).Where(i => !exclude.Contains(i));
+
+            int index = randomNumber.Next(48, 90 - exclude.Count);
+            return range.ElementAt(index);
+        }
+    }
+    #endregion Confimation Code
+
+    static class Hash_SHA2
+    {
+        private static HashAlgorithm hashResume;
+        private static Binary binaryOriginalHash;
+
+        public static void InitialiceVariables(string confirmationCode)
+        {
+            hashResume = new SHA256Managed();
+            byte[] originalHash = Hash_SHA2.CreateResume(confirmationCode);
+            binaryOriginalHash = new Binary(originalHash);
+        }
+
+        public static byte[] CreateResume(string confirmationCode)
+        {
+             return hashResume.ComputeHash(Encoding.UTF8.GetBytes(confirmationCode));
+        }
+
+        public static bool VerifyResume(string confirmationCode)
+        {
+            byte[] confirmationHash = Hash_SHA2.CreateResume(confirmationCode);
+
+            // La clase binary es muy eficiente a la hora de hacer equals de dos resumenes hash para ver si son iguales (https://stackoverflow.com/questions/18472867/checking-equality-for-two-byte-arrays/18472958)
+            Binary binaryConfirmationHash = new Binary(confirmationHash);
+
+            return binaryOriginalHash.Equals(binaryConfirmationHash);
         }
     }
 }
