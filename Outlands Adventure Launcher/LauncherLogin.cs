@@ -700,6 +700,11 @@ namespace Outlands_Adventure_Launcher
 
                     EventText.Text = "Hemos mandado un código de confirmación a tu correo electrónico, dirígete a tu correo e introduce el código para confirmar tu cuenta";
 
+                    string confirmationCode = CreateConfirmationCode.CreateCode();
+                    Hash_SHA2.InitialiceVariables(confirmationCode);
+                    SendEmail.SendNewEmail(ResetCredentialsEmailText, "Creación de una nueva cuenta del cliente de" +
+                           " Outlands Adventure", "Su código de confimación es", confirmationCode);
+
                     targetPanel = "login";
 
                     ShowImageGradient();
@@ -902,6 +907,9 @@ namespace Outlands_Adventure_Launcher
                     // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
                     EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
                             "nuestra base de datos te mandaremos un recordatorio de tu nombre de usuario";
+
+                    SendEmail.SendNewEmail(ResetCredentialsEmailText, "Recordatorio del nombre de usuario del cliente de" +
+                        " Outlands Adventure", "Su nombre de usuario es", "Napo"); // Cambiar Napo por el nombre de la bd
                 }
                 else if (passwordLost)
                 {
@@ -914,8 +922,10 @@ namespace Outlands_Adventure_Launcher
                     EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
                             "nuestra base de datos te enviaremos un código de confirmación para que reestablezcas tu contraseña";
 
+                    string confirmationCode = CreateConfirmationCode.CreateCode();
+                    Hash_SHA2.InitialiceVariables(confirmationCode);
                     SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
-                           " Outlands Adventure");
+                           " Outlands Adventure", "Su código de confimación es", confirmationCode);
                 }
 
                 targetPanel = "login";
@@ -1060,6 +1070,16 @@ namespace Outlands_Adventure_Launcher
         {
             ImagePanel.Focus();
         }
+
+        private void ResetPasswordEventPanel_Click(object sender, EventArgs e)
+        {
+            ResetPasswordEventPanel.Focus();
+        }
+
+        private void ResetPasswordEventText_Click(object sender, EventArgs e)
+        {
+            ResetPasswordEventPanel.Focus();
+        }
         #endregion
 
         #region Show and Hide Image Gradient Panel
@@ -1078,6 +1098,8 @@ namespace Outlands_Adventure_Launcher
         // Methods to hide Image Gradient Panel
         private void ImageGradient_Click(object sender, EventArgs e)
         {
+            ImageGradient.Focus();
+
             if (SelectClientIdiom.Visible)
             {
                 HideSelectIdiomPanel();
@@ -1134,6 +1156,22 @@ namespace Outlands_Adventure_Launcher
         }
 
         private void ShowConfirmPassword_Click(object sender, EventArgs e)
+        {
+            this.confirmPasswordVisible = this.confirmPasswordVisible ? false : true;
+
+            if (!this.confirmPasswordVisible)
+            {
+                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
+                currentPasswordTextbox.PasswordChar = '•';
+            }
+            else
+            {
+                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.show_password;
+                currentPasswordTextbox.PasswordChar = '\0';
+            }
+        }
+
+        private void ShowResetPassword_Click(object sender, EventArgs e)
         {
             this.confirmPasswordVisible = this.confirmPasswordVisible ? false : true;
 
@@ -1259,10 +1297,8 @@ namespace Outlands_Adventure_Launcher
             NewPasswordErrorLabel.Text = "";
             ConfirmNewPasswordErrorLabel.Text = "";
 
-            passwordVisible = false;
-            confirmPasswordVisible = false;
-            ShowNewPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
-            ShowConfirmNewPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
+            ShowPassword_Click(ShowNewPassword, EventArgs.Empty);
+            ShowConfirmPassword_Click(ShowConfirmNewPassword, EventArgs.Empty);
 
             NewEmailFocusLost();
             NewUserNameFocusLost();
@@ -1284,6 +1320,21 @@ namespace Outlands_Adventure_Launcher
             ReturnToLogin.Focus();
             UserNameTextbox.Focus();
 
+        }
+
+        private void ResetEventsValue()
+        {
+            EventPasswordCode.Text = "";
+            EventErrorText.Visible = false;
+        }
+
+        private void Reset_ResetPasswordEventValues()
+        {
+            ResetPasswordTextbox.Text = "";
+            ShowResetPassword_Click(ShowResetPassword, EventArgs.Empty);
+
+            ResetPasswordPanel.Focus();
+            ResetPasswordEventPanel.Visible = false;
         }
         #endregion
 
@@ -1308,6 +1359,7 @@ namespace Outlands_Adventure_Launcher
         private void EventExitButton_Click(object sender, EventArgs e)
         {
             CheckTargetPanel();
+            ResetEventsValue();
         }
 
         private void EventPasswordCode_KeyUp(object sender, KeyEventArgs e)
@@ -1322,17 +1374,147 @@ namespace Outlands_Adventure_Launcher
         {
             if (Hash_SHA2.VerifyResume(EventPasswordCode.Text))
             {
-                MessageBox.Show("The hashes are the same");
-                CheckTargetPanel();
+                EventErrorText.Visible = false;
+
+                EventsPanel.Visible = false;
+                ResetPasswordEventPanel.Visible = true;
+
+                ResetEventsValue();
             }
             else
             {
-                MessageBox.Show("The hashes are NOT the same.");
+                EventErrorText.Visible = true;
             }
         }
         #endregion
 
         #endregion Events Panel
+
+        #region Reset Password Event
+        private void ResetPasswordPanel_Click(object sender, EventArgs e)
+        {
+            ResetPasswordTextbox.Focus();
+        }
+
+        private void ResetPasswordLabel_Click(object sender, EventArgs e)
+        {
+            ResetPasswordTextbox.Focus();
+        }
+
+        private void ResetPasswordTextbox_Enter(object sender, EventArgs e)
+        {
+            ResetPasswordFocusGain();
+        }
+
+        private void ResetPasswordTextbox_Leave(object sender, EventArgs e)
+        {
+            ResetPasswordFocusLost();
+        }
+
+        private void ResetPasswordFocusGain()
+        {
+            if (ResetPasswordTextbox.Text.Length == 0)
+            {
+                ResetPasswordLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
+                ResetPasswordLabel.Location = new Point(0, 2);
+            }
+
+            ShowResetPassword.Visible = true;
+            currentShowPasswordButton = ShowResetPassword;
+            currentPasswordTextbox = ResetPasswordTextbox;
+
+            if (Control.IsKeyLocked(Keys.CapsLock))
+            {
+                ResetPasswordMayusLock.Visible = true;
+                ResetPasswordTextbox.Size = new Size(165, 22);
+            }
+            else
+            {
+                ResetPasswordMayusLock.Visible = false;
+                ResetPasswordTextbox.Size = new Size(195, 22);
+            }
+        }
+
+        private void ResetPasswordFocusLost()
+        {
+            // Pone el label que indica Constraseña otra vez con letra grande en el medio y comprueba errores de la caja de texto
+            if (ResetPasswordTextbox.Text.Length == 0)
+            {
+                ResetPasswordLabel.Font = new Font("Oxygen", 10);
+                ResetPasswordLabel.Location = new Point(14, 10);
+
+                ResetPasswordStrengthProgressBar.Visible = false;
+                ResetPasswordStrengthLabel.Visible = false;
+                ResetPasswordEventErrorText.Visible = false;
+            }
+            else
+            {
+                if (ResetPasswordTextbox.Text.Length < 4)
+                {
+                    ResetPasswordStrengthProgressBar.Visible = false;
+                    ResetPasswordStrengthLabel.Visible = false;
+
+                    ResetPasswordEventErrorText.Visible = true;
+                    ResetPasswordEventErrorText.Text = "Debe contener cuatro letras como mínimo";
+                }
+                else
+                {
+                    ResetPasswordEventErrorText.Visible = false;
+                }
+            }
+
+            ShowResetPassword.Visible = false;
+            ResetPasswordMayusLock.Visible = false;
+        }
+
+        private void ResetPasswordTextbox_TextChanged(object sender, EventArgs e)
+        {
+            ResetPasswordEventErrorText.Visible = false;
+            ResetPasswordStrengthProgressBar.Visible = true;
+            ResetPasswordStrengthLabel.Visible = true;
+
+            PasswordStrength.CheckPasswordStrength(ResetPasswordTextbox, ResetPasswordStrengthProgressBar, ResetPasswordStrengthLabel);
+        }
+
+        private void ResetPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.CapsLock)
+            {
+                if (Control.IsKeyLocked(Keys.CapsLock))
+                {
+                    ResetPasswordMayusLock.Visible = true;
+                    ResetPasswordTextbox.Size = new Size(165, 22);
+                }
+                else if (!Control.IsKeyLocked(Keys.CapsLock))
+                {
+                    ResetPasswordMayusLock.Visible = false;
+                    ResetPasswordTextbox.Size = new Size(195, 22);
+                }
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                ResetPasswordEventPanel.Focus();
+            }
+        }
+
+        private void ResetPasswordSendButton_Click(object sender, EventArgs e)
+        {
+            ResetPasswordFocusLost();
+
+            if (!ResetPasswordEventErrorText.Visible)
+            {
+                Reset_ResetPasswordEventValues();
+                CheckTargetPanel();
+            }
+        }
+
+        private void ResetPasswordExitButton_Click(object sender, EventArgs e)
+        {
+            Reset_ResetPasswordEventValues();
+            CheckTargetPanel();
+        }
+        #endregion
 
         #region CheckEmailAdress
         public bool IsEmailValid(string emailAddress)

@@ -87,8 +87,21 @@
             this.ConfigurationButton = new System.Windows.Forms.Panel();
             this.ImagePanel = new System.Windows.Forms.Panel();
             this.ImageGradient = new System.Windows.Forms.Panel();
+            this.ResetPasswordEventPanel = new System.Windows.Forms.Panel();
+            this.ResetPasswordPanel = new System.Windows.Forms.Panel();
+            this.ResetPasswordLabel = new System.Windows.Forms.Label();
+            this.ResetPasswordTextbox = new System.Windows.Forms.TextBox();
+            this.ResetPasswordMayusLock = new System.Windows.Forms.Panel();
+            this.ShowResetPassword = new System.Windows.Forms.Panel();
+            this.ResetPasswordStrengthProgressBar = new System.Windows.Forms.ProgressBar();
+            this.ResetPasswordStrengthLabel = new System.Windows.Forms.Label();
+            this.ResetPasswordEventText = new System.Windows.Forms.Label();
+            this.ResetPasswordEventErrorText = new System.Windows.Forms.Label();
+            this.ResetPasswordSendButton = new System.Windows.Forms.Label();
+            this.ResetPasswordExitButton = new System.Windows.Forms.Label();
             this.EventsPanel = new System.Windows.Forms.Panel();
             this.EventText = new System.Windows.Forms.Label();
+            this.EventErrorText = new System.Windows.Forms.Label();
             this.EventPasswordCode = new System.Windows.Forms.TextBox();
             this.EventSendButton = new System.Windows.Forms.Label();
             this.EventExitButton = new System.Windows.Forms.Label();
@@ -112,6 +125,8 @@
             this.ResetCredentialsEmailPanel.SuspendLayout();
             this.ImagePanel.SuspendLayout();
             this.ImageGradient.SuspendLayout();
+            this.ResetPasswordEventPanel.SuspendLayout();
+            this.ResetPasswordPanel.SuspendLayout();
             this.EventsPanel.SuspendLayout();
             this.ConfigurationPanel.SuspendLayout();
             this.SelectClientIdiom.SuspendLayout();
@@ -881,6 +896,7 @@
             // 
             this.ImageGradient.BackColor = System.Drawing.Color.Transparent;
             this.ImageGradient.Controls.Add(this.EventsPanel);
+            this.ImageGradient.Controls.Add(this.ResetPasswordEventPanel);
             this.ImageGradient.Controls.Add(this.ConfigurationPanel);
             this.ImageGradient.Location = new System.Drawing.Point(0, 0);
             this.ImageGradient.Name = "ImageGradient";
@@ -889,10 +905,172 @@
             this.ImageGradient.Visible = false;
             this.ImageGradient.Click += new System.EventHandler(this.ImageGradient_Click);
             // 
+            // ResetPasswordEventPanel
+            // 
+            this.ResetPasswordEventPanel.BackColor = System.Drawing.Color.Black;
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordPanel);
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordStrengthProgressBar);
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordStrengthLabel);
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordEventText);
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordEventErrorText);
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordSendButton);
+            this.ResetPasswordEventPanel.Controls.Add(this.ResetPasswordExitButton);
+            this.ResetPasswordEventPanel.Location = new System.Drawing.Point(291, 250);
+            this.ResetPasswordEventPanel.Name = "ResetPasswordEventPanel";
+            this.ResetPasswordEventPanel.Size = new System.Drawing.Size(800, 225);
+            this.ResetPasswordEventPanel.TabIndex = 19;
+            this.ResetPasswordEventPanel.Visible = false;
+            this.ResetPasswordEventPanel.Click += new System.EventHandler(this.ResetPasswordEventPanel_Click);
+            // 
+            // ResetPasswordPanel
+            // 
+            this.ResetPasswordPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.ResetPasswordPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ResetPasswordPanel.Controls.Add(this.ResetPasswordLabel);
+            this.ResetPasswordPanel.Controls.Add(this.ResetPasswordTextbox);
+            this.ResetPasswordPanel.Controls.Add(this.ResetPasswordMayusLock);
+            this.ResetPasswordPanel.Controls.Add(this.ShowResetPassword);
+            this.ResetPasswordPanel.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ResetPasswordPanel.Location = new System.Drawing.Point(190, 78);
+            this.ResetPasswordPanel.Name = "ResetPasswordPanel";
+            this.ResetPasswordPanel.Size = new System.Drawing.Size(311, 46);
+            this.ResetPasswordPanel.TabIndex = 19;
+            this.ResetPasswordPanel.Click += new System.EventHandler(this.ResetPasswordPanel_Click);
+            // 
+            // ResetPasswordLabel
+            // 
+            this.ResetPasswordLabel.AutoSize = true;
+            this.ResetPasswordLabel.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ResetPasswordLabel.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.ResetPasswordLabel.Location = new System.Drawing.Point(14, 12);
+            this.ResetPasswordLabel.Name = "ResetPasswordLabel";
+            this.ResetPasswordLabel.Size = new System.Drawing.Size(179, 21);
+            this.ResetPasswordLabel.TabIndex = 5;
+            this.ResetPasswordLabel.Text = "NUEVA CONTRASEÑA";
+            this.ResetPasswordLabel.Click += new System.EventHandler(this.ResetPasswordLabel_Click);
+            // 
+            // ResetPasswordTextbox
+            // 
+            this.ResetPasswordTextbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.ResetPasswordTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ResetPasswordTextbox.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordTextbox.ForeColor = System.Drawing.Color.Black;
+            this.ResetPasswordTextbox.Location = new System.Drawing.Point(10, 21);
+            this.ResetPasswordTextbox.MaxLength = 40;
+            this.ResetPasswordTextbox.Name = "ResetPasswordTextbox";
+            this.ResetPasswordTextbox.PasswordChar = '•';
+            this.ResetPasswordTextbox.Size = new System.Drawing.Size(260, 22);
+            this.ResetPasswordTextbox.TabIndex = 15;
+            this.ResetPasswordTextbox.TextChanged += new System.EventHandler(this.ResetPasswordTextbox_TextChanged);
+            this.ResetPasswordTextbox.Enter += new System.EventHandler(this.ResetPasswordTextbox_Enter);
+            this.ResetPasswordTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ResetPasswordTextbox_KeyUp);
+            this.ResetPasswordTextbox.Leave += new System.EventHandler(this.ResetPasswordTextbox_Leave);
+            // 
+            // ResetPasswordMayusLock
+            // 
+            this.ResetPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
+            this.ResetPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
+            this.ResetPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ResetPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
+            this.ResetPasswordMayusLock.Name = "ResetPasswordMayusLock";
+            this.ResetPasswordMayusLock.Size = new System.Drawing.Size(30, 30);
+            this.ResetPasswordMayusLock.TabIndex = 16;
+            this.ResetPasswordMayusLock.Visible = false;
+            // 
+            // ShowResetPassword
+            // 
+            this.ShowResetPassword.BackColor = System.Drawing.Color.Transparent;
+            this.ShowResetPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
+            this.ShowResetPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ShowResetPassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ShowResetPassword.Location = new System.Drawing.Point(276, 7);
+            this.ShowResetPassword.Name = "ShowResetPassword";
+            this.ShowResetPassword.Size = new System.Drawing.Size(30, 30);
+            this.ShowResetPassword.TabIndex = 17;
+            this.ShowResetPassword.Visible = false;
+            this.ShowResetPassword.Click += new System.EventHandler(this.ShowResetPassword_Click);
+            // 
+            // ResetPasswordStrengthProgressBar
+            // 
+            this.ResetPasswordStrengthProgressBar.BackColor = System.Drawing.Color.White;
+            this.ResetPasswordStrengthProgressBar.Location = new System.Drawing.Point(561, 91);
+            this.ResetPasswordStrengthProgressBar.Name = "ResetPasswordStrengthProgressBar";
+            this.ResetPasswordStrengthProgressBar.Size = new System.Drawing.Size(163, 23);
+            this.ResetPasswordStrengthProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.ResetPasswordStrengthProgressBar.TabIndex = 20;
+            this.ResetPasswordStrengthProgressBar.Visible = false;
+            // 
+            // ResetPasswordStrengthLabel
+            // 
+            this.ResetPasswordStrengthLabel.Font = new System.Drawing.Font("Oxygen", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordStrengthLabel.ForeColor = System.Drawing.Color.Red;
+            this.ResetPasswordStrengthLabel.Location = new System.Drawing.Point(585, 142);
+            this.ResetPasswordStrengthLabel.Name = "ResetPasswordStrengthLabel";
+            this.ResetPasswordStrengthLabel.Size = new System.Drawing.Size(114, 21);
+            this.ResetPasswordStrengthLabel.TabIndex = 21;
+            this.ResetPasswordStrengthLabel.Text = "Fuerte";
+            this.ResetPasswordStrengthLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ResetPasswordStrengthLabel.Visible = false;
+            // 
+            // ResetPasswordEventText
+            // 
+            this.ResetPasswordEventText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordEventText.ForeColor = System.Drawing.Color.White;
+            this.ResetPasswordEventText.Location = new System.Drawing.Point(0, 5);
+            this.ResetPasswordEventText.Name = "ResetPasswordEventText";
+            this.ResetPasswordEventText.Size = new System.Drawing.Size(700, 70);
+            this.ResetPasswordEventText.TabIndex = 0;
+            this.ResetPasswordEventText.Text = "Escribe tu nueva contraseña";
+            this.ResetPasswordEventText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ResetPasswordEventText.Click += new System.EventHandler(this.ResetPasswordEventText_Click);
+            // 
+            // ResetPasswordEventErrorText
+            // 
+            this.ResetPasswordEventErrorText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordEventErrorText.ForeColor = System.Drawing.Color.Red;
+            this.ResetPasswordEventErrorText.Location = new System.Drawing.Point(150, 142);
+            this.ResetPasswordEventErrorText.Name = "ResetPasswordEventErrorText";
+            this.ResetPasswordEventErrorText.Size = new System.Drawing.Size(403, 21);
+            this.ResetPasswordEventErrorText.TabIndex = 18;
+            this.ResetPasswordEventErrorText.Text = "Código erroneo";
+            this.ResetPasswordEventErrorText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ResetPasswordEventErrorText.Visible = false;
+            // 
+            // ResetPasswordSendButton
+            // 
+            this.ResetPasswordSendButton.BackColor = System.Drawing.Color.Transparent;
+            this.ResetPasswordSendButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetPasswordSendButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordSendButton.ForeColor = System.Drawing.Color.White;
+            this.ResetPasswordSendButton.Location = new System.Drawing.Point(185, 182);
+            this.ResetPasswordSendButton.Name = "ResetPasswordSendButton";
+            this.ResetPasswordSendButton.Size = new System.Drawing.Size(125, 31);
+            this.ResetPasswordSendButton.TabIndex = 16;
+            this.ResetPasswordSendButton.Text = "ENVIAR";
+            this.ResetPasswordSendButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ResetPasswordSendButton.Click += new System.EventHandler(this.ResetPasswordSendButton_Click);
+            // 
+            // ResetPasswordExitButton
+            // 
+            this.ResetPasswordExitButton.BackColor = System.Drawing.Color.Transparent;
+            this.ResetPasswordExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetPasswordExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetPasswordExitButton.ForeColor = System.Drawing.Color.White;
+            this.ResetPasswordExitButton.Location = new System.Drawing.Point(372, 182);
+            this.ResetPasswordExitButton.Name = "ResetPasswordExitButton";
+            this.ResetPasswordExitButton.Size = new System.Drawing.Size(125, 31);
+            this.ResetPasswordExitButton.TabIndex = 14;
+            this.ResetPasswordExitButton.Text = "CERRAR";
+            this.ResetPasswordExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ResetPasswordExitButton.Click += new System.EventHandler(this.ResetPasswordExitButton_Click);
+            // 
             // EventsPanel
             // 
             this.EventsPanel.BackColor = System.Drawing.Color.Black;
             this.EventsPanel.Controls.Add(this.EventText);
+            this.EventsPanel.Controls.Add(this.EventErrorText);
             this.EventsPanel.Controls.Add(this.EventPasswordCode);
             this.EventsPanel.Controls.Add(this.EventSendButton);
             this.EventsPanel.Controls.Add(this.EventExitButton);
@@ -913,6 +1091,18 @@
             this.EventText.Text = "Hemos mandado un código a tu correo electrónico, dirígete a tu correo e introduce" +
     " el código para confirmar tu cuenta";
             this.EventText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // EventErrorText
+            // 
+            this.EventErrorText.AutoSize = true;
+            this.EventErrorText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventErrorText.ForeColor = System.Drawing.Color.Red;
+            this.EventErrorText.Location = new System.Drawing.Point(560, 100);
+            this.EventErrorText.Name = "EventErrorText";
+            this.EventErrorText.Size = new System.Drawing.Size(134, 21);
+            this.EventErrorText.TabIndex = 18;
+            this.EventErrorText.Text = "Código erroneo";
+            this.EventErrorText.Visible = false;
             // 
             // EventPasswordCode
             // 
@@ -1097,6 +1287,9 @@
             this.ResetCredentialsEmailPanel.PerformLayout();
             this.ImagePanel.ResumeLayout(false);
             this.ImageGradient.ResumeLayout(false);
+            this.ResetPasswordEventPanel.ResumeLayout(false);
+            this.ResetPasswordPanel.ResumeLayout(false);
+            this.ResetPasswordPanel.PerformLayout();
             this.EventsPanel.ResumeLayout(false);
             this.EventsPanel.PerformLayout();
             this.ConfigurationPanel.ResumeLayout(false);
@@ -1178,6 +1371,19 @@
         private System.Windows.Forms.Label EventExitButton;
         private System.Windows.Forms.TextBox EventPasswordCode;
         private System.Windows.Forms.Label EventSendButton;
+        private System.Windows.Forms.Label EventErrorText;
+        private System.Windows.Forms.Panel ResetPasswordEventPanel;
+        private System.Windows.Forms.Panel ResetPasswordPanel;
+        private System.Windows.Forms.Label ResetPasswordLabel;
+        private System.Windows.Forms.TextBox ResetPasswordTextbox;
+        private System.Windows.Forms.Panel ResetPasswordMayusLock;
+        private System.Windows.Forms.Panel ShowResetPassword;
+        private System.Windows.Forms.Label ResetPasswordEventText;
+        private System.Windows.Forms.Label ResetPasswordEventErrorText;
+        private System.Windows.Forms.Label ResetPasswordSendButton;
+        private System.Windows.Forms.Label ResetPasswordExitButton;
+        private System.Windows.Forms.ProgressBar ResetPasswordStrengthProgressBar;
+        private System.Windows.Forms.Label ResetPasswordStrengthLabel;
     }
 }
 

@@ -93,11 +93,8 @@ namespace Outlands_Adventure_Launcher
     #region Send Email
     static class SendEmail
     {
-        public static void SendNewEmail(TextBox emailTextBox, string emailSubject)
+        public static void SendNewEmail(TextBox emailTextBox, string emailSubject, string emailBody, string emailBodyData)
         {
-            string confirmationCode = CreateConfirmationCode.CreateCode();
-            Hash_SHA2.InitialiceVariables(confirmationCode);
-
             try
             {
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
@@ -108,8 +105,8 @@ namespace Outlands_Adventure_Launcher
                 mail.Subject = emailSubject;
 
                 mail.IsBodyHtml = true;
-                string htmlBody = "<p><h2> Su código de confimación es </h2></p> <br/>" +
-                    "<p><h1>" + confirmationCode + "</h1></p>";
+                string htmlBody = "<p><h2>" + emailBody + "</h2></p> <br/>" +
+                    "<p><h1>" + emailBodyData + "</h1></p>";
                 mail.Body = htmlBody;
 
                 smtpServer.Port = 587;
