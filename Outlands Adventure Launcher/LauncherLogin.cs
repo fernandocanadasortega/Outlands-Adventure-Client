@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Outlands_Adventure_Launcher
@@ -473,6 +474,9 @@ namespace Outlands_Adventure_Launcher
         {
             if (loginProblemsAvaible)
             {
+                LoginProblemsPanel.Visible = false;
+                Enable_Disable_LoadingPanel(true);
+
                 ResetCredentialsButton.Focus();
                 bool messageError = false;
 
@@ -506,9 +510,11 @@ namespace Outlands_Adventure_Launcher
                     messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
                            " Outlands Adventure", "Su código de confimación es", confirmationCode);
                 }
+                Enable_Disable_LoadingPanel(false);
 
                 if (messageError)
                 {
+                    LoginProblemsPanel.Visible = true;
                     Login_RegisterButton(false, ResetCredentialsButton, ref loginProblemsAvaible);
                 }
                 else
@@ -697,7 +703,16 @@ namespace Outlands_Adventure_Launcher
             if (!ResetPasswordEventErrorText.Visible)
             {
                 Reset_ResetPasswordEventValues();
-                CheckTargetPanel();
+
+                EventText.Location = new Point(40, 25);
+                EventPasswordCode.Visible = false;
+                EventSendButton.Visible = false;
+                EventExitButton.Location = new Point(237, 105);
+
+                EventText.Text = "Contraseña guardada con éxito";
+
+                ResetPasswordEventPanel.Visible = false;
+                EventsPanel.Visible = true;
             }
         }
 
@@ -726,70 +741,78 @@ namespace Outlands_Adventure_Launcher
         // Reset all values
         private void RegisterLabel_Click(object sender, EventArgs e)
         {
+            Enable_Disable_LoadingPanel(true);
             ResetLoginPanelValues();
 
             targetPanel = "register";
             CheckTargetPanel();
+            Enable_Disable_LoadingPanel(false);
         }
 
         // Login Problems (Login Panel)
         // Reset all values
         private void LoginProblems_Click(object sender, EventArgs e)
         {
+            Enable_Disable_LoadingPanel(true);
             ResetLoginPanelValues();
 
             targetPanel = "loginProblems";
             CheckTargetPanel();
+            Enable_Disable_LoadingPanel(false);
         }
 
         // Login Existing Account (Register Panel)
         // Reset all values
         private void LoginLabel_Click(object sender, EventArgs e)
         {
+            Enable_Disable_LoadingPanel(true);
             ResetRegisterPanelValues();
 
             targetPanel = "login";
             CheckTargetPanel();
+            Enable_Disable_LoadingPanel(false);
         }
 
         // Return to Login (Login Problems Panel)
         // Reset all values
         private void ReturnToLogin_Click(object sender, EventArgs e)
         {
+            Enable_Disable_LoadingPanel(true);
             ResetLoginProblemsPanelValues();
 
             targetPanel = "login";
             CheckTargetPanel();
+            Enable_Disable_LoadingPanel(false);
         }
         #endregion Change Panel
 
-        #region Set destination panel  -  Reset current panel
+        #region Set destination panel  -  Reset current panel  -  Enable Loading Panel
 
         #region Check Target Panel
         private void CheckTargetPanel()
         {
-            BackgroundPanel.Visible = true;
-
             if (targetPanel.Equals("login"))
             {
                 LoginPanel.Visible = true;
                 RegisterPanel.Visible = false;
                 LoginProblemsPanel.Visible = false;
+                LoginPanel.Focus();
             }
             else if (targetPanel.Equals("register"))
             {
                 LoginPanel.Visible = false;
                 RegisterPanel.Visible = true;
                 LoginProblemsPanel.Visible = false;
+                RegisterPanel.Focus();
             }
             else if (targetPanel.Equals("loginProblems"))
             {
                 LoginPanel.Visible = false;
                 RegisterPanel.Visible = false;
                 LoginProblemsPanel.Visible = true;
+                LoginProblemsPanel.Focus();
             }
 
-            BackgroundPanel.Focus();
             ImageGradient.Visible = false;
             ConfigurationPanel.Visible = false;
             EventsPanel.Visible = false;
@@ -871,12 +894,24 @@ namespace Outlands_Adventure_Launcher
 
             // Llamar al método que se ejecuta cuando una caja de texto pierde el foco
             CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
-
-            ResetPasswordEventPanel.Visible = false;
         }
-        #endregion
+        #endregion Reset Panel Values
 
-        #endregion Set destination panel  -  Reset current panel
+        #region Enable / Disable Loading Panel
+        private void Enable_Disable_LoadingPanel(bool enable)
+        {
+            if (enable)
+            {
+                BackgroundPanel.Visible = true;
+            }
+            else
+            {
+                BackgroundPanel.Visible = false;
+            }
+        }
+        #endregion Enable Loading Panel
+
+        #endregion Set destination panel  -  Reset current panel  -  Enable Loading Panel
 
         #region Textboxes / Email / Password comprobations
         /// <summary>
