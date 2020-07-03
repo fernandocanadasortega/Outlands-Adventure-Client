@@ -93,7 +93,7 @@ namespace Outlands_Adventure_Launcher
     #region Send Email
     static class SendEmail
     {
-        public static void SendNewEmail(TextBox emailTextBox, string emailSubject, string emailBody, string emailBodyData)
+        public static bool SendNewEmail(TextBox emailTextBox, string emailSubject, string emailBody, string emailBodyData)
         {
             try
             {
@@ -114,10 +114,13 @@ namespace Outlands_Adventure_Launcher
                 smtpServer.Credentials = new System.Net.NetworkCredential("outlandsadventure@gmail.com", "Outlands_Client_Password");
                 smtpServer.EnableSsl = true;
                 smtpServer.Send(mail);
+
+                return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                return true;
+                //MessageBox.Show(ex.Message);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Outlands_Adventure_Launcher.Properties;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
@@ -44,147 +45,64 @@ namespace Outlands_Adventure_Launcher
         #region Login Interface
         // Manage all items in the login panel
 
-        #region UserName Textbox Gain Focus
+        #region UserName Textbox Focus
         // These methods make UserName Textbox gain the focus
-        private void UserNamePanel_Click(object sender, EventArgs e)
+        private void UserNamePanel_Label_Click(object sender, EventArgs e)
         {
-            // Cuando haces click en el panel contenedor
+            // Cuando haces click en el label o en el panel contenedor
             UserNameTextbox.Focus();
         }
 
-        private void UserNameLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
-            UserNameTextbox.Focus();
-        }
-
-        // These methods manage the focus gain
+        // This method manage the focus gain
         private void UserNameTextBox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            UserNameGain();
+            TextboxGainFocusAnimation(UserNameTextbox, UserNameLabel, null, null);
         }
 
-        private void UserNameGain()
-        {
-            if (UserNameTextbox.Text.Length == 0)
-            {
-                UserNameLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                UserNameLabel.Location = new Point(0, 2);
-            }
-        }
-        #endregion
-
-        #region UserName Textbox Lose Focus
-        // These methods manage the focus lose
+        // This method manage the focus lose
         private void UserNameTextBox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            UserNameFocusLost();
-        }
-
-        private void UserNameFocusLost()
-        {
-            if (UserNameTextbox.Text.Length == 0)
-            {
-                UserNameLabel.Font = new Font("Oxygen", 10);
-                UserNameLabel.Location = new Point(14, 10);
-            }
+            TextboxLoseFocusAnimation(UserNameTextbox, UserNameLabel, null, null, null, null, null);
         }
         #endregion
 
-        #region Password Textbox Gain Focus
+        #region Password Textbox Focus
         // These methods make Password Textbox gain the focus
-        private void PasswordPanel_Enter(object sender, EventArgs e)
+        private void PasswordPanel_Label_Click(object sender, EventArgs e)
         {
-            // Cuando haces click en el panel contenedor
-            PasswordTextbox.Focus();
-        }
-
-        private void PasswordLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
+            // Cuando haces click en el label o en el panel contenedor
             PasswordTextbox.Focus();
         }
 
         private void PasswordTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            PasswordGain();
+            TextboxGainFocusAnimation(PasswordTextbox, PasswordLabel, ShowLoginPassword, LoginMayusLock);
         }
 
-        private void PasswordGain()
-        {
-            if (PasswordTextbox.Text.Length == 0)
-            {
-                PasswordLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                PasswordLabel.Location = new Point(0, 2);
-            }
-
-            ShowLoginPassword.Visible = true;
-            currentShowPasswordButton = ShowLoginPassword;
-            currentPasswordTextbox = PasswordTextbox;
-
-            if (Control.IsKeyLocked(Keys.CapsLock))
-            {
-                LoginMayusLock.Visible = true;
-                PasswordTextbox.Size = new Size(165, 22);
-            }
-            else
-            {
-                LoginMayusLock.Visible = false;
-                PasswordTextbox.Size = new Size(195, 22);
-            }
-        }
-        #endregion
-
-        #region Password Textbox Lose Focus
-        // These methods manage the focus lose
+        // This method manage the focus lose
         private void PasswordTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            PasswordFocusLost();
-        }
-
-        private void PasswordFocusLost()
-        {
-            if (PasswordTextbox.Text.Length == 0)
-            {
-                PasswordLabel.Font = new Font("Oxygen", 10);
-                PasswordLabel.Location = new Point(14, 10);
-            }
-
-
-            ShowLoginPassword.Visible = false;
-            LoginMayusLock.Visible = false;
+            TextboxLoseFocusAnimation(PasswordTextbox, PasswordLabel, null, ShowLoginPassword, LoginMayusLock, null, null);
         }
         #endregion
 
         #region Write Login Textboxs
         // These methods check username and password, if the is more that 4 characters in each textbox then enable the login button
+        private void UserNameTextbox_KeyUp(object sender, KeyEventArgs e)
+        {
+            TextboxKeyUp(e, LoginPanel, null, null);
+        }
+
         private void PasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.CapsLock)
-            {
-                if (Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    LoginMayusLock.Visible = true;
-                    PasswordTextbox.Size = new Size(165, 22);
-                }
-                else if (!Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    LoginMayusLock.Visible = false;
-                    PasswordTextbox.Size = new Size(195, 22);
-                }
-            }
+            TextboxKeyUp(e, LoginPanel, PasswordTextbox, LoginMayusLock);
         }
 
-        private void UserNameTextbox_TextChanged(object sender, EventArgs e)
-        {
-            CheckLoginTextboxs();
-        }
-
-        private void PasswordTextbox_TextChanged(object sender, EventArgs e)
+        private void UserName_PasswordTextbox_TextChanged(object sender, EventArgs e)
         {
             CheckLoginTextboxs();
         }
@@ -193,15 +111,11 @@ namespace Outlands_Adventure_Launcher
         {
             if (UserNameTextbox.Text.Length >= 4 && PasswordTextbox.Text.Length >= 4)
             {
-                LoginButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginSuccessful;
-                LoginButton.Cursor = System.Windows.Forms.Cursors.Hand;
-                loginAvaible = true;
+                Login_RegisterButton(true, LoginButton, ref loginAvaible);
             }
             else
             {
-                LoginButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
-                LoginButton.Cursor = System.Windows.Forms.Cursors.Default;
-                loginAvaible = false;
+                Login_RegisterButton(false, LoginButton, ref loginAvaible);
             }
         }
         #endregion
@@ -262,459 +176,185 @@ namespace Outlands_Adventure_Launcher
         #region Register Interface
         //Manage all items in the register panel
 
-        #region New Email Textbox Gain Focus
-        // These methods make New Email Textbox gain the focus
-        private void NewEmailPanel_Click(object sender, EventArgs e)
+        #region New Email Textbox Focus
+        // These methods make New Email Textbox gain and loose the focus
+        private void NewEmailPanel_Label_Click(object sender, EventArgs e)
         {
-            // Cuando haces click en el panel contenedor
-            NewEmailTextbox.Focus();
-        }
-
-        private void NewEmailLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
+            // Cuando haces click en el label o en el panel contenedor
             NewEmailTextbox.Focus();
         }
 
         private void NewEmailTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            NewEmailGain();
+            TextboxGainFocusAnimation(NewEmailTextbox, NewEmailLabel, null, null);
         }
 
-        private void NewEmailGain()
-        {
-            if (NewEmailTextbox.Text.Length == 0)
-            {
-                NewEmailLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                NewEmailLabel.Location = new Point(0, 2);
-            }
-        }
-        #endregion
-
-        #region New Email Textbox Lose Focus
-        // These methods manage the focus lose, and check the content of the textbox
         private void NewEmailTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            NewEmailFocusLost();
-        }
-
-        private void NewEmailFocusLost()
-        {
-            if (NewEmailTextbox.Text.Length == 0)
-            {
-                NewEmailLabel.Font = new Font("Oxygen", 10);
-                NewEmailLabel.Location = new Point(14, 10);
-
-                NewEmailErrorLabel.Visible = false;
-            }
-            else
-            {
-                if (NewEmailTextbox.Text.Length < 4)
-                {
-                    NewEmailErrorLabel.Visible = true;
-                    NewEmailErrorLabel.Text = "Debe contener cuatro letras como mínimo";
-                }
-                else if (!IsEmailValid(NewEmailTextbox.Text))
-                {
-                    NewEmailErrorLabel.Visible = true;
-                    NewEmailErrorLabel.Text = "Introduce una dirección de correo válida";
-                }
-                else
-                {
-                    NewEmailErrorLabel.Visible = false;
-                }
-            }
-
-            CheckRegisterTextboxs();
+            CheckRegister_ResetTexboxErrors(NewEmailTextbox);
         }
         #endregion
 
-        #region New UserName Textbox Gain Focus
-        // These methods make New UserName Textbox gain the focus
-        private void NewUserNamePanel_Click(object sender, EventArgs e)
+        #region New UserName Textbox Focus
+        // These methods make New UserName Textbox gain and loose the focus
+        private void NewUserNamePanel_Label_Click(object sender, EventArgs e)
         {
-            // Cuando haces click en el panel contenedor
-            NewUserNameTextbox.Focus();
-        }
-
-        private void NewUserNameLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
+            // Cuando haces click en el label o en el panel contenedor
             NewUserNameTextbox.Focus();
         }
 
         private void NewUserNameTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            NewUserNameGain();
+            TextboxGainFocusAnimation(NewUserNameTextbox, NewUserNameLabel, null, null);
         }
 
-        private void NewUserNameGain()
-        {
-            if (NewUserNameTextbox.Text.Length == 0)
-            {
-                NewUserNameLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                NewUserNameLabel.Location = new Point(0, 2);
-            }
-        }
-        #endregion
-
-        #region New UserName Textbox Lose Focus
-        // These methods manage the focus lose
         private void NewUserNameTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            NewUserNameFocusLost();
-        }
-
-        private void NewUserNameFocusLost()
-        {
-            if (NewUserNameTextbox.Text.Length == 0)
-            {
-                NewUserNameLabel.Font = new Font("Oxygen", 10);
-                NewUserNameLabel.Location = new Point(14, 10);
-
-                NewUserNameErrorLabel.Visible = false;
-            }
-            else
-            {
-                if (NewUserNameTextbox.Text.Length < 4)
-                {
-                    NewUserNameErrorLabel.Visible = true;
-                    NewUserNameErrorLabel.Text = "Debe contener cuatro letras como mínimo";
-                }
-                else
-                {
-                    NewUserNameErrorLabel.Visible = false;
-                }
-            }
-
-            CheckRegisterTextboxs();
+            CheckRegister_ResetTexboxErrors(NewUserNameTextbox);
         }
         #endregion
 
-        #region New Password Textbox Gain Focus
-        // These methods make New Password Textbox gain the focus
-        private void NewPasswordPanel_Click(object sender, EventArgs e)
+        #region New Password Textbox Focus
+        // These methods make New Password Textbox gain and loose the focus
+        private void NewPasswordPanel_Label_Click(object sender, EventArgs e)
         {
-            // Cuando haces click en el panel contenedor
-            NewPasswordTextbox.Focus();
-        }
-
-        private void NewPasswordLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
+            // Cuando haces click en el label o en el panel contenedor
             NewPasswordTextbox.Focus();
         }
 
         private void NewPasswordTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            NewPasswordGain();
+            TextboxGainFocusAnimation(NewPasswordTextbox, NewPasswordLabel, ShowNewPassword, NewPasswordMayusLock);
         }
 
-        /* Pone el label que indica Constraseña arriba con letra pequeña, te enseña el ojo para mostrar la contraseña
-         * y controla si las mayúsculas están activadas cuando el textbox coje el foco
-        */
-        private void NewPasswordGain()
-        {
-            if (NewPasswordTextbox.Text.Length == 0)
-            {
-                NewPasswordLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                NewPasswordLabel.Location = new Point(0, 2);
-            }
-
-            ShowNewPassword.Visible = true;
-            currentShowPasswordButton = ShowNewPassword;
-            currentPasswordTextbox = NewPasswordTextbox;
-
-            if (Control.IsKeyLocked(Keys.CapsLock))
-            {
-                NewPasswordMayusLock.Visible = true;
-                NewPasswordTextbox.Size = new Size(165, 22);
-            }
-            else
-            {
-                NewPasswordMayusLock.Visible = false;
-                NewPasswordTextbox.Size = new Size(195, 22);
-            }
-        }
-        #endregion
-
-        #region New Password Textbox Lose Focus
-        // These methods manage the focus lose
         private void NewPasswordTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            NewPasswordFocusLost();
-        }
-
-        private void NewPasswordFocusLost()
-        {
-            // Pone el label que indica Constraseña otra vez con letra grande en el medio y comprueba errores de la caja de texto
-            if (NewPasswordTextbox.Text.Length == 0)
-            {
-                NewPasswordLabel.Font = new Font("Oxygen", 10);
-                NewPasswordLabel.Location = new Point(14, 10);
-
-                NewPasswordStrengthProgressBar.Visible = false;
-                NewPasswordStrengthLabel.Visible = false;
-                NewPasswordErrorLabel.Visible = false;
-            }
-            else
-            {
-                if (NewPasswordTextbox.Text.Length < 4)
-                {
-                    NewPasswordStrengthProgressBar.Visible = false;
-                    NewPasswordStrengthLabel.Visible = false;
-
-                    NewPasswordErrorLabel.Visible = true;
-                    NewPasswordErrorLabel.Text = "Debe contener cuatro letras como mínimo";
-                }
-                else
-                {
-                    NewPasswordErrorLabel.Visible = false;
-                }
-            }
-
-            CheckRegisterTextboxs();
-            ShowNewPassword.Visible = false;
-            NewPasswordMayusLock.Visible = false;
+            CheckRegister_ResetTexboxErrors(NewPasswordTextbox);
         }
         #endregion
 
-        #region Confirm New Password Textbox Gain Focus
-        // These methods make Confirm New Password Textbox gain the focus
-        private void ConfirmNewPasswordPanel_Click(object sender, EventArgs e)
+        #region Confirm New Password Textbox Focus
+        // These methods make Confirm New Password Textbox gain and loose the focus
+        private void ConfirmNewPasswordPanel_Label_Click(object sender, EventArgs e)
         {
-            // Cuando haces click en el panel contenedor
-            ConfirmNewPasswordTextbox.Focus();
-        }
-
-        private void ConfirmNewPasswordLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
+            // Cuando haces click en el label o en el panel contenedor
             ConfirmNewPasswordTextbox.Focus();
         }
 
         private void ConfirmNewPasswordTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            ConfirmNewPasswordGain();
+            TextboxGainFocusAnimation(ConfirmNewPasswordTextbox, ConfirmNewPasswordLabel, ShowConfirmNewPassword,
+                ConfirmNewPasswordMayusLock);
         }
 
-        private void ConfirmNewPasswordGain()
-        {
-            if (ConfirmNewPasswordTextbox.Text.Length == 0)
-            {
-                ConfirmNewPasswordLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                ConfirmNewPasswordLabel.Location = new Point(0, 2);
-            }
-
-            ShowConfirmNewPassword.Visible = true;
-            currentShowPasswordButton = ShowConfirmNewPassword;
-            currentPasswordTextbox = ConfirmNewPasswordTextbox;
-
-            if (Control.IsKeyLocked(Keys.CapsLock))
-            {
-                ConfirmNewPasswordMayusLock.Visible = true;
-                ConfirmNewPasswordTextbox.Size = new Size(165, 22);
-            }
-            else
-            {
-                ConfirmNewPasswordMayusLock.Visible = false;
-                ConfirmNewPasswordTextbox.Size = new Size(195, 22);
-            }
-        }
-        #endregion
-
-        #region Confirm New Password Textbox Lose Focus
-        // These methods manage the focus lose
         private void ConfirmNewPasswordTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            ConfirmNewPasswordFocusLost();
-        }
-
-        private void ConfirmNewPasswordFocusLost()
-        {
-            if (ConfirmNewPasswordTextbox.Text.Length == 0)
-            {
-                ConfirmNewPasswordLabel.Font = new Font("Oxygen", 10);
-                ConfirmNewPasswordLabel.Location = new Point(14, 10);
-
-                ConfirmNewPasswordErrorLabel.Visible = false;
-            }
-            else
-            {
-                if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text))
-                {
-                    ConfirmNewPasswordErrorLabel.Visible = true;
-                    ConfirmNewPasswordErrorLabel.Text = "Las contraseñas no coinciden";
-                }
-                else if (ConfirmNewPasswordTextbox.Text.Length < 4)
-                {
-                    ConfirmNewPasswordErrorLabel.Visible = true;
-                    ConfirmNewPasswordErrorLabel.Text = "Debe contener cuatro letras como mínimo";
-                }
-                else
-                {
-                    ConfirmNewPasswordErrorLabel.Visible = false;
-                }
-            }
-
-            CheckRegisterTextboxs();
-            ShowConfirmNewPassword.Visible = false;
-            ConfirmNewPasswordMayusLock.Visible = false;
+            CheckRegister_ResetTexboxErrors(ConfirmNewPasswordTextbox);
         }
         #endregion
 
         #region Write Register Textboxs
         // These methods check email, username and passwords, if there are any errors in any textbox then unable the register button
         // In password textboxes check if the key pressed is Lock Capital to show a warning to the user
-        private void NewEmailTextbox_KeyUp(object sender, KeyEventArgs e)
+        private void NewEmail_UserNameTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                RegisterPanel.Focus();
-            }
-        }
-
-        private void NewUserNameTextbox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                RegisterPanel.Focus();
-            }
+            TextboxKeyUp(e, RegisterPanel, null, null);
         }
 
         private void NewPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.CapsLock)
-            {
-                if (Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    NewPasswordMayusLock.Visible = true;
-                    NewPasswordTextbox.Size = new Size(165, 22);
-                }
-                else if (!Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    NewPasswordMayusLock.Visible = false;
-                    NewPasswordTextbox.Size = new Size(195, 22);
-                }
-            }
-
-            if (e.KeyCode == Keys.Enter)
-            {
-                RegisterPanel.Focus();
-            }
+            TextboxKeyUp(e, RegisterPanel, NewPasswordTextbox, NewPasswordMayusLock);
         }
 
         private void ConfirmNewPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.CapsLock)
-            {
-                if (Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    ConfirmNewPasswordMayusLock.Visible = true;
-                    ConfirmNewPasswordTextbox.Size = new Size(165, 22);
-                }
-                else if (!Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    ConfirmNewPasswordMayusLock.Visible = false;
-                    ConfirmNewPasswordTextbox.Size = new Size(195, 22);
-                }
-            }
+            TextboxKeyUp(e, RegisterPanel, ConfirmNewPasswordTextbox, ConfirmNewPasswordMayusLock);
+        }
 
-            if (e.KeyCode == Keys.Enter)
-            {
-                RegisterPanel.Focus();
-            }
+        private void RegisterTextboxes_TextChanged(object sender, EventArgs e)
+        {
+            CheckRegisterTextboxs();
         }
 
         private void NewPasswordTextbox_TextChanged(object sender, EventArgs e)
         {
-            NewPasswordErrorLabel.Visible = false;
-            NewPasswordStrengthProgressBar.Visible = true;
-            NewPasswordStrengthLabel.Visible = true;
-
-            PasswordStrength.CheckPasswordStrength(NewPasswordTextbox, NewPasswordStrengthProgressBar, NewPasswordStrengthLabel);
+            CheckTextboxPasswordStrength(NewPasswordTextbox, NewPasswordErrorLabel, NewPasswordStrengthProgressBar, 
+                NewPasswordStrengthLabel);
+            CheckRegisterTextboxs();
         }
 
         // Check the textboxes contents
         private void CheckRegisterTextboxs()
         {
-            // if there is no error label showing
-            if (!NewEmailErrorLabel.Visible && !NewUserNameErrorLabel.Visible && !NewPasswordErrorLabel.Visible &&
-                !ConfirmNewPasswordErrorLabel.Visible)
+            // If all textboxes has at least 4 caracters then enable the register button
+            if (NewEmailTextbox.Text.Length >= 4 && NewUserNameTextbox.Text.Length >= 4 && NewPasswordTextbox.Text.Length >= 4 &&
+                ConfirmNewPasswordTextbox.Text.Length >= 4)
             {
-                // If all textboxes has at least 4 caracters then enable the register button
-                if (NewEmailTextbox.Text.Length > 0 && NewUserNameTextbox.Text.Length > 0 && NewPasswordTextbox.Text.Length > 0 &&
-                    ConfirmNewPasswordTextbox.Text.Length > 0)
-                {
-                    RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginSuccessful;
-                    RegisterButton.Cursor = System.Windows.Forms.Cursors.Hand;
-                    registerAvaible = true;
-                }
-                else
-                {
-                    RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
-                    RegisterButton.Cursor = System.Windows.Forms.Cursors.Default;
-                    registerAvaible = false;
-                }
+                Login_RegisterButton(true, RegisterButton, ref registerAvaible);
             }
-            // If there are any error label showing then disable the register button
             else
             {
-                RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
-                RegisterButton.Cursor = System.Windows.Forms.Cursors.Default;
-                registerAvaible = false;
+                Login_RegisterButton(false, RegisterButton, ref registerAvaible);
             }
         }
         #endregion
 
         #region Register in
-        // Check the textboxes content when you put the mouse over the button
-        private void RegisterButton_MouseEnter(object sender, EventArgs e)
-        {
-            RegisterButton.Focus();
-            CheckRegisterTextboxs();
-        }
-
         // This method manage login button when you click on it
         private void RegisterButton_Click(object sender, EventArgs e)
         {
-            if (registerAvaible)
-            {
-                RegisterButton.Focus();
-                CheckRegisterCredentials();
+            RegisterButton.Focus();
 
+            if (!NewEmailErrorLabel.Visible && !NewUserNameErrorLabel.Visible && !NewPasswordErrorLabel.Visible &&
+                !ConfirmNewPasswordErrorLabel.Visible)
+            {
                 if (registerAvaible)
                 {
-                    EventText.Location = new Point(40, 5);
-                    EventPasswordCode.Visible = true;
-                    EventSendButton.Visible = true;
-                    EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+                    //CheckRegisterCredentials();
 
-                    EventText.Text = "Hemos mandado un código de confirmación a tu correo electrónico, dirígete a tu correo e introduce el código para confirmar tu cuenta";
+                    if (registerAvaible)
+                    {
+                        string confirmationCode = CreateConfirmationCode.CreateCode();
+                        Hash_SHA2.InitialiceVariables(confirmationCode);
+                        bool messageError = SendEmail.SendNewEmail(NewEmailTextbox, "Creación de una nueva cuenta del cliente de" +
+                               " Outlands Adventure", "Su código de confimación es", confirmationCode);
 
-                    string confirmationCode = CreateConfirmationCode.CreateCode();
-                    Hash_SHA2.InitialiceVariables(confirmationCode);
-                    SendEmail.SendNewEmail(ResetCredentialsEmailText, "Creación de una nueva cuenta del cliente de" +
-                           " Outlands Adventure", "Su código de confimación es", confirmationCode);
+                        if (!messageError)
+                        {
+                            EventText.Location = new Point(40, 5);
+                            EventPasswordCode.Visible = true;
+                            EventSendButton.Visible = true;
+                            EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
-                    targetPanel = "login";
+                            EventText.Text = "Hemos mandado un código de confirmación a tu correo electrónico, dirígete a tu correo" +
+                                " e introduce el código para confirmar tu cuenta";
 
-                    ShowImageGradient();
-                    EventsPanel.Visible = true;
-                    ResetRegisterPanelValues();
+                            targetPanel = "login";
+
+                            ShowImageGradient();
+                            EventsPanel.Visible = true;
+                            ResetRegisterPanelValues();
+                        }
+                        else
+                        {
+                            NewEmailErrorLabel.Text = "Problema al enviar el correo";
+                            NewEmailErrorLabel.Visible = true;
+                            Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                        }
+                    }
                 }
             }
             else
             {
-                RegisterButton.Focus();
+                Login_RegisterButton(false, RegisterButton, ref registerAvaible);
             }
         }
 
@@ -725,53 +365,62 @@ namespace Outlands_Adventure_Launcher
             {
                 NewEmailErrorLabel.Text = "Dirección de correo ya registrada";
                 NewEmailErrorLabel.Visible = true;
-                registerAvaible = false;
-                CheckRegisterTextboxs();
+                Login_RegisterButton(false, RegisterButton, ref registerAvaible);
             }
 
             if (NewUserNameTextbox.Text.Equals("Napo"))
             {
                 NewUserNameErrorLabel.Text = "Nombre de usuario no disponible";
                 NewUserNameErrorLabel.Visible = true;
-                registerAvaible = false;
-                CheckRegisterTextboxs();
+                Login_RegisterButton(false, RegisterButton, ref registerAvaible);
             }
         }
         #endregion
 
         #endregion Register Interface
 
-        #region Login Problems
+        #region Login Problems Interface
         // Manage all items in login problems panel
 
-        #region Forgotten Username Button
-        private void ForgottenUsernameButton_MouseEnter(object sender, EventArgs e)
+        #region Forgotten Username / Password Button
+        private void ForgottenUsername_PasswordButton_MouseEnter(object sender, EventArgs e)
         {
             ForgottenUsernameButton.BackColor = Color.FromArgb(25, 0, 203, 255);
         }
 
-        private void ForgottenUsernameButton_MouseLeave(object sender, EventArgs e)
+        private void ForgottenUsername_PasswordButton_MouseLeave(object sender, EventArgs e)
         {
             ForgottenUsernameButton.BackColor = Color.FromArgb(0, 0, 203, 255);
         }
 
-        private void ForgottenUsernameHeader_Click(object sender, EventArgs e)
+        private void ForgottenUsernameButton_Header_Click(object sender, EventArgs e)
         {
-            SetForgottenUsernameRecover();
+            SetForgottenUsername_PasswordRecover(true);
         }
 
-        private void ForgottenUsernameButton_Click(object sender, EventArgs e)
+        private void ForgottenPasswordButton_Header_Click(object sender, EventArgs e)
         {
-            SetForgottenUsernameRecover();
+            SetForgottenUsername_PasswordRecover(false);
         }
 
-        private void SetForgottenUsernameRecover()
+        private void SetForgottenUsername_PasswordRecover(bool forgottenUsername)
         {
-            usernameLost = true;
-            passwordLost = false;
+            if (forgottenUsername)
+            {
+                usernameLost = true;
+                passwordLost = false;
 
-            ResetCredentialsHeader.Text = "¿Necesitas ayuda para recordar tu nombre de usuario? \n" +
-                "Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico";
+                ResetCredentialsHeader.Text = "¿Necesitas ayuda para recordar tu nombre de usuario? \n" +
+                    "Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico";
+            }
+            else
+            {
+                usernameLost = false;
+                passwordLost = true;
+
+                ResetCredentialsHeader.Text = "¿Has olvidado tu contraseña? \n" +
+                    "Puedes solicitar cambiar tu contraseña anterior por otra nueva";
+            }
 
             if (!ResetCredentialsHeader.Visible)
             {
@@ -785,90 +434,23 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion
 
-        #region Forgotten Password Button
-        private void ForgottenPasswordButton_MouseEnter(object sender, EventArgs e)
+        #region Reset Credentials Textbox Focus
+        private void ResetCredentialsEmailPanel_Label_Click(object sender, EventArgs e)
         {
-            ForgottenPasswordButton.BackColor = Color.FromArgb(25, 0, 203, 255);
-        }
-
-        private void ForgottenPasswordButton_MouseLeave(object sender, EventArgs e)
-        {
-            ForgottenPasswordButton.BackColor = Color.FromArgb(0, 0, 203, 255);
-        }
-
-        private void ForgottenPasswordButton_Click(object sender, EventArgs e)
-        {
-            SetForgottenPasswordRecover();
-        }
-
-        private void ForgottenPasswordHeader_Click(object sender, EventArgs e)
-        {
-            SetForgottenPasswordRecover();
-        }
-
-        private void SetForgottenPasswordRecover()
-        {
-            usernameLost = false;
-            passwordLost = true;
-
-            ResetCredentialsHeader.Text = "¿Has olvidado tu contraseña? \n" +
-                "Puedes solicitar cambiar tu contraseña anterior por otra nueva";
-
-            if (!ResetCredentialsHeader.Visible)
-            {
-                ResetCredentialsHeader.Visible = true;
-                ResetCredentialsEmailPanel.Visible = true;
-                ResetCredentialsButton.Visible = true;
-            }
-
-            ResetCredentialsEmailText.Text = "";
-            ForgottenPasswordHeader.Focus();
-        }
-        #endregion
-
-        #region Reset Credentials Textbox Focus Gain
-        private void ResetCredentialsEmailPanel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el panel contenedor
-            ResetCredentialsEmailText.Focus();
-        }
-
-        private void ResetCredentialsEmailLabel_Click(object sender, EventArgs e)
-        {
-            // Cuando haces click en el label
+            // Cuando haces click en el panel contenedor o en el label
             ResetCredentialsEmailText.Focus();
         }
 
         private void ResetCredentialsEmailText_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
-            ResetCredentialsFocusGain();
+            TextboxGainFocusAnimation(ResetCredentialsEmailText, ResetCredentialsEmailLabel, null, null);
         }
 
-        private void ResetCredentialsFocusGain()
-        {
-            if (ResetCredentialsEmailText.Text.Length == 0)
-            {
-                ResetCredentialsEmailLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                ResetCredentialsEmailLabel.Location = new Point(0, 2);
-            }
-        }
-        #endregion
-
-        #region Reset Credentials Textbox Focus Lost
         private void ResetCredentialsEmailText_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
-            ResetCredentialsFocusLost();
-        }
-
-        private void ResetCredentialsFocusLost()
-        {
-            if (ResetCredentialsEmailText.Text.Length == 0)
-            {
-                ResetCredentialsEmailLabel.Font = new Font("Oxygen", 10);
-                ResetCredentialsEmailLabel.Location = new Point(14, 10);
-            }
+            TextboxLoseFocusAnimation(ResetCredentialsEmailText, ResetCredentialsEmailLabel, null, null, null, null, null);
         }
         #endregion
 
@@ -877,15 +459,11 @@ namespace Outlands_Adventure_Launcher
         {
             if (ResetCredentialsEmailText.Text.Length > 4 && IsEmailValid(ResetCredentialsEmailText.Text))
             {
-                ResetCredentialsButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginSuccessful;
-                ResetCredentialsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-                loginProblemsAvaible = true;
+                Login_RegisterButton(true, ResetCredentialsButton, ref loginProblemsAvaible);
             }
             else
             {
-                ResetCredentialsButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
-                ResetCredentialsButton.Cursor = System.Windows.Forms.Cursors.Default;
-                loginProblemsAvaible = false;
+                Login_RegisterButton(false, ResetCredentialsButton, ref loginProblemsAvaible);
             }
         }
         #endregion
@@ -896,6 +474,7 @@ namespace Outlands_Adventure_Launcher
             if (loginProblemsAvaible)
             {
                 ResetCredentialsButton.Focus();
+                bool messageError = false;
 
                 if (usernameLost)
                 {
@@ -908,7 +487,7 @@ namespace Outlands_Adventure_Launcher
                     EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
                             "nuestra base de datos te mandaremos un recordatorio de tu nombre de usuario";
 
-                    SendEmail.SendNewEmail(ResetCredentialsEmailText, "Recordatorio del nombre de usuario del cliente de" +
+                    messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Recordatorio del nombre de usuario del cliente de" +
                         " Outlands Adventure", "Su nombre de usuario es", "Napo"); // Cambiar Napo por el nombre de la bd
                 }
                 else if (passwordLost)
@@ -924,15 +503,22 @@ namespace Outlands_Adventure_Launcher
 
                     string confirmationCode = CreateConfirmationCode.CreateCode();
                     Hash_SHA2.InitialiceVariables(confirmationCode);
-                    SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
+                    messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
                            " Outlands Adventure", "Su código de confimación es", confirmationCode);
                 }
 
-                targetPanel = "login";
+                if (messageError)
+                {
+                    Login_RegisterButton(false, ResetCredentialsButton, ref loginProblemsAvaible);
+                }
+                else
+                {
+                    targetPanel = "login";
 
-                ShowImageGradient();
-                EventsPanel.Visible = true;
-                ResetLoginProblemsPanelValues();
+                    ShowImageGradient();
+                    EventsPanel.Visible = true;
+                    ResetLoginProblemsPanelValues();
+                }
             }
             else
             {
@@ -941,7 +527,7 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion
 
-        #endregion Login Problems
+        #endregion Login Problems Interface
 
         #region Game Client Configuration
         // This method manage game client configuration button when you click on it
@@ -1017,95 +603,169 @@ namespace Outlands_Adventure_Launcher
 
         #endregion Game Client Configuration
 
-        #region Others
-        // Miscellany of methods and functions for various things
-        #region Lose Focus
-        // These methods lose focus to any box  -- Hace que todas las cajas de texto pierdan el foco
-        private void LoginText_Click(object sender, EventArgs e)
+        #region Popup Events
+
+        #region Events Panel
+        private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
         {
-            LoginPanel.Focus();
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
         }
 
-        private void WrongCredentials_Click(object sender, EventArgs e)
+        private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
         {
-            LoginPanel.Focus();
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
         }
 
-        private void LoginPanel_Click(object sender, EventArgs e)
+        private void EventSendButton_Click(object sender, EventArgs e)
         {
-            LoginPanel.Focus();
+            CheckHashResumes();
         }
 
-        private void RegisterText_Click(object sender, EventArgs e)
+        private void EventExitButton_Click(object sender, EventArgs e)
         {
-            RegisterPanel.Focus();
+            targetPanel = "login";
+            CheckTargetPanel();
+            ResetEventsValue();
         }
 
-        private void RegisterPanel_Click(object sender, EventArgs e)
+        private void EventPasswordCode_KeyUp(object sender, KeyEventArgs e)
         {
-            RegisterPanel.Focus();
-        }
-
-        private void LoginProblemsPanel_Click(object sender, EventArgs e)
-        {
-            LoginProblemsPanel.Focus();
-        }
-
-        private void LoginProblemsHeader_1_Click(object sender, EventArgs e)
-        {
-            LoginProblemsHeader_1.Focus();
-        }
-
-        private void LoginProblemsHeader_2_Click(object sender, EventArgs e)
-        {
-            LoginProblemsHeader_2.Focus();
-        }
-
-        private void ResetCredentialsHeader_Click(object sender, EventArgs e)
-        {
-            ResetCredentialsHeader.Focus();
-        }
-
-        private void ImagePanel_Click(object sender, EventArgs e)
-        {
-            ImagePanel.Focus();
-        }
-
-        private void ResetPasswordEventPanel_Click(object sender, EventArgs e)
-        {
-            ResetPasswordEventPanel.Focus();
-        }
-
-        private void ResetPasswordEventText_Click(object sender, EventArgs e)
-        {
-            ResetPasswordEventPanel.Focus();
-        }
-        #endregion
-
-        #region Show and Hide Image Gradient Panel
-        // Methods to show Image Gradient Panel
-        private void ShowImageGradient()
-        {
-            ConfigurationButton.Visible = false;
-            BackgroundPanel.Visible = false;
-            LoginPanel.Visible = false;
-            RegisterPanel.Visible = false;
-            LoginProblemsPanel.Visible = false;
-
-            ImageGradient.Visible = true;
-        }
-
-        // Methods to hide Image Gradient Panel
-        private void ImageGradient_Click(object sender, EventArgs e)
-        {
-            ImageGradient.Focus();
-
-            if (SelectClientIdiom.Visible)
+            if (e.KeyCode == Keys.Enter)
             {
-                HideSelectIdiomPanel();
+                CheckHashResumes();
             }
         }
 
+        private void EventPasswordCode_TextChanged(object sender, EventArgs e)
+        {
+            EventPasswordCode.Text = EventPasswordCode.Text.ToUpper();
+            EventPasswordCode.Select(EventPasswordCode.Text.Length, 0);
+        }
+
+        private void CheckHashResumes()
+        {
+            if (Hash_SHA2.VerifyResume(EventPasswordCode.Text))
+            {
+                EventErrorText.Visible = false;
+
+                EventsPanel.Visible = false;
+
+                if (passwordLost) ResetPasswordEventPanel.Visible = true;
+
+                ResetEventsValue();
+            }
+            else
+            {
+                EventErrorText.Visible = true;
+            }
+        }
+        #endregion Events Panel
+
+        #region Reset Password Event
+        private void ResetPasswordPanel_Label_Click(object sender, EventArgs e)
+        {
+            // Cuando haces click en el label o en el panel contenedor
+            ResetPasswordTextbox.Focus();
+        }
+
+        private void ResetPasswordTextbox_Enter(object sender, EventArgs e)
+        {
+            TextboxGainFocusAnimation(ResetPasswordTextbox, ResetPasswordLabel, ShowResetPassword, ResetPasswordMayusLock);
+        }
+
+        private void ResetPasswordTextbox_Leave(object sender, EventArgs e)
+        {
+            CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
+        }
+
+
+        private void ResetPasswordTextbox_TextChanged(object sender, EventArgs e)
+        {
+            CheckTextboxPasswordStrength(ResetPasswordTextbox, ResetPasswordEventErrorText, ResetPasswordStrengthProgressBar,
+                ResetPasswordStrengthLabel);
+        }
+
+        private void ResetPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
+        {
+            TextboxKeyUp(e, ResetPasswordPanel, ResetPasswordTextbox, ResetPasswordMayusLock);
+        }
+
+        private void ResetPasswordSendButton_Click(object sender, EventArgs e)
+        {
+            CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
+
+            if (!ResetPasswordEventErrorText.Visible)
+            {
+                Reset_ResetPasswordEventValues();
+                CheckTargetPanel();
+            }
+        }
+
+        private void ResetPasswordExitButton_Click(object sender, EventArgs e)
+        {
+            targetPanel = "login";
+            CheckTargetPanel();
+            Reset_ResetPasswordEventValues();
+        }
+        #endregion Reset Password Event
+
+        #endregion Popup Events
+
+        #region Change Panel (ex: Change from login to register)
+        private void ActionLabel_MouseEnter(object sender, EventArgs e)
+        {
+            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Bold);
+        }
+
+        private void ActionLabel_MouseLeave(object sender, EventArgs e)
+        {
+            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Regular);
+        }
+
+        // Create New Account (Login Panel)
+        // Reset all values
+        private void RegisterLabel_Click(object sender, EventArgs e)
+        {
+            ResetLoginPanelValues();
+
+            targetPanel = "register";
+            CheckTargetPanel();
+        }
+
+        // Login Problems (Login Panel)
+        // Reset all values
+        private void LoginProblems_Click(object sender, EventArgs e)
+        {
+            ResetLoginPanelValues();
+
+            targetPanel = "loginProblems";
+            CheckTargetPanel();
+        }
+
+        // Login Existing Account (Register Panel)
+        // Reset all values
+        private void LoginLabel_Click(object sender, EventArgs e)
+        {
+            ResetRegisterPanelValues();
+
+            targetPanel = "login";
+            CheckTargetPanel();
+        }
+
+        // Return to Login (Login Problems Panel)
+        // Reset all values
+        private void ReturnToLogin_Click(object sender, EventArgs e)
+        {
+            ResetLoginProblemsPanelValues();
+
+            targetPanel = "login";
+            CheckTargetPanel();
+        }
+        #endregion Change Panel
+
+        #region Set destination panel  -  Reset current panel
+
+        #region Check Target Panel
         private void CheckTargetPanel()
         {
             BackgroundPanel.Visible = true;
@@ -1135,144 +795,7 @@ namespace Outlands_Adventure_Launcher
             EventsPanel.Visible = false;
             ConfigurationButton.Visible = true;
         }
-        #endregion
-
-        #region Show Hide Password
-        // These methods are used to show and hide the password in password textboxes
-        private void ShowPassword_Click(object sender, EventArgs e)
-        {
-            this.passwordVisible = this.passwordVisible ? false : true;
-
-            if (!passwordVisible)
-            {
-                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
-                currentPasswordTextbox.PasswordChar = '•';
-            }
-            else
-            {
-                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.show_password;
-                currentPasswordTextbox.PasswordChar = '\0';
-            }
-        }
-
-        private void ShowConfirmPassword_Click(object sender, EventArgs e)
-        {
-            this.confirmPasswordVisible = this.confirmPasswordVisible ? false : true;
-
-            if (!this.confirmPasswordVisible)
-            {
-                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
-                currentPasswordTextbox.PasswordChar = '•';
-            }
-            else
-            {
-                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.show_password;
-                currentPasswordTextbox.PasswordChar = '\0';
-            }
-        }
-
-        private void ShowResetPassword_Click(object sender, EventArgs e)
-        {
-            this.confirmPasswordVisible = this.confirmPasswordVisible ? false : true;
-
-            if (!this.confirmPasswordVisible)
-            {
-                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
-                currentPasswordTextbox.PasswordChar = '•';
-            }
-            else
-            {
-                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.show_password;
-                currentPasswordTextbox.PasswordChar = '\0';
-            }
-        }
-        #endregion
-
-        #region Create New Account and Login Problems (Login Panel)
-        // These methods manage new account button when mouse enter, exit and click on it
-        private void Register_LoginProblems_MouseEnter(object sender, EventArgs e)
-        {
-            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Bold);
-        }
-
-        private void Register_LoginProblems_MouseLeave(object sender, EventArgs e)
-        {
-            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Regular);
-        }
-
-        // Reset all values
-        private void RegisterLabel_Click(object sender, EventArgs e)
-        {
-            ResetLoginPanelValues();
-
-            LoginPanel.Visible = false;
-            RegisterPanel.Visible = true;
-            LoginProblemsPanel.Visible = false;
-
-            targetPanel = "register";
-
-            NewEmailTextbox.Focus();
-        }
-
-        private void LoginProblems_Click(object sender, EventArgs e)
-        {
-            ResetLoginPanelValues();
-
-            LoginPanel.Visible = false;
-            RegisterPanel.Visible = false;
-            LoginProblemsPanel.Visible = true;
-
-            targetPanel = "loginProblems";
-        }
-        #endregion
-
-        #region Login Existing Account (Register Panel)
-        // These methods manage new account button when mouse enter, exit and click on it
-        private void LoginLabel_MouseEnter(object sender, EventArgs e)
-        {
-            LoginLabel.Font = new Font("Oxygen", 9, FontStyle.Bold);
-        }
-
-        private void LoginLabel_MouseLeave(object sender, EventArgs e)
-        {
-            LoginLabel.Font = new Font("Oxygen", 9, FontStyle.Regular);
-        }
-
-        // Reset all values
-        private void LoginLabel_Click(object sender, EventArgs e)
-        {
-            ResetRegisterPanelValues();
-
-            LoginPanel.Visible = true;
-            RegisterPanel.Visible = false;
-            LoginProblemsPanel.Visible = false;
-
-            targetPanel = "login";
-        }
-        #endregion
-
-        #region Return to Login (Login Problems Panel)
-        private void ReturnToLogin_MouseEnter(object sender, EventArgs e)
-        {
-            ReturnToLogin.Font = new Font("Oxygen", 9, FontStyle.Bold);
-        }
-
-        private void ReturnToLogin_MouseLeave(object sender, EventArgs e)
-        {
-            ReturnToLogin.Font = new Font("Oxygen", 9, FontStyle.Regular);
-        }
-
-        private void ReturnToLogin_Click(object sender, EventArgs e)
-        {
-            ResetLoginProblemsPanelValues();
-
-            LoginPanel.Visible = true;
-            RegisterPanel.Visible = false;
-            LoginProblemsPanel.Visible = false;
-
-            targetPanel = "login";
-        }
-        #endregion
+        #endregion Check Target Panel
 
         #region Reset Panel Values
         private void ResetLoginPanelValues()
@@ -1280,10 +803,17 @@ namespace Outlands_Adventure_Launcher
             UserNameTextbox.Text = "";
             PasswordTextbox.Text = "";
             RememberMe.Checked = false;
-            passwordVisible = false;
-            ShowLoginPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
+            WrongCredentials.Visible = false;
 
-            RegisterLabel.Focus();
+            // Lo pongo a true para que luego al hacer el click se ponga a falso y cambie el icono
+            passwordVisible = true;
+            currentPasswordTextbox = PasswordTextbox;
+            currentShowPasswordButton = ShowLoginPassword;
+            ShowPassword_Click(null, EventArgs.Empty);
+
+            // Llamar al método que se ejecuta cuando una caja de texto pierde el foco
+            TextboxLoseFocusAnimation(UserNameTextbox, UserNameLabel, null, null, null, null, null);
+            TextboxLoseFocusAnimation(PasswordTextbox, PasswordLabel, null, ShowLoginPassword, LoginMayusLock, null, null);
         }
 
         private void ResetRegisterPanelValues()
@@ -1292,21 +822,24 @@ namespace Outlands_Adventure_Launcher
             NewUserNameTextbox.Text = "";
             NewPasswordTextbox.Text = "";
             ConfirmNewPasswordTextbox.Text = "";
-            NewEmailErrorLabel.Text = "";
-            NewUserNameErrorLabel.Text = "";
-            NewPasswordErrorLabel.Text = "";
-            ConfirmNewPasswordErrorLabel.Text = "";
 
-            ShowPassword_Click(ShowNewPassword, EventArgs.Empty);
-            ShowConfirmPassword_Click(ShowConfirmNewPassword, EventArgs.Empty);
+            // Los pongo a true para que luego al hacer el click se pongan a falso y cambien el icono
+            passwordVisible = true;
+            currentPasswordTextbox = NewPasswordTextbox;
+            currentShowPasswordButton = ShowNewPassword;
+            ShowPassword_Click(null, EventArgs.Empty);
 
-            NewEmailFocusLost();
-            NewUserNameFocusLost();
-            NewPasswordFocusLost();
-            ConfirmNewPasswordFocusLost();
+            confirmPasswordVisible = true;
+            currentPasswordTextbox = ConfirmNewPasswordTextbox;
+            currentShowPasswordButton = ShowConfirmNewPassword;
+            ShowConfirmPassword_Click(null, EventArgs.Empty);
 
-            LoginLabel.Focus();
-            UserNameTextbox.Focus();
+            // Llamar al método que se ejecuta cuando una caja de texto pierde el foco
+            TextBox[] registerTexboxes = { NewEmailTextbox, NewUserNameTextbox, NewPasswordTextbox, ConfirmNewPasswordTextbox };
+            for (int currentTextbox = 0; currentTextbox < registerTexboxes.Length; currentTextbox++)
+            {
+                CheckRegister_ResetTexboxErrors(registerTexboxes[currentTextbox]);
+            }
         }
 
         private void ResetLoginProblemsPanelValues()
@@ -1317,9 +850,7 @@ namespace Outlands_Adventure_Launcher
             ResetCredentialsEmailPanel.Visible = false;
             ResetCredentialsButton.Visible = false;
 
-            ReturnToLogin.Focus();
-            UserNameTextbox.Focus();
-
+            TextboxLoseFocusAnimation(ResetCredentialsEmailText, ResetCredentialsEmailLabel, null, null, null, null, null);
         }
 
         private void ResetEventsValue()
@@ -1331,202 +862,350 @@ namespace Outlands_Adventure_Launcher
         private void Reset_ResetPasswordEventValues()
         {
             ResetPasswordTextbox.Text = "";
-            ShowResetPassword_Click(ShowResetPassword, EventArgs.Empty);
 
-            ResetPasswordPanel.Focus();
+            // Lo pongo a true para que luego al hacer el click se ponga a falso y cambie el icono
+            confirmPasswordVisible = true;
+            currentPasswordTextbox = ResetPasswordTextbox;
+            currentShowPasswordButton = ShowResetPassword;
+            ShowResetPassword_Click(null, EventArgs.Empty);
+
+            // Llamar al método que se ejecuta cuando una caja de texto pierde el foco
+            CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
+
             ResetPasswordEventPanel.Visible = false;
         }
         #endregion
 
-        #region Events Panel
+        #endregion Set destination panel  -  Reset current panel
 
-        #region Send and Exit Event Button
-        private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
+        #region Textboxes / Email / Password comprobations
+        /// <summary>
+        /// Hace más pequeño el texto que indica para que sirve la caja de texto, te enseña el ojo para mostrar la contraseña
+        /// y controla si el bloqueo de mayúsculas está activado para mostrar un aviso cuando el textbox coje el foco
+        /// </summary>
+        /// <param name="currentTextbox">Caja de texto donde escribir lo que necesites</param>
+        /// <param name="currentTextboxLabel">Label que indica para que sirve la caja de texto</param>
+        private void TextboxGainFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Panel showPassword, 
+            Panel mayusLock)
         {
-            ((Label) sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
-        }
-
-        private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
-        {
-            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
-        }
-
-        private void EventSendButton_Click(object sender, EventArgs e)
-        {
-            CheckHashResumes();
-        }
-
-        private void EventExitButton_Click(object sender, EventArgs e)
-        {
-            CheckTargetPanel();
-            ResetEventsValue();
-        }
-
-        private void EventPasswordCode_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
+            // El método solo deberia tener este if
+            if (currentTextbox.Text.Length == 0)
             {
-                CheckHashResumes();
-            }
-        }
-
-        private void CheckHashResumes()
-        {
-            if (Hash_SHA2.VerifyResume(EventPasswordCode.Text))
-            {
-                EventErrorText.Visible = false;
-
-                EventsPanel.Visible = false;
-                ResetPasswordEventPanel.Visible = true;
-
-                ResetEventsValue();
-            }
-            else
-            {
-                EventErrorText.Visible = true;
-            }
-        }
-        #endregion
-
-        #endregion Events Panel
-
-        #region Reset Password Event
-        private void ResetPasswordPanel_Click(object sender, EventArgs e)
-        {
-            ResetPasswordTextbox.Focus();
-        }
-
-        private void ResetPasswordLabel_Click(object sender, EventArgs e)
-        {
-            ResetPasswordTextbox.Focus();
-        }
-
-        private void ResetPasswordTextbox_Enter(object sender, EventArgs e)
-        {
-            ResetPasswordFocusGain();
-        }
-
-        private void ResetPasswordTextbox_Leave(object sender, EventArgs e)
-        {
-            ResetPasswordFocusLost();
-        }
-
-        private void ResetPasswordFocusGain()
-        {
-            if (ResetPasswordTextbox.Text.Length == 0)
-            {
-                ResetPasswordLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
-                ResetPasswordLabel.Location = new Point(0, 2);
+                currentTextboxLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
+                currentTextboxLabel.Location = new Point(0, 2);
             }
 
-            ShowResetPassword.Visible = true;
-            currentShowPasswordButton = ShowResetPassword;
-            currentPasswordTextbox = ResetPasswordTextbox;
+            // Esto se debería ir a otro método
+            if (showPassword != null)
+            {
+                showPassword.Visible = true;
+                currentShowPasswordButton = showPassword;
+                currentPasswordTextbox = currentTextbox;
 
-            if (Control.IsKeyLocked(Keys.CapsLock))
-            {
-                ResetPasswordMayusLock.Visible = true;
-                ResetPasswordTextbox.Size = new Size(165, 22);
-            }
-            else
-            {
-                ResetPasswordMayusLock.Visible = false;
-                ResetPasswordTextbox.Size = new Size(195, 22);
-            }
-        }
-
-        private void ResetPasswordFocusLost()
-        {
-            // Pone el label que indica Constraseña otra vez con letra grande en el medio y comprueba errores de la caja de texto
-            if (ResetPasswordTextbox.Text.Length == 0)
-            {
-                ResetPasswordLabel.Font = new Font("Oxygen", 10);
-                ResetPasswordLabel.Location = new Point(14, 10);
-
-                ResetPasswordStrengthProgressBar.Visible = false;
-                ResetPasswordStrengthLabel.Visible = false;
-                ResetPasswordEventErrorText.Visible = false;
-            }
-            else
-            {
-                if (ResetPasswordTextbox.Text.Length < 4)
+                if (Control.IsKeyLocked(Keys.CapsLock))
                 {
-                    ResetPasswordStrengthProgressBar.Visible = false;
-                    ResetPasswordStrengthLabel.Visible = false;
-
-                    ResetPasswordEventErrorText.Visible = true;
-                    ResetPasswordEventErrorText.Text = "Debe contener cuatro letras como mínimo";
+                    mayusLock.Visible = true;
+                    currentTextbox.Size = new Size(165, 22);
                 }
                 else
                 {
-                    ResetPasswordEventErrorText.Visible = false;
+                    mayusLock.Visible = false;
+                    currentTextbox.Size = new Size(195, 22);
                 }
             }
-
-            ShowResetPassword.Visible = false;
-            ResetPasswordMayusLock.Visible = false;
         }
 
-        private void ResetPasswordTextbox_TextChanged(object sender, EventArgs e)
+        private void TextboxLoseFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Label currentErrorLabel, 
+            Panel showPassword, Panel mayusLock, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
-            ResetPasswordEventErrorText.Visible = false;
-            ResetPasswordStrengthProgressBar.Visible = true;
-            ResetPasswordStrengthLabel.Visible = true;
-
-            PasswordStrength.CheckPasswordStrength(ResetPasswordTextbox, ResetPasswordStrengthProgressBar, ResetPasswordStrengthLabel);
-        }
-
-        private void ResetPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.CapsLock)
+            if (currentTextbox.Text.Length == 0)
             {
-                if (Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    ResetPasswordMayusLock.Visible = true;
-                    ResetPasswordTextbox.Size = new Size(165, 22);
-                }
-                else if (!Control.IsKeyLocked(Keys.CapsLock))
-                {
-                    ResetPasswordMayusLock.Visible = false;
-                    ResetPasswordTextbox.Size = new Size(195, 22);
-                }
+                EmptyTextbox(currentTextboxLabel, currentErrorLabel, showPassword, mayusLock, passwordStrength, passwordStrengthLabel);
             }
 
-            if (e.KeyCode == Keys.Enter)
+            if (showPassword != null)
             {
-                ResetPasswordEventPanel.Focus();
+                showPassword.Visible = false;
+                mayusLock.Visible = false;
             }
         }
 
-        private void ResetPasswordSendButton_Click(object sender, EventArgs e)
+        private void CheckRegister_ResetTexboxErrors(TextBox currentTextbox)
         {
-            ResetPasswordFocusLost();
-
-            if (!ResetPasswordEventErrorText.Visible)
+            switch (currentTextbox.Name)
             {
-                Reset_ResetPasswordEventValues();
-                CheckTargetPanel();
+                case "NewEmailTextbox":
+                    if (NewEmailTextbox.Text.Length == 0)
+                        EmptyTextbox(NewEmailLabel, NewEmailErrorLabel, null, null, null, null);
+
+                    else if (NewEmailTextbox.Text.Length < 4)
+                        LessFourLetters(NewEmailErrorLabel, "Debe contener cuatro letras como mínimo", null, null);
+
+                    else if (!IsEmailValid(NewEmailTextbox.Text))
+                        GenericError(NewEmailErrorLabel, "Introduce una dirección de correo válida");
+
+                    else
+                        NewEmailErrorLabel.Visible = false;
+                    break;
+
+                case "NewUserNameTextbox":
+                    if (NewUserNameTextbox.Text.Length == 0)
+                        EmptyTextbox(NewUserNameLabel, NewUserNameErrorLabel, null, null, null, null);
+
+                    else if (NewUserNameTextbox.Text.Length < 4)
+                        LessFourLetters(NewUserNameErrorLabel, "Debe contener cuatro letras como mínimo", null, null);
+
+                    else
+                        NewUserNameErrorLabel.Visible = false;
+                    break;
+
+                case "NewPasswordTextbox":
+                    if (NewPasswordTextbox.Text.Length == 0)
+                    {
+                        EmptyTextbox(NewPasswordLabel, NewPasswordErrorLabel, ShowNewPassword, NewPasswordMayusLock,
+                            NewPasswordStrengthProgressBar, NewPasswordStrengthLabel);
+                    }
+
+                    if (NewPasswordTextbox.Text.Length < 4 && NewPasswordTextbox.Text.Length > 0)
+                    {
+                        LessFourLetters(NewPasswordErrorLabel, "Debe contener cuatro letras como mínimo",
+                            NewPasswordStrengthProgressBar, NewPasswordStrengthLabel);
+                    }
+                    else
+                    {
+                        NewPasswordErrorLabel.Visible = false;
+                    }
+
+                    if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text) && ConfirmNewPasswordTextbox.Text.Length > 0)
+                    {
+                        GenericError(ConfirmNewPasswordErrorLabel, "Las contraseñas no coinciden");
+                    }
+                    else
+                    {
+                        ConfirmNewPasswordErrorLabel.Visible = false;
+                    }
+
+                    ShowNewPassword.Visible = false;
+                    NewPasswordMayusLock.Visible = false;
+                    break;
+
+                case "ConfirmNewPasswordTextbox":
+                    if (ConfirmNewPasswordTextbox.Text.Length == 0)
+                    {
+                        EmptyTextbox(ConfirmNewPasswordLabel, ConfirmNewPasswordErrorLabel, ShowConfirmNewPassword,
+                            ConfirmNewPasswordMayusLock, null, null);
+                    }
+                    else if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text) && NewPasswordTextbox.Text.Length > 0)
+                    {
+                        GenericError(ConfirmNewPasswordErrorLabel, "Las contraseñas no coinciden");
+                    }
+                    else if (ConfirmNewPasswordTextbox.Text.Length < 4)
+                    {
+                        LessFourLetters(ConfirmNewPasswordErrorLabel, "Debe contener cuatro letras como mínimo", null, null);
+                    }
+                    else
+                    {
+                        ConfirmNewPasswordErrorLabel.Visible = false;
+                    }
+
+                    ShowConfirmNewPassword.Visible = false;
+                    ConfirmNewPasswordMayusLock.Visible = false;
+                    break;
+
+                case "ResetPasswordTextbox":
+                    if (ResetPasswordTextbox.Text.Length == 0)
+                    {
+                        EmptyTextbox(ResetPasswordLabel, ResetPasswordEventErrorText, ShowResetPassword, ResetPasswordMayusLock,
+                            ResetPasswordStrengthProgressBar, ResetPasswordStrengthLabel);
+                    }
+                    else if (ResetPasswordTextbox.Text.Length < 4)
+                    {
+                        LessFourLetters(ResetPasswordEventErrorText, "Debe contener cuatro letras como mínimo", 
+                            ResetPasswordStrengthProgressBar, ResetPasswordStrengthLabel);
+                    }
+                    else
+                    {
+                        ResetPasswordEventErrorText.Visible = false;
+                    }
+                    break;
             }
         }
 
-        private void ResetPasswordExitButton_Click(object sender, EventArgs e)
+        /// Hace más grande el texto que indica para que sirve la caja de texto, oculta el ojo, quita el aviso de que está el
+        /// bloque de mayúsculas activado y quita la barra y la etiqueta que te indica la fuerza de la contraseña
+        private void EmptyTextbox(Label currentTextboxLabel, Label currentErrorLabel,
+            Panel showPassword, Panel mayusLock, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
-            Reset_ResetPasswordEventValues();
-            CheckTargetPanel();
-        }
-        #endregion
+            currentTextboxLabel.Font = new Font("Oxygen", 10);
+            currentTextboxLabel.Location = new Point(14, 10);
+            if (currentErrorLabel != null) currentErrorLabel.Visible = false;
 
-        #region CheckEmailAdress
-        public bool IsEmailValid(string emailAddress)
+            if (showPassword != null)
+            {
+                showPassword.Visible = false;
+                mayusLock.Visible = false;
+            }
+
+            if (passwordStrength != null)
+            {
+                passwordStrength.Visible = false;
+                passwordStrengthLabel.Visible = false;
+            }
+        }
+
+        private void LessFourLetters(Label currentErrorLabel, string errorText, ProgressBar passwordStrength, Label passwordStrengthLabel)
+        {
+            if (passwordStrength != null)
+            {
+                passwordStrength.Visible = false;
+                passwordStrengthLabel.Visible = false;
+            }
+
+            currentErrorLabel.Visible = true;
+            currentErrorLabel.Text = errorText;
+        }
+
+        private void GenericError(Label currentErrorLabel, string errorText)
+        {
+            currentErrorLabel.Visible = true;
+            currentErrorLabel.Text = errorText;
+        }
+
+        private bool IsEmailValid(string emailAddress)
         {
             try
             {
                 MailAddress checkMailAdress = new MailAddress(emailAddress);
-                return true;
+                return checkMailAdress.Address == emailAddress;
             }
             catch (FormatException)
             {
                 return false;
+            }
+        }
+
+        private void TextboxKeyUp(KeyEventArgs e, Panel currentMainPanel, TextBox currentTextbox, Panel passwordMayusLock)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                currentMainPanel.Focus();
+            }
+
+            if (passwordMayusLock != null)
+            {
+                if (Control.IsKeyLocked(Keys.CapsLock))
+                {
+                    passwordMayusLock.Visible = true;
+                    currentTextbox.Size = new Size(165, 22);
+                }
+                else if (!Control.IsKeyLocked(Keys.CapsLock))
+                {
+                    passwordMayusLock.Visible = false;
+                    currentTextbox.Size = new Size(195, 22);
+                }
+            }
+        }
+
+        private void CheckTextboxPasswordStrength(TextBox currentTextbox, Label currentErrorLabel, ProgressBar passwordStrength,
+            Label passwordStrengthLabel)
+        {
+            currentErrorLabel.Visible = false;
+            passwordStrength.Visible = true;
+            passwordStrengthLabel.Visible = true;
+
+            PasswordStrength.CheckPasswordStrength(currentTextbox, passwordStrength, passwordStrengthLabel);
+        }
+
+        #endregion Textboxes / Email / Password comprobations
+
+        #region Others
+        // Miscellany of methods and functions for various things
+        #region Lose Focus
+        // These methods lose focus to any box  -- Hace que todas las cajas de texto pierdan el foco
+        private void OrdinaryFocusLose(object sender, EventArgs e)
+        {
+            BackgroundPanel.Focus();
+        }
+
+        private void EventFocusLose(object sender, EventArgs e)
+        {
+            ImagePanel.Focus();
+        }
+        #endregion
+
+        #region Show and Hide Image Gradient Panel
+        // Methods to show Image Gradient Panel
+        private void ShowImageGradient()
+        {
+            ConfigurationButton.Visible = false;
+            BackgroundPanel.Visible = false;
+            LoginPanel.Visible = false;
+            RegisterPanel.Visible = false;
+            LoginProblemsPanel.Visible = false;
+
+            ImageGradient.Visible = true;
+        }
+
+        // Methods to hide Image Gradient Panel
+        private void ImageGradient_Click(object sender, EventArgs e)
+        {
+            ImageGradient.Focus();
+
+            if (SelectClientIdiom.Visible)
+            {
+                HideSelectIdiomPanel();
+            }
+        }
+        #endregion
+
+        #region Show Hide Password
+        // These methods are used to show and hide the password in password textboxes
+        private void ShowPassword_Click(object sender, EventArgs e)
+        {
+            Show_HidePassword(ref passwordVisible);
+        }
+
+        private void ShowConfirmPassword_Click(object sender, EventArgs e)
+        {
+            Show_HidePassword(ref confirmPasswordVisible);
+        }
+
+        private void ShowResetPassword_Click(object sender, EventArgs e)
+        {
+            Show_HidePassword(ref confirmPasswordVisible);
+        }
+
+        private void Show_HidePassword(ref bool currentPasswordVisibleIndicator)
+        {
+            currentPasswordVisibleIndicator = currentPasswordVisibleIndicator ? false : true;
+
+            if (!currentPasswordVisibleIndicator)
+            {
+                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
+                currentPasswordTextbox.PasswordChar = '•';
+            }
+            else
+            {
+                currentShowPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.show_password;
+                currentPasswordTextbox.PasswordChar = '\0';
+            }
+        }
+        #endregion
+
+        #region Enable / Disable Access button
+        private void Login_RegisterButton(bool buttonEnabled, Panel login_RegisterButton, ref bool currentActionState)
+        {
+            if (buttonEnabled)
+            {
+                login_RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginSuccessful;
+                login_RegisterButton.Cursor = System.Windows.Forms.Cursors.Hand;
+                currentActionState = true;
+            }
+            else
+            {
+                login_RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
+                login_RegisterButton.Cursor = System.Windows.Forms.Cursors.Default;
+                currentActionState = false;
             }
         }
         #endregion

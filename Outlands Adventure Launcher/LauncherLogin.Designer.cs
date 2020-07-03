@@ -87,6 +87,12 @@
             this.ConfigurationButton = new System.Windows.Forms.Panel();
             this.ImagePanel = new System.Windows.Forms.Panel();
             this.ImageGradient = new System.Windows.Forms.Panel();
+            this.EventsPanel = new System.Windows.Forms.Panel();
+            this.EventText = new System.Windows.Forms.Label();
+            this.EventErrorText = new System.Windows.Forms.Label();
+            this.EventPasswordCode = new System.Windows.Forms.TextBox();
+            this.EventSendButton = new System.Windows.Forms.Label();
+            this.EventExitButton = new System.Windows.Forms.Label();
             this.ResetPasswordEventPanel = new System.Windows.Forms.Panel();
             this.ResetPasswordPanel = new System.Windows.Forms.Panel();
             this.ResetPasswordLabel = new System.Windows.Forms.Label();
@@ -99,12 +105,6 @@
             this.ResetPasswordEventErrorText = new System.Windows.Forms.Label();
             this.ResetPasswordSendButton = new System.Windows.Forms.Label();
             this.ResetPasswordExitButton = new System.Windows.Forms.Label();
-            this.EventsPanel = new System.Windows.Forms.Panel();
-            this.EventText = new System.Windows.Forms.Label();
-            this.EventErrorText = new System.Windows.Forms.Label();
-            this.EventPasswordCode = new System.Windows.Forms.TextBox();
-            this.EventSendButton = new System.Windows.Forms.Label();
-            this.EventExitButton = new System.Windows.Forms.Label();
             this.ConfigurationPanel = new System.Windows.Forms.Panel();
             this.SelectClientIdiom = new System.Windows.Forms.Panel();
             this.spanish = new System.Windows.Forms.Panel();
@@ -125,9 +125,9 @@
             this.ResetCredentialsEmailPanel.SuspendLayout();
             this.ImagePanel.SuspendLayout();
             this.ImageGradient.SuspendLayout();
+            this.EventsPanel.SuspendLayout();
             this.ResetPasswordEventPanel.SuspendLayout();
             this.ResetPasswordPanel.SuspendLayout();
-            this.EventsPanel.SuspendLayout();
             this.ConfigurationPanel.SuspendLayout();
             this.SelectClientIdiom.SuspendLayout();
             this.SuspendLayout();
@@ -140,7 +140,7 @@
             this.LoginText.Size = new System.Drawing.Size(327, 76);
             this.LoginText.TabIndex = 0;
             this.LoginText.Text = "Inicia sesión con tu cuenta de Outlands Adventure\r\n";
-            this.LoginText.Click += new System.EventHandler(this.LoginText_Click);
+            this.LoginText.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // UserNamePanel
             // 
@@ -153,7 +153,7 @@
             this.UserNamePanel.Name = "UserNamePanel";
             this.UserNamePanel.Size = new System.Drawing.Size(311, 46);
             this.UserNamePanel.TabIndex = 5;
-            this.UserNamePanel.Click += new System.EventHandler(this.UserNamePanel_Click);
+            this.UserNamePanel.Click += new System.EventHandler(this.UserNamePanel_Label_Click);
             // 
             // UserNameLabel
             // 
@@ -166,7 +166,7 @@
             this.UserNameLabel.Size = new System.Drawing.Size(184, 21);
             this.UserNameLabel.TabIndex = 5;
             this.UserNameLabel.Text = "NOMBRE DE USUARIO";
-            this.UserNameLabel.Click += new System.EventHandler(this.UserNameLabel_Click);
+            this.UserNameLabel.Click += new System.EventHandler(this.UserNamePanel_Label_Click);
             // 
             // UserNameTextbox
             // 
@@ -179,8 +179,9 @@
             this.UserNameTextbox.Name = "UserNameTextbox";
             this.UserNameTextbox.Size = new System.Drawing.Size(290, 22);
             this.UserNameTextbox.TabIndex = 12;
-            this.UserNameTextbox.TextChanged += new System.EventHandler(this.UserNameTextbox_TextChanged);
+            this.UserNameTextbox.TextChanged += new System.EventHandler(this.UserName_PasswordTextbox_TextChanged);
             this.UserNameTextbox.Enter += new System.EventHandler(this.UserNameTextBox_Enter);
+            this.UserNameTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.UserNameTextbox_KeyUp);
             this.UserNameTextbox.Leave += new System.EventHandler(this.UserNameTextBox_Leave);
             // 
             // LoginPanel
@@ -197,7 +198,7 @@
             this.LoginPanel.Name = "LoginPanel";
             this.LoginPanel.Size = new System.Drawing.Size(415, 708);
             this.LoginPanel.TabIndex = 6;
-            this.LoginPanel.Click += new System.EventHandler(this.LoginPanel_Click);
+            this.LoginPanel.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // WrongCredentials
             // 
@@ -210,7 +211,7 @@
             this.WrongCredentials.Text = "Tus credenciales de inicio de sesión no coinciden con ninguna cuenta registrada e" +
     "n nuestro sistema\r\n";
             this.WrongCredentials.Visible = false;
-            this.WrongCredentials.Click += new System.EventHandler(this.WrongCredentials_Click);
+            this.WrongCredentials.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // PasswordPanel
             // 
@@ -225,7 +226,7 @@
             this.PasswordPanel.Name = "PasswordPanel";
             this.PasswordPanel.Size = new System.Drawing.Size(311, 46);
             this.PasswordPanel.TabIndex = 6;
-            this.PasswordPanel.Enter += new System.EventHandler(this.PasswordPanel_Enter);
+            this.PasswordPanel.Enter += new System.EventHandler(this.PasswordPanel_Label_Click);
             // 
             // PasswordLabel
             // 
@@ -238,7 +239,7 @@
             this.PasswordLabel.Size = new System.Drawing.Size(121, 21);
             this.PasswordLabel.TabIndex = 5;
             this.PasswordLabel.Text = "CONTRASEÑA";
-            this.PasswordLabel.Click += new System.EventHandler(this.PasswordLabel_Click);
+            this.PasswordLabel.Click += new System.EventHandler(this.PasswordPanel_Label_Click);
             // 
             // PasswordTextbox
             // 
@@ -252,7 +253,7 @@
             this.PasswordTextbox.PasswordChar = '•';
             this.PasswordTextbox.Size = new System.Drawing.Size(260, 22);
             this.PasswordTextbox.TabIndex = 11;
-            this.PasswordTextbox.TextChanged += new System.EventHandler(this.PasswordTextbox_TextChanged);
+            this.PasswordTextbox.TextChanged += new System.EventHandler(this.UserName_PasswordTextbox_TextChanged);
             this.PasswordTextbox.Enter += new System.EventHandler(this.PasswordTextbox_Enter);
             this.PasswordTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PasswordTextbox_KeyUp);
             this.PasswordTextbox.Leave += new System.EventHandler(this.PasswordTextbox_Leave);
@@ -317,8 +318,8 @@
             this.RegisterLabel.TabIndex = 0;
             this.RegisterLabel.Text = "Crear una cuenta";
             this.RegisterLabel.Click += new System.EventHandler(this.RegisterLabel_Click);
-            this.RegisterLabel.MouseEnter += new System.EventHandler(this.Register_LoginProblems_MouseEnter);
-            this.RegisterLabel.MouseLeave += new System.EventHandler(this.Register_LoginProblems_MouseLeave);
+            this.RegisterLabel.MouseEnter += new System.EventHandler(this.ActionLabel_MouseEnter);
+            this.RegisterLabel.MouseLeave += new System.EventHandler(this.ActionLabel_MouseLeave);
             // 
             // LoginProblems
             // 
@@ -331,8 +332,8 @@
             this.LoginProblems.TabIndex = 9;
             this.LoginProblems.Text = "¿Problemas al iniciar sesión?";
             this.LoginProblems.Click += new System.EventHandler(this.LoginProblems_Click);
-            this.LoginProblems.MouseEnter += new System.EventHandler(this.Register_LoginProblems_MouseEnter);
-            this.LoginProblems.MouseLeave += new System.EventHandler(this.Register_LoginProblems_MouseLeave);
+            this.LoginProblems.MouseEnter += new System.EventHandler(this.ActionLabel_MouseEnter);
+            this.LoginProblems.MouseLeave += new System.EventHandler(this.ActionLabel_MouseLeave);
             // 
             // RegisterPanel
             // 
@@ -354,7 +355,7 @@
             this.RegisterPanel.Size = new System.Drawing.Size(415, 708);
             this.RegisterPanel.TabIndex = 10;
             this.RegisterPanel.Visible = false;
-            this.RegisterPanel.Click += new System.EventHandler(this.RegisterPanel_Click);
+            this.RegisterPanel.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // RegisterText
             // 
@@ -364,7 +365,7 @@
             this.RegisterText.Size = new System.Drawing.Size(354, 107);
             this.RegisterText.TabIndex = 0;
             this.RegisterText.Text = "Crea tu cuenta de Outlands Adventure\r\n";
-            this.RegisterText.Click += new System.EventHandler(this.RegisterText_Click);
+            this.RegisterText.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // NewEmailPanel
             // 
@@ -377,7 +378,7 @@
             this.NewEmailPanel.Name = "NewEmailPanel";
             this.NewEmailPanel.Size = new System.Drawing.Size(311, 46);
             this.NewEmailPanel.TabIndex = 6;
-            this.NewEmailPanel.Click += new System.EventHandler(this.NewEmailPanel_Click);
+            this.NewEmailPanel.Click += new System.EventHandler(this.NewEmailPanel_Label_Click);
             // 
             // NewEmailLabel
             // 
@@ -390,7 +391,7 @@
             this.NewEmailLabel.Size = new System.Drawing.Size(195, 21);
             this.NewEmailLabel.TabIndex = 5;
             this.NewEmailLabel.Text = "DIRECCIÓN DE CORREO";
-            this.NewEmailLabel.Click += new System.EventHandler(this.NewEmailLabel_Click);
+            this.NewEmailLabel.Click += new System.EventHandler(this.NewEmailPanel_Label_Click);
             // 
             // NewEmailTextbox
             // 
@@ -399,12 +400,13 @@
             this.NewEmailTextbox.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NewEmailTextbox.ForeColor = System.Drawing.Color.Black;
             this.NewEmailTextbox.Location = new System.Drawing.Point(10, 21);
-            this.NewEmailTextbox.MaxLength = 70;
+            this.NewEmailTextbox.MaxLength = 60;
             this.NewEmailTextbox.Name = "NewEmailTextbox";
             this.NewEmailTextbox.Size = new System.Drawing.Size(290, 22);
             this.NewEmailTextbox.TabIndex = 13;
+            this.NewEmailTextbox.TextChanged += new System.EventHandler(this.RegisterTextboxes_TextChanged);
             this.NewEmailTextbox.Enter += new System.EventHandler(this.NewEmailTextbox_Enter);
-            this.NewEmailTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NewEmailTextbox_KeyUp);
+            this.NewEmailTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NewEmail_UserNameTextbox_KeyUp);
             this.NewEmailTextbox.Leave += new System.EventHandler(this.NewEmailTextbox_Leave);
             // 
             // NewEmailErrorLabel
@@ -430,7 +432,7 @@
             this.NewUserNamePanel.Name = "NewUserNamePanel";
             this.NewUserNamePanel.Size = new System.Drawing.Size(311, 46);
             this.NewUserNamePanel.TabIndex = 5;
-            this.NewUserNamePanel.Click += new System.EventHandler(this.NewUserNamePanel_Click);
+            this.NewUserNamePanel.Click += new System.EventHandler(this.NewUserNamePanel_Label_Click);
             // 
             // NewUserNameLabel
             // 
@@ -443,7 +445,7 @@
             this.NewUserNameLabel.Size = new System.Drawing.Size(184, 21);
             this.NewUserNameLabel.TabIndex = 5;
             this.NewUserNameLabel.Text = "NOMBRE DE USUARIO";
-            this.NewUserNameLabel.Click += new System.EventHandler(this.NewUserNameLabel_Click);
+            this.NewUserNameLabel.Click += new System.EventHandler(this.NewUserNamePanel_Label_Click);
             // 
             // NewUserNameTextbox
             // 
@@ -456,8 +458,9 @@
             this.NewUserNameTextbox.Name = "NewUserNameTextbox";
             this.NewUserNameTextbox.Size = new System.Drawing.Size(290, 22);
             this.NewUserNameTextbox.TabIndex = 14;
+            this.NewUserNameTextbox.TextChanged += new System.EventHandler(this.RegisterTextboxes_TextChanged);
             this.NewUserNameTextbox.Enter += new System.EventHandler(this.NewUserNameTextbox_Enter);
-            this.NewUserNameTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NewUserNameTextbox_KeyUp);
+            this.NewUserNameTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.NewEmail_UserNameTextbox_KeyUp);
             this.NewUserNameTextbox.Leave += new System.EventHandler(this.NewUserNameTextbox_Leave);
             // 
             // NewUserNameErrorLabel
@@ -485,7 +488,7 @@
             this.NewPasswordPanel.Name = "NewPasswordPanel";
             this.NewPasswordPanel.Size = new System.Drawing.Size(311, 46);
             this.NewPasswordPanel.TabIndex = 6;
-            this.NewPasswordPanel.Click += new System.EventHandler(this.NewPasswordPanel_Click);
+            this.NewPasswordPanel.Click += new System.EventHandler(this.NewPasswordPanel_Label_Click);
             // 
             // NewPasswordLabel
             // 
@@ -498,7 +501,7 @@
             this.NewPasswordLabel.Size = new System.Drawing.Size(121, 21);
             this.NewPasswordLabel.TabIndex = 5;
             this.NewPasswordLabel.Text = "CONTRASEÑA";
-            this.NewPasswordLabel.Click += new System.EventHandler(this.NewPasswordLabel_Click);
+            this.NewPasswordLabel.Click += new System.EventHandler(this.NewPasswordPanel_Label_Click);
             // 
             // NewPasswordTextbox
             // 
@@ -522,7 +525,7 @@
             this.NewPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
             this.NewPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.NewPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.NewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.NewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.NewPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
             this.NewPasswordMayusLock.Name = "NewPasswordMayusLock";
             this.NewPasswordMayusLock.Size = new System.Drawing.Size(30, 30);
@@ -587,7 +590,7 @@
             this.ConfirmNewPasswordPanel.Name = "ConfirmNewPasswordPanel";
             this.ConfirmNewPasswordPanel.Size = new System.Drawing.Size(311, 46);
             this.ConfirmNewPasswordPanel.TabIndex = 6;
-            this.ConfirmNewPasswordPanel.Click += new System.EventHandler(this.ConfirmNewPasswordPanel_Click);
+            this.ConfirmNewPasswordPanel.Click += new System.EventHandler(this.ConfirmNewPasswordPanel_Label_Click);
             // 
             // ConfirmNewPasswordLabel
             // 
@@ -600,7 +603,7 @@
             this.ConfirmNewPasswordLabel.Size = new System.Drawing.Size(200, 21);
             this.ConfirmNewPasswordLabel.TabIndex = 5;
             this.ConfirmNewPasswordLabel.Text = "REPITE LA CONTRASEÑA";
-            this.ConfirmNewPasswordLabel.Click += new System.EventHandler(this.ConfirmNewPasswordLabel_Click);
+            this.ConfirmNewPasswordLabel.Click += new System.EventHandler(this.ConfirmNewPasswordPanel_Label_Click);
             // 
             // ConfirmNewPasswordTextbox
             // 
@@ -614,6 +617,7 @@
             this.ConfirmNewPasswordTextbox.PasswordChar = '•';
             this.ConfirmNewPasswordTextbox.Size = new System.Drawing.Size(260, 22);
             this.ConfirmNewPasswordTextbox.TabIndex = 16;
+            this.ConfirmNewPasswordTextbox.TextChanged += new System.EventHandler(this.RegisterTextboxes_TextChanged);
             this.ConfirmNewPasswordTextbox.Enter += new System.EventHandler(this.ConfirmNewPasswordTextbox_Enter);
             this.ConfirmNewPasswordTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ConfirmNewPasswordTextbox_KeyUp);
             this.ConfirmNewPasswordTextbox.Leave += new System.EventHandler(this.ConfirmNewPasswordTextbox_Leave);
@@ -623,7 +627,7 @@
             this.ConfirmNewPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
             this.ConfirmNewPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.ConfirmNewPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ConfirmNewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConfirmNewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.ConfirmNewPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
             this.ConfirmNewPasswordMayusLock.Name = "ConfirmNewPasswordMayusLock";
             this.ConfirmNewPasswordMayusLock.Size = new System.Drawing.Size(30, 30);
@@ -665,7 +669,6 @@
             this.RegisterButton.Size = new System.Drawing.Size(82, 70);
             this.RegisterButton.TabIndex = 8;
             this.RegisterButton.Click += new System.EventHandler(this.RegisterButton_Click);
-            this.RegisterButton.MouseEnter += new System.EventHandler(this.RegisterButton_MouseEnter);
             // 
             // LoginLabel
             // 
@@ -678,8 +681,8 @@
             this.LoginLabel.TabIndex = 9;
             this.LoginLabel.Text = "¿Ya tienes una cuenta? Inicia sesión";
             this.LoginLabel.Click += new System.EventHandler(this.LoginLabel_Click);
-            this.LoginLabel.MouseEnter += new System.EventHandler(this.LoginLabel_MouseEnter);
-            this.LoginLabel.MouseLeave += new System.EventHandler(this.LoginLabel_MouseLeave);
+            this.LoginLabel.MouseEnter += new System.EventHandler(this.ActionLabel_MouseEnter);
+            this.LoginLabel.MouseLeave += new System.EventHandler(this.ActionLabel_MouseLeave);
             // 
             // LoginProblemsPanel
             // 
@@ -699,7 +702,7 @@
             this.LoginProblemsPanel.Size = new System.Drawing.Size(415, 709);
             this.LoginProblemsPanel.TabIndex = 0;
             this.LoginProblemsPanel.Visible = false;
-            this.LoginProblemsPanel.Click += new System.EventHandler(this.LoginProblemsPanel_Click);
+            this.LoginProblemsPanel.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // ReturnToLogin
             // 
@@ -712,8 +715,8 @@
             this.ReturnToLogin.TabIndex = 10;
             this.ReturnToLogin.Text = "Volver";
             this.ReturnToLogin.Click += new System.EventHandler(this.ReturnToLogin_Click);
-            this.ReturnToLogin.MouseEnter += new System.EventHandler(this.ReturnToLogin_MouseEnter);
-            this.ReturnToLogin.MouseLeave += new System.EventHandler(this.ReturnToLogin_MouseLeave);
+            this.ReturnToLogin.MouseEnter += new System.EventHandler(this.ActionLabel_MouseEnter);
+            this.ReturnToLogin.MouseLeave += new System.EventHandler(this.ActionLabel_MouseLeave);
             // 
             // LoginProblemsHeader_1
             // 
@@ -726,7 +729,7 @@
             this.LoginProblemsHeader_1.TabIndex = 0;
             this.LoginProblemsHeader_1.Text = "¿PROBLEMAS AL INICIAR SESIÓN?";
             this.LoginProblemsHeader_1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.LoginProblemsHeader_1.Click += new System.EventHandler(this.LoginProblemsHeader_1_Click);
+            this.LoginProblemsHeader_1.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // LoginProblemsHeader_2
             // 
@@ -740,7 +743,7 @@
             this.LoginProblemsHeader_2.Text = "Hay diversas razones por las que no puedas inicar sesión, prueba las siguientes s" +
     "oluciones";
             this.LoginProblemsHeader_2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.LoginProblemsHeader_2.Click += new System.EventHandler(this.LoginProblemsHeader_2_Click);
+            this.LoginProblemsHeader_2.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // ForgottenUsernameButton
             // 
@@ -751,9 +754,9 @@
             this.ForgottenUsernameButton.Name = "ForgottenUsernameButton";
             this.ForgottenUsernameButton.Size = new System.Drawing.Size(130, 120);
             this.ForgottenUsernameButton.TabIndex = 2;
-            this.ForgottenUsernameButton.Click += new System.EventHandler(this.ForgottenUsernameButton_Click);
-            this.ForgottenUsernameButton.MouseEnter += new System.EventHandler(this.ForgottenUsernameButton_MouseEnter);
-            this.ForgottenUsernameButton.MouseLeave += new System.EventHandler(this.ForgottenUsernameButton_MouseLeave);
+            this.ForgottenUsernameButton.Click += new System.EventHandler(this.ForgottenUsernameButton_Header_Click);
+            this.ForgottenUsernameButton.MouseEnter += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseEnter);
+            this.ForgottenUsernameButton.MouseLeave += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseLeave);
             // 
             // ForgottenUsernameHeader
             // 
@@ -766,7 +769,7 @@
             this.ForgottenUsernameHeader.TabIndex = 0;
             this.ForgottenUsernameHeader.Text = "¿Nombre usuario olvidado?";
             this.ForgottenUsernameHeader.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ForgottenUsernameHeader.Click += new System.EventHandler(this.ForgottenUsernameHeader_Click);
+            this.ForgottenUsernameHeader.Click += new System.EventHandler(this.ForgottenUsernameButton_Header_Click);
             // 
             // ForgottenPasswordButton
             // 
@@ -777,9 +780,9 @@
             this.ForgottenPasswordButton.Name = "ForgottenPasswordButton";
             this.ForgottenPasswordButton.Size = new System.Drawing.Size(130, 120);
             this.ForgottenPasswordButton.TabIndex = 3;
-            this.ForgottenPasswordButton.Click += new System.EventHandler(this.ForgottenPasswordButton_Click);
-            this.ForgottenPasswordButton.MouseEnter += new System.EventHandler(this.ForgottenPasswordButton_MouseEnter);
-            this.ForgottenPasswordButton.MouseLeave += new System.EventHandler(this.ForgottenPasswordButton_MouseLeave);
+            this.ForgottenPasswordButton.Click += new System.EventHandler(this.ForgottenPasswordButton_Header_Click);
+            this.ForgottenPasswordButton.MouseEnter += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseEnter);
+            this.ForgottenPasswordButton.MouseLeave += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseLeave);
             // 
             // ForgottenPasswordHeader
             // 
@@ -792,7 +795,7 @@
             this.ForgottenPasswordHeader.TabIndex = 4;
             this.ForgottenPasswordHeader.Text = "¿Contraseña olvidada?";
             this.ForgottenPasswordHeader.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ForgottenPasswordHeader.Click += new System.EventHandler(this.ForgottenPasswordHeader_Click);
+            this.ForgottenPasswordHeader.Click += new System.EventHandler(this.ForgottenPasswordButton_Header_Click);
             // 
             // ResetCredentialsHeader
             // 
@@ -807,7 +810,7 @@
     " otra nueva";
             this.ResetCredentialsHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ResetCredentialsHeader.Visible = false;
-            this.ResetCredentialsHeader.Click += new System.EventHandler(this.ResetCredentialsHeader_Click);
+            this.ResetCredentialsHeader.Click += new System.EventHandler(this.OrdinaryFocusLose);
             // 
             // ResetCredentialsEmailPanel
             // 
@@ -821,7 +824,7 @@
             this.ResetCredentialsEmailPanel.Size = new System.Drawing.Size(311, 46);
             this.ResetCredentialsEmailPanel.TabIndex = 7;
             this.ResetCredentialsEmailPanel.Visible = false;
-            this.ResetCredentialsEmailPanel.Click += new System.EventHandler(this.ResetCredentialsEmailPanel_Click);
+            this.ResetCredentialsEmailPanel.Click += new System.EventHandler(this.ResetCredentialsEmailPanel_Label_Click);
             // 
             // ResetCredentialsEmailLabel
             // 
@@ -834,7 +837,7 @@
             this.ResetCredentialsEmailLabel.Size = new System.Drawing.Size(195, 21);
             this.ResetCredentialsEmailLabel.TabIndex = 5;
             this.ResetCredentialsEmailLabel.Text = "DIRECCIÓN DE CORREO";
-            this.ResetCredentialsEmailLabel.Click += new System.EventHandler(this.ResetCredentialsEmailLabel_Click);
+            this.ResetCredentialsEmailLabel.Click += new System.EventHandler(this.ResetCredentialsEmailPanel_Label_Click);
             // 
             // ResetCredentialsEmailText
             // 
@@ -843,7 +846,7 @@
             this.ResetCredentialsEmailText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResetCredentialsEmailText.ForeColor = System.Drawing.Color.Black;
             this.ResetCredentialsEmailText.Location = new System.Drawing.Point(10, 21);
-            this.ResetCredentialsEmailText.MaxLength = 70;
+            this.ResetCredentialsEmailText.MaxLength = 60;
             this.ResetCredentialsEmailText.Name = "ResetCredentialsEmailText";
             this.ResetCredentialsEmailText.Size = new System.Drawing.Size(290, 22);
             this.ResetCredentialsEmailText.TabIndex = 13;
@@ -890,7 +893,7 @@
             this.ImagePanel.Name = "ImagePanel";
             this.ImagePanel.Size = new System.Drawing.Size(1366, 709);
             this.ImagePanel.TabIndex = 0;
-            this.ImagePanel.Click += new System.EventHandler(this.ImagePanel_Click);
+            this.ImagePanel.Click += new System.EventHandler(this.EventFocusLose);
             // 
             // ImageGradient
             // 
@@ -904,6 +907,89 @@
             this.ImageGradient.TabIndex = 0;
             this.ImageGradient.Visible = false;
             this.ImageGradient.Click += new System.EventHandler(this.ImageGradient_Click);
+            // 
+            // EventsPanel
+            // 
+            this.EventsPanel.BackColor = System.Drawing.Color.Black;
+            this.EventsPanel.Controls.Add(this.EventText);
+            this.EventsPanel.Controls.Add(this.EventErrorText);
+            this.EventsPanel.Controls.Add(this.EventPasswordCode);
+            this.EventsPanel.Controls.Add(this.EventSendButton);
+            this.EventsPanel.Controls.Add(this.EventExitButton);
+            this.EventsPanel.Location = new System.Drawing.Point(291, 260);
+            this.EventsPanel.Name = "EventsPanel";
+            this.EventsPanel.Size = new System.Drawing.Size(800, 185);
+            this.EventsPanel.TabIndex = 14;
+            this.EventsPanel.Visible = false;
+            // 
+            // EventText
+            // 
+            this.EventText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventText.ForeColor = System.Drawing.Color.White;
+            this.EventText.Location = new System.Drawing.Point(40, 25);
+            this.EventText.Name = "EventText";
+            this.EventText.Size = new System.Drawing.Size(720, 70);
+            this.EventText.TabIndex = 0;
+            this.EventText.Text = "Hemos mandado un código a tu correo electrónico, dirígete a tu correo e introduce" +
+    " el código para confirmar tu cuenta";
+            this.EventText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // EventErrorText
+            // 
+            this.EventErrorText.AutoSize = true;
+            this.EventErrorText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventErrorText.ForeColor = System.Drawing.Color.Red;
+            this.EventErrorText.Location = new System.Drawing.Point(560, 100);
+            this.EventErrorText.Name = "EventErrorText";
+            this.EventErrorText.Size = new System.Drawing.Size(134, 21);
+            this.EventErrorText.TabIndex = 18;
+            this.EventErrorText.Text = "Código erroneo";
+            this.EventErrorText.Visible = false;
+            // 
+            // EventPasswordCode
+            // 
+            this.EventPasswordCode.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventPasswordCode.ForeColor = System.Drawing.Color.Black;
+            this.EventPasswordCode.Location = new System.Drawing.Point(298, 95);
+            this.EventPasswordCode.MaxLength = 8;
+            this.EventPasswordCode.Name = "EventPasswordCode";
+            this.EventPasswordCode.Size = new System.Drawing.Size(203, 29);
+            this.EventPasswordCode.TabIndex = 15;
+            this.EventPasswordCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.EventPasswordCode.TextChanged += new System.EventHandler(this.EventPasswordCode_TextChanged);
+            this.EventPasswordCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EventPasswordCode_KeyUp);
+            // 
+            // EventSendButton
+            // 
+            this.EventSendButton.BackColor = System.Drawing.Color.Transparent;
+            this.EventSendButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EventSendButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventSendButton.ForeColor = System.Drawing.Color.White;
+            this.EventSendButton.Location = new System.Drawing.Point(265, 142);
+            this.EventSendButton.Name = "EventSendButton";
+            this.EventSendButton.Size = new System.Drawing.Size(125, 31);
+            this.EventSendButton.TabIndex = 16;
+            this.EventSendButton.Text = "ENVIAR";
+            this.EventSendButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EventSendButton.Click += new System.EventHandler(this.EventSendButton_Click);
+            this.EventSendButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
+            this.EventSendButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
+            // 
+            // EventExitButton
+            // 
+            this.EventExitButton.BackColor = System.Drawing.Color.Transparent;
+            this.EventExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EventExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EventExitButton.ForeColor = System.Drawing.Color.White;
+            this.EventExitButton.Location = new System.Drawing.Point(405, 142);
+            this.EventExitButton.Name = "EventExitButton";
+            this.EventExitButton.Size = new System.Drawing.Size(125, 31);
+            this.EventExitButton.TabIndex = 14;
+            this.EventExitButton.Text = "CERRAR";
+            this.EventExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EventExitButton.Click += new System.EventHandler(this.EventExitButton_Click);
+            this.EventExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
+            this.EventExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
             // ResetPasswordEventPanel
             // 
@@ -920,7 +1006,7 @@
             this.ResetPasswordEventPanel.Size = new System.Drawing.Size(800, 225);
             this.ResetPasswordEventPanel.TabIndex = 19;
             this.ResetPasswordEventPanel.Visible = false;
-            this.ResetPasswordEventPanel.Click += new System.EventHandler(this.ResetPasswordEventPanel_Click);
+            this.ResetPasswordEventPanel.Click += new System.EventHandler(this.EventFocusLose);
             // 
             // ResetPasswordPanel
             // 
@@ -935,7 +1021,7 @@
             this.ResetPasswordPanel.Name = "ResetPasswordPanel";
             this.ResetPasswordPanel.Size = new System.Drawing.Size(311, 46);
             this.ResetPasswordPanel.TabIndex = 19;
-            this.ResetPasswordPanel.Click += new System.EventHandler(this.ResetPasswordPanel_Click);
+            this.ResetPasswordPanel.Click += new System.EventHandler(this.ResetPasswordPanel_Label_Click);
             // 
             // ResetPasswordLabel
             // 
@@ -948,7 +1034,7 @@
             this.ResetPasswordLabel.Size = new System.Drawing.Size(179, 21);
             this.ResetPasswordLabel.TabIndex = 5;
             this.ResetPasswordLabel.Text = "NUEVA CONTRASEÑA";
-            this.ResetPasswordLabel.Click += new System.EventHandler(this.ResetPasswordLabel_Click);
+            this.ResetPasswordLabel.Click += new System.EventHandler(this.ResetPasswordPanel_Label_Click);
             // 
             // ResetPasswordTextbox
             // 
@@ -972,7 +1058,7 @@
             this.ResetPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
             this.ResetPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.ResetPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ResetPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.ResetPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
             this.ResetPasswordMayusLock.Name = "ResetPasswordMayusLock";
             this.ResetPasswordMayusLock.Size = new System.Drawing.Size(30, 30);
@@ -1024,7 +1110,7 @@
             this.ResetPasswordEventText.TabIndex = 0;
             this.ResetPasswordEventText.Text = "Escribe tu nueva contraseña";
             this.ResetPasswordEventText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ResetPasswordEventText.Click += new System.EventHandler(this.ResetPasswordEventText_Click);
+            this.ResetPasswordEventText.Click += new System.EventHandler(this.EventFocusLose);
             // 
             // ResetPasswordEventErrorText
             // 
@@ -1051,6 +1137,8 @@
             this.ResetPasswordSendButton.Text = "ENVIAR";
             this.ResetPasswordSendButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ResetPasswordSendButton.Click += new System.EventHandler(this.ResetPasswordSendButton_Click);
+            this.ResetPasswordSendButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
+            this.ResetPasswordSendButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
             // ResetPasswordExitButton
             // 
@@ -1065,88 +1153,8 @@
             this.ResetPasswordExitButton.Text = "CERRAR";
             this.ResetPasswordExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ResetPasswordExitButton.Click += new System.EventHandler(this.ResetPasswordExitButton_Click);
-            // 
-            // EventsPanel
-            // 
-            this.EventsPanel.BackColor = System.Drawing.Color.Black;
-            this.EventsPanel.Controls.Add(this.EventText);
-            this.EventsPanel.Controls.Add(this.EventErrorText);
-            this.EventsPanel.Controls.Add(this.EventPasswordCode);
-            this.EventsPanel.Controls.Add(this.EventSendButton);
-            this.EventsPanel.Controls.Add(this.EventExitButton);
-            this.EventsPanel.Location = new System.Drawing.Point(291, 260);
-            this.EventsPanel.Name = "EventsPanel";
-            this.EventsPanel.Size = new System.Drawing.Size(800, 185);
-            this.EventsPanel.TabIndex = 14;
-            this.EventsPanel.Visible = false;
-            // 
-            // EventText
-            // 
-            this.EventText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EventText.ForeColor = System.Drawing.Color.White;
-            this.EventText.Location = new System.Drawing.Point(40, 25);
-            this.EventText.Name = "EventText";
-            this.EventText.Size = new System.Drawing.Size(720, 70);
-            this.EventText.TabIndex = 0;
-            this.EventText.Text = "Hemos mandado un código a tu correo electrónico, dirígete a tu correo e introduce" +
-    " el código para confirmar tu cuenta";
-            this.EventText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // EventErrorText
-            // 
-            this.EventErrorText.AutoSize = true;
-            this.EventErrorText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EventErrorText.ForeColor = System.Drawing.Color.Red;
-            this.EventErrorText.Location = new System.Drawing.Point(560, 100);
-            this.EventErrorText.Name = "EventErrorText";
-            this.EventErrorText.Size = new System.Drawing.Size(134, 21);
-            this.EventErrorText.TabIndex = 18;
-            this.EventErrorText.Text = "Código erroneo";
-            this.EventErrorText.Visible = false;
-            // 
-            // EventPasswordCode
-            // 
-            this.EventPasswordCode.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EventPasswordCode.ForeColor = System.Drawing.Color.Black;
-            this.EventPasswordCode.Location = new System.Drawing.Point(298, 95);
-            this.EventPasswordCode.MaxLength = 8;
-            this.EventPasswordCode.Name = "EventPasswordCode";
-            this.EventPasswordCode.Size = new System.Drawing.Size(203, 29);
-            this.EventPasswordCode.TabIndex = 15;
-            this.EventPasswordCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.EventPasswordCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EventPasswordCode_KeyUp);
-            // 
-            // EventSendButton
-            // 
-            this.EventSendButton.BackColor = System.Drawing.Color.Transparent;
-            this.EventSendButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.EventSendButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EventSendButton.ForeColor = System.Drawing.Color.White;
-            this.EventSendButton.Location = new System.Drawing.Point(265, 142);
-            this.EventSendButton.Name = "EventSendButton";
-            this.EventSendButton.Size = new System.Drawing.Size(125, 31);
-            this.EventSendButton.TabIndex = 16;
-            this.EventSendButton.Text = "ENVIAR";
-            this.EventSendButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.EventSendButton.Click += new System.EventHandler(this.EventSendButton_Click);
-            this.EventSendButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
-            this.EventSendButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
-            // 
-            // EventExitButton
-            // 
-            this.EventExitButton.BackColor = System.Drawing.Color.Transparent;
-            this.EventExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.EventExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EventExitButton.ForeColor = System.Drawing.Color.White;
-            this.EventExitButton.Location = new System.Drawing.Point(405, 142);
-            this.EventExitButton.Name = "EventExitButton";
-            this.EventExitButton.Size = new System.Drawing.Size(125, 31);
-            this.EventExitButton.TabIndex = 14;
-            this.EventExitButton.Text = "CERRAR";
-            this.EventExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.EventExitButton.Click += new System.EventHandler(this.EventExitButton_Click);
-            this.EventExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
-            this.EventExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
+            this.ResetPasswordExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
+            this.ResetPasswordExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
             // ConfigurationPanel
             // 
@@ -1287,11 +1295,11 @@
             this.ResetCredentialsEmailPanel.PerformLayout();
             this.ImagePanel.ResumeLayout(false);
             this.ImageGradient.ResumeLayout(false);
+            this.EventsPanel.ResumeLayout(false);
+            this.EventsPanel.PerformLayout();
             this.ResetPasswordEventPanel.ResumeLayout(false);
             this.ResetPasswordPanel.ResumeLayout(false);
             this.ResetPasswordPanel.PerformLayout();
-            this.EventsPanel.ResumeLayout(false);
-            this.EventsPanel.PerformLayout();
             this.ConfigurationPanel.ResumeLayout(false);
             this.SelectClientIdiom.ResumeLayout(false);
             this.ResumeLayout(false);
