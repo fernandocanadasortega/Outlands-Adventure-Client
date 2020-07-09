@@ -709,7 +709,7 @@ namespace Outlands_Adventure_Launcher
                 EventSendButton.Visible = false;
                 EventExitButton.Location = new Point(237, 105);
 
-                EventText.Text = "Contraseña guardada con éxito";
+                EventText.Text = "Contraseña cambiada con éxito";
 
                 ResetPasswordEventPanel.Visible = false;
                 EventsPanel.Visible = true;
