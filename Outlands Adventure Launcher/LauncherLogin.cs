@@ -1,5 +1,6 @@
 ﻿using Outlands_Adventure_Launcher.Properties;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Net.Mail;
@@ -15,6 +16,7 @@ namespace Outlands_Adventure_Launcher
 
         private bool loginAvaible;
         private bool registerAvaible;
+        private bool registerErrors;
 
         private bool loginProblemsAvaible;
         private bool usernameLost;
@@ -31,6 +33,7 @@ namespace Outlands_Adventure_Launcher
 
             loginAvaible = false;
             registerAvaible = false;
+            registerErrors = false;
             loginProblemsAvaible = false;
 
             passwordVisible = false;
@@ -148,6 +151,7 @@ namespace Outlands_Adventure_Launcher
                 if (loginAvaible)
                 {
                     MessageBox.Show("Logeado :P");
+                    // Cerrar este form y llamar a otro form cuando te logeas
                 }
             }
             else
@@ -158,16 +162,25 @@ namespace Outlands_Adventure_Launcher
 
         private void CheckLoginCredentials()
         {
-            //Cambiar por datos sacados de firebase
-            if (UserNameTextbox.Text.Equals("Napo") && PasswordTextbox.Text.Equals("Napo"))
+            string sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_name LIKE '" + UserNameTextbox.Text + "' &&" +
+                " user_password = SHA('" + PasswordTextbox.Text + "')";
+            int rowsRecovered = SQLManager.CheckDuplicatedData(sqlQuery);
+
+            if (rowsRecovered > 0)
             {
                 loginAvaible = true;
                 WrongCredentials.Visible = false;
             }
+            else if (rowsRecovered == 0)
+            {
+                Login_RegisterButton(false, LoginButton, ref loginAvaible);
+                WrongCredentials.Visible = true;
+            }
             else
             {
-                loginAvaible = false;
-                WrongCredentials.Visible = true;
+                ShowImageGradient();
+                EventsPanel.Visible = true;
+                GenericPopUpMessage("No se puede conectar con la BD");
             }
         }
         #endregion
@@ -319,9 +332,9 @@ namespace Outlands_Adventure_Launcher
             {
                 if (registerAvaible)
                 {
-                    //CheckRegisterCredentials();
+                    CheckRegisterCredentials();
 
-                    if (registerAvaible)
+                    if (registerAvaible && !registerErrors)
                     {
                         string confirmationCode = CreateConfirmationCode.CreateCode();
                         Hash_SHA2.InitialiceVariables(confirmationCode);
@@ -331,7 +344,7 @@ namespace Outlands_Adventure_Launcher
                         if (!messageError)
                         {
                             EventText.Location = new Point(40, 5);
-                            EventPasswordCode.Visible = true;
+                            EventCode.Visible = true;
                             EventSendButton.Visible = true;
                             EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
@@ -339,16 +352,19 @@ namespace Outlands_Adventure_Launcher
                                 " e introduce el código para confirmar tu cuenta";
 
                             targetPanel = "login";
+                            registerErrors = false;
 
                             ShowImageGradient();
                             EventsPanel.Visible = true;
-                            ResetRegisterPanelValues();
                         }
                         else
                         {
-                            NewEmailErrorLabel.Text = "Problema al enviar el correo";
-                            NewEmailErrorLabel.Visible = true;
-                            Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                            // Cambio registerErrors de true a false para que despúes de mandar el mensaje de error
+                            //puedas intentarlo de nuevo al instante
+                            registerErrors = true;
+                            ShowImageGradient();
+                            EventsPanel.Visible = true;
+                            GenericPopUpMessage("Problema al enviar el correo");
                         }
                     }
                 }
@@ -361,19 +377,66 @@ namespace Outlands_Adventure_Launcher
 
         private void CheckRegisterCredentials()
         {
-            //Cambiar por datos sacados de firebase
-            if (NewEmailTextbox.Text.Equals("thenapo212@gmail.com"))
-            {
-                NewEmailErrorLabel.Text = "Dirección de correo ya registrada";
-                NewEmailErrorLabel.Visible = true;
-                Login_RegisterButton(false, RegisterButton, ref registerAvaible);
-            }
+            string sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_email LIKE '" + NewEmailTextbox.Text + "'";
+            int emailRowsRecovered = SQLManager.CheckDuplicatedData(sqlQuery);
 
-            if (NewUserNameTextbox.Text.Equals("Napo"))
+            sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_name LIKE '" + NewUserNameTextbox.Text + "'";
+            int nameRowsRecovered = SQLManager.CheckDuplicatedData(sqlQuery);
+
+            if (emailRowsRecovered > -1 && nameRowsRecovered > -1)
             {
-                NewUserNameErrorLabel.Text = "Nombre de usuario no disponible";
-                NewUserNameErrorLabel.Visible = true;
-                Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                if (emailRowsRecovered > 0)
+                {
+                    GenericError(NewEmailErrorLabel, "Dirección de correo ya registrada");
+                    Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                }
+                else
+                {
+                    NewEmailErrorLabel.Visible = false;
+                }
+
+                if (nameRowsRecovered > 0)
+                {
+                    GenericError(NewUserNameErrorLabel, "Nombre de usuario ya registrado");
+                    Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                }
+                else
+                {
+                    NewUserNameErrorLabel.Visible = false;
+                }
+            }
+            else
+            {
+                // Cambio registerErrors de true a false para que despúes de mandar el mensaje de error
+                //puedas intentarlo de nuevo al instante
+                registerErrors = true;
+                ShowImageGradient();
+                EventsPanel.Visible = true;
+                GenericPopUpMessage("No se puede conectar con la BD");
+            }
+        }
+
+        private void RegisterNewUser()
+        {
+            string sqlQuery = "INSERT INTO user_information VALUES ('" + NewEmailTextbox.Text + "', '"
+                + NewUserNameTextbox.Text + "', SHA('" + NewPasswordTextbox.Text + "'), null)";
+            string queryError = SQLManager.InsertNewUser(sqlQuery);
+
+            if (queryError.Length > 0)
+            {
+                if (queryError.Contains("Unable to connect"))
+                {
+                    // Pop up de falta de internet - No te puedes conectar a la base de datos
+                    GenericPopUpMessage("No se puede conectar con la BD");
+                }
+
+                else
+                {
+                    // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
+                    GenericPopUpMessage(queryError);
+                    MessageBox.Show(queryError);
+                }
+                registerErrors = true;
             }
         }
         #endregion
@@ -474,8 +537,8 @@ namespace Outlands_Adventure_Launcher
         {
             if (loginProblemsAvaible)
             {
+                BackgroundPanel.Visible = false;
                 LoginProblemsPanel.Visible = false;
-                Enable_Disable_LoadingPanel(true);
 
                 ResetCredentialsButton.Focus();
                 bool messageError = false;
@@ -483,7 +546,7 @@ namespace Outlands_Adventure_Launcher
                 if (usernameLost)
                 {
                     EventText.Location = new Point(40, 25);
-                    EventPasswordCode.Visible = false;
+                    EventCode.Visible = false;
                     EventSendButton.Visible = false;
                     EventExitButton.Location = new Point(237, 105);
 
@@ -497,7 +560,7 @@ namespace Outlands_Adventure_Launcher
                 else if (passwordLost)
                 {
                     EventText.Location = new Point(40, 9);
-                    EventPasswordCode.Visible = true;
+                    EventCode.Visible = true;
                     EventSendButton.Visible = true;
                     EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
@@ -510,7 +573,6 @@ namespace Outlands_Adventure_Launcher
                     messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
                            " Outlands Adventure", "Su código de confimación es", confirmationCode);
                 }
-                Enable_Disable_LoadingPanel(false);
 
                 if (messageError)
                 {
@@ -629,12 +691,21 @@ namespace Outlands_Adventure_Launcher
 
         private void EventExitButton_Click(object sender, EventArgs e)
         {
-            targetPanel = "login";
+            if (registerErrors)
+            {
+                targetPanel = "register";
+                registerErrors = false;
+            }
+            else
+            {
+                targetPanel = "login";
+            }
+
             CheckTargetPanel();
             ResetEventsValue();
         }
 
-        private void EventPasswordCode_KeyUp(object sender, KeyEventArgs e)
+        private void EventCode_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -642,27 +713,37 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
-        private void EventPasswordCode_TextChanged(object sender, EventArgs e)
+        private void EventCode_TextChanged(object sender, EventArgs e)
         {
-            EventPasswordCode.Text = EventPasswordCode.Text.ToUpper();
-            EventPasswordCode.Select(EventPasswordCode.Text.Length, 0);
+            EventCode.Text = EventCode.Text.ToUpper();
+            EventCode.Select(EventCode.Text.Length, 0);
         }
 
         private void CheckHashResumes()
         {
-            if (Hash_SHA2.VerifyResume(EventPasswordCode.Text))
+            if (Hash_SHA2.VerifyResume(EventCode.Text))
             {
-                EventErrorText.Visible = false;
+                EventCodeError.Visible = false;
 
                 EventsPanel.Visible = false;
 
                 if (passwordLost) ResetPasswordEventPanel.Visible = true;
 
+                if (registerAvaible)
+                {
+                    RegisterNewUser();
+                    if (!registerErrors)
+                    {
+                        ResetRegisterPanelValues();
+                        GenericPopUpMessage("Te has registrado exitosamente");
+                    }
+                }
+
                 ResetEventsValue();
             }
             else
             {
-                EventErrorText.Visible = true;
+                EventCodeError.Visible = true;
             }
         }
         #endregion Events Panel
@@ -703,16 +784,7 @@ namespace Outlands_Adventure_Launcher
             if (!ResetPasswordEventErrorText.Visible)
             {
                 Reset_ResetPasswordEventValues();
-
-                EventText.Location = new Point(40, 25);
-                EventPasswordCode.Visible = false;
-                EventSendButton.Visible = false;
-                EventExitButton.Location = new Point(237, 105);
-
-                EventText.Text = "Contraseña cambiada con éxito";
-
-                ResetPasswordEventPanel.Visible = false;
-                EventsPanel.Visible = true;
+                GenericPopUpMessage("Contraseña cambiada con éxito");
             }
         }
 
@@ -723,6 +795,19 @@ namespace Outlands_Adventure_Launcher
             Reset_ResetPasswordEventValues();
         }
         #endregion Reset Password Event
+
+        private void GenericPopUpMessage(string eventText)
+        {
+            EventText.Location = new Point(40, 25);
+            EventCode.Visible = false;
+            EventSendButton.Visible = false;
+            EventExitButton.Location = new Point(237, 105);
+
+            EventText.Text = eventText;
+
+            ResetPasswordEventPanel.Visible = false;
+            EventsPanel.Visible = true;
+        }
 
         #endregion Popup Events
 
@@ -741,48 +826,40 @@ namespace Outlands_Adventure_Launcher
         // Reset all values
         private void RegisterLabel_Click(object sender, EventArgs e)
         {
-            Enable_Disable_LoadingPanel(true);
             ResetLoginPanelValues();
 
             targetPanel = "register";
             CheckTargetPanel();
-            Enable_Disable_LoadingPanel(false);
         }
 
         // Login Problems (Login Panel)
         // Reset all values
         private void LoginProblems_Click(object sender, EventArgs e)
         {
-            Enable_Disable_LoadingPanel(true);
             ResetLoginPanelValues();
 
             targetPanel = "loginProblems";
             CheckTargetPanel();
-            Enable_Disable_LoadingPanel(false);
         }
 
         // Login Existing Account (Register Panel)
         // Reset all values
         private void LoginLabel_Click(object sender, EventArgs e)
         {
-            Enable_Disable_LoadingPanel(true);
             ResetRegisterPanelValues();
 
             targetPanel = "login";
             CheckTargetPanel();
-            Enable_Disable_LoadingPanel(false);
         }
 
         // Return to Login (Login Problems Panel)
         // Reset all values
         private void ReturnToLogin_Click(object sender, EventArgs e)
         {
-            Enable_Disable_LoadingPanel(true);
             ResetLoginProblemsPanelValues();
 
             targetPanel = "login";
             CheckTargetPanel();
-            Enable_Disable_LoadingPanel(false);
         }
         #endregion Change Panel
 
@@ -813,10 +890,7 @@ namespace Outlands_Adventure_Launcher
                 LoginProblemsPanel.Focus();
             }
 
-            ImageGradient.Visible = false;
-            ConfigurationPanel.Visible = false;
-            EventsPanel.Visible = false;
-            ConfigurationButton.Visible = true;
+            HideImageGradient();
         }
         #endregion Check Target Panel
 
@@ -863,6 +937,8 @@ namespace Outlands_Adventure_Launcher
             {
                 CheckRegister_ResetTexboxErrors(registerTexboxes[currentTextbox]);
             }
+
+            registerErrors = false;
         }
 
         private void ResetLoginProblemsPanelValues()
@@ -878,8 +954,8 @@ namespace Outlands_Adventure_Launcher
 
         private void ResetEventsValue()
         {
-            EventPasswordCode.Text = "";
-            EventErrorText.Visible = false;
+            EventCode.Text = "";
+            EventCodeError.Visible = false;
         }
 
         private void Reset_ResetPasswordEventValues()
@@ -896,20 +972,6 @@ namespace Outlands_Adventure_Launcher
             CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
         }
         #endregion Reset Panel Values
-
-        #region Enable / Disable Loading Panel
-        private void Enable_Disable_LoadingPanel(bool enable)
-        {
-            if (enable)
-            {
-                BackgroundPanel.Visible = true;
-            }
-            else
-            {
-                BackgroundPanel.Visible = false;
-            }
-        }
-        #endregion Enable Loading Panel
 
         #endregion Set destination panel  -  Reset current panel  -  Enable Loading Panel
 
@@ -1172,13 +1234,24 @@ namespace Outlands_Adventure_Launcher
         // Methods to show Image Gradient Panel
         private void ShowImageGradient()
         {
-            ConfigurationButton.Visible = false;
             BackgroundPanel.Visible = false;
+            ConfigurationButton.Visible = false;
+            ConfigurationPanel.Visible = false;
+            EventsPanel.Visible = false;
+            ImageGradient.Visible = true;
+
             LoginPanel.Visible = false;
             RegisterPanel.Visible = false;
             LoginProblemsPanel.Visible = false;
+        }
 
-            ImageGradient.Visible = true;
+        private void HideImageGradient()
+        {
+            BackgroundPanel.Visible = true;
+            ConfigurationButton.Visible = true;
+            ConfigurationPanel.Visible = false;
+            EventsPanel.Visible = false;
+            ImageGradient.Visible = false;
         }
 
         // Methods to hide Image Gradient Panel
