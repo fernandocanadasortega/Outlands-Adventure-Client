@@ -19,6 +19,7 @@ namespace Outlands_Adventure_Launcher
         private bool registerErrors;
 
         private bool loginProblemsAvaible;
+        private bool loginProblemsErrors;
         private bool usernameLost;
         private bool passwordLost;
 
@@ -35,6 +36,7 @@ namespace Outlands_Adventure_Launcher
             registerAvaible = false;
             registerErrors = false;
             loginProblemsAvaible = false;
+            loginProblemsErrors = false;
 
             passwordVisible = false;
             confirmPasswordVisible = false;
@@ -359,8 +361,6 @@ namespace Outlands_Adventure_Launcher
                         }
                         else
                         {
-                            // Cambio registerErrors de true a false para que despúes de mandar el mensaje de error
-                            //puedas intentarlo de nuevo al instante
                             registerErrors = true;
                             ShowImageGradient();
                             EventsPanel.Visible = true;
@@ -407,8 +407,6 @@ namespace Outlands_Adventure_Launcher
             }
             else
             {
-                // Cambio registerErrors de true a false para que despúes de mandar el mensaje de error
-                //puedas intentarlo de nuevo al instante
                 registerErrors = true;
                 ShowImageGradient();
                 EventsPanel.Visible = true;
@@ -447,14 +445,24 @@ namespace Outlands_Adventure_Launcher
         // Manage all items in login problems panel
 
         #region Forgotten Username / Password Button
-        private void ForgottenUsername_PasswordButton_MouseEnter(object sender, EventArgs e)
+        private void ForgottenUsernameButton_MouseEnter(object sender, EventArgs e)
         {
             ForgottenUsernameButton.BackColor = Color.FromArgb(25, 0, 203, 255);
         }
 
-        private void ForgottenUsername_PasswordButton_MouseLeave(object sender, EventArgs e)
+        private void ForgottenUsernameButton_MouseLeave(object sender, EventArgs e)
         {
             ForgottenUsernameButton.BackColor = Color.FromArgb(0, 0, 203, 255);
+        }
+
+        private void ForgottenPasswordButton_MouseEnter(object sender, EventArgs e)
+        {
+            ForgottenPasswordButton.BackColor = Color.FromArgb(25, 0, 203, 255);
+        }
+
+        private void ForgottenPasswordButton_MouseLeave(object sender, EventArgs e)
+        {
+            ForgottenPasswordButton.BackColor = Color.FromArgb(0, 0, 203, 255);
         }
 
         private void ForgottenUsernameButton_Header_Click(object sender, EventArgs e)
@@ -537,60 +545,123 @@ namespace Outlands_Adventure_Launcher
         {
             if (loginProblemsAvaible)
             {
-                BackgroundPanel.Visible = false;
-                LoginProblemsPanel.Visible = false;
+                CheckLoginProblemsEmail();
 
-                ResetCredentialsButton.Focus();
-                bool messageError = false;
-
-                if (usernameLost)
+                if (!loginProblemsErrors)
                 {
-                    EventText.Location = new Point(40, 25);
-                    EventCode.Visible = false;
-                    EventSendButton.Visible = false;
-                    EventExitButton.Location = new Point(237, 105);
+                    BackgroundPanel.Visible = false;
+                    LoginProblemsPanel.Visible = false;
 
-                    // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
-                    EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
-                            "nuestra base de datos te mandaremos un recordatorio de tu nombre de usuario";
+                    ResetCredentialsButton.Focus();
+                    bool messageError = false;
 
-                    messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Recordatorio del nombre de usuario del cliente de" +
-                        " Outlands Adventure", "Su nombre de usuario es", "Napo"); // Cambiar Napo por el nombre de la bd
-                }
-                else if (passwordLost)
-                {
-                    EventText.Location = new Point(40, 9);
-                    EventCode.Visible = true;
-                    EventSendButton.Visible = true;
-                    EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+                    if (usernameLost)
+                    {
+                        EventText.Location = new Point(40, 25);
+                        EventCode.Visible = false;
+                        EventSendButton.Visible = false;
+                        EventExitButton.Location = new Point(237, 105);
 
-                    // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
-                    EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
-                            "nuestra base de datos te enviaremos un código de confirmación para que reestablezcas tu contraseña";
+                        // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
+                        EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
+                                "nuestra base de datos te mandaremos un recordatorio de tu nombre de usuario";
 
-                    string confirmationCode = CreateConfirmationCode.CreateCode();
-                    Hash_SHA2.InitialiceVariables(confirmationCode);
-                    messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña del cliente de" +
-                           " Outlands Adventure", "Su código de confimación es", confirmationCode);
-                }
+                        if (loginProblemsAvaible)
+                        {
+                            string userNameRecovered = CheckUserName();
 
-                if (messageError)
-                {
-                    LoginProblemsPanel.Visible = true;
-                    Login_RegisterButton(false, ResetCredentialsButton, ref loginProblemsAvaible);
-                }
-                else
-                {
-                    targetPanel = "login";
+                            if (userNameRecovered.Length > 0)
+                            {
+                                messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Recordatorio del nombre de usuario" +
+                                    " del cliente de Outlands Adventure", "Su nombre de usuario es", userNameRecovered);
+                            }
+                        }
+                    }
+                    else if (passwordLost)
+                    {
+                        EventText.Location = new Point(40, 9);
+                        EventCode.Visible = true;
+                        EventSendButton.Visible = true;
+                        EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
-                    ShowImageGradient();
-                    EventsPanel.Visible = true;
-                    ResetLoginProblemsPanelValues();
+                        // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
+                        EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
+                                "nuestra base de datos te enviaremos un código de confirmación para que reestablezcas tu contraseña";
+
+                        if (loginProblemsAvaible)
+                        {
+                            string confirmationCode = CreateConfirmationCode.CreateCode();
+                            Hash_SHA2.InitialiceVariables(confirmationCode);
+                            messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña" +
+                                " del cliente de Outlands Adventure", "Su código de confimación es", confirmationCode);
+                        }
+                    }
+
+                    if (messageError)
+                    {
+                        loginProblemsErrors = true;
+                        ShowImageGradient();
+                        EventsPanel.Visible = true;
+                        GenericPopUpMessage("Problema al enviar el correo");
+                    }
+                    else
+                    {
+                        targetPanel = "login";
+
+                        ShowImageGradient();
+                        EventsPanel.Visible = true;
+                    }
                 }
             }
             else
             {
                 ResetCredentialsButton.Focus();
+            }
+        }
+
+        private void CheckLoginProblemsEmail()
+        {
+            string sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
+            int emailRowsRecovered = SQLManager.CheckDuplicatedData(sqlQuery);
+
+            if (emailRowsRecovered > -1)
+            {
+                if (emailRowsRecovered == 0)
+                {
+                    Login_RegisterButton(false, ResetCredentialsButton, ref loginProblemsAvaible);
+                }
+            }
+            else
+            {
+                loginProblemsErrors = true;
+                ShowImageGradient();
+                EventsPanel.Visible = true;
+                GenericPopUpMessage("No se puede conectar con la BD");
+            }
+        }
+
+        private string CheckUserName()
+        {
+            string sqlQuery = "SELECT user_name FROM user_information WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
+            string userNameRecovered = SQLManager.SearchQueryData(sqlQuery);
+
+            if (!userNameRecovered.Equals("error"))
+            {
+                if (userNameRecovered.Length > 0)
+                {
+                    return userNameRecovered;
+                }
+
+                return "";
+            }
+            else
+            {
+                loginProblemsErrors = true;
+                ShowImageGradient();
+                EventsPanel.Visible = true;
+                GenericPopUpMessage("No se puede conectar con la BD");
+
+                return "";
             }
         }
         #endregion
@@ -691,10 +762,20 @@ namespace Outlands_Adventure_Launcher
 
         private void EventExitButton_Click(object sender, EventArgs e)
         {
+            if (usernameLost && !loginProblemsErrors)
+            {
+                ResetLoginProblemsPanelValues();
+            }
+
             if (registerErrors)
             {
                 targetPanel = "register";
                 registerErrors = false;
+            }
+            else if (loginProblemsErrors || passwordLost)
+            {
+                targetPanel = "loginProblems";
+                loginProblemsErrors = false;
             }
             else
             {
@@ -749,6 +830,8 @@ namespace Outlands_Adventure_Launcher
         #endregion Events Panel
 
         #region Reset Password Event
+
+        #region Reset Password Textbox
         private void ResetPasswordPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
@@ -776,24 +859,62 @@ namespace Outlands_Adventure_Launcher
         {
             TextboxKeyUp(e, ResetPasswordPanel, ResetPasswordTextbox, ResetPasswordMayusLock);
         }
+        #endregion Reset Password Textbox
 
+        #region Send and Exit Button
         private void ResetPasswordSendButton_Click(object sender, EventArgs e)
         {
             CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
 
             if (!ResetPasswordEventErrorText.Visible)
             {
-                Reset_ResetPasswordEventValues();
-                GenericPopUpMessage("Contraseña cambiada con éxito");
+                ChangeUserPassword();
+                if (!loginProblemsErrors)
+                {
+                    passwordLost = false;
+                    loginProblemsErrors = false;
+
+                    GenericPopUpMessage("Contraseña cambiada con éxito");
+                    ResetPasswordEventPanel.Visible = false;
+                    Reset_ResetPasswordEventValues();
+                    ResetLoginProblemsPanelValues();
+                }
             }
         }
 
         private void ResetPasswordExitButton_Click(object sender, EventArgs e)
         {
-            targetPanel = "login";
+            targetPanel = "loginProblems";
+            loginProblemsErrors = false;
             CheckTargetPanel();
             Reset_ResetPasswordEventValues();
+            ResetPasswordEventPanel.Visible = false;
         }
+        #endregion Send and Exit Button
+
+        private void ChangeUserPassword()
+        {
+            string sqlQuery = "UPDATE user_information SET user_password=SHA('" + ResetPasswordTextbox.Text + "')" +
+                " WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
+            string queryError = SQLManager.InsertNewUser(sqlQuery);
+
+            if (queryError.Length > 0)
+            {
+                if (queryError.Contains("Unable to connect"))
+                {
+                    // Pop up de falta de internet - No te puedes conectar a la base de datos
+                    GenericPopUpMessage("No se puede conectar con la BD");
+                }
+
+                else
+                {
+                    // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
+                    GenericPopUpMessage(queryError);
+                }
+                loginProblemsErrors = true;
+            }
+        }
+
         #endregion Reset Password Event
 
         private void GenericPopUpMessage(string eventText)

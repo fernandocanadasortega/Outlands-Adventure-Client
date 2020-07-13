@@ -755,8 +755,8 @@
             this.ForgottenUsernameButton.Size = new System.Drawing.Size(130, 120);
             this.ForgottenUsernameButton.TabIndex = 2;
             this.ForgottenUsernameButton.Click += new System.EventHandler(this.ForgottenUsernameButton_Header_Click);
-            this.ForgottenUsernameButton.MouseEnter += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseEnter);
-            this.ForgottenUsernameButton.MouseLeave += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseLeave);
+            this.ForgottenUsernameButton.MouseEnter += new System.EventHandler(this.ForgottenUsernameButton_MouseEnter);
+            this.ForgottenUsernameButton.MouseLeave += new System.EventHandler(this.ForgottenUsernameButton_MouseLeave);
             // 
             // ForgottenUsernameHeader
             // 
@@ -781,8 +781,8 @@
             this.ForgottenPasswordButton.Size = new System.Drawing.Size(130, 120);
             this.ForgottenPasswordButton.TabIndex = 3;
             this.ForgottenPasswordButton.Click += new System.EventHandler(this.ForgottenPasswordButton_Header_Click);
-            this.ForgottenPasswordButton.MouseEnter += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseEnter);
-            this.ForgottenPasswordButton.MouseLeave += new System.EventHandler(this.ForgottenUsername_PasswordButton_MouseLeave);
+            this.ForgottenPasswordButton.MouseEnter += new System.EventHandler(this.ForgottenPasswordButton_MouseEnter);
+            this.ForgottenPasswordButton.MouseLeave += new System.EventHandler(this.ForgottenPasswordButton_MouseLeave);
             // 
             // ForgottenPasswordHeader
             // 

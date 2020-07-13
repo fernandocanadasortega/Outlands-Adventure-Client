@@ -39,6 +39,36 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        public static string SearchQueryData(string readQuery)
+        {
+            // Poner pop up pantalla de carga
+            string recoveredData = "";
+            try
+            {
+                using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
+                {
+                    dbConnection.Open();
+                    MySqlCommand readCommand = new MySqlCommand(readQuery, dbConnection);
+
+                    MySqlDataReader reader = readCommand.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        return reader[0].ToString();
+                    }
+                    else
+                    {
+                        return recoveredData;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return "error";
+            }
+        }
+
+        // Mira si existe un dato en la base de datos y retorna el número de filas que contienen el dato que buscas
         public static int CheckDuplicatedData(string readQuery)
         {
             // Poner pop up pantalla de carga
@@ -57,7 +87,6 @@ namespace Outlands_Adventure_Launcher
                     }
                     else
                     {
-                        MessageBox.Show("No se encuentran coincidencias");
                         return 0;
                     }
                 }
