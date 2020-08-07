@@ -17,7 +17,6 @@ namespace Outlands_Adventure_Launcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LauncherLogin());
-            //Application.Run(new Form1());
         }
     }
 }

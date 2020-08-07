@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
@@ -13,8 +14,11 @@ namespace Outlands_Adventure_Launcher
     public partial class LauncherLogin : Form
     {
         private string targetPanel;
+        private bool operationInProgress;
 
         private bool loginAvaible;
+        private bool loginErrors;
+
         private bool registerAvaible;
         private bool registerErrors;
 
@@ -28,13 +32,18 @@ namespace Outlands_Adventure_Launcher
         private bool passwordVisible;
         private bool confirmPasswordVisible;
 
+
         public LauncherLogin()
         {
             targetPanel = "login";
+            operationInProgress = false;
 
             loginAvaible = false;
+            loginErrors = false;
+
             registerAvaible = false;
             registerErrors = false;
+
             loginProblemsAvaible = false;
             loginProblemsErrors = false;
 
@@ -44,7 +53,6 @@ namespace Outlands_Adventure_Launcher
             InitializeComponent();
 
             ImageGradient.BackColor = Color.FromArgb(190, 0, 0, 0);
-
             ConfigurationPanel.BackColor = Color.FromArgb(255, 0, 0, 0);
         }
 
@@ -100,12 +108,26 @@ namespace Outlands_Adventure_Launcher
         // These methods check username and password, if the is more that 4 characters in each textbox then enable the login button
         private void UserNameTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            TextboxKeyUp(e, LoginPanel, null, null);
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginButton_Click(null, EventArgs.Empty);
+            }
+            else
+            {
+                TextboxKeyUp(e, LoginPanel, null, null);
+            }
         }
 
         private void PasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
-            TextboxKeyUp(e, LoginPanel, PasswordTextbox, LoginMayusLock);
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginButton_Click(null, EventArgs.Empty);
+            }
+            else
+            {
+                TextboxKeyUp(e, LoginPanel, PasswordTextbox, LoginMayusLock);
+            }
         }
 
         private void UserName_PasswordTextbox_TextChanged(object sender, EventArgs e)
@@ -147,13 +169,16 @@ namespace Outlands_Adventure_Launcher
         {
             if (loginAvaible)
             {
+                loginErrors = false;
                 LoginButton.Focus();
                 CheckLoginCredentials();
 
-                if (loginAvaible)
+                if (loginAvaible && !loginErrors)
                 {
                     MessageBox.Show("Logeado :P");
                     // Cerrar este form y llamar a otro form cuando te logeas
+
+
                 }
             }
             else
@@ -164,6 +189,7 @@ namespace Outlands_Adventure_Launcher
 
         private void CheckLoginCredentials()
         {
+            OpenLoadingScreen(true);
             string sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_name LIKE '" + UserNameTextbox.Text + "' &&" +
                 " user_password = SHA('" + PasswordTextbox.Text + "')";
             int rowsRecovered = SQLManager.CheckDuplicatedData(sqlQuery);
@@ -172,17 +198,20 @@ namespace Outlands_Adventure_Launcher
             {
                 loginAvaible = true;
                 WrongCredentials.Visible = false;
+                CloseLoadingScreen(true, "login");
             }
             else if (rowsRecovered == 0)
             {
                 Login_RegisterButton(false, LoginButton, ref loginAvaible);
                 WrongCredentials.Visible = true;
+                loginErrors = true;
+                CloseLoadingScreen(true, "login");
             }
             else
             {
-                ShowImageGradient();
-                EventsPanel.Visible = true;
+                CloseLoadingScreen(false, "login");
                 GenericPopUpMessage("No se puede conectar con la BD");
+                loginErrors = true;
             }
         }
         #endregion
@@ -338,6 +367,7 @@ namespace Outlands_Adventure_Launcher
 
                     if (registerAvaible && !registerErrors)
                     {
+                        OpenLoadingScreen(true);
                         string confirmationCode = CreateConfirmationCode.CreateCode();
                         Hash_SHA2.InitialiceVariables(confirmationCode);
                         bool messageError = SendEmail.SendNewEmail(NewEmailTextbox, "Creación de una nueva cuenta del cliente de" +
@@ -356,14 +386,13 @@ namespace Outlands_Adventure_Launcher
                             targetPanel = "login";
                             registerErrors = false;
 
-                            ShowImageGradient();
+                            CloseLoadingScreen(false, "register");
                             EventsPanel.Visible = true;
                         }
                         else
                         {
+                            CloseLoadingScreen(false, "register");
                             registerErrors = true;
-                            ShowImageGradient();
-                            EventsPanel.Visible = true;
                             GenericPopUpMessage("Problema al enviar el correo");
                         }
                     }
@@ -377,6 +406,8 @@ namespace Outlands_Adventure_Launcher
 
         private void CheckRegisterCredentials()
         {
+            OpenLoadingScreen(true);
+            registerErrors = false;
             string sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_email LIKE '" + NewEmailTextbox.Text + "'";
             int emailRowsRecovered = SQLManager.CheckDuplicatedData(sqlQuery);
 
@@ -387,8 +418,10 @@ namespace Outlands_Adventure_Launcher
             {
                 if (emailRowsRecovered > 0)
                 {
+                    registerErrors = true;
                     GenericError(NewEmailErrorLabel, "Dirección de correo ya registrada");
                     Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                    CloseLoadingScreen(true, "register");
                 }
                 else
                 {
@@ -397,8 +430,10 @@ namespace Outlands_Adventure_Launcher
 
                 if (nameRowsRecovered > 0)
                 {
+                    registerErrors = true;
                     GenericError(NewUserNameErrorLabel, "Nombre de usuario ya registrado");
                     Login_RegisterButton(false, RegisterButton, ref registerAvaible);
+                    CloseLoadingScreen(true, "register");
                 }
                 else
                 {
@@ -407,18 +442,18 @@ namespace Outlands_Adventure_Launcher
             }
             else
             {
+                CloseLoadingScreen(false, "register");
                 registerErrors = true;
-                ShowImageGradient();
-                EventsPanel.Visible = true;
                 GenericPopUpMessage("No se puede conectar con la BD");
             }
         }
 
         private void RegisterNewUser()
         {
+            OpenLoadingScreen(false);
             string sqlQuery = "INSERT INTO user_information VALUES ('" + NewEmailTextbox.Text + "', '"
                 + NewUserNameTextbox.Text + "', SHA('" + NewPasswordTextbox.Text + "'), null)";
-            string queryError = SQLManager.InsertNewUser(sqlQuery);
+            string queryError = SQLManager.Insert_ModifyUser(sqlQuery);
 
             if (queryError.Length > 0)
             {
@@ -432,10 +467,12 @@ namespace Outlands_Adventure_Launcher
                 {
                     // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
                     GenericPopUpMessage(queryError);
-                    MessageBox.Show(queryError);
                 }
+
                 registerErrors = true;
             }
+
+            CloseLoadingScreen(false, "register");
         }
         #endregion
 
@@ -527,6 +564,14 @@ namespace Outlands_Adventure_Launcher
         #endregion
 
         #region Write Reset Credentials Textbox
+        private void ResetCredentialsEmailText_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ResetCredentialsButton_Click(null, EventArgs.Empty);
+            }
+        }
+
         private void ResetCredentialsEmailText_TextChanged(object sender, EventArgs e)
         {
             if (ResetCredentialsEmailText.Text.Length > 4 && IsEmailValid(ResetCredentialsEmailText.Text))
@@ -545,14 +590,11 @@ namespace Outlands_Adventure_Launcher
         {
             if (loginProblemsAvaible)
             {
+                OpenLoadingScreen(true);
                 CheckLoginProblemsEmail();
 
                 if (!loginProblemsErrors)
                 {
-                    BackgroundPanel.Visible = false;
-                    LoginProblemsPanel.Visible = false;
-
-                    ResetCredentialsButton.Focus();
                     bool messageError = false;
 
                     if (usernameLost)
@@ -600,15 +642,14 @@ namespace Outlands_Adventure_Launcher
                     if (messageError)
                     {
                         loginProblemsErrors = true;
-                        ShowImageGradient();
                         EventsPanel.Visible = true;
+                        CloseLoadingScreen(false, "loginProblems");
                         GenericPopUpMessage("Problema al enviar el correo");
                     }
                     else
                     {
                         targetPanel = "login";
-
-                        ShowImageGradient();
+                        CloseLoadingScreen(false, "loginProblems");
                         EventsPanel.Visible = true;
                     }
                 }
@@ -634,8 +675,7 @@ namespace Outlands_Adventure_Launcher
             else
             {
                 loginProblemsErrors = true;
-                ShowImageGradient();
-                EventsPanel.Visible = true;
+                CloseLoadingScreen(false, "loginProblems");
                 GenericPopUpMessage("No se puede conectar con la BD");
             }
         }
@@ -657,8 +697,7 @@ namespace Outlands_Adventure_Launcher
             else
             {
                 loginProblemsErrors = true;
-                ShowImageGradient();
-                EventsPanel.Visible = true;
+                CloseLoadingScreen(false, "loginProblems");
                 GenericPopUpMessage("No se puede conectar con la BD");
 
                 return "";
@@ -874,6 +913,7 @@ namespace Outlands_Adventure_Launcher
                     passwordLost = false;
                     loginProblemsErrors = false;
 
+                    targetPanel = "login";
                     GenericPopUpMessage("Contraseña cambiada con éxito");
                     ResetPasswordEventPanel.Visible = false;
                     Reset_ResetPasswordEventValues();
@@ -894,9 +934,10 @@ namespace Outlands_Adventure_Launcher
 
         private void ChangeUserPassword()
         {
+            OpenLoadingScreen(false);
             string sqlQuery = "UPDATE user_information SET user_password=SHA('" + ResetPasswordTextbox.Text + "')" +
                 " WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
-            string queryError = SQLManager.InsertNewUser(sqlQuery);
+            string queryError = SQLManager.Insert_ModifyUser(sqlQuery);
 
             if (queryError.Length > 0)
             {
@@ -913,6 +954,8 @@ namespace Outlands_Adventure_Launcher
                 }
                 loginProblemsErrors = true;
             }
+
+            CloseLoadingScreen(false, "loginProblems");
         }
 
         #endregion Reset Password Event
@@ -1359,6 +1402,7 @@ namespace Outlands_Adventure_Launcher
             ConfigurationButton.Visible = false;
             ConfigurationPanel.Visible = false;
             EventsPanel.Visible = false;
+            ResetPasswordEventPanel.Visible = false;
             ImageGradient.Visible = true;
 
             LoginPanel.Visible = false;
@@ -1372,6 +1416,7 @@ namespace Outlands_Adventure_Launcher
             ConfigurationButton.Visible = true;
             ConfigurationPanel.Visible = false;
             EventsPanel.Visible = false;
+            ResetPasswordEventPanel.Visible = false;
             ImageGradient.Visible = false;
         }
 
@@ -1438,6 +1483,35 @@ namespace Outlands_Adventure_Launcher
             }
         }
         #endregion
+
+        #region Enable / Disable Loading Screen
+        private void OpenLoadingScreen(bool showImageGradient)
+        {
+            if (showImageGradient) ShowImageGradient();
+            ImageGradient.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+            operationInProgress = true;
+        }
+
+        private void CloseLoadingScreen(bool hideImageGradient, string targetPanel)
+        {
+            ImageGradient.Cursor = System.Windows.Forms.Cursors.Default;
+
+            if (hideImageGradient)
+            {
+                this.targetPanel = targetPanel;
+                CheckTargetPanel();
+            }
+
+            operationInProgress = false;
+        }
+        #endregion Enable / Disable Loading Screen
+
+        #region Form Actions
+        private void LauncherLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (operationInProgress) e.Cancel = true;
+        }
+        #endregion Form Actions
 
         #endregion Others
     }

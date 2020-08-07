@@ -852,6 +852,7 @@
             this.ResetCredentialsEmailText.TabIndex = 13;
             this.ResetCredentialsEmailText.TextChanged += new System.EventHandler(this.ResetCredentialsEmailText_TextChanged);
             this.ResetCredentialsEmailText.Enter += new System.EventHandler(this.ResetCredentialsEmailText_Enter);
+            this.ResetCredentialsEmailText.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ResetCredentialsEmailText_KeyUp);
             this.ResetCredentialsEmailText.Leave += new System.EventHandler(this.ResetCredentialsEmailText_Leave);
             // 
             // ResetCredentialsButton
@@ -1270,9 +1271,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
             this.MaximizeBox = false;
             this.Name = "LauncherLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LauncherLogin_FormClosing);
             this.UserNamePanel.ResumeLayout(false);
             this.UserNamePanel.PerformLayout();
             this.LoginPanel.ResumeLayout(false);

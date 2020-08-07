@@ -14,9 +14,8 @@ namespace Outlands_Adventure_Launcher
     {
         private static string conectionRoute = @"server=localhost;user id=root;database=outlands_adventure_client";
 
-        public static string InsertNewUser(string insertQuery)
+        public static string Insert_ModifyUser(string insertQuery)
         {
-            // Poner pop up pantalla de carga
             string queryError = "";
             try
             {
@@ -39,9 +38,9 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        // Recupera un dato de la base de datos
         public static string SearchQueryData(string readQuery)
         {
-            // Poner pop up pantalla de carga
             string recoveredData = "";
             try
             {
@@ -71,7 +70,6 @@ namespace Outlands_Adventure_Launcher
         // Mira si existe un dato en la base de datos y retorna el número de filas que contienen el dato que buscas
         public static int CheckDuplicatedData(string readQuery)
         {
-            // Poner pop up pantalla de carga
             try
             {
                 using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
@@ -94,35 +92,6 @@ namespace Outlands_Adventure_Launcher
             catch (Exception)
             {
                 return -1;
-            }
-        }
-
-        public static void ModifyUserData()
-        {
-            // Poner pop up pantalla de carga
-            string updateQuery = "UPDATE user_information SET user_password = 'nueva nueva contraseña'" +
-                " WHERE user_email LIKE 'email De napo'";
-            try
-            {
-                using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
-                {
-                    dbConnection.Open();
-                    MySqlCommand updateCommand = new MySqlCommand(updateQuery, dbConnection);
-
-                    if (updateCommand.ExecuteNonQuery() == 1)
-                    {
-                        MessageBox.Show("Usuario modificado :D");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ha ocurrido un error D:");
-                        throw new Exception();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
     }
