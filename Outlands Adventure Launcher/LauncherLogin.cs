@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Net.Mail;
+using System.Resources;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,6 +15,8 @@ namespace Outlands_Adventure_Launcher
 {
     public partial class LauncherLogin : Form
     {
+        private readonly string windowsRegistry = "Outlands_Adventure_Launcher";
+
         private string targetPanel;
         private bool operationInProgress;
 
@@ -35,6 +39,7 @@ namespace Outlands_Adventure_Launcher
 
         public LauncherLogin()
         {
+            // cambiar el idioma usado en los archivos de recursos resx
             targetPanel = "login";
             operationInProgress = false;
 
@@ -210,7 +215,7 @@ namespace Outlands_Adventure_Launcher
             else
             {
                 CloseLoadingScreen(false, "login");
-                GenericPopUpMessage("No se puede conectar con la BD");
+                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
                 loginErrors = true;
             }
         }
@@ -331,7 +336,7 @@ namespace Outlands_Adventure_Launcher
 
         private void NewPasswordTextbox_TextChanged(object sender, EventArgs e)
         {
-            CheckTextboxPasswordStrength(NewPasswordTextbox, NewPasswordErrorLabel, NewPasswordStrengthProgressBar, 
+            CheckTextboxPasswordStrength(NewPasswordTextbox, NewPasswordErrorLabel, NewPasswordStrengthProgressBar,
                 NewPasswordStrengthLabel);
             CheckRegisterTextboxs();
         }
@@ -370,8 +375,9 @@ namespace Outlands_Adventure_Launcher
                         OpenLoadingScreen(true);
                         string confirmationCode = CreateConfirmationCode.CreateCode();
                         Hash_SHA2.InitialiceVariables(confirmationCode);
-                        bool messageError = SendEmail.SendNewEmail(NewEmailTextbox, "Creación de una nueva cuenta del cliente de" +
-                               " Outlands Adventure", "Su código de confimación es", confirmationCode);
+
+                        string[] messageInfo = ClientLanguage.sendEmail_NewAccount.Split('*');
+                        bool messageError = SendEmail.SendNewEmail(NewEmailTextbox, messageInfo[0], messageInfo[1], confirmationCode);
 
                         if (!messageError)
                         {
@@ -380,8 +386,7 @@ namespace Outlands_Adventure_Launcher
                             EventSendButton.Visible = true;
                             EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
-                            EventText.Text = "Hemos mandado un código de confirmación a tu correo electrónico, dirígete a tu correo" +
-                                " e introduce el código para confirmar tu cuenta";
+                            EventText.Text = ClientLanguage.events_Header_NewAccount;
 
                             targetPanel = "login";
                             registerErrors = false;
@@ -393,7 +398,7 @@ namespace Outlands_Adventure_Launcher
                         {
                             CloseLoadingScreen(false, "register");
                             registerErrors = true;
-                            GenericPopUpMessage("Problema al enviar el correo");
+                            GenericPopUpMessage(ClientLanguage.events_SendEmailError);
                         }
                     }
                 }
@@ -419,7 +424,7 @@ namespace Outlands_Adventure_Launcher
                 if (emailRowsRecovered > 0)
                 {
                     registerErrors = true;
-                    GenericError(NewEmailErrorLabel, "Dirección de correo ya registrada");
+                    GenericError(NewEmailErrorLabel, ClientLanguage.textboxError_EmailRegistered);
                     Login_RegisterButton(false, RegisterButton, ref registerAvaible);
                     CloseLoadingScreen(true, "register");
                 }
@@ -431,7 +436,7 @@ namespace Outlands_Adventure_Launcher
                 if (nameRowsRecovered > 0)
                 {
                     registerErrors = true;
-                    GenericError(NewUserNameErrorLabel, "Nombre de usuario ya registrado");
+                    GenericError(NewUserNameErrorLabel, ClientLanguage.textboxError_UsernameRegistered);
                     Login_RegisterButton(false, RegisterButton, ref registerAvaible);
                     CloseLoadingScreen(true, "register");
                 }
@@ -444,7 +449,7 @@ namespace Outlands_Adventure_Launcher
             {
                 CloseLoadingScreen(false, "register");
                 registerErrors = true;
-                GenericPopUpMessage("No se puede conectar con la BD");
+                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
             }
         }
 
@@ -460,7 +465,7 @@ namespace Outlands_Adventure_Launcher
                 if (queryError.Contains("Unable to connect"))
                 {
                     // Pop up de falta de internet - No te puedes conectar a la base de datos
-                    GenericPopUpMessage("No se puede conectar con la BD");
+                    GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
                 }
 
                 else
@@ -519,16 +524,14 @@ namespace Outlands_Adventure_Launcher
                 usernameLost = true;
                 passwordLost = false;
 
-                ResetCredentialsHeader.Text = "¿Necesitas ayuda para recordar tu nombre de usuario? \n" +
-                    "Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico";
+                ResetCredentialsHeader.Text = ClientLanguage.loginProblems_LostUsername;
             }
             else
             {
                 usernameLost = false;
                 passwordLost = true;
 
-                ResetCredentialsHeader.Text = "¿Has olvidado tu contraseña? \n" +
-                    "Puedes solicitar cambiar tu contraseña anterior por otra nueva";
+                ResetCredentialsHeader.Text = ClientLanguage.loginProblems_LostPassword;
             }
 
             if (!ResetCredentialsHeader.Visible)
@@ -605,8 +608,7 @@ namespace Outlands_Adventure_Launcher
                         EventExitButton.Location = new Point(237, 105);
 
                         // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
-                        EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
-                                "nuestra base de datos te mandaremos un recordatorio de tu nombre de usuario";
+                        EventText.Text = ClientLanguage.events_Header_UsernameLost;
 
                         if (loginProblemsAvaible)
                         {
@@ -614,8 +616,9 @@ namespace Outlands_Adventure_Launcher
 
                             if (userNameRecovered.Length > 0)
                             {
-                                messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Recordatorio del nombre de usuario" +
-                                    " del cliente de Outlands Adventure", "Su nombre de usuario es", userNameRecovered);
+                                string[] messageInfo = ClientLanguage.sendEmail_LostUsername.Split('*');
+                                messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, messageInfo[0], messageInfo[1],
+                                    userNameRecovered);
                             }
                         }
                     }
@@ -627,15 +630,14 @@ namespace Outlands_Adventure_Launcher
                         EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
                         // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
-                        EventText.Text = "Si la dirección de correo coincide con alguna dirección de correo de " +
-                                "nuestra base de datos te enviaremos un código de confirmación para que reestablezcas tu contraseña";
+                        EventText.Text = ClientLanguage.events_Header_PasswordLost;
 
                         if (loginProblemsAvaible)
                         {
                             string confirmationCode = CreateConfirmationCode.CreateCode();
                             Hash_SHA2.InitialiceVariables(confirmationCode);
-                            messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, "Reestablecimiento de la contraseña" +
-                                " del cliente de Outlands Adventure", "Su código de confimación es", confirmationCode);
+                            string[] messageInfo = ClientLanguage.sendEmail_LostPassword.Split('*');
+                            messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, messageInfo[0], messageInfo[1], confirmationCode);
                         }
                     }
 
@@ -644,7 +646,7 @@ namespace Outlands_Adventure_Launcher
                         loginProblemsErrors = true;
                         EventsPanel.Visible = true;
                         CloseLoadingScreen(false, "loginProblems");
-                        GenericPopUpMessage("Problema al enviar el correo");
+                        GenericPopUpMessage(ClientLanguage.events_SendEmailError);
                     }
                     else
                     {
@@ -676,7 +678,7 @@ namespace Outlands_Adventure_Launcher
             {
                 loginProblemsErrors = true;
                 CloseLoadingScreen(false, "loginProblems");
-                GenericPopUpMessage("No se puede conectar con la BD");
+                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
             }
         }
 
@@ -698,7 +700,7 @@ namespace Outlands_Adventure_Launcher
             {
                 loginProblemsErrors = true;
                 CloseLoadingScreen(false, "loginProblems");
-                GenericPopUpMessage("No se puede conectar con la BD");
+                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
 
                 return "";
             }
@@ -714,31 +716,9 @@ namespace Outlands_Adventure_Launcher
             ConfigurationButton.Focus();
             ShowImageGradient();
             ConfigurationPanel.Visible = true;
-        }
 
-        #region Select Idiom Panel
-        // Hide select client idiom panel when you click out of it
-        private void ConfigurationPanel_Click(object sender, EventArgs e)
-        {
-            if (SelectClientIdiom.Visible)
-            {
-                HideSelectIdiomPanel();
-            }
+            ReadSelectedLanguage(false);
         }
-
-        // Button to select a new client idiom
-        private void SelectedClientIdiom_Click(object sender, EventArgs e)
-        {
-            SelectClientIdiom.Visible = true;
-            ConfigurationExitButton.Visible = false;
-        }
-
-        private void HideSelectIdiomPanel()
-        {
-            SelectClientIdiom.Visible = false;
-            ConfigurationExitButton.Visible = true;
-        }
-        #endregion
 
         #region Configuration Exit Button
         private void ExitButton_MouseEnter(object sender, EventArgs e)
@@ -755,29 +735,7 @@ namespace Outlands_Adventure_Launcher
         {
             CheckTargetPanel();
         }
-        #endregion
-
-        #region Select New Client Idiom
-        private void SelectNewClientIdiom(object sender, EventArgs e)
-        {
-            string idiomSelected = ((Panel)sender).Name + "_flag";
-
-            switch (idiomSelected)
-            {
-                case "spanish_flag":
-                    SelectedClientIdiom.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.spanish_flag;
-                    // Reiniciar el cliente y cambiar el idioma
-                    break;
-
-                case "english_flag":
-                    SelectedClientIdiom.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.english_flag;
-                    // Reiniciar el cliente y cambiar el idioma
-                    break;
-            }
-
-            HideSelectIdiomPanel();
-        }
-        #endregion
+        #endregion Configuration Exit Button
 
         #endregion Game Client Configuration
 
@@ -855,7 +813,7 @@ namespace Outlands_Adventure_Launcher
                     if (!registerErrors)
                     {
                         ResetRegisterPanelValues();
-                        GenericPopUpMessage("Te has registrado exitosamente");
+                        GenericPopUpMessage(ClientLanguage.registerSucessful);
                     }
                 }
 
@@ -914,7 +872,7 @@ namespace Outlands_Adventure_Launcher
                     loginProblemsErrors = false;
 
                     targetPanel = "login";
-                    GenericPopUpMessage("Contraseña cambiada con éxito");
+                    GenericPopUpMessage(ClientLanguage.newPasswordSucessful);
                     ResetPasswordEventPanel.Visible = false;
                     Reset_ResetPasswordEventValues();
                     ResetLoginProblemsPanelValues();
@@ -944,7 +902,7 @@ namespace Outlands_Adventure_Launcher
                 if (queryError.Contains("Unable to connect"))
                 {
                     // Pop up de falta de internet - No te puedes conectar a la base de datos
-                    GenericPopUpMessage("No se puede conectar con la BD");
+                    GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
                 }
 
                 else
@@ -962,7 +920,7 @@ namespace Outlands_Adventure_Launcher
 
         private void GenericPopUpMessage(string eventText)
         {
-            EventText.Location = new Point(40, 25);
+            EventText.Location = new Point(23, 25);
             EventCode.Visible = false;
             EventSendButton.Visible = false;
             EventExitButton.Location = new Point(237, 105);
@@ -1146,7 +1104,7 @@ namespace Outlands_Adventure_Launcher
         /// </summary>
         /// <param name="currentTextbox">Caja de texto donde escribir lo que necesites</param>
         /// <param name="currentTextboxLabel">Label que indica para que sirve la caja de texto</param>
-        private void TextboxGainFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Panel showPassword, 
+        private void TextboxGainFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Panel showPassword,
             Panel mayusLock)
         {
             // El método solo deberia tener este if
@@ -1176,7 +1134,7 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
-        private void TextboxLoseFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Label currentErrorLabel, 
+        private void TextboxLoseFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Label currentErrorLabel,
             Panel showPassword, Panel mayusLock, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
             if (currentTextbox.Text.Length == 0)
@@ -1200,10 +1158,10 @@ namespace Outlands_Adventure_Launcher
                         EmptyTextbox(NewEmailLabel, NewEmailErrorLabel, null, null, null, null);
 
                     else if (NewEmailTextbox.Text.Length < 4)
-                        LessFourLetters(NewEmailErrorLabel, "Debe contener cuatro letras como mínimo", null, null);
+                        LessFourLetters(NewEmailErrorLabel, ClientLanguage.textboxError_LessFourLetters, null, null);
 
                     else if (!IsEmailValid(NewEmailTextbox.Text))
-                        GenericError(NewEmailErrorLabel, "Introduce una dirección de correo válida");
+                        GenericError(NewEmailErrorLabel, ClientLanguage.textboxError_WrongEmail);
 
                     else
                         NewEmailErrorLabel.Visible = false;
@@ -1214,7 +1172,7 @@ namespace Outlands_Adventure_Launcher
                         EmptyTextbox(NewUserNameLabel, NewUserNameErrorLabel, null, null, null, null);
 
                     else if (NewUserNameTextbox.Text.Length < 4)
-                        LessFourLetters(NewUserNameErrorLabel, "Debe contener cuatro letras como mínimo", null, null);
+                        LessFourLetters(NewUserNameErrorLabel, ClientLanguage.textboxError_LessFourLetters, null, null);
 
                     else
                         NewUserNameErrorLabel.Visible = false;
@@ -1229,7 +1187,7 @@ namespace Outlands_Adventure_Launcher
 
                     if (NewPasswordTextbox.Text.Length < 4 && NewPasswordTextbox.Text.Length > 0)
                     {
-                        LessFourLetters(NewPasswordErrorLabel, "Debe contener cuatro letras como mínimo",
+                        LessFourLetters(NewPasswordErrorLabel, ClientLanguage.textboxError_LessFourLetters, 
                             NewPasswordStrengthProgressBar, NewPasswordStrengthLabel);
                     }
                     else
@@ -1239,7 +1197,7 @@ namespace Outlands_Adventure_Launcher
 
                     if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text) && ConfirmNewPasswordTextbox.Text.Length > 0)
                     {
-                        GenericError(ConfirmNewPasswordErrorLabel, "Las contraseñas no coinciden");
+                        GenericError(ConfirmNewPasswordErrorLabel, ClientLanguage.textboxError_PasswordNotMatch);
                     }
                     else
                     {
@@ -1258,11 +1216,11 @@ namespace Outlands_Adventure_Launcher
                     }
                     else if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text) && NewPasswordTextbox.Text.Length > 0)
                     {
-                        GenericError(ConfirmNewPasswordErrorLabel, "Las contraseñas no coinciden");
+                        GenericError(ConfirmNewPasswordErrorLabel, ClientLanguage.textboxError_PasswordNotMatch);
                     }
                     else if (ConfirmNewPasswordTextbox.Text.Length < 4)
                     {
-                        LessFourLetters(ConfirmNewPasswordErrorLabel, "Debe contener cuatro letras como mínimo", null, null);
+                        LessFourLetters(ConfirmNewPasswordErrorLabel, ClientLanguage.textboxError_LessFourLetters, null, null);
                     }
                     else
                     {
@@ -1281,7 +1239,7 @@ namespace Outlands_Adventure_Launcher
                     }
                     else if (ResetPasswordTextbox.Text.Length < 4)
                     {
-                        LessFourLetters(ResetPasswordEventErrorText, "Debe contener cuatro letras como mínimo", 
+                        LessFourLetters(ResetPasswordEventErrorText, ClientLanguage.textboxError_LessFourLetters,
                             ResetPasswordStrengthProgressBar, ResetPasswordStrengthLabel);
                     }
                     else
@@ -1419,17 +1377,6 @@ namespace Outlands_Adventure_Launcher
             ResetPasswordEventPanel.Visible = false;
             ImageGradient.Visible = false;
         }
-
-        // Methods to hide Image Gradient Panel
-        private void ImageGradient_Click(object sender, EventArgs e)
-        {
-            ImageGradient.Focus();
-
-            if (SelectClientIdiom.Visible)
-            {
-                HideSelectIdiomPanel();
-            }
-        }
         #endregion
 
         #region Show Hide Password
@@ -1514,5 +1461,147 @@ namespace Outlands_Adventure_Launcher
         #endregion Form Actions
 
         #endregion Others
+
+        // Allow Combo Box to center aligned
+        private void LanguageSelected_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            // By using Sender, one method could handle multiple ComboBoxes
+            ComboBox cbx = sender as ComboBox;
+            if (cbx != null)
+            {
+                // Always draw the background
+                e.DrawBackground();
+
+                // Drawing one of the items?
+                if (e.Index >= 0)
+                {
+                    // Set the string alignment.  Choices are Center, Near and Far
+                    StringFormat sf = new StringFormat();
+                    sf.LineAlignment = StringAlignment.Center;
+                    sf.Alignment = StringAlignment.Center;
+
+                    // Set the Brush to ComboBox ForeColor to maintain any ComboBox color settings
+                    // Assumes Brush is solid
+                    Brush brush = new SolidBrush(cbx.ForeColor);
+
+                    // If drawing highlighted selection, change brush
+                    if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                        brush = SystemBrushes.HighlightText;
+
+                    // Draw the string
+                    e.Graphics.DrawString(cbx.Items[e.Index].ToString(), cbx.Font, brush, e.Bounds, sf);
+                }
+            }
+        }
+
+        private void LauncherLogin_Load(object sender, EventArgs e)
+        {
+            ReadSelectedLanguage(true);
+        }
+
+        private void LanguageSelected_DropDownClosed(object sender, EventArgs e)
+        {
+            ConfigurationPanel.Focus();
+        }
+
+        private void LanguageSelected_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            string[] selectedLanguageArray = LanguageSelected.SelectedItem.ToString().Split('(');
+            ChangeCurrentLanguage(selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1));
+            ChangeAplicationLanguage();
+
+            // poner try catch por si acaso, peta cuando el idioma no existe
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(windowsRegistry);
+            key.SetValue("selectedLanguage", LanguageSelected.SelectedItem.ToString());
+        }
+
+        private void ReadSelectedLanguage(bool appLoading)
+        {
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(windowsRegistry);
+            if (key != null)
+            {
+                string selectedLanguage = (string)key.GetValue("selectedLanguage");
+
+                if (LanguageSelected != null && !appLoading)
+                {
+                    LanguageSelected.SelectedIndex = LanguageSelected.FindString(selectedLanguage);
+                }
+                else if (appLoading)
+                {
+                    if (selectedLanguage != null && !selectedLanguage.Equals(""))
+                    {
+                        string[] selectedLanguageArray = selectedLanguage.Split('(');
+                        string currentCulture = selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1);
+                        ChangeCurrentLanguage(currentCulture);
+                        // If the language is not spanish when the aplication starts then translate it
+                        if (!currentCulture.Equals("es-ES"))
+                        {
+                            ChangeAplicationLanguage();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Estoy en español");
+                        }
+                    }
+                    else
+                    {
+                        ChangeCurrentLanguage("es-ES");
+                    }
+                }
+            }
+        }
+
+        private void ChangeCurrentLanguage(string selectedLanguage)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
+            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
+        }
+
+        private void ChangeAplicationLanguage()
+        {
+            // Login Interface
+            LoginText.Text = ClientLanguage.login_Header;
+            WrongCredentials.Text = ClientLanguage.login_Error;
+            UserNameLabel.Text = ClientLanguage.textbox_Username;
+            PasswordLabel.Text = ClientLanguage.textbox_Password;
+            RememberMe.Text = ClientLanguage.login_RememberMe;
+            RegisterLabel.Text = ClientLanguage.login_Register;
+            LoginProblems.Text = ClientLanguage.login_LoginProblems;
+
+            // Register Interface
+            RegisterText.Text = ClientLanguage.register_Header;
+            NewEmailLabel.Text = ClientLanguage.textbox_Email;
+            NewUserNameLabel.Text = ClientLanguage.textbox_Username;
+            NewPasswordLabel.Text = ClientLanguage.textbox_Password;
+            ConfirmNewPasswordLabel.Text = ClientLanguage.textbox_ConfirmPassword;
+            LoginLabel.Text = ClientLanguage.register_Login;
+
+            // Login Problems Interface
+            LoginProblemsHeader_1.Text = ClientLanguage.loginProblems_Header;
+            LoginProblemsHeader_2.Text = ClientLanguage.loginProblems_Header2;
+            ForgottenUsernameHeader.Text = ClientLanguage.loginProblems_UsernameHeader;
+            ForgottenPasswordHeader.Text = ClientLanguage.loginProblems_PasswordHeader;
+            ResetCredentialsEmailLabel.Text = ClientLanguage.textbox_Email;
+            ReturnToLogin.Text = ClientLanguage.loginProblems_Login;
+
+            // Events
+            EventSendButton.Text = ClientLanguage.button_Confirm;
+            EventExitButton.Text = ClientLanguage.button_Close;
+            ResetPasswordSendButton.Text = ClientLanguage.button_Confirm;
+            ResetPasswordExitButton.Text = ClientLanguage.button_Close;
+
+            // Settings
+            ConfigurationHeader.Text = ClientLanguage.settings_Header;
+            ClientLanguageHeader.Text = ClientLanguage.settings_LanguageHeader;
+
+            LanguageSelected.Items.Clear();
+            string[] languagesAvaibles = ClientLanguage.settings_Languages.Split('*');
+            foreach (string currentLanguage in languagesAvaibles)
+            {
+                LanguageSelected.Items.Add(currentLanguage);
+            }
+
+            ConfigurationExitButton.Text = ClientLanguage.button_Close;
+        }
     }
 }
