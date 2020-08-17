@@ -1506,13 +1506,44 @@ namespace Outlands_Adventure_Launcher
 
         private void LanguageSelected_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            string[] selectedLanguageArray = LanguageSelected.SelectedItem.ToString().Split('(');
-            ChangeCurrentLanguage(selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1));
+            string selectedLanguage = "";
+            try
+            {
+                string[] selectedLanguageArray = LanguageSelected.SelectedItem.ToString().Split('(');
+                selectedLanguage = selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1);
+            }
+            catch (Exception)
+            {
+                // DEPRECATED
+                // Cuando es un idioma como japonés que no reconoce los parentesis le quito el ultimo paréntisis y luego busco el primero
+                /*string language = LanguageSelected.SelectedItem.ToString();
+                language = language.Remove(language.Length - 1);
+
+                for (int i = language.Length; i > 0; i--)
+                {
+                    try
+                    {
+                        string currentLetter = language.Substring(i, 1);
+
+                        if (currentLetter.Contains("（"))
+                        {
+                            selectedLanguage = language.Remove(0, i + 1);
+                        }
+                    }
+                    catch (Exception)
+                    { }
+                }*/
+            }
+
+
+            ChangeCurrentLanguage(selectedLanguage);
             ChangeAplicationLanguage();
+
+            CheckLanguageComboboxSelection(selectedLanguage);
 
             // poner try catch por si acaso, peta cuando el idioma no existe
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(windowsRegistry);
-            key.SetValue("selectedLanguage", LanguageSelected.SelectedItem.ToString());
+            key.SetValue("selectedLanguage", selectedLanguage);
         }
 
         private void ReadSelectedLanguage(bool appLoading)
@@ -1524,23 +1555,26 @@ namespace Outlands_Adventure_Launcher
 
                 if (LanguageSelected != null && !appLoading)
                 {
-                    LanguageSelected.SelectedIndex = LanguageSelected.FindString(selectedLanguage);
+                    if (CheckLanguageComboboxSelection(selectedLanguage) != -1)
+                    {
+                        CheckLanguageComboboxSelection(selectedLanguage);
+                    }
+                    else
+                    {
+                        LanguageSelected.SelectedIndex = 0;
+                    }
                 }
                 else if (appLoading)
                 {
                     if (selectedLanguage != null && !selectedLanguage.Equals(""))
                     {
-                        string[] selectedLanguageArray = selectedLanguage.Split('(');
-                        string currentCulture = selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1);
-                        ChangeCurrentLanguage(currentCulture);
+                        //string[] selectedLanguageArray = selectedLanguage.Split('(');
+                        //string currentCulture = selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1);
+                        ChangeCurrentLanguage(selectedLanguage);
                         // If the language is not spanish when the aplication starts then translate it
-                        if (!currentCulture.Equals("es-ES"))
+                        if (!selectedLanguage.Equals("es-ES"))
                         {
                             ChangeAplicationLanguage();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Estoy en español");
                         }
                     }
                     else
@@ -1549,6 +1583,20 @@ namespace Outlands_Adventure_Launcher
                     }
                 }
             }
+        }
+
+        private int CheckLanguageComboboxSelection(string selectedLanguage)
+        {
+            for (int currentLanguageItem = 0; currentLanguageItem < LanguageSelected.Items.Count; currentLanguageItem++)
+            {
+                if (LanguageSelected.Items[currentLanguageItem].ToString().Contains(selectedLanguage))
+                {
+                    LanguageSelected.SelectedIndex = currentLanguageItem;
+                    return 0;
+                }
+            }
+
+            return -1;
         }
 
         private void ChangeCurrentLanguage(string selectedLanguage)

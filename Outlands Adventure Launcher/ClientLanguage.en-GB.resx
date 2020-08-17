@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
 		Microsoft ResX Schema
 
 		Version 1.3
@@ -58,44 +58,181 @@
 			: using a System.ComponentModel.TypeConverter
 			: and then encoded with base64 encoding.
 	-->
-	
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>1.3</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="button_Close" xml:space="preserve">
+    <value>CLOSE</value>
+  </data>
+  <data name="button_Confirm" xml:space="preserve">
+    <value>SEND</value>
+  </data>
+  <data name="eventCode_Error" xml:space="preserve">
+    <value>Wrong code</value>
+  </data>
+  <data name="events_Database_ConnectionError" xml:space="preserve">
+    <value>There was an error accessing the database, please check your internet connection and try again later</value>
+  </data>
+  <data name="events_Header_NewAccount" xml:space="preserve">
+    <value>We have sent a confirmation code to your e-mail, go there and enter the code to confirm your account</value>
+  </data>
+  <data name="events_Header_PasswordLost" xml:space="preserve">
+    <value>If the email address matches an email address in our database, we will send you a confirmation code so you can reset your password</value>
+  </data>
+  <data name="events_Header_UsernameLost" xml:space="preserve">
+    <value>If the email address matches any email address in our database we will send you a reminder of your username</value>
+  </data>
+  <data name="events_SendEmailError" xml:space="preserve">
+    <value>There was a problem sending the mail, please check your internet connection and try again later</value>
+  </data>
+  <data name="loginProblems_Header" xml:space="preserve">
+    <value>PROBLEMS LOGGING IN?</value>
+  </data>
+  <data name="loginProblems_Header2" xml:space="preserve">
+    <value>There are several reasons why you cannot log in, try the following solutions</value>
+  </data>
+  <data name="loginProblems_Login" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="loginProblems_LostPassword" xml:space="preserve">
+    <value>Have you forgotten your password? You can request to change your old password for a new one</value>
+  </data>
+  <data name="loginProblems_LostUsername" xml:space="preserve">
+    <value>Do you need help remembering your username? You can request that we send you a reminder of your username to your email</value>
+  </data>
+  <data name="loginProblems_PasswordHeader" xml:space="preserve">
+    <value>Forgotten password?</value>
+  </data>
+  <data name="loginProblems_UsernameHeader" xml:space="preserve">
+    <value>Forgotten username?</value>
+  </data>
+  <data name="login_Error" xml:space="preserve">
+    <value>Your login credentials do not match any account registered in our system</value>
+  </data>
+  <data name="login_Header" xml:space="preserve">
+    <value>Log in with your Outlands Adventure account</value>
+  </data>
+  <data name="login_LoginProblems" xml:space="preserve">
+    <value>Problems logging in?</value>
+  </data>
+  <data name="login_Register" xml:space="preserve">
+    <value>Create an account</value>
+  </data>
+  <data name="login_RememberMe" xml:space="preserve">
+    <value>Stay signed in</value>
+  </data>
+  <data name="newPasswordEvent_Header" xml:space="preserve">
+    <value>Type your new password</value>
+  </data>
+  <data name="newPasswordEvent_Password" xml:space="preserve">
+    <value>NEW PASSWORD</value>
+  </data>
+  <data name="newPasswordSucessful" xml:space="preserve">
+    <value>Password successfully edited</value>
+  </data>
+  <data name="passwordStrenght_Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="passwordStrenght_Strong" xml:space="preserve">
+    <value>STRONG</value>
+  </data>
+  <data name="passwordStrenght_VeryStrong" xml:space="preserve">
+    <value>Very Strong</value>
+  </data>
+  <data name="passwordStrenght_VeryWeak" xml:space="preserve">
+    <value>Very weak</value>
+  </data>
+  <data name="passwordStrenght_Weak" xml:space="preserve">
+    <value>Weak</value>
+  </data>
+  <data name="registerSucessful" xml:space="preserve">
+    <value>You have successfully registered</value>
+  </data>
+  <data name="register_Header" xml:space="preserve">
+    <value>Create your Outlands Adventure account</value>
+  </data>
+  <data name="register_Login" xml:space="preserve">
+    <value>Already a member? Sign in</value>
+  </data>
+  <data name="sendEmail_LostPassword" xml:space="preserve">
+    <value>Outlands Adventure Client Password Reset*Your confirmation code is</value>
+  </data>
+  <data name="sendEmail_LostUsername" xml:space="preserve">
+    <value>Outlands Adventure Client Username Reminder*Your username is</value>
+  </data>
+  <data name="sendEmail_NewAccount" xml:space="preserve">
+    <value>Creation of a new Outlands Adventure user account*Your confirmation code is</value>
+  </data>
+  <data name="settings_Header" xml:space="preserve">
+    <value>SETTINGS</value>
+  </data>
+  <data name="settings_LanguageHeader" xml:space="preserve">
+    <value>Client language</value>
+  </data>
+  <data name="settings_Languages" xml:space="preserve">
+    <value>SPANISH - SPAIN (es-ES)*ENGLISH - UNITED STATES (en-US)*ENGLISH - UNITED KINGDOM (en-GB)*FRENCH (fr)*GERMAN (de)*RUSSIAN (ru)*JAPANESE (ja)*NORWEGIAN (no)</value>
+  </data>
+  <data name="textboxError_EmailRegistered" xml:space="preserve">
+    <value>E-mail already registered</value>
+  </data>
+  <data name="textboxError_LessFourLetters" xml:space="preserve">
+    <value>It must contain at least four letters</value>
+  </data>
+  <data name="textboxError_PasswordNotMatch" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="textboxError_UsernameRegistered" xml:space="preserve">
+    <value>That Username is already registered</value>
+  </data>
+  <data name="textboxError_WrongEmail" xml:space="preserve">
+    <value>Enter a valid e-mail address</value>
+  </data>
+  <data name="textbox_ConfirmPassword" xml:space="preserve">
+    <value>REPEAT PASSWORD</value>
+  </data>
+  <data name="textbox_Email" xml:space="preserve">
+    <value>E-MAIL ADDRESS</value>
+  </data>
+  <data name="textbox_Password" xml:space="preserve">
+    <value>PASSWORD</value>
+  </data>
+  <data name="textbox_Username" xml:space="preserve">
+    <value>USERNAME</value>
+  </data>
 </root>

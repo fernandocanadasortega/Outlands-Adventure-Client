@@ -205,7 +205,7 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¿Has olvidado tu contraseña? \n Puedes solicitar cambiar tu contraseña anterior por otra nueva.
+        ///   Busca una cadena traducida similar a ¿Has olvidado tu contraseña? Puedes solicitar cambiar tu contraseña anterior por otra nueva.
         /// </summary>
         internal static string loginProblems_LostPassword {
             get {
@@ -214,7 +214,7 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¿Necesitas ayuda para recordar tu nombre de usuario? \n Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico.
+        ///   Busca una cadena traducida similar a ¿Necesitas ayuda para recordar tu nombre de usuario? Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico.
         /// </summary>
         internal static string loginProblems_LostUsername {
             get {
@@ -385,7 +385,7 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ESPAÑOL - ESPAÑA (spa)*INGLÉS - ESTADOS UNIDOS (en-US)*INGLÉS - REINO UNIDO (en-GB)*FRANCÉS (fr)*ALEMÁN (ger)*RUSO (russ)*TURCO (turk)*CHINO SIMPLIFICADO (ch_simpl)*JAPONÉS (jap).
+        ///   Busca una cadena traducida similar a ESPAÑOL - ESPAÑA (es-ES)*INGLÉS - ESTADOS UNIDOS (en-US)*INGLÉS - REINO UNIDO (en-GB)*FRANCÉS (fr)*ALEMÁN (de)*RUSO (ru)*JAPONÉS (ja)*NORUEGO (no).
         /// </summary>
         internal static string settings_Languages {
             get {

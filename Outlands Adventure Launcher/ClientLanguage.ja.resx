@@ -118,141 +118,141 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="button_Close" xml:space="preserve">
-    <value>CLOSE</value>
+    <value>閉じる</value>
   </data>
   <data name="button_Confirm" xml:space="preserve">
-    <value>SEND</value>
+    <value>送信</value>
   </data>
   <data name="eventCode_Error" xml:space="preserve">
-    <value>Wrong code</value>
+    <value>不正なコード</value>
   </data>
   <data name="events_Database_ConnectionError" xml:space="preserve">
-    <value>There was an error accessing the database, please check your internet connection and try again later</value>
+    <value>データベースへのアクセス中にエラーが発生しました。インターネット接続を確認して、後でもう一度やり直してください</value>
   </data>
   <data name="events_Header_NewAccount" xml:space="preserve">
-    <value>We have sent a confirmation code to your email, go there and enter the code to confirm your account</value>
+    <value>確認コードをメールに送信しました。メールにアクセスし、コードを入力してアカウントを確認してください</value>
   </data>
   <data name="events_Header_PasswordLost" xml:space="preserve">
-    <value>If the email address matches an email address in our database, we will send you a confirmation code so you can reset your password</value>
+    <value>メールアドレスがデータベースのメールアドレスと一致する場合は、パスワードをリセットできるように確認コードを送信します</value>
   </data>
   <data name="events_Header_UsernameLost" xml:space="preserve">
-    <value>If the email address matches any email address in our database we will send you a reminder of your username</value>
+    <value>メールアドレスがデータベースのメールアドレスと一致する場合、ユーザー名のリマインダーを送信します</value>
   </data>
   <data name="events_SendEmailError" xml:space="preserve">
-    <value>There was a problem sending the mail, please check your internet connection and try again later</value>
+    <value>メールの送信中に問題が発生しました。インターネット接続を確認して、後でもう一度やり直してください</value>
   </data>
   <data name="loginProblems_Header" xml:space="preserve">
-    <value>ISSUES LOGGING IN?</value>
+    <value>ログインの問題？</value>
   </data>
   <data name="loginProblems_Header2" xml:space="preserve">
-    <value>There are several reasons why you cannot log in, try the following solutions</value>
+    <value>ログインできない理由はいくつかあります。以下の解決策を試してください</value>
   </data>
   <data name="loginProblems_Login" xml:space="preserve">
-    <value>Return</value>
+    <value>戻る</value>
   </data>
   <data name="loginProblems_LostPassword" xml:space="preserve">
-    <value>Have you forgotten your password? You can request to change your old password for a new one</value>
+    <value>パスワードを忘れましたか？ 古いパスワードを新しいパスワードに変更するように要求できます</value>
   </data>
   <data name="loginProblems_LostUsername" xml:space="preserve">
-    <value>Do you need help remembering your username? You can request that we send you a reminder of your username to your email</value>
+    <value>ユーザー名を思い出すのに助けが必要ですか？ ユーザー名のリマインダーをメールに送信するようリクエストできます</value>
   </data>
   <data name="loginProblems_PasswordHeader" xml:space="preserve">
-    <value>Forgotten password?</value>
+    <value>パスワードを忘れました？</value>
   </data>
   <data name="loginProblems_UsernameHeader" xml:space="preserve">
-    <value>Forgotten username?</value>
+    <value>ユーザー名を忘れましたか？</value>
   </data>
   <data name="login_Error" xml:space="preserve">
-    <value>Your login credentials do not match any account registered in our system</value>
+    <value>ログイン認証情報が、システムに登録されているアカウントと一致しません</value>
   </data>
   <data name="login_Header" xml:space="preserve">
-    <value>Log in with your Outlands Adventure account</value>
+    <value>Outlands Adventureアカウントでログインしてください</value>
   </data>
   <data name="login_LoginProblems" xml:space="preserve">
-    <value>Issues logging in?</value>
+    <value>ログインの問題？</value>
   </data>
   <data name="login_Register" xml:space="preserve">
-    <value>Create new account</value>
+    <value>アカウントを作成する</value>
   </data>
   <data name="login_RememberMe" xml:space="preserve">
-    <value>Stay signed in</value>
+    <value>サインインの状態を維持</value>
   </data>
   <data name="newPasswordEvent_Header" xml:space="preserve">
-    <value>Type your new password</value>
+    <value>新しいパスワードを入力してください</value>
   </data>
   <data name="newPasswordEvent_Password" xml:space="preserve">
-    <value>NEW PASSWORD</value>
+    <value>新しいパスワード</value>
   </data>
   <data name="newPasswordSucessful" xml:space="preserve">
-    <value>Password successfully edited</value>
+    <value>パスワードは正常に変更されました</value>
   </data>
   <data name="passwordStrenght_Medium" xml:space="preserve">
-    <value>Medium</value>
+    <value>中央値</value>
   </data>
   <data name="passwordStrenght_Strong" xml:space="preserve">
-    <value>STRONG</value>
+    <value>強い</value>
   </data>
   <data name="passwordStrenght_VeryStrong" xml:space="preserve">
-    <value>Very strong</value>
+    <value>とても強い</value>
   </data>
   <data name="passwordStrenght_VeryWeak" xml:space="preserve">
-    <value>Very weak</value>
+    <value>非常に弱い</value>
   </data>
   <data name="passwordStrenght_Weak" xml:space="preserve">
-    <value>Weak</value>
+    <value>弱い</value>
   </data>
   <data name="registerSucessful" xml:space="preserve">
-    <value>You have successfully registered</value>
+    <value>登録に成功しました</value>
   </data>
   <data name="register_Header" xml:space="preserve">
-    <value>Create your Outlands Adventure account</value>
+    <value>Outlands Adventureアカウントを作成してください</value>
   </data>
   <data name="register_Login" xml:space="preserve">
-    <value>Already have an account? Sign in</value>
+    <value>すでにアカウントをお持ちですか？ ログインする</value>
   </data>
   <data name="sendEmail_LostPassword" xml:space="preserve">
-    <value>Outlands Adventure Client Password Reset*Your confirmation code is</value>
+    <value>Outlands Adventure Customer Password Reset*確認コードは</value>
   </data>
   <data name="sendEmail_LostUsername" xml:space="preserve">
-    <value>Outlands Adventure Client Username Reminder*Your username is</value>
+    <value>Outlands Adventure Customer Username Reminder*ユーザー名は</value>
   </data>
   <data name="sendEmail_NewAccount" xml:space="preserve">
-    <value>Creation of a new Outlands Adventure user account*Your confirmation code is</value>
+    <value>新しいOutlands Adventure顧客アカウントを作成する*確認コードは次のとおりです</value>
   </data>
   <data name="settings_Header" xml:space="preserve">
-    <value>SETTINGS</value>
+    <value>設定</value>
   </data>
   <data name="settings_LanguageHeader" xml:space="preserve">
-    <value>Client language</value>
+    <value>顧客の言語</value>
   </data>
   <data name="settings_Languages" xml:space="preserve">
-    <value>SPANISH - SPAIN (es-ES)*ENGLISH - UNITED STATES (en-US)*ENGLISH - UNITED KINGDOM (en-GB)*FRENCH (fr)*GERMAN (de)*RUSSIAN (ru)*JAPANESE (ja)*NORWEGIAN (no)</value>
+    <value>スペイン語-スペイン (es-ES)*英語-米国 (en-US)*英語-イギリス (en-GB)*フランス語 (fr)*ドイツ語 (de)*ロシア (ru)* 日本人 (ja)*ノルウェー語 (no)</value>
   </data>
   <data name="textboxError_EmailRegistered" xml:space="preserve">
-    <value>Email address already registered</value>
+    <value>電子メールアドレスはすでに登録されています</value>
   </data>
   <data name="textboxError_LessFourLetters" xml:space="preserve">
-    <value>It must contain at least four letters</value>
+    <value>4文字以上である必要があります</value>
   </data>
   <data name="textboxError_PasswordNotMatch" xml:space="preserve">
-    <value>The passwords do not match</value>
+    <value>パスワードの不一致</value>
   </data>
   <data name="textboxError_UsernameRegistered" xml:space="preserve">
-    <value>Username already registered</value>
+    <value>ユーザー名はすでに登録されています</value>
   </data>
   <data name="textboxError_WrongEmail" xml:space="preserve">
-    <value>Please enter valid email address</value>
+    <value>有効なメールアドレスを入力してください</value>
   </data>
   <data name="textbox_ConfirmPassword" xml:space="preserve">
-    <value>REPEAT PASSWORD</value>
+    <value>パスワードを再度入力してください</value>
   </data>
   <data name="textbox_Email" xml:space="preserve">
-    <value>EMAIL ADDRESS</value>
+    <value>メールアドレス</value>
   </data>
   <data name="textbox_Password" xml:space="preserve">
-    <value>PASSWORD</value>
+    <value>パスワード</value>
   </data>
   <data name="textbox_Username" xml:space="preserve">
-    <value>USERNAME</value>
+    <value>ﾕｰｻﾞｰ名</value>
   </data>
 </root>

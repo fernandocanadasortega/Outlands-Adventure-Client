@@ -87,6 +87,11 @@
             this.ConfigurationButton = new System.Windows.Forms.Panel();
             this.ImagePanel = new System.Windows.Forms.Panel();
             this.ImageGradient = new System.Windows.Forms.Panel();
+            this.ConfigurationPanel = new System.Windows.Forms.Panel();
+            this.ConfigurationHeader = new System.Windows.Forms.Label();
+            this.ClientLanguageHeader = new System.Windows.Forms.Label();
+            this.LanguageSelected = new System.Windows.Forms.ComboBox();
+            this.ConfigurationExitButton = new System.Windows.Forms.Label();
             this.EventsPanel = new System.Windows.Forms.Panel();
             this.EventText = new System.Windows.Forms.Label();
             this.EventCodeError = new System.Windows.Forms.Label();
@@ -105,11 +110,6 @@
             this.ResetPasswordEventErrorText = new System.Windows.Forms.Label();
             this.ResetPasswordSendButton = new System.Windows.Forms.Label();
             this.ResetPasswordExitButton = new System.Windows.Forms.Label();
-            this.ConfigurationPanel = new System.Windows.Forms.Panel();
-            this.ConfigurationHeader = new System.Windows.Forms.Label();
-            this.ClientLanguageHeader = new System.Windows.Forms.Label();
-            this.LanguageSelected = new System.Windows.Forms.ComboBox();
-            this.ConfigurationExitButton = new System.Windows.Forms.Label();
             this.UserNamePanel.SuspendLayout();
             this.LoginPanel.SuspendLayout();
             this.PasswordPanel.SuspendLayout();
@@ -122,10 +122,10 @@
             this.ResetCredentialsEmailPanel.SuspendLayout();
             this.ImagePanel.SuspendLayout();
             this.ImageGradient.SuspendLayout();
+            this.ConfigurationPanel.SuspendLayout();
             this.EventsPanel.SuspendLayout();
             this.ResetPasswordEventPanel.SuspendLayout();
             this.ResetPasswordPanel.SuspendLayout();
-            this.ConfigurationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LoginText
@@ -310,7 +310,7 @@
             this.RegisterLabel.AutoSize = true;
             this.RegisterLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RegisterLabel.Font = new System.Drawing.Font("Oxygen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RegisterLabel.Location = new System.Drawing.Point(53, 630);
+            this.RegisterLabel.Location = new System.Drawing.Point(47, 630);
             this.RegisterLabel.Name = "RegisterLabel";
             this.RegisterLabel.Size = new System.Drawing.Size(122, 19);
             this.RegisterLabel.TabIndex = 0;
@@ -671,12 +671,11 @@
             // 
             // LoginLabel
             // 
-            this.LoginLabel.AutoSize = true;
             this.LoginLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LoginLabel.Font = new System.Drawing.Font("Oxygen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoginLabel.Location = new System.Drawing.Point(47, 661);
             this.LoginLabel.Name = "LoginLabel";
-            this.LoginLabel.Size = new System.Drawing.Size(248, 19);
+            this.LoginLabel.Size = new System.Drawing.Size(350, 38);
             this.LoginLabel.TabIndex = 9;
             this.LoginLabel.Text = "¿Ya tienes una cuenta? Inicia sesión";
             this.LoginLabel.Click += new System.EventHandler(this.LoginLabel_Click);
@@ -708,7 +707,7 @@
             this.ReturnToLogin.AutoSize = true;
             this.ReturnToLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ReturnToLogin.Font = new System.Drawing.Font("Oxygen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ReturnToLogin.Location = new System.Drawing.Point(345, 20);
+            this.ReturnToLogin.Location = new System.Drawing.Point(305, 20);
             this.ReturnToLogin.Name = "ReturnToLogin";
             this.ReturnToLogin.Size = new System.Drawing.Size(52, 19);
             this.ReturnToLogin.TabIndex = 10;
@@ -906,6 +905,90 @@
             this.ImageGradient.Size = new System.Drawing.Size(1366, 709);
             this.ImageGradient.TabIndex = 0;
             this.ImageGradient.Visible = false;
+            // 
+            // ConfigurationPanel
+            // 
+            this.ConfigurationPanel.BackColor = System.Drawing.Color.Black;
+            this.ConfigurationPanel.Controls.Add(this.ConfigurationHeader);
+            this.ConfigurationPanel.Controls.Add(this.ClientLanguageHeader);
+            this.ConfigurationPanel.Controls.Add(this.LanguageSelected);
+            this.ConfigurationPanel.Controls.Add(this.ConfigurationExitButton);
+            this.ConfigurationPanel.Location = new System.Drawing.Point(291, 110);
+            this.ConfigurationPanel.Name = "ConfigurationPanel";
+            this.ConfigurationPanel.Size = new System.Drawing.Size(800, 500);
+            this.ConfigurationPanel.TabIndex = 1;
+            this.ConfigurationPanel.Visible = false;
+            // 
+            // ConfigurationHeader
+            // 
+            this.ConfigurationHeader.AutoSize = true;
+            this.ConfigurationHeader.BackColor = System.Drawing.Color.Transparent;
+            this.ConfigurationHeader.Font = new System.Drawing.Font("Oxygen", 14F, System.Drawing.FontStyle.Bold);
+            this.ConfigurationHeader.ForeColor = System.Drawing.Color.White;
+            this.ConfigurationHeader.Location = new System.Drawing.Point(338, 60);
+            this.ConfigurationHeader.Name = "ConfigurationHeader";
+            this.ConfigurationHeader.Size = new System.Drawing.Size(110, 31);
+            this.ConfigurationHeader.TabIndex = 0;
+            this.ConfigurationHeader.Text = "AJUSTES";
+            this.ConfigurationHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ClientLanguageHeader
+            // 
+            this.ClientLanguageHeader.AutoSize = true;
+            this.ClientLanguageHeader.BackColor = System.Drawing.Color.Transparent;
+            this.ClientLanguageHeader.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClientLanguageHeader.ForeColor = System.Drawing.Color.White;
+            this.ClientLanguageHeader.Location = new System.Drawing.Point(100, 220);
+            this.ClientLanguageHeader.Name = "ClientLanguageHeader";
+            this.ClientLanguageHeader.Size = new System.Drawing.Size(181, 26);
+            this.ClientLanguageHeader.TabIndex = 1;
+            this.ClientLanguageHeader.Text = "Idioma del cliente";
+            this.ClientLanguageHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LanguageSelected
+            // 
+            this.LanguageSelected.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LanguageSelected.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.LanguageSelected.DropDownHeight = 160;
+            this.LanguageSelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LanguageSelected.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LanguageSelected.FormattingEnabled = true;
+            this.LanguageSelected.IntegralHeight = false;
+            this.LanguageSelected.ItemHeight = 40;
+            this.LanguageSelected.Items.AddRange(new object[] {
+            "ESPAÑOL - ESPAÑA (es-ES)",
+            "INGLÉS - ESTADOS UNIDOS (en-US)",
+            "INGLÉS - REINO UNIDO (en-GB)",
+            "FRANCÉS (fr)",
+            "ALEMÁN (de)",
+            "RUSO (ru)",
+            "CHINO (zh)",
+            "JAPONÉS (ja)",
+            "NORUEGO (no)"});
+            this.LanguageSelected.Location = new System.Drawing.Point(367, 210);
+            this.LanguageSelected.Name = "LanguageSelected";
+            this.LanguageSelected.Size = new System.Drawing.Size(333, 46);
+            this.LanguageSelected.TabIndex = 11;
+            this.LanguageSelected.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.LanguageSelected_DrawItem);
+            this.LanguageSelected.SelectionChangeCommitted += new System.EventHandler(this.LanguageSelected_SelectionChangeCommitted);
+            this.LanguageSelected.DropDownClosed += new System.EventHandler(this.LanguageSelected_DropDownClosed);
+            // 
+            // ConfigurationExitButton
+            // 
+            this.ConfigurationExitButton.AutoSize = true;
+            this.ConfigurationExitButton.BackColor = System.Drawing.Color.Transparent;
+            this.ConfigurationExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConfigurationExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConfigurationExitButton.ForeColor = System.Drawing.Color.White;
+            this.ConfigurationExitButton.Location = new System.Drawing.Point(340, 445);
+            this.ConfigurationExitButton.Name = "ConfigurationExitButton";
+            this.ConfigurationExitButton.Size = new System.Drawing.Size(88, 26);
+            this.ConfigurationExitButton.TabIndex = 3;
+            this.ConfigurationExitButton.Text = "CERRAR";
+            this.ConfigurationExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ConfigurationExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            this.ConfigurationExitButton.MouseEnter += new System.EventHandler(this.ExitButton_MouseEnter);
+            this.ConfigurationExitButton.MouseLeave += new System.EventHandler(this.ExitButton_MouseLeave);
             // 
             // EventsPanel
             // 
@@ -1155,90 +1238,6 @@
             this.ResetPasswordExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
             this.ResetPasswordExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
-            // ConfigurationPanel
-            // 
-            this.ConfigurationPanel.BackColor = System.Drawing.Color.Black;
-            this.ConfigurationPanel.Controls.Add(this.ConfigurationHeader);
-            this.ConfigurationPanel.Controls.Add(this.ClientLanguageHeader);
-            this.ConfigurationPanel.Controls.Add(this.LanguageSelected);
-            this.ConfigurationPanel.Controls.Add(this.ConfigurationExitButton);
-            this.ConfigurationPanel.Location = new System.Drawing.Point(291, 110);
-            this.ConfigurationPanel.Name = "ConfigurationPanel";
-            this.ConfigurationPanel.Size = new System.Drawing.Size(800, 500);
-            this.ConfigurationPanel.TabIndex = 1;
-            this.ConfigurationPanel.Visible = false;
-            // 
-            // ConfigurationHeader
-            // 
-            this.ConfigurationHeader.AutoSize = true;
-            this.ConfigurationHeader.BackColor = System.Drawing.Color.Transparent;
-            this.ConfigurationHeader.Font = new System.Drawing.Font("Oxygen", 14F, System.Drawing.FontStyle.Bold);
-            this.ConfigurationHeader.ForeColor = System.Drawing.Color.White;
-            this.ConfigurationHeader.Location = new System.Drawing.Point(338, 60);
-            this.ConfigurationHeader.Name = "ConfigurationHeader";
-            this.ConfigurationHeader.Size = new System.Drawing.Size(110, 31);
-            this.ConfigurationHeader.TabIndex = 0;
-            this.ConfigurationHeader.Text = "AJUSTES";
-            this.ConfigurationHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ClientLanguageHeader
-            // 
-            this.ClientLanguageHeader.AutoSize = true;
-            this.ClientLanguageHeader.BackColor = System.Drawing.Color.Transparent;
-            this.ClientLanguageHeader.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClientLanguageHeader.ForeColor = System.Drawing.Color.White;
-            this.ClientLanguageHeader.Location = new System.Drawing.Point(100, 220);
-            this.ClientLanguageHeader.Name = "ClientLanguageHeader";
-            this.ClientLanguageHeader.Size = new System.Drawing.Size(181, 26);
-            this.ClientLanguageHeader.TabIndex = 1;
-            this.ClientLanguageHeader.Text = "Idioma del cliente";
-            this.ClientLanguageHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LanguageSelected
-            // 
-            this.LanguageSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LanguageSelected.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.LanguageSelected.DropDownHeight = 160;
-            this.LanguageSelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LanguageSelected.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LanguageSelected.FormattingEnabled = true;
-            this.LanguageSelected.IntegralHeight = false;
-            this.LanguageSelected.ItemHeight = 40;
-            this.LanguageSelected.Items.AddRange(new object[] {
-            "ESPAÑOL - ESPAÑA (es-ES)",
-            "INGLÉS - ESTADOS UNIDOS (en-US)",
-            "INGLÉS - REINO UNIDO (en-GB)",
-            "FRANCÉS (fr)",
-            "ALEMÁN (ger)",
-            "RUSO (russ)",
-            "TURCO (turk)",
-            "CHINO SIMPLIFICADO (ch_simpl)",
-            "JAPONÉS (jap)"});
-            this.LanguageSelected.Location = new System.Drawing.Point(367, 210);
-            this.LanguageSelected.Name = "LanguageSelected";
-            this.LanguageSelected.Size = new System.Drawing.Size(333, 46);
-            this.LanguageSelected.TabIndex = 11;
-            this.LanguageSelected.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.LanguageSelected_DrawItem);
-            this.LanguageSelected.SelectionChangeCommitted += new System.EventHandler(this.LanguageSelected_SelectionChangeCommitted);
-            this.LanguageSelected.DropDownClosed += new System.EventHandler(this.LanguageSelected_DropDownClosed);
-            // 
-            // ConfigurationExitButton
-            // 
-            this.ConfigurationExitButton.AutoSize = true;
-            this.ConfigurationExitButton.BackColor = System.Drawing.Color.Transparent;
-            this.ConfigurationExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ConfigurationExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConfigurationExitButton.ForeColor = System.Drawing.Color.White;
-            this.ConfigurationExitButton.Location = new System.Drawing.Point(340, 445);
-            this.ConfigurationExitButton.Name = "ConfigurationExitButton";
-            this.ConfigurationExitButton.Size = new System.Drawing.Size(88, 26);
-            this.ConfigurationExitButton.TabIndex = 3;
-            this.ConfigurationExitButton.Text = "CERRAR";
-            this.ConfigurationExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ConfigurationExitButton.Click += new System.EventHandler(this.ExitButton_Click);
-            this.ConfigurationExitButton.MouseEnter += new System.EventHandler(this.ExitButton_MouseEnter);
-            this.ConfigurationExitButton.MouseLeave += new System.EventHandler(this.ExitButton_MouseLeave);
-            // 
             // LauncherLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1267,7 +1266,6 @@
             this.PasswordPanel.ResumeLayout(false);
             this.PasswordPanel.PerformLayout();
             this.RegisterPanel.ResumeLayout(false);
-            this.RegisterPanel.PerformLayout();
             this.NewEmailPanel.ResumeLayout(false);
             this.NewEmailPanel.PerformLayout();
             this.NewUserNamePanel.ResumeLayout(false);
@@ -1282,13 +1280,13 @@
             this.ResetCredentialsEmailPanel.PerformLayout();
             this.ImagePanel.ResumeLayout(false);
             this.ImageGradient.ResumeLayout(false);
+            this.ConfigurationPanel.ResumeLayout(false);
+            this.ConfigurationPanel.PerformLayout();
             this.EventsPanel.ResumeLayout(false);
             this.EventsPanel.PerformLayout();
             this.ResetPasswordEventPanel.ResumeLayout(false);
             this.ResetPasswordPanel.ResumeLayout(false);
             this.ResetPasswordPanel.PerformLayout();
-            this.ConfigurationPanel.ResumeLayout(false);
-            this.ConfigurationPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }

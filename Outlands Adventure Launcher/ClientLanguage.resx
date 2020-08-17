@@ -151,10 +151,10 @@
     <value>Volver</value>
   </data>
   <data name="loginProblems_LostPassword" xml:space="preserve">
-    <value>¿Has olvidado tu contraseña? \n Puedes solicitar cambiar tu contraseña anterior por otra nueva</value>
+    <value>¿Has olvidado tu contraseña? Puedes solicitar cambiar tu contraseña anterior por otra nueva</value>
   </data>
   <data name="loginProblems_LostUsername" xml:space="preserve">
-    <value>¿Necesitas ayuda para recordar tu nombre de usuario? \n Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico</value>
+    <value>¿Necesitas ayuda para recordar tu nombre de usuario? Puedes solicitar que te mandemos un recordatorio de tu usuario a tu correo electrónico</value>
   </data>
   <data name="loginProblems_PasswordHeader" xml:space="preserve">
     <value>¿Contraseña olvidada?</value>
@@ -226,7 +226,7 @@
     <value>Idioma del cliente</value>
   </data>
   <data name="settings_Languages" xml:space="preserve">
-    <value>ESPAÑOL - ESPAÑA (spa)*INGLÉS - ESTADOS UNIDOS (en-US)*INGLÉS - REINO UNIDO (en-GB)*FRANCÉS (fr)*ALEMÁN (ger)*RUSO (russ)*TURCO (turk)*CHINO SIMPLIFICADO (ch_simpl)*JAPONÉS (jap)</value>
+    <value>ESPAÑOL - ESPAÑA (es-ES)*INGLÉS - ESTADOS UNIDOS (en-US)*INGLÉS - REINO UNIDO (en-GB)*FRANCÉS (fr)*ALEMÁN (de)*RUSO (ru)*JAPONÉS (ja)*NORUEGO (no)</value>
   </data>
   <data name="textboxError_EmailRegistered" xml:space="preserve">
     <value>Dirección de correo ya registrada</value>

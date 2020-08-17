@@ -107,11 +107,16 @@
     </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="SQLManager.cs" />
+    <EmbeddedResource Include="ClientLanguage.de.resx" />
     <EmbeddedResource Include="ClientLanguage.en-GB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.en-GB.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ClientLanguage.en-US.resx" />
+    <EmbeddedResource Include="ClientLanguage.fr.resx" />
+    <EmbeddedResource Include="ClientLanguage.ja.resx" />
+    <EmbeddedResource Include="ClientLanguage.no.resx" />
+    <EmbeddedResource Include="ClientLanguage.ru.resx" />
     <EmbeddedResource Include="LauncherLogin.resx">
       <DependentUpon>LauncherLogin.cs</DependentUpon>
     </EmbeddedResource>
