@@ -63,6 +63,26 @@ namespace Outlands_Adventure_Launcher.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap arrow {
+            get {
+                object obj = ResourceManager.GetObject("arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap close {
+            get {
+                object obj = ResourceManager.GetObject("close", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap configuration {
             get {
                 object obj = ResourceManager.GetObject("configuration", resourceCulture);
@@ -76,16 +96,6 @@ namespace Outlands_Adventure_Launcher.Properties {
         internal static System.Drawing.Bitmap Crossed_Swords {
             get {
                 object obj = ResourceManager.GetObject("Crossed Swords", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap english_flag {
-            get {
-                object obj = ResourceManager.GetObject("english flag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +126,16 @@ namespace Outlands_Adventure_Launcher.Properties {
         internal static System.Drawing.Bitmap forgot_username {
             get {
                 object obj = ResourceManager.GetObject("forgot username", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap game_settings {
+            get {
+                object obj = ResourceManager.GetObject("game settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,26 +186,6 @@ namespace Outlands_Adventure_Launcher.Properties {
         internal static System.Drawing.Bitmap show_password {
             get {
                 object obj = ResourceManager.GetObject("show password", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap spanish_flag {
-            get {
-                object obj = ResourceManager.GetObject("spanish flag", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap titulo {
-            get {
-                object obj = ResourceManager.GetObject("titulo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

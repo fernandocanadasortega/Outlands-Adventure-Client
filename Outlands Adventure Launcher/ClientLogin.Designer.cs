@@ -1,6 +1,6 @@
 ﻿namespace Outlands_Adventure_Launcher
 {
-    partial class LauncherLogin
+    partial class ClientLogin
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LauncherLogin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientLogin));
             this.LoginText = new System.Windows.Forms.Label();
             this.UserNamePanel = new System.Windows.Forms.Panel();
             this.UserNameLabel = new System.Windows.Forms.Label();
@@ -522,7 +522,6 @@
             // NewPasswordMayusLock
             // 
             this.NewPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
-            this.NewPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.NewPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.NewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.NewPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
@@ -534,7 +533,6 @@
             // ShowNewPassword
             // 
             this.ShowNewPassword.BackColor = System.Drawing.Color.Transparent;
-            this.ShowNewPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
             this.ShowNewPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ShowNewPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ShowNewPassword.Location = new System.Drawing.Point(276, 7);
@@ -624,7 +622,6 @@
             // ConfirmNewPasswordMayusLock
             // 
             this.ConfirmNewPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
-            this.ConfirmNewPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.ConfirmNewPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ConfirmNewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.ConfirmNewPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
@@ -636,7 +633,6 @@
             // ShowConfirmNewPassword
             // 
             this.ShowConfirmNewPassword.BackColor = System.Drawing.Color.Transparent;
-            this.ShowConfirmNewPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
             this.ShowConfirmNewPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ShowConfirmNewPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ShowConfirmNewPassword.Location = new System.Drawing.Point(276, 7);
@@ -660,7 +656,6 @@
             // 
             // RegisterButton
             // 
-            this.RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
             this.RegisterButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RegisterButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.RegisterButton.Location = new System.Drawing.Point(160, 566);
@@ -745,7 +740,6 @@
             // 
             // ForgottenUsernameButton
             // 
-            this.ForgottenUsernameButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.forgot_username;
             this.ForgottenUsernameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ForgottenUsernameButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForgottenUsernameButton.Location = new System.Drawing.Point(49, 225);
@@ -771,7 +765,6 @@
             // 
             // ForgottenPasswordButton
             // 
-            this.ForgottenPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.forgot_password;
             this.ForgottenPasswordButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ForgottenPasswordButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForgottenPasswordButton.Location = new System.Drawing.Point(230, 225);
@@ -856,7 +849,6 @@
             // ResetCredentialsButton
             // 
             this.ResetCredentialsButton.BackColor = System.Drawing.Color.White;
-            this.ResetCredentialsButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
             this.ResetCredentialsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ResetCredentialsButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.ResetCredentialsButton.Location = new System.Drawing.Point(166, 616);
@@ -886,6 +878,7 @@
             // 
             // ImagePanel
             // 
+            this.ImagePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ImagePanel.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
             this.ImagePanel.Controls.Add(this.ImageGradient);
             this.ImagePanel.Location = new System.Drawing.Point(0, 0);
@@ -1138,7 +1131,6 @@
             // ResetPasswordMayusLock
             // 
             this.ResetPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
-            this.ResetPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.ResetPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ResetPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.ResetPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
@@ -1150,7 +1142,6 @@
             // ShowResetPassword
             // 
             this.ShowResetPassword.BackColor = System.Drawing.Color.Transparent;
-            this.ShowResetPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
             this.ShowResetPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ShowResetPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ShowResetPassword.Location = new System.Drawing.Point(276, 7);
@@ -1238,7 +1229,7 @@
             this.ResetPasswordExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
             this.ResetPasswordExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
-            // LauncherLogin
+            // ClientLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1255,7 +1246,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MaximizeBox = false;
-            this.Name = "LauncherLogin";
+            this.Name = "ClientLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LauncherLogin_FormClosing);
             this.Load += new System.EventHandler(this.LauncherLogin_Load);

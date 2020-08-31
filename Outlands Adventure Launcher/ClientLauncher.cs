@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Outlands_Adventure_Launcher
 {
-    static class LauncherIndex
+    static class ClientLauncher
     {
         /// <summary>
         /// Punto de entrada principal para la aplicación.
@@ -16,7 +16,16 @@ namespace Outlands_Adventure_Launcher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LauncherLogin());
+
+            //ClientLogin clientLogin = new ClientLogin();
+            //clientLogin.ReceiveClassInstance(clientLogin);
+            //Application.Run(clientLogin);
+
+            ClientAplication clientAplication = new ClientAplication();
+            clientAplication.ReceiveClassInstance(clientAplication);
+            Application.Run(clientAplication);
+
+            //Application.Run(new Form1());
         }
     }
 }

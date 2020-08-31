@@ -14,9 +14,9 @@ using System.Windows.Forms;
 
 namespace Outlands_Adventure_Launcher
 {
-    public partial class LauncherLogin : Form
+    public partial class ClientLogin : Form
     {
-        private readonly string windowsRegistry = "Outlands_Adventure_Launcher";
+        ClientLogin clientLogin;
 
         private string targetPanel;
         private bool operationInProgress;
@@ -38,7 +38,7 @@ namespace Outlands_Adventure_Launcher
         private bool confirmPasswordVisible;
 
 
-        public LauncherLogin()
+        public ClientLogin()
         {
             // cambiar el idioma usado en los archivos de recursos resx
             targetPanel = "login";
@@ -60,6 +60,11 @@ namespace Outlands_Adventure_Launcher
 
             ImageGradient.BackColor = Color.FromArgb(190, 0, 0, 0);
             ConfigurationPanel.BackColor = Color.FromArgb(255, 0, 0, 0);
+        }
+
+        public void ReceiveClassInstance(ClientLogin clientLogin)
+        {
+            this.clientLogin = clientLogin;
         }
 
         #region Login Interface
@@ -711,14 +716,15 @@ namespace Outlands_Adventure_Launcher
         #endregion Login Problems Interface
 
         #region Game Client Configuration
-        // This method manage game client configuration button when you click on it
+        // These methods manage game client configuration button when you click on it
         private void Configuration_Click(object sender, EventArgs e)
         {
             ConfigurationButton.Focus();
             ShowImageGradient();
             ConfigurationPanel.Visible = true;
 
-            ReadSelectedLanguage(false);
+            LanguageManager languageManager = new LanguageManager();
+            languageManager.ReadSelectedLanguage(false, LanguageSelected);
         }
 
         #region Configuration Exit Button
@@ -1459,14 +1465,12 @@ namespace Outlands_Adventure_Launcher
         #region Form Actions
         private void LauncherLogin_Load(object sender, EventArgs e)
         {
-            Microsoft.Win32.RegistryKey key = OpenWindowsRegister(false);
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            windowsRegisterManager.LoadWindowPosition(this);
 
-            if (key.GetValue("XPosition") != null && key.GetValue("YPosition") != null)
-            {
-                this.Location = new Point((int)key.GetValue("XPosition"), (int)key.GetValue("YPosition"));
-            }
-
-            ReadSelectedLanguage(true);
+            LanguageManager languageManager = new LanguageManager();
+            languageManager.SelectCurrentAplicationWindow(clientLogin, null);
+            languageManager.ReadSelectedLanguage(true, LanguageSelected);
         }
 
         private void LauncherLogin_FormClosing(object sender, FormClosingEventArgs e)
@@ -1477,10 +1481,8 @@ namespace Outlands_Adventure_Launcher
             }
             else
             {
-                Microsoft.Win32.RegistryKey key = OpenWindowsRegister(true);
-                key.SetValue("XPosition", this.Location.X);
-                key.SetValue("YPosition", this.Location.Y);
-                CloseWindowsRegister(key);
+                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                windowsRegisterManager.SaveWindowPosition(this);
             }
         }
         #endregion Form Actions
@@ -1491,56 +1493,22 @@ namespace Outlands_Adventure_Launcher
         // Allow Combo Box to center aligned
         private void LanguageSelected_DrawItem(object sender, DrawItemEventArgs e)
         {
-            // By using Sender, one method could handle multiple ComboBoxes
-            ComboBox cbx = sender as ComboBox;
-            if (cbx != null)
-            {
-                // Always draw the background
-                e.DrawBackground();
-
-                // Drawing one of the items?
-                if (e.Index >= 0)
-                {
-                    // Set the string alignment.  Choices are Center, Near and Far
-                    StringFormat sf = new StringFormat();
-                    sf.LineAlignment = StringAlignment.Center;
-                    sf.Alignment = StringAlignment.Center;
-
-                    // Set the Brush to ComboBox ForeColor to maintain any ComboBox color settings
-                    // Assumes Brush is solid
-                    Brush brush = new SolidBrush(cbx.ForeColor);
-
-                    // If drawing highlighted selection, change brush
-                    if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-                        brush = SystemBrushes.HighlightText;
-
-                    // Draw the string
-                    e.Graphics.DrawString(cbx.Items[e.Index].ToString(), cbx.Font, brush, e.Bounds, sf);
-                }
-            }
+            ComboboxManager languageComboboxManager = new ComboboxManager();
+            languageComboboxManager.Combobox_DrawItem(sender, e);
         }
 
         private void LanguageSelected_DropDownClosed(object sender, EventArgs e)
         {
-            ConfigurationPanel.Focus();
+            ComboboxManager languageComboboxManager = new ComboboxManager();
+            languageComboboxManager.Combobox_DropDownClosed(ConfigurationPanel);
         }
         #endregion Combobox controls
 
         #region Language manager
         /// <summary>
-        /// Cambia el idioma de la aplicación por el solicitado y permite acceder a los recursos propios de ese idioma
-        /// </summary>
-        /// <param name="selectedLanguage"></param>
-        private void ChangeCurrentLanguage(string selectedLanguage)
-        {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
-            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
-        }
-
-        /// <summary>
         /// Cambia el idioma de todos los objetos que hay en la aplicación
         /// </summary>
-        private void ChangeAplicationLanguage()
+        public void ChangeAplicationLanguage()
         {
             // Login Interface
             LoginText.Text = ClientLanguage.login_Header;
@@ -1594,111 +1562,12 @@ namespace Outlands_Adventure_Launcher
         /// <param name="e">Eventos que le ocurren al objeto</param>
         private void LanguageSelected_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            string[] selectedLanguageArray = LanguageSelected.SelectedItem.ToString().Split('(');
-            string selectedLanguage = selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1);
-
-            ChangeCurrentLanguage(selectedLanguage);
-            ChangeAplicationLanguage();
-            CheckLanguageComboboxSelection(selectedLanguage);
-
-            // poner try catch por si acaso, peta cuando el idioma no existe
-            Microsoft.Win32.RegistryKey key = OpenWindowsRegister(true);
-            key.SetValue("selectedLanguage", selectedLanguage);
-            CloseWindowsRegister(key);
-        }
-
-        /// <summary>
-        /// Lee el idioma que se está usando del registro del windows, si no hay ninguno establece el español por defecto.
-        /// Si la aplicación se esta abriendo entonces cambia el idioma de la aplicación si no es español y si entras a
-        /// ajustes entonces establece en el desplegable el idioma que está en uso 
-        /// </summary>
-        /// <param name="appLoading">booleano que indica si la aplicación está cargando por primera vez o si estás entrando
-        /// al método una vez que toda la aplicación ya ha cargado</param>
-        private void ReadSelectedLanguage(bool appLoading)
-        {
-            Microsoft.Win32.RegistryKey key = OpenWindowsRegister(true);
-
-            string selectedLanguage = (string)key.GetValue("selectedLanguage");
-
-            if (selectedLanguage == null || selectedLanguage.Equals(""))
-            {
-                selectedLanguage = "es-ES";
-                key.SetValue("selectedLanguage", selectedLanguage);
-            }
-
-            if (LanguageSelected != null && !appLoading)
-            {
-                if (CheckLanguageComboboxSelection(selectedLanguage) != -1)
-                {
-                    CheckLanguageComboboxSelection(selectedLanguage);
-                }
-                else
-                {
-                    LanguageSelected.SelectedIndex = 0;
-                }
-            }
-            else if (appLoading)
-            {
-                ChangeCurrentLanguage(selectedLanguage);
-
-                // If the language is not spanish when the aplication starts then translate it
-                if (!selectedLanguage.Equals("es-ES"))
-                {
-                    ChangeAplicationLanguage();
-                }
-            }
-
-            CloseWindowsRegister(key);
-        }
-
-        /// <summary>
-        /// Establece en el desplegable del idiomas en el menú de ajustes qué idioma se está usando actualmente
-        /// </summary>
-        /// <param name="selectedLanguage">Idioma que se está usando actualmente</param>
-        /// <returns>Int, devuelve -1 si no se ha encontrado el idioma en el desplegable</returns>
-        private int CheckLanguageComboboxSelection(string selectedLanguage)
-        {
-            for (int currentLanguageItem = 0; currentLanguageItem < LanguageSelected.Items.Count; currentLanguageItem++)
-            {
-                if (LanguageSelected.Items[currentLanguageItem].ToString().Contains(selectedLanguage))
-                {
-                    LanguageSelected.SelectedIndex = currentLanguageItem;
-                    return 0; // This 0 does nothing, but every route must return a number
-                }
-            }
-
-            return -1;
+            LanguageManager languageManager = new LanguageManager();
+            languageManager.SelectCurrentAplicationWindow(clientLogin, null);
+            languageManager.LanguageCombobox_LanguageChanged(LanguageSelected);
         }
         #endregion Language manager
 
         #endregion Combobox controls and Language manager
-
-        #region Windows register manager
-        /// <summary>
-        /// Abre la entrada del registro de windows si ya existe y si no existe la crea
-        /// </summary>
-        /// <param name="writeMode">bool, verdadero para escribir en la entrada del registro y false para leer solo</param>
-        /// <returns>RegistryKey, entrada del registro de windows</returns>
-        private Microsoft.Win32.RegistryKey OpenWindowsRegister(bool writeMode)
-        {
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(windowsRegistry, writeMode);
-
-            if (key == null)
-            {
-                key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(windowsRegistry);
-            }
-
-            return key;
-        }
-
-        /// <summary>
-        /// Cierra la entrada del registro de windows
-        /// </summary>
-        /// <param name="key">RegistryKey, entrada del registro de windows</param>
-        private void CloseWindowsRegister(Microsoft.Win32.RegistryKey key)
-        {
-            key.Close();
-        }
-        #endregion Windows register manager
     }
 }

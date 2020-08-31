@@ -87,38 +87,109 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientLanguage.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientLanguage.de.resx</DependentUpon>
+    </Compile>
     <Compile Include="ClientLanguage.en-GB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.en-GB.resx</DependentUpon>
     </Compile>
-    <Compile Include="LauncherLogin.cs">
+    <Compile Include="ClientAplication.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LauncherLogin.Designer.cs">
-      <DependentUpon>LauncherLogin.cs</DependentUpon>
+    <Compile Include="ClientAplication.Designer.cs">
+      <DependentUpon>ClientAplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="LauncherIndex.cs" />
+    <Compile Include="ClientLanguage.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientLanguage.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientLanguage.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientLanguage.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientLanguage.ja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientLanguage.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientLanguage.no.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientLanguage.no.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientLanguage.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientLanguage.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientLogin.Designer.cs">
+      <DependentUpon>ClientLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientLauncher.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClientLanguage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="SQLManager.cs" />
-    <EmbeddedResource Include="ClientLanguage.de.resx" />
+    <EmbeddedResource Include="ClientAplication.resx">
+      <DependentUpon>ClientAplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientLanguage.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientLanguage.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ClientLanguage.en-GB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.en-GB.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.en-US.resx" />
-    <EmbeddedResource Include="ClientLanguage.fr.resx" />
-    <EmbeddedResource Include="ClientLanguage.ja.resx" />
-    <EmbeddedResource Include="ClientLanguage.no.resx" />
-    <EmbeddedResource Include="ClientLanguage.ru.resx" />
-    <EmbeddedResource Include="LauncherLogin.resx">
-      <DependentUpon>LauncherLogin.cs</DependentUpon>
+    <EmbeddedResource Include="ClientLanguage.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientLanguage.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientLanguage.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientLanguage.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientLanguage.ja.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientLanguage.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientLanguage.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientLanguage.no.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientLanguage.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientLanguage.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientLogin.resx">
+      <DependentUpon>ClientLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -129,17 +200,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Outlands Adventure Launcher_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -148,12 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\titulo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LauncherImage.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Pantalla launcher.png" />
@@ -186,12 +249,6 @@
     <None Include="Resources\forgot password.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Idiom Flags\spanish flag.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Idiom Flags\english flag.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
@@ -202,6 +259,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\game settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
