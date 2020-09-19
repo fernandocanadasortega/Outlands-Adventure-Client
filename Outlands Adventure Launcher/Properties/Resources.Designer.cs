@@ -103,6 +103,16 @@ namespace Outlands_Adventure_Launcher.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap empty_store {
+            get {
+                object obj = ResourceManager.GetObject("empty store", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap flecha_hacia_arriba {
             get {
                 object obj = ResourceManager.GetObject("flecha-hacia-arriba", resourceCulture);
@@ -126,6 +136,16 @@ namespace Outlands_Adventure_Launcher.Properties {
         internal static System.Drawing.Bitmap forgot_username {
             get {
                 object obj = ResourceManager.GetObject("forgot username", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap game_library_empty {
+            get {
+                object obj = ResourceManager.GetObject("game library empty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,12 +1,15 @@
-﻿using System;
+﻿using CG.Web.MegaApiClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,16 +20,26 @@ namespace Outlands_Adventure_Launcher
     public partial class ClientAplication : Form
     {
         private ClientAplication clientAplication;
+        private string userEmail;
+
+        private string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "Outlands Adventure Client");
+        private string downloadGameName = "";
+        private string downloadState = "";
+        private bool downloadInProgress;
+        private bool uninstallInProgress;
 
         private readonly int objectHighlighted = 30;
         private readonly int objectUnmarked = 0;
         private readonly int objectSelected = 50;
         private bool storeOpen, libraryOpen, gameInfoOpen;
 
+        private bool operationInProgress;
         private bool canTriggerSelections;
 
         private ListView currentGameImagesListView;
-        private Dictionary<string, Image> currentGameImages;
+        List<GameInfo> currentGameInfoList;
+        GameInfo currentGameInfo;
 
         private ToolTip toolTip;
         private string tileSizeSelected = "";
@@ -36,85 +49,60 @@ namespace Outlands_Adventure_Launcher
             InitializeComponent();
         }
 
+        public void ReceiveClassInstance(ClientAplication clientAplication)
+        {
+            this.clientAplication = clientAplication;
+            userEmail = "thenapo212@gmail.com"; // cambiar por nombre de usuario obtenido cuando te logeas
+        }
+
+        #region Form Actions
         private void ClientAplication_Load(object sender, EventArgs e)
         {
-            currentGameImages = new Dictionary<string, Image>();
+            CreateClientFolder();
+
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            windowsRegisterManager.LoadWindowPosition(this);
+
+            LanguageManager languageManager = new LanguageManager();
+            languageManager.SelectCurrentAplicationWindow(null, clientAplication);
+            languageManager.ReadSelectedLanguage(true, LanguageSelected);
+
+            currentGameInfoList = new List<GameInfo>();
             ImageGradient.BackColor = Color.FromArgb(190, 0, 0, 0);
-            GameInfoGradient.BackColor = Color.FromArgb(190, 0, 0, 0);
+            GameInfoGradient.BackColor = Color.FromArgb(210, 0, 0, 0);
             toolTip = new ToolTip();
+
+            operationInProgress = false;
             canTriggerSelections = true;
 
             // Comprobar si el panel de inicio establecido no es la información, si no es la información del usuario hacer el metodo 1
             SelectTileSize(true, false, false); // Metodo 1
             SetDefaultScreen();
+
+            DownloadProgress.MarqueeAnimationSpeed = 40;
+            UninstallProgress.MarqueeAnimationSpeed = 40;
         }
 
-        public void ReceiveClassInstance(ClientAplication clientAplication)
+        private void ClientAplication_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.clientAplication = clientAplication;
-        }
-
-        #region Side Menu Manager
-
-        private void SetDefaultScreen()
-        {
-            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
-            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
-
-            string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
-            if (selectedDefaultScreen == null || selectedDefaultScreen.Equals(""))
+            if (operationInProgress)
             {
-                key.SetValue("selectedDefaultScreen", "Tienda"); //store_Header
-            }
-
-            switch (selectedDefaultScreen)
-            {
-                case "Tienda": //store_Header
-                    Store_MouseDown(null, null);
-                    break;
-
-                case "Libreria de juegos": //gameLibrary_Header
-                    GameLibrary_MouseDown(null, null);
-                    break;
-
-                case "Aleatorio": //randomDefaultScreen
-                    Random random = new Random();
-                    int randomNumer = random.Next(1, 3);
-
-                    if (randomNumer == 1) Store_MouseDown(null, null);
-                    else if (randomNumer == 2) GameLibrary_MouseDown(null, null);
-                    break;
-            }
-        }
-
-        private void ChangeScreen(ref bool selectedScreen, Image gameImage)
-        {
-            // Change between Screens (store, library...)
-            if (gameImage == null)
-            {
-                storeOpen = libraryOpen = gameInfoOpen = false;
-                selectedScreen = true;
-
-                StoreMenu.Visible = storeOpen;
-                GameLibraryMenu.Visible = libraryOpen;
-                GameInfoMenu.Visible = gameInfoOpen;
-
-                Store_MouseLeave(null, EventArgs.Empty);
-                GameLibrary_MouseLeave(null, EventArgs.Empty);
-
-                FilterGame.Text = "";
+                e.Cancel = true;
             }
             else
             {
-                //if (storeOpen) // Poner el dinero
-                //else if (libraryOpen)
+                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                windowsRegisterManager.SaveWindowPosition(this);
 
-                selectedScreen = true;
-                GameInfoMenu.Visible = gameInfoOpen;
-                GameInfoMenu.BackgroundImage = gameImage;
+                Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+                key.SetValue("selectedTileSize", tileSizeSelected);
+
+                windowsRegisterManager.CloseWindowsRegister(key);
             }
         }
+        #endregion Form Actions
 
+        #region Side Menu Manager
         private void ChangeBackgroundColor(Object backgroundPanel, int colorOpacity)
         {
             if (backgroundPanel.GetType() == typeof(Panel))
@@ -133,17 +121,7 @@ namespace Outlands_Adventure_Launcher
             if (canTriggerSelections)
             {
                 ChangeBackgroundColor(UserInformation, objectHighlighted);
-
-                ContextMenuStrip.Name = "UserInfoMenu";
-                ContextMenuStrip.Items.Clear();
-
-                ContextMenuStrip.Items.Add("Ajustes de la aplicación"); //userInfoMenu_Settings
-                ContextMenuStrip.Items.Add(new ToolStripSeparator());
-                ContextMenuStrip.Items.Add("Cerrar sesión"); //userInfoMenu_logout
-
-                ContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserSettingsMenuStrip_ItemClicked);
-                ContextMenuStrip.Show(UserInformation, new Point(UserInformation.Width, + 10));
-
+                ShowUserInfoMenu();
                 canTriggerSelections = false;
             }
         }
@@ -158,22 +136,10 @@ namespace Outlands_Adventure_Launcher
                         !MouseIsOverControl(UserPhoto) && !MouseIsOverControl(GameInfoMenu))
                     {
                         ChangeBackgroundColor(UserInformation, objectUnmarked);
-
-                        ContextMenuStrip.ItemClicked -= this.UserSettingsMenuStrip_ItemClicked;
-                        ContextMenuStrip.Hide();
-                        ContextMenuStrip.Items.Clear();
-
+                        HideUserInfoMenu();
                         canTriggerSelections = true;
                     }
                 }
-            }
-        }
-
-        private void UserInformation_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (e == null || e.Button == MouseButtons.Left)
-            {
-                MessageBox.Show("click");
             }
         }
         #endregion User Information
@@ -212,7 +178,7 @@ namespace Outlands_Adventure_Launcher
                 if (!storeOpen)
                 {
                     Store.Focus();
-                    ChangeScreen(ref storeOpen, null);
+                    ChangeScreen(ref storeOpen, false);
 
                     ChangeBackgroundColor(Store, objectSelected);
                     ChangeBackgroundColor(GameLibrary, objectUnmarked);
@@ -272,7 +238,7 @@ namespace Outlands_Adventure_Launcher
                 if (!libraryOpen)
                 {
                     GameLibrary.Focus();
-                    ChangeScreen(ref libraryOpen, null);
+                    ChangeScreen(ref libraryOpen, false);
 
                     ChangeBackgroundColor(GameLibrary, objectSelected);
                     ChangeBackgroundColor(Store, objectUnmarked);
@@ -315,9 +281,55 @@ namespace Outlands_Adventure_Launcher
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(false);
             string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
+
             DefaultScreen.SelectedItem = selectedDefaultScreen;
+            windowsRegisterManager.CloseWindowsRegister(key);
+
+            if (DefaultScreen.SelectedItem == null || DefaultScreen.SelectedIndex == -1)
+                DefaultScreen.SelectedIndex = 0;
 
             ConfigurationPanel.Focus();
+        }
+
+        private void DeleteAccount_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                OpenLoadingScreen();
+                string confirmationCode = CreateConfirmationCode.CreateCode();
+                Hash_SHA2.InitialiceVariables(confirmationCode);
+
+                string[] messageInfo = ClientLanguage.sendEmail_DeleteAccount.Split('*');
+                bool messageError = SendEmail.SendNewEmail(userEmail, messageInfo[0], messageInfo[1], confirmationCode);
+
+                if (!messageError)
+                {
+                    EventText.Location = new Point(20, 10);
+                    EventCode.Visible = true;
+                    EventSendButton.Visible = true;
+                    EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+
+                    EventText.Text = ClientLanguage.events_Header_NewAccount;
+
+                    EventsPanel.Visible = true;
+                }
+                else
+                {
+                    GenericPopUpMessage(ClientLanguage.events_SendEmailError);
+                }
+
+                CloseLoadingScreen(false);
+            }
+        }
+
+        private void DeleteAccount_MouseEnter(object sender, EventArgs e)
+        {
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
+        }
+
+        private void DeleteAccount_MouseLeave(object sender, EventArgs e)
+        {
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
         }
 
         private void ConfigurationExitButton_Click(object sender, EventArgs e)
@@ -336,26 +348,106 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion Game Client Configuration
 
-        #region Show and Hide Image Gradient Panel
-        // Methods to show Image Gradient Panel
-        private void ShowImageGradient()
+        #region Set default screen and change screens
+        private void SetDefaultScreen()
         {
-            ConfigurationPanel.Visible = false;
-            EventsPanel.Visible = false;
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 
-            SideMenu.Visible = false;
-            MainMenu.Visible = false;
+            string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
+            if (selectedDefaultScreen == null || selectedDefaultScreen.Equals(""))
+            {
+                key.SetValue("selectedDefaultScreen", ClientLanguage.store_Header);
+            }
+
+            windowsRegisterManager.CloseWindowsRegister(key);
+
+            if (selectedDefaultScreen.Equals(ClientLanguage.store_Header))
+            {
+                Store_MouseDown(null, null);
+            }
+            else if (selectedDefaultScreen.Equals(ClientLanguage.gameLibrary_Header))
+            {
+                GameLibrary_MouseDown(null, null);
+            }
+            else if (selectedDefaultScreen.Equals(ClientLanguage.randomDefaultScreen))
+            {
+                Random random = new Random();
+                int randomNumer = random.Next(1, 3);
+
+                if (randomNumer == 1) Store_MouseDown(null, null);
+                else if (randomNumer == 2) GameLibrary_MouseDown(null, null);
+            }
+            else
+            {
+                Store_MouseDown(null, null);
+            }
         }
 
-        private void HideImageGradient()
+        private void ChangeScreen(ref bool selectedScreen, bool openGameInfo)
         {
-            ConfigurationPanel.Visible = false;
-            EventsPanel.Visible = false;
+            // Change between Screens (store, library...)
+            if (!openGameInfo)
+            {
+                storeOpen = libraryOpen = gameInfoOpen = false;
+                selectedScreen = true;
 
-            SideMenu.Visible = true;
-            MainMenu.Visible = true;
+                StoreMenu.Visible = storeOpen;
+                GameLibraryMenu.Visible = libraryOpen;
+                GameInfoMenu.Visible = gameInfoOpen;
+
+                Store_MouseLeave(null, EventArgs.Empty);
+                GameLibrary_MouseLeave(null, EventArgs.Empty);
+
+                FilterGame.Text = "";
+            }
+            else
+            {
+                if (storeOpen)
+                {
+                    Play_BuyGame.Text = ClientLanguage.buy_Button;
+                    
+                    MoneyPanel.Visible = true;
+                    CurrentCurrency.Text = "900 " + ClientLanguage.currency;
+                    this.GamePrice.Text = currentGameInfo.GamePrice + " " + ClientLanguage.currency;
+                    GameSettingsBackground.Visible = false;
+
+                }
+                else if (libraryOpen)
+                {
+                    if (CheckGameFiles())
+                    {
+                        Play_BuyGame.Text = ClientLanguage.play_Button;
+                    }
+                    else
+                    {
+                        if (!currentGameInfo.GameDownloadLink.Equals(""))
+                        {
+                            if (!downloadInProgress) // Descarga no en curso
+                            {
+                                Play_BuyGame.Text = ClientLanguage.download_Avaible_Button;
+                            }
+                            else // Descarga en curso
+                            {
+                                Play_BuyGame.Text = ClientLanguage.download_Avaible_Button + " - " + ClientLanguage.action_InProgress;
+                            }
+                        }
+                        else
+                        {
+                            Play_BuyGame.Text = ClientLanguage.download_Unavaible_Button;
+                        }
+                    }
+
+                    MoneyPanel.Visible = false;
+                    GameSettingsBackground.Visible = true;
+                }
+
+                selectedScreen = true;
+                GameInfoMenu.Visible = gameInfoOpen;
+                GameInfoMenu.BackgroundImage = currentGameInfo.GameImage;
+            }
         }
-        #endregion Show and Hide Image Gradient Panel
+        #endregion Set default screen and change screens
 
         #region Combobox controls, Language manager and Default Screen Manager
 
@@ -383,12 +475,28 @@ namespace Outlands_Adventure_Launcher
             // Events
             EventSendButton.Text = ClientLanguage.button_Confirm;
             EventExitButton.Text = ClientLanguage.button_Close;
+            EventCodeError.Text = ClientLanguage.eventCode_Error;
+
+            // Download - Uninstall
+            CheckDownload_UninstallInformationLanguage();
 
             // Settings
             ConfigurationHeader.Text = ClientLanguage.settings_Header;
             ClientLanguageHeader.Text = ClientLanguage.settings_LanguageHeader;
+            DefaultScreenHeader.Text = ClientLanguage.settings_DefaultScreenHeader;
+            ConfigurationExitButton.Text = ClientLanguage.button_Close;
+            DeleteAccount.Text = ClientLanguage.settings_DeleteAccount;
 
-            // faltan el resto de elementos
+            // Main menu
+            FilterGame.Text = ClientLanguage.filterGame;
+            CurrentCurrencyHeader.Text = ClientLanguage.currentCurrency;
+            GamePriceHeader.Text = ClientLanguage.currentGamePrice;
+            StoreEmptyLabel.Text = ClientLanguage.StoreEmpty;
+            LibraryEmptyLabel.Text = ClientLanguage.LibraryEmpty;
+
+            // Side menu
+            StoreLabel.Text = ClientLanguage.store_Header;
+            GameLibraryLabel.Text = ClientLanguage.gameLibrary_Header;
 
             LanguageSelected.Items.Clear();
             string[] languagesAvaibles = ClientLanguage.settings_Languages.Split('*');
@@ -397,7 +505,73 @@ namespace Outlands_Adventure_Launcher
                 LanguageSelected.Items.Add(currentLanguage);
             }
 
-            ConfigurationExitButton.Text = ClientLanguage.button_Close;
+            DefaultScreen.Items.Clear();
+            string[] ScreensAvaibles = ClientLanguage.settings_DefaultScreen.Split('*');
+            foreach (string currentScreen in ScreensAvaibles)
+            {
+                DefaultScreen.Items.Add(currentScreen);
+            }
+        }
+
+        private void CheckDownload_UninstallInformationLanguage()
+        {
+            LanguageManager languageManager = new LanguageManager();
+            string currentLanguage = ChangeLanguageTemporarily(languageManager);
+
+            if (downloadState.Equals(ClientLanguage.game_Download))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.game_Download;
+            }
+            else if (downloadState.Equals(ClientLanguage.game_Install))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.game_Install;
+            }
+            else if (downloadState.Equals(ClientLanguage.game_DownloadError))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.game_DownloadError;
+            }
+            else if (downloadState.Equals(ClientLanguage.game_DownloadSucess))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.game_DownloadSucess;
+            }
+            else if (downloadState.Equals(ClientLanguage.game_InstallError))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.game_InstallError;
+            }
+            else if (downloadState.Equals(ClientLanguage.Uninstalling_Game))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.Uninstalling_Game;
+            }
+            else if (downloadState.Equals(ClientLanguage.Uninstalled_Game))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.Uninstalled_Game;
+            }
+            else if (downloadState.Equals(ClientLanguage.game_NoSpace))
+            {
+                languageManager.ChangeCurrentLanguage(currentLanguage);
+                DownloadState.Text = ClientLanguage.game_NoSpace;
+            }
+
+            languageManager.ChangeCurrentLanguage(currentLanguage);
+        }
+
+        // Cambia el idioma a español y devuelve el idioma que esta seleccionado originalmente por el usuario
+        private string ChangeLanguageTemporarily(LanguageManager languageManager)
+        {
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+            string currentLanguage = (string)key.GetValue("selectedLanguage");
+
+            languageManager.ChangeCurrentLanguage("es-ES");
+
+            return currentLanguage;
         }
 
         /// <summary>
@@ -407,9 +581,14 @@ namespace Outlands_Adventure_Launcher
         /// <param name="e">Eventos que le ocurren al objeto</param>
         private void LanguageSelected_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            int currentDefaultScreen = DefaultScreen.SelectedIndex;
+
             LanguageManager languageManager = new LanguageManager();
             languageManager.SelectCurrentAplicationWindow(null, clientAplication);
             languageManager.LanguageCombobox_LanguageChanged(LanguageSelected);
+
+            SaveDefaultScreen(currentDefaultScreen);
+            DefaultScreen.SelectedIndex = currentDefaultScreen;
         }
         #endregion Language manager
 
@@ -421,9 +600,14 @@ namespace Outlands_Adventure_Launcher
         /// <param name="e">Eventos que le ocurren al objeto</param>
         private void DefaultScreen_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            SaveDefaultScreen(DefaultScreen.SelectedIndex);
+        }
+
+        private void SaveDefaultScreen(int selectedItemIndex)
+        {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
-            key.SetValue("selectedDefaultScreen", DefaultScreen.SelectedItem.ToString());
+            key.SetValue("selectedDefaultScreen", DefaultScreen.Items[selectedItemIndex]);
             windowsRegisterManager.CloseWindowsRegister(key);
         }
         #endregion Default Screen manager
@@ -521,7 +705,7 @@ namespace Outlands_Adventure_Launcher
         #region Tile Size Icons Manager
         private void SmallTiles_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTip(SmallTiles, "Small tiles"); //smallTiles_Tooltip
+            ShowToolTip(SmallTiles, ClientLanguage.smallTiles_Tooltip);
         }
 
         private void SmallTiles_MouseLeave(object sender, EventArgs e)
@@ -531,14 +715,17 @@ namespace Outlands_Adventure_Launcher
 
         private void SmallTiles_Click(object sender, EventArgs e)
         {
-            SmallTiles.Focus();
-            tileSizeSelected = "SmallTile";
-            SelectTileSize(false, true, false);
+            if (!tileSizeSelected.Equals("SmallTile"))
+            {
+                SmallTiles.Focus();
+                tileSizeSelected = "SmallTile";
+                SelectTileSize(false, true, false);
+            }
         }
 
         private void MediumTiles_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTip(MediumTiles, "Medium tiles"); //mediumTiles_Tooltip
+            ShowToolTip(MediumTiles, ClientLanguage.mediumTiles_Tooltip);
         }
 
         private void MediumTiles_MouseLeave(object sender, EventArgs e)
@@ -548,14 +735,17 @@ namespace Outlands_Adventure_Launcher
 
         private void MediumTiles_Click(object sender, EventArgs e)
         {
-            MediumTiles.Focus();
-            tileSizeSelected = "MediumTile";
-            SelectTileSize(false, true, false);
+            if (!tileSizeSelected.Equals("MediumTile"))
+            {
+                MediumTiles.Focus();
+                tileSizeSelected = "MediumTile";
+                SelectTileSize(false, true, false);
+            }
         }
 
         private void LargeTiles_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTip(LargeTiles, "Large tiles"); //largeTiles_Tooltip
+            ShowToolTip(LargeTiles, ClientLanguage.largeTiles_Tooltip);
         }
 
         private void LargeTiles_MouseLeave(object sender, EventArgs e)
@@ -565,17 +755,20 @@ namespace Outlands_Adventure_Launcher
 
         private void LargeTiles_Click(object sender, EventArgs e)
         {
-            LargeTiles.Focus();
-            tileSizeSelected = "LargeTile";
-            SelectTileSize(false, true, false);
+            if (!tileSizeSelected.Equals("LargeTile"))
+            {
+                LargeTiles.Focus();
+                tileSizeSelected = "LargeTile";
+                SelectTileSize(false, true, false);
+            }
         }
         #endregion Tile Size Icons Manager
 
         #region Game Filter Manager
         private void FilterGame_Click(object sender, EventArgs e)
         {
-            if (FilterGame.Text.Equals("Filter Library") && FilterGame.ForeColor == Color.FromArgb(130, 130, 130))
-                FilterGame.SelectionStart = 0; //filterGame
+            if (FilterGame.Text.Equals(ClientLanguage.filterGame) && FilterGame.ForeColor == Color.FromArgb(130, 130, 130))
+                FilterGame.SelectionStart = 0;
         }
 
         private void FilterGame_KeyDown(object sender, KeyEventArgs e)
@@ -600,7 +793,7 @@ namespace Outlands_Adventure_Launcher
             {
                 FilterGame.TextChanged -= FilterGame_TextChanged;
 
-                FilterGame.Text = "Filter Library"; //filterGame
+                FilterGame.Text = ClientLanguage.filterGame;
                 FilterGame.ForeColor = Color.FromArgb(130, 130, 130);
                 FilterGame.KeyDown += FilterGame_KeyDown;
                 FilterGame.SelectionStart = 0;
@@ -617,7 +810,19 @@ namespace Outlands_Adventure_Launcher
         {
             if (formStarting)
             {
-                tileSizeSelected = "LargeTile"; // Cambiar por el que exista en el registro de windows
+                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+
+                string selectedTileSize = (string)key.GetValue("selectedTileSize");
+                if (selectedTileSize == null || selectedTileSize.Equals(""))
+                {
+                    selectedTileSize = "LargeTile";
+                    key.SetValue("selectedTileSize", selectedTileSize);
+                }
+
+                windowsRegisterManager.CloseWindowsRegister(key);
+
+                tileSizeSelected = selectedTileSize;
                 TileSizeButtonsColor();
             }
 
@@ -630,21 +835,21 @@ namespace Outlands_Adventure_Launcher
                     switch (tileSizeSelected)
                     {
                         case "SmallTile":
-                            if (FilterGame.Text.Equals("Filter Library")) //filterGame
+                            if (FilterGame.Text.Equals(ClientLanguage.filterGame))
                                 ResizeGameList(80, 120);
                             else
                                 RefillFilteredGames(FilterGame.Text, 80, 120);
                             break;
 
                         case "MediumTile":
-                            if (FilterGame.Text.Equals("Filter Library")) //filterGame
+                            if (FilterGame.Text.Equals(ClientLanguage.filterGame))
                                 ResizeGameList(130, 196);
                             else
                                 RefillFilteredGames(FilterGame.Text, 130, 196);
                             break;
 
                         case "LargeTile":
-                            if (FilterGame.Text.Equals("Filter Library")) //filterGame
+                            if (FilterGame.Text.Equals(ClientLanguage.filterGame))
                                 ResizeGameList(196, 256);
                             else
                                 RefillFilteredGames(FilterGame.Text, 196, 256);
@@ -673,35 +878,57 @@ namespace Outlands_Adventure_Launcher
 
         private void FillGameList(int xSize, int ySize)
         {
-            currentGameImages.Clear();
+            currentGameInfoList.Clear();
             currentGameImagesListView.Items.Clear();
             GameImages.Images.Clear();
 
-            string folderPath = "C:/Users/thena/Desktop/GTX 1060/memes"; // Cambiar por imagenes de la base de datos
             GameImages.ImageSize = new Size(xSize, ySize);
             GameImages.ColorDepth = ColorDepth.Depth32Bit;
 
-            string[] paths = Directory.GetFiles(folderPath);
 
-            try
+            if (storeOpen) currentGameInfoList = CheckAvaibleGames();
+            else if (libraryOpen) currentGameInfoList = CheckOwnedGames();
+
+            if (currentGameInfoList == null || currentGameInfoList.Count == 0)
             {
-                for (int currentImage = 0; currentImage < paths.Length; currentImage++)
+                if (storeOpen)
                 {
-                    Image gameImage = Image.FromFile(paths[currentImage]);
-                    string gameName = Path.GetFileNameWithoutExtension(paths[currentImage]);
-
-                    GameImages.Images.Add(gameImage);
-                    currentGameImagesListView.Items.Add(gameName, currentImage);
-
-                    currentGameImages.Add(gameName, gameImage);
+                    StoreEmpty.Visible = true;
+                    StoreAvailableGames.Visible = false;
+                }
+                else if (libraryOpen)
+                {
+                    LibraryEmpty.Visible = true;
+                    GameLibraryAvailableGames.Visible = false;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-            }
+                StoreEmpty.Visible = false;
+                LibraryEmpty.Visible = false;
+                StoreAvailableGames.Visible = true;
+                GameLibraryAvailableGames.Visible = true;
 
-            currentGameImagesListView.LargeImageList = GameImages;
+                try
+                {
+                    for (int currentImage = 0; currentImage < currentGameInfoList.Count; currentImage++)
+                    {
+                        try
+                        {
+                            GameImages.Images.Add(currentGameInfoList[currentImage].GameImage);
+                            currentGameImagesListView.Items.Add(currentGameInfoList[currentImage].GameName, currentImage);
+                        }
+                        catch (OutOfMemoryException)
+                        { }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                currentGameImagesListView.LargeImageList = GameImages;
+            }
         }
 
         private void ResizeGameList(int xSize, int ySize)
@@ -713,10 +940,10 @@ namespace Outlands_Adventure_Launcher
             GameImages.ColorDepth = ColorDepth.Depth32Bit;
 
             int currentImage = 0;
-            foreach (KeyValuePair<string, Image> currentGameDictionaryPair in currentGameImages)
+            foreach (GameInfo currentGameInfo in currentGameInfoList)
             {
-                currentGameImagesListView.Items.Add(currentGameDictionaryPair.Key, currentImage);
-                GameImages.Images.Add(currentGameDictionaryPair.Value);
+                currentGameImagesListView.Items.Add(currentGameInfoList[currentImage].GameName, currentImage);
+                GameImages.Images.Add(currentGameInfoList[currentImage].GameImage);
 
                 currentImage++;
             }
@@ -736,12 +963,12 @@ namespace Outlands_Adventure_Launcher
             }
 
             int currentImage = 0;
-            foreach (KeyValuePair<string, Image> currentGameDictionaryPair in currentGameImages)
+            foreach (GameInfo currentGameInfo in currentGameInfoList)
             {
-                if ((currentGameDictionaryPair.Key).ToLower().Contains(filteredGameName.ToLower()) || filteredGameName.Equals(""))
+                if (currentGameInfoList[currentImage].GameName.ToLower().Contains(filteredGameName.ToLower()) || filteredGameName.Equals(""))
                 {
-                    currentGameImagesListView.Items.Add(currentGameDictionaryPair.Key, currentImage);
-                    GameImages.Images.Add(currentGameDictionaryPair.Value);
+                    currentGameImagesListView.Items.Add(currentGameInfoList[currentImage].GameName, currentImage);
+                    GameImages.Images.Add(currentGameInfoList[currentImage].GameImage);
 
                     currentImage++;
                 }
@@ -750,6 +977,95 @@ namespace Outlands_Adventure_Launcher
             currentGameImagesListView.LargeImageList = GameImages;
         }
         #endregion Fill Games Listview and Resize Listview Images
+
+        #region Listview Manager and Game Info Button (Play - Download - Buy Button)
+        private void GamesListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                string gameName = currentGameImagesListView.SelectedItems[0].SubItems[0].Text;
+
+                foreach (GameInfo currentGameInfo in currentGameInfoList)
+                {
+                    if (currentGameInfo.GameName.Equals(gameName))
+                    {
+                        this.currentGameInfo = currentGameInfo;
+                        break;
+                    }
+                }
+
+                ChangeScreen(ref gameInfoOpen, true);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (libraryOpen) ShowGameSettingsMenu(MousePosition.X + 10, MousePosition.Y + 15, null);
+            }
+
+            // Unselect all items
+            if (this.currentGameImagesListView.SelectedIndices.Count > 0)
+                for (int i = 0; i < this.currentGameImagesListView.SelectedIndices.Count; i++)
+                {
+                    this.currentGameImagesListView.Items[this.currentGameImagesListView.SelectedIndices[i]].Selected = false;
+                }
+        }
+
+        private void GamesListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //if (libraryOpen) Launch / Install game
+        }
+
+        private void Play_BuyGame_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (storeOpen)
+                {
+                    OpenLoadingScreen();
+                    string sqlQuery = "INSERT INTO games_owned(user_email, gameName, gameProgression) VALUES " +
+                        "('" + userEmail + "', '" + currentGameInfo.GameName + "', null)";
+                    string queryError = SQLManager.Insert_ModifyData(sqlQuery);
+
+                    if (queryError.Length > 0)
+                    {
+                        if (queryError.Contains("Unable to connect"))
+                        {
+                            // Pop up de falta de internet - No te puedes conectar a la base de datos
+                            GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                        }
+                        else
+                        {
+                            // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
+                            GenericPopUpMessage(queryError);
+                        }
+                    }
+                    else
+                    {
+                        SelectTileSize(false, false, true);
+                        ChangeScreen(ref storeOpen, false);
+                        GenericPopUpMessage(ClientLanguage.buyGameSucess);
+                    }
+
+                    CloseLoadingScreen(false);
+                }
+                else if (libraryOpen)
+                {
+                    if (Play_BuyGame.Text.Equals(ClientLanguage.play_Button))
+                    {
+                        string gamePath = Path.Combine(downloadPath, currentGameInfo.GameName, currentGameInfo.GameName + ".exe");
+                        Process.Start(gamePath);
+                    }
+                    else if (Play_BuyGame.Text.Equals(ClientLanguage.download_Avaible_Button))
+                    {
+                        Download_InstallGame();
+                    }
+                    else if (Play_BuyGame.Text.Equals(ClientLanguage.gameSettingsMenu_Uninstall))
+                    {
+                        UninstallGame();
+                    }
+                }
+            }
+        }
+        #endregion Listview Manager and Game Info Button (Play - Buy Button)
 
         #region Others
 
@@ -773,6 +1089,7 @@ namespace Outlands_Adventure_Launcher
         #region Mouse is over control
         private bool MouseIsOverControl(Object currentObject)
         {
+            // Check if the mouse is over a panel or label
             if (currentObject.GetType() == typeof(Panel))
             {
                 Panel currentPanel = (Panel)currentObject;
@@ -790,39 +1107,253 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion Mouse is over control
 
-        #endregion Others
-
-        private void GamesListView_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                string gameName = currentGameImagesListView.SelectedItems[0].SubItems[0].Text;
-                currentGameImages.TryGetValue(gameName, out Image gameImage);
-                ChangeScreen(ref gameInfoOpen, gameImage);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                ShowGameSettingsMenu(MousePosition.X + 10, MousePosition.Y + 15, null);
-            }
-
-            // Unselect all items
-            if (this.currentGameImagesListView.SelectedIndices.Count > 0)
-                for (int i = 0; i < this.currentGameImagesListView.SelectedIndices.Count; i++)
-                {
-                    this.currentGameImagesListView.Items[this.currentGameImagesListView.SelectedIndices[i]].Selected = false;
-                }
-        }
-
-        private void StoreGamesListView_DoubleClick(object sender, EventArgs e)
-        {
-            // Abrir juego inmediatamente o instalarlo si no esta
-        }
-
+        #region Close Game Info
         private void CloseGameInfo_Click(object sender, EventArgs e)
         {
             gameInfoOpen = false;
             GameInfoMenu.Visible = gameInfoOpen;
         }
+        #endregion Close Game Info
+
+        #region Popup events
+        private void GenericPopUpMessage(string eventText)
+        {
+            EventText.Location = new Point(20, 25);
+            EventCode.Visible = false;
+            EventSendButton.Visible = false;
+            EventExitButton.Location = new Point(237, 105);
+            EventText.Text = eventText;
+            EventsPanel.Visible = true;
+        }
+
+        private void CheckHashResumes()
+        {
+            if (Hash_SHA2.VerifyResume(EventCode.Text))
+            {
+                EventCodeError.Visible = false;
+                EventsPanel.Visible = false;
+
+                EventCode.Text = "";
+                EventCodeError.Visible = false;
+
+                OpenLoadingScreen();
+
+                string sqlQuery = "DELETE FROM user_information WHERE user_email LIKE '" + userEmail + "'";
+                string queryError = SQLManager.Insert_ModifyData(sqlQuery);
+
+                if (queryError.Length > 0)
+                {
+                    if (queryError.Contains("Unable to connect"))
+                    {
+                        // Pop up de falta de internet - No te puedes conectar a la base de datos
+                        GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                    }
+                    else
+                    {
+                        // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
+                        GenericPopUpMessage(queryError);
+                    }
+                }
+                else
+                {
+                    // "Log Out" - Devuelvele a la pantalla de login
+                }
+
+                CloseLoadingScreen(false);
+            }
+            else
+            {
+                EventCodeError.Visible = true;
+            }
+        }
+
+        private void EventExitButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                HideImageGradient();
+
+                EventCode.Text = "";
+                EventCodeError.Visible = false;
+            }
+        }
+
+        private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
+        {
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
+        }
+
+        private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
+        {
+            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
+        }
+
+        private void EventSendButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                CheckHashResumes();
+            }
+        }
+
+        private void EventCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CheckHashResumes();
+            }
+        }
+        #endregion Popup events
+
+        #region Show and Hide Image Gradient Panel
+        // Methods to show Image Gradient Panel
+        private void ShowImageGradient()
+        {
+            ConfigurationPanel.Visible = false;
+            EventsPanel.Visible = false;
+
+            SideMenu.Visible = false;
+            MainMenu.Visible = false;
+        }
+
+        private void HideImageGradient()
+        {
+            ConfigurationPanel.Visible = false;
+            EventsPanel.Visible = false;
+
+            SideMenu.Visible = true;
+            MainMenu.Visible = true;
+
+            SelectTileSize(false, true, false);
+        }
+        #endregion Show and Hide Image Gradient Panel
+
+        #region Enable / Disable Loading Screen
+        private void OpenLoadingScreen()
+        {
+            ShowImageGradient();
+            ImageGradient.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+            operationInProgress = true;
+        }
+
+        private void CloseLoadingScreen(bool hideImageGradient)
+        {
+            if (hideImageGradient) HideImageGradient();
+            ImageGradient.Cursor = System.Windows.Forms.Cursors.Default;
+            operationInProgress = false;
+        }
+        #endregion Enable / Disable Loading Screen
+
+        #endregion Others
+
+        #region Context Menu Strip Manager (Drop-down menu)
+
+        #region User Settings Menu
+        private void ShowUserInfoMenu()
+        {
+            ContextMenuStrip.Name = "UserInfoMenu";
+            ContextMenuStrip.Items.Clear();
+
+            ContextMenuStrip.Items.Add(ClientLanguage.userInfoMenu_Settings);
+            ContextMenuStrip.Items.Add(new ToolStripSeparator());
+            ContextMenuStrip.Items.Add(ClientLanguage.userInfoMenu_logout);
+
+            ContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserSettingsMenuStrip_ItemClicked);
+            ContextMenuStrip.Show(UserInformation, new Point(UserInformation.Width, +10));
+        }
+
+        private void HideUserInfoMenu()
+        {
+            ContextMenuStrip.ItemClicked -= this.UserSettingsMenuStrip_ItemClicked;
+            ContextMenuStrip.Hide();
+            ContextMenuStrip.Items.Clear();
+        }
+
+        private void UserSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (ContextMenuStrip.Items[0] == e.ClickedItem)
+            {
+                OpenConfiguration();
+            }
+            else if (ContextMenuStrip.Items[2] == e.ClickedItem)
+            {
+                // Cerrar sesión
+            }
+        }
+        #endregion User Settings Menu
+
+        #region Game Settings Menu
+        private void GameSettings_Click(object sender, EventArgs e)
+        {
+            ShowGameSettingsMenu(GameSettingsBackground.Width + 3, 3, GameSettingsBackground);
+        }
+
+        private void ShowGameSettingsMenu(int pointX, int pointY, Panel panelAttached)
+        {
+            ContextMenuStrip.Name = "GameSettingsMenu";
+            ContextMenuStrip.Items.Clear();
+
+            if (!gameInfoOpen)
+            {
+                string gameName = currentGameImagesListView.SelectedItems[0].SubItems[0].Text;
+
+                foreach (GameInfo currentGameInfo in currentGameInfoList)
+                {
+                    if (currentGameInfo.GameName.Equals(gameName))
+                    {
+                        this.currentGameInfo = currentGameInfo;
+                        break;
+                    }
+                }
+            }
+
+            if (CheckGameFiles())
+            {
+                ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.play_Button));
+                ContextMenuStrip.Items.Add(new ToolStripSeparator());
+                ContextMenuStrip.Items.Add(ClientLanguage.gameSettingsMenu_Uninstall);
+            }
+            else
+            {
+                if (!currentGameInfo.GameDownloadLink.Equals(""))
+                {
+                    if (!downloadInProgress) // Descarga no en curso
+                    {
+                        ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Avaible_Button));
+                    }
+                    else // Descarga en curso
+                    {
+                        ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Avaible_Button + " - " + 
+                            ClientLanguage.action_InProgress));
+                    }
+                }
+                else
+                {
+                    ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Unavaible_Button));
+                }
+            }
+
+            ContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.GameSettingsMenuStrip_ItemClicked);
+            if (panelAttached == null) ContextMenuStrip.Show(pointX, pointY);
+            if (panelAttached != null) ContextMenuStrip.Show(panelAttached, new Point(pointX, pointY));
+        }
+
+        private void GameSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text.Equals(ClientLanguage.play_Button))
+            {
+                // Jugar juego
+            }
+            else if (e.ClickedItem.Text.Equals(ClientLanguage.download_Avaible_Button))
+            {
+                Download_InstallGame();
+            }
+            else if (e.ClickedItem.Text.Equals(ClientLanguage.gameSettingsMenu_Uninstall))
+            {
+                UninstallGame();
+            }
+        }
+        #endregion Game Settings Menu
 
         private void ContextMenuStrip_MouseLeave(object sender, EventArgs e)
         {
@@ -841,51 +1372,280 @@ namespace Outlands_Adventure_Launcher
                 ContextMenuStrip.ItemClicked -= this.GameSettingsMenuStrip_ItemClicked;
             }
         }
+        #endregion Context Menu Strip Manager (Drop-down menu)
 
-        private void ShowGameSettingsMenu(int pointX, int pointY, Panel panelAttached)
+        #region SQL Check games status
+        private List<GameInfo> CheckOwnedGames()
         {
-            ContextMenuStrip.Name = "GameSettingsMenu";
-            ContextMenuStrip.Items.Clear();
+            string sqlQuery = "SELECT G_A.gameName, G_A.gameCover, G_A.gamePrice, G_A.gameDownloadLink " +
+                "FROM games_avaibles G_A INNER JOIN games_owned G_O ON G_A.gameName = G_O.gameName " +
+                "Where G_O.user_email LIKE '" + userEmail + "'";
 
-            ContextMenuStrip.Items.Add(new ToolStripMenuItem("Jugar")); //gameSettingsMenu_Play
-            ContextMenuStrip.Items.Add(new ToolStripSeparator());
-            ContextMenuStrip.Items.Add(new ToolStripMenuItem("Actualizar")); //gameSettingsMenu_Update
-            ContextMenuStrip.Items.Add(new ToolStripSeparator());
-            ContextMenuStrip.Items.Add("Reparar"); //gameSettingsMenu_Repair
-            ContextMenuStrip.Items.Add(new ToolStripSeparator());
-            ContextMenuStrip.Items.Add("Desinstalar"); //gameSettingsMenu_Uninstall
-
-            ContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.GameSettingsMenuStrip_ItemClicked);
-            if (panelAttached == null) ContextMenuStrip.Show(pointX, pointY);
-            if (panelAttached != null) ContextMenuStrip.Show(panelAttached, new Point(pointX, pointY));
+            return SQLManager.ReadGameList(sqlQuery);
         }
 
-        private void GameSettings_Click(object sender, EventArgs e)
+        private List<GameInfo> CheckAvaibleGames()
         {
-            ShowGameSettingsMenu(GameSettingsBackground.Width + 3, 3, GameSettingsBackground);
-        }
+            string sqlQuery = "SELECT G_A.gameName, G_A.gameCover, G_A.gamePrice, G_A.gameDownloadLink FROM games_avaibles G_A " +
+                "WHERE NOT EXISTS (SELECT G_O.gameName FROM games_owned G_O " +
+                "WHERE G_A.gameName = G_O.gameName AND G_O.user_email Like '" + userEmail + "')";
 
-        private void UserSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+            return SQLManager.ReadGameList(sqlQuery);
+        }
+        #endregion SQL Check games status
+
+        private void CreateClientFolder()
         {
-            if (ContextMenuStrip.Items[0] == e.ClickedItem)
+            if (!Directory.Exists(downloadPath))
             {
-                OpenConfiguration();
+                try
+                {
+                    Directory.CreateDirectory(downloadPath);
+                }
+                catch (Exception)
+                { }
             }
-            else if (ContextMenuStrip.Items[1] == e.ClickedItem)
+        }
+
+        private async void Download_InstallGame()
+        {
+            long requeriedDriveSpace = 600000000; // 600 MB in bytes
+            LanguageManager languageManager = new LanguageManager();
+
+            CloseGameInfo_Click(null, EventArgs.Empty);
+            ContextMenuStrip.Hide();
+            downloadInProgress = true;
+
+            while (!Directory.Exists(downloadPath))
             {
-                // Cerrar sesión
+                CreateClientFolder();
+            }
+
+            foreach (DriveInfo drive in DriveInfo.GetDrives())
+            {
+                if (downloadPath.Contains(drive.Name))
+                {
+                    if (drive.TotalFreeSpace >= requeriedDriveSpace)
+                    {
+                        if (Uninstall_Information.Visible)
+                        {
+                            Uninstall_Information.Location = new Point(0, 332);
+                            Store.Location = new Point(0, 85);
+                            GameLibrary.Location = new Point(0, 203);
+                        }
+
+                        DownloadInformationGameImage.BackgroundImage = currentGameInfo.GameImage;
+                        DownloadInformationGameName.Text = currentGameInfo.GameName;
+
+                        DownloadProgress.Style = ProgressBarStyle.Marquee;
+                        DownloadProgress.Value = 40;
+                        DownloadInformation.Visible = true;
+                        CloseDownloadInformation.Visible = false;
+
+                        DownloadState.ForeColor = Color.FromArgb(230, 230, 230);
+
+                        languageManager.ChangeCurrentLanguage("es-ES");
+                        downloadState = ClientLanguage.game_Download;
+                        CheckDownload_UninstallInformationLanguage();
+                        try
+                        {
+                            await Task.Run(async () =>
+                            {
+                            await DownloadGameFromMega();
+                            });
+                        }
+                        catch (Exception)
+                        {
+                            DownloadState.ForeColor = Color.Red;
+                            languageManager.ChangeCurrentLanguage("es-ES");
+                            downloadState = ClientLanguage.game_DownloadError;
+                            CheckDownload_UninstallInformationLanguage();
+
+                            DownloadProgress.Style = ProgressBarStyle.Continuous;
+                            DownloadProgress.Value = 100;
+
+                            DeleteCorruptedFiles();
+                            break;
+                        }
+
+                        languageManager.ChangeCurrentLanguage("es-ES");
+                        downloadState = ClientLanguage.game_Install;
+                        CheckDownload_UninstallInformationLanguage();
+                        try
+                        {
+                            await Task.Run(async () =>
+                            {
+                                await Install_Game();
+                            });
+                        }
+                        catch (Exception)
+                        {
+                            DownloadState.ForeColor = Color.Red;
+                            languageManager.ChangeCurrentLanguage("es-ES");
+                            downloadState = ClientLanguage.game_InstallError;
+                            CheckDownload_UninstallInformationLanguage();
+
+                            DownloadProgress.Style = ProgressBarStyle.Continuous;
+                            DownloadProgress.Value = 100;
+
+                            DeleteCorruptedFiles();
+                            break;
+                        }
+
+                        languageManager.ChangeCurrentLanguage("es-ES");
+                        downloadState = ClientLanguage.game_DownloadSucess;
+                        CheckDownload_UninstallInformationLanguage();
+
+                        DownloadProgress.Style = ProgressBarStyle.Continuous;
+                        DownloadProgress.Value = 100;
+                    }
+                    else
+                    {
+                        DownloadState.ForeColor = Color.Red;
+                        languageManager.ChangeCurrentLanguage("es-ES");
+                        downloadState = ClientLanguage.game_NoSpace;
+                        CheckDownload_UninstallInformationLanguage();
+
+                        DownloadProgress.Style = ProgressBarStyle.Continuous;
+                        DownloadProgress.Value = 100;
+                    }
+                }
+            }
+
+            CloseGameInfo_Click(null, EventArgs.Empty);
+            ContextMenuStrip.Hide();
+            downloadInProgress = false;
+            CloseDownloadInformation.Visible = true;
+        }
+
+        private async void UninstallGame()
+        {
+            if (Directory.Exists(downloadPath))
+            {
+                CloseGameInfo_Click(null, EventArgs.Empty);
+                ContextMenuStrip.Hide();
+                uninstallInProgress = true;
+
+                if (DownloadInformation.Visible)
+                {
+                    Uninstall_Information.Location = new Point(0, 332);
+                    Store.Location = new Point(0, 85);
+                    GameLibrary.Location = new Point(0, 203);
+                }
+                else
+                {
+                    this.Uninstall_Information.Location = new Point(0, 414);
+                }
+
+                UninstallProgress.Style = ProgressBarStyle.Marquee;
+                UninstallProgress.Value = 40;
+                Uninstall_Information.Visible = true;
+                CloseUninstall_Information.Visible = false;
+
+                UninstallState.ForeColor = Color.FromArgb(230, 230, 230);
+                UninstallState.Text = ClientLanguage.Uninstalling_Game;
+
+                if (Directory.Exists(Path.Combine(downloadPath, currentGameInfo.GameName)))
+                {
+                    Directory.Delete(Path.Combine(downloadPath, currentGameInfo.GameName), true);
+                }
+
+                UninstallState.Text = ClientLanguage.Uninstalled_Game;
+                UninstallProgress.Style = ProgressBarStyle.Continuous;
+                UninstallProgress.Value = 100;
+
+                CloseGameInfo_Click(null, EventArgs.Empty);
+                ContextMenuStrip.Hide();
+                uninstallInProgress = false;
+                CloseUninstall_Information.Visible = true;
             }
         }
 
-        private void GameSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void CloseDownloadInformation_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                DownloadInformation.Visible = false;
 
+                if (Uninstall_Information.Visible)
+                {
+                    Uninstall_Information.Location = new Point(0, 414);
+                    Store.Location = new Point(0, 150);
+                    GameLibrary.Location = new Point(0, 268);
+                }
+            }
         }
 
-
-        private void StoreAvailableGames_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                Uninstall_Information.Visible = false;
 
+                Store.Location = new Point(0, 150);
+                GameLibrary.Location = new Point(0, 268);
+            }
+        }
+
+        // Check if the game is already installed
+        private bool CheckGameFiles()
+        {
+            if (Directory.Exists(Path.Combine(downloadPath, currentGameInfo.GameName)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void DeleteCorruptedFiles()
+        {
+            try
+            {
+                if (downloadGameName.Length > 0)
+                {
+                    if (File.Exists(Path.Combine(downloadPath, downloadGameName)))
+                    {
+                        File.Delete(Path.Combine(downloadPath, downloadGameName));
+                    }
+                    else if (Directory.Exists(Path.Combine(downloadPath, Path.GetFileNameWithoutExtension(downloadGameName))))
+                    {
+                        Directory.Delete(Path.Combine(downloadPath, Path.GetFileNameWithoutExtension(downloadGameName)));
+                    }
+                }
+            }
+            catch (Exception)
+            { }
+        }
+
+        private async Task DownloadGameFromMega()
+        {
+            MegaApiClient mega = new MegaApiClient();
+            mega.LoginAnonymous();
+
+            Uri fileLink = new Uri(currentGameInfo.GameDownloadLink);
+
+            INodeInfo node = mega.GetNodeFromLink(fileLink);
+
+            downloadGameName = node.Name;
+
+            if (File.Exists(Path.Combine(downloadPath, downloadGameName)))
+            {
+                File.Delete(Path.Combine(downloadPath, downloadGameName));
+            }
+
+            mega.DownloadFile(fileLink, Path.Combine(downloadPath, node.Name));
+            mega.Logout();
+        }
+
+        private async Task Install_Game()
+        {
+            string zipPath = Path.Combine(downloadPath, downloadGameName);
+            string extractPath = downloadPath;
+
+            ZipFile.ExtractToDirectory(zipPath, extractPath);
+
+            File.Delete(Path.Combine(downloadPath, downloadGameName));
         }
     }
 }

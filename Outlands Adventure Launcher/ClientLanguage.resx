@@ -123,6 +123,9 @@
   <data name="button_Confirm" xml:space="preserve">
     <value>ENVIAR</value>
   </data>
+  <data name="buy_Button" xml:space="preserve">
+    <value>Comprar</value>
+  </data>
   <data name="eventCode_Error" xml:space="preserve">
     <value>Código erroneo</value>
   </data>
@@ -140,6 +143,24 @@
   </data>
   <data name="events_SendEmailError" xml:space="preserve">
     <value>Ha ocurrido un problema al enviar el correo, compruebe su conexión a internet e intentelo de nuevo más tarde</value>
+  </data>
+  <data name="filterGame" xml:space="preserve">
+    <value>Filtrar biblioteca</value>
+  </data>
+  <data name="gameLibrary_Header" xml:space="preserve">
+    <value>Biblioteca de juegos</value>
+  </data>
+  <data name="gameSettingsMenu_Repair" xml:space="preserve">
+    <value>Reparar</value>
+  </data>
+  <data name="gameSettingsMenu_Uninstall" xml:space="preserve">
+    <value>Desinstalar</value>
+  </data>
+  <data name="gameSettingsMenu_Update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="largeTiles_Tooltip" xml:space="preserve">
+    <value>Iconos grandes</value>
   </data>
   <data name="loginProblems_Header" xml:space="preserve">
     <value>¿PROBLEMAS AL INICIAR SESIÓN?</value>
@@ -177,6 +198,9 @@
   <data name="login_RememberMe" xml:space="preserve">
     <value>Mantener sesión abierta</value>
   </data>
+  <data name="mediumTiles_Tooltip" xml:space="preserve">
+    <value>Iconos medianos</value>
+  </data>
   <data name="newPasswordEvent_Header" xml:space="preserve">
     <value>Escribe tu nueva contraseña</value>
   </data>
@@ -201,6 +225,12 @@
   <data name="passwordStrenght_Weak" xml:space="preserve">
     <value>Débil</value>
   </data>
+  <data name="play_Button" xml:space="preserve">
+    <value>Jugar</value>
+  </data>
+  <data name="randomDefaultScreen" xml:space="preserve">
+    <value>Aleatorio</value>
+  </data>
   <data name="registerSucessful" xml:space="preserve">
     <value>Te has registrado exitosamente</value>
   </data>
@@ -219,6 +249,15 @@
   <data name="sendEmail_NewAccount" xml:space="preserve">
     <value>Creación de una nueva cuenta del cliente de Outlands Adventure*Su código de confimación es</value>
   </data>
+  <data name="settings_DefaultScreen" xml:space="preserve">
+    <value>Biblioteca de juegos*Tienda*Aleatorio</value>
+  </data>
+  <data name="settings_DefaultScreenHeader" xml:space="preserve">
+    <value>Pantalla de inicio</value>
+  </data>
+  <data name="settings_DeleteAccount" xml:space="preserve">
+    <value>Borrar cuenta</value>
+  </data>
   <data name="settings_Header" xml:space="preserve">
     <value>AJUSTES</value>
   </data>
@@ -227,6 +266,12 @@
   </data>
   <data name="settings_Languages" xml:space="preserve">
     <value>ESPAÑOL - ESPAÑA (es-ES)*INGLÉS - ESTADOS UNIDOS (en-US)*INGLÉS - REINO UNIDO (en-GB)*FRANCÉS (fr)*ALEMÁN (de)*RUSO (ru)*JAPONÉS (ja)*NORUEGO (no)</value>
+  </data>
+  <data name="smallTiles_Tooltip" xml:space="preserve">
+    <value>Iconos pequeños</value>
+  </data>
+  <data name="store_Header" xml:space="preserve">
+    <value>Tienda</value>
   </data>
   <data name="textboxError_EmailRegistered" xml:space="preserve">
     <value>Dirección de correo ya registrada</value>
@@ -254,5 +299,65 @@
   </data>
   <data name="textbox_Username" xml:space="preserve">
     <value>NOMBRE DE USUARIO</value>
+  </data>
+  <data name="userInfoMenu_logout" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="userInfoMenu_Settings" xml:space="preserve">
+    <value>Ajustes de la aplicación</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>€</value>
+  </data>
+  <data name="currentCurrency" xml:space="preserve">
+    <value>Saldo Actual</value>
+  </data>
+  <data name="currentGamePrice" xml:space="preserve">
+    <value>Precio del juego</value>
+  </data>
+  <data name="buyGameSucess" xml:space="preserve">
+    <value>Juego comprado con éxito</value>
+  </data>
+  <data name="LibraryEmpty" xml:space="preserve">
+    <value>No se han encontrado juegos en la librería</value>
+  </data>
+  <data name="StoreEmpty" xml:space="preserve">
+    <value>No se han encontrado juegos nuevos</value>
+  </data>
+  <data name="sendEmail_DeleteAccount" xml:space="preserve">
+    <value>Eliminación de la cuenta del cliente de Outlands Adventure*Su código de confimación es</value>
+  </data>
+  <data name="game_Download" xml:space="preserve">
+    <value>DESCARGANDO</value>
+  </data>
+  <data name="game_DownloadError" xml:space="preserve">
+    <value>ERROR AL DESCARGAR</value>
+  </data>
+  <data name="game_DownloadSucess" xml:space="preserve">
+    <value>DESCARGA COMPLETA</value>
+  </data>
+  <data name="game_Install" xml:space="preserve">
+    <value>INSTALANDO</value>
+  </data>
+  <data name="game_InstallError" xml:space="preserve">
+    <value>ERROR AL INSTALAR</value>
+  </data>
+  <data name="game_NoSpace" xml:space="preserve">
+    <value>ESPACIO INSUFICIENTE</value>
+  </data>
+  <data name="download_Avaible_Button" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="download_Unavaible_Button" xml:space="preserve">
+    <value>No disponible</value>
+  </data>
+  <data name="action_InProgress" xml:space="preserve">
+    <value>En curso</value>
+  </data>
+  <data name="Uninstalling_Game" xml:space="preserve">
+    <value>Desinstalando</value>
+  </data>
+  <data name="Uninstalled_Game" xml:space="preserve">
+    <value>Desinstalado</value>
   </data>
 </root>

@@ -61,6 +61,15 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a En curso.
+        /// </summary>
+        internal static string action_InProgress {
+            get {
+                return ResourceManager.GetString("action_InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a CERRAR.
         /// </summary>
         internal static string button_Close {
@@ -75,6 +84,69 @@ namespace Outlands_Adventure_Launcher {
         internal static string button_Confirm {
             get {
                 return ResourceManager.GetString("button_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Comprar.
+        /// </summary>
+        internal static string buy_Button {
+            get {
+                return ResourceManager.GetString("buy_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Juego comprado con éxito.
+        /// </summary>
+        internal static string buyGameSucess {
+            get {
+                return ResourceManager.GetString("buyGameSucess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a €.
+        /// </summary>
+        internal static string currency {
+            get {
+                return ResourceManager.GetString("currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Saldo Actual.
+        /// </summary>
+        internal static string currentCurrency {
+            get {
+                return ResourceManager.GetString("currentCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Precio del juego.
+        /// </summary>
+        internal static string currentGamePrice {
+            get {
+                return ResourceManager.GetString("currentGamePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descargar.
+        /// </summary>
+        internal static string download_Avaible_Button {
+            get {
+                return ResourceManager.GetString("download_Avaible_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No disponible.
+        /// </summary>
+        internal static string download_Unavaible_Button {
+            get {
+                return ResourceManager.GetString("download_Unavaible_Button", resourceCulture);
             }
         }
         
@@ -129,6 +201,123 @@ namespace Outlands_Adventure_Launcher {
         internal static string events_SendEmailError {
             get {
                 return ResourceManager.GetString("events_SendEmailError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Filtrar biblioteca.
+        /// </summary>
+        internal static string filterGame {
+            get {
+                return ResourceManager.GetString("filterGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a DESCARGANDO.
+        /// </summary>
+        internal static string game_Download {
+            get {
+                return ResourceManager.GetString("game_Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR AL DESCARGAR.
+        /// </summary>
+        internal static string game_DownloadError {
+            get {
+                return ResourceManager.GetString("game_DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a DESCARGA COMPLETA.
+        /// </summary>
+        internal static string game_DownloadSucess {
+            get {
+                return ResourceManager.GetString("game_DownloadSucess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a INSTALANDO.
+        /// </summary>
+        internal static string game_Install {
+            get {
+                return ResourceManager.GetString("game_Install", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ERROR AL INSTALAR.
+        /// </summary>
+        internal static string game_InstallError {
+            get {
+                return ResourceManager.GetString("game_InstallError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ESPACIO INSUFICIENTE.
+        /// </summary>
+        internal static string game_NoSpace {
+            get {
+                return ResourceManager.GetString("game_NoSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Biblioteca de juegos.
+        /// </summary>
+        internal static string gameLibrary_Header {
+            get {
+                return ResourceManager.GetString("gameLibrary_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reparar.
+        /// </summary>
+        internal static string gameSettingsMenu_Repair {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_Repair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Desinstalar.
+        /// </summary>
+        internal static string gameSettingsMenu_Uninstall {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Actualizar.
+        /// </summary>
+        internal static string gameSettingsMenu_Update {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Iconos grandes.
+        /// </summary>
+        internal static string largeTiles_Tooltip {
+            get {
+                return ResourceManager.GetString("largeTiles_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se han encontrado juegos en la librería.
+        /// </summary>
+        internal static string LibraryEmpty {
+            get {
+                return ResourceManager.GetString("LibraryEmpty", resourceCulture);
             }
         }
         
@@ -241,6 +430,15 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Iconos medianos.
+        /// </summary>
+        internal static string mediumTiles_Tooltip {
+            get {
+                return ResourceManager.GetString("mediumTiles_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Escribe tu nueva contraseña.
         /// </summary>
         internal static string newPasswordEvent_Header {
@@ -313,6 +511,24 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Jugar.
+        /// </summary>
+        internal static string play_Button {
+            get {
+                return ResourceManager.GetString("play_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Aleatorio.
+        /// </summary>
+        internal static string randomDefaultScreen {
+            get {
+                return ResourceManager.GetString("randomDefaultScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Crea tu cuenta de Outlands Adventure.
         /// </summary>
         internal static string register_Header {
@@ -336,6 +552,15 @@ namespace Outlands_Adventure_Launcher {
         internal static string registerSucessful {
             get {
                 return ResourceManager.GetString("registerSucessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Eliminación de la cuenta del cliente de Outlands Adventure*Su código de confimación es.
+        /// </summary>
+        internal static string sendEmail_DeleteAccount {
+            get {
+                return ResourceManager.GetString("sendEmail_DeleteAccount", resourceCulture);
             }
         }
         
@@ -367,6 +592,33 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Biblioteca de juegos*Tienda*Aleatorio.
+        /// </summary>
+        internal static string settings_DefaultScreen {
+            get {
+                return ResourceManager.GetString("settings_DefaultScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pantalla de inicio.
+        /// </summary>
+        internal static string settings_DefaultScreenHeader {
+            get {
+                return ResourceManager.GetString("settings_DefaultScreenHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Borrar cuenta.
+        /// </summary>
+        internal static string settings_DeleteAccount {
+            get {
+                return ResourceManager.GetString("settings_DeleteAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a AJUSTES.
         /// </summary>
         internal static string settings_Header {
@@ -390,6 +642,33 @@ namespace Outlands_Adventure_Launcher {
         internal static string settings_Languages {
             get {
                 return ResourceManager.GetString("settings_Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Iconos pequeños.
+        /// </summary>
+        internal static string smallTiles_Tooltip {
+            get {
+                return ResourceManager.GetString("smallTiles_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tienda.
+        /// </summary>
+        internal static string store_Header {
+            get {
+                return ResourceManager.GetString("store_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se han encontrado juegos nuevos.
+        /// </summary>
+        internal static string StoreEmpty {
+            get {
+                return ResourceManager.GetString("StoreEmpty", resourceCulture);
             }
         }
         
@@ -471,6 +750,42 @@ namespace Outlands_Adventure_Launcher {
         internal static string textboxError_WrongEmail {
             get {
                 return ResourceManager.GetString("textboxError_WrongEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Desinstalado.
+        /// </summary>
+        internal static string Uninstalled_Game {
+            get {
+                return ResourceManager.GetString("Uninstalled_Game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Desinstalando.
+        /// </summary>
+        internal static string Uninstalling_Game {
+            get {
+                return ResourceManager.GetString("Uninstalling_Game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cerrar sesión.
+        /// </summary>
+        internal static string userInfoMenu_logout {
+            get {
+                return ResourceManager.GetString("userInfoMenu_logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ajustes de la aplicación.
+        /// </summary>
+        internal static string userInfoMenu_Settings {
+            get {
+                return ResourceManager.GetString("userInfoMenu_Settings", resourceCulture);
             }
         }
     }

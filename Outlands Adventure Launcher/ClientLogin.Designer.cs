@@ -522,6 +522,7 @@
             // NewPasswordMayusLock
             // 
             this.NewPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
+            this.NewPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.NewPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.NewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.NewPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
@@ -533,6 +534,7 @@
             // ShowNewPassword
             // 
             this.ShowNewPassword.BackColor = System.Drawing.Color.Transparent;
+            this.ShowNewPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
             this.ShowNewPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ShowNewPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ShowNewPassword.Location = new System.Drawing.Point(276, 7);
@@ -622,6 +624,7 @@
             // ConfirmNewPasswordMayusLock
             // 
             this.ConfirmNewPasswordMayusLock.BackColor = System.Drawing.Color.Transparent;
+            this.ConfirmNewPasswordMayusLock.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.flecha_hacia_arriba;
             this.ConfirmNewPasswordMayusLock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ConfirmNewPasswordMayusLock.Cursor = System.Windows.Forms.Cursors.Default;
             this.ConfirmNewPasswordMayusLock.Location = new System.Drawing.Point(245, 7);
@@ -633,6 +636,7 @@
             // ShowConfirmNewPassword
             // 
             this.ShowConfirmNewPassword.BackColor = System.Drawing.Color.Transparent;
+            this.ShowConfirmNewPassword.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.hide_password;
             this.ShowConfirmNewPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ShowConfirmNewPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ShowConfirmNewPassword.Location = new System.Drawing.Point(276, 7);
@@ -656,6 +660,7 @@
             // 
             // RegisterButton
             // 
+            this.RegisterButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
             this.RegisterButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RegisterButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.RegisterButton.Location = new System.Drawing.Point(160, 566);
@@ -740,6 +745,7 @@
             // 
             // ForgottenUsernameButton
             // 
+            this.ForgottenUsernameButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.forgot_username;
             this.ForgottenUsernameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ForgottenUsernameButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForgottenUsernameButton.Location = new System.Drawing.Point(49, 225);
@@ -765,6 +771,7 @@
             // 
             // ForgottenPasswordButton
             // 
+            this.ForgottenPasswordButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.forgot_password;
             this.ForgottenPasswordButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ForgottenPasswordButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForgottenPasswordButton.Location = new System.Drawing.Point(230, 225);
@@ -849,6 +856,7 @@
             // ResetCredentialsButton
             // 
             this.ResetCredentialsButton.BackColor = System.Drawing.Color.White;
+            this.ResetCredentialsButton.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.loginUnavaible;
             this.ResetCredentialsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ResetCredentialsButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.ResetCredentialsButton.Location = new System.Drawing.Point(166, 616);

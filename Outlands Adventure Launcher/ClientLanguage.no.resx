@@ -255,4 +255,112 @@
   <data name="textbox_Password" xml:space="preserve">
     <value>PASSORD</value>
   </data>
+  <data name="filterGame" xml:space="preserve">
+    <value>Filtrer biblioteket</value>
+  </data>
+  <data name="gameLibrary_Header" xml:space="preserve">
+    <value>Spillbibliotek</value>
+  </data>
+  <data name="largeTiles_Tooltip" xml:space="preserve">
+    <value>Store ikoner</value>
+  </data>
+  <data name="mediumTiles_Tooltip" xml:space="preserve">
+    <value>Medium ikoner</value>
+  </data>
+  <data name="play_Button" xml:space="preserve">
+    <value>Å leke</value>
+  </data>
+  <data name="randomDefaultScreen" xml:space="preserve">
+    <value>Tilfeldig</value>
+  </data>
+  <data name="settings_DefaultScreen" xml:space="preserve">
+    <value>Spillbibliotek*Butikk*Tilfeldig</value>
+  </data>
+  <data name="settings_DefaultScreenHeader" xml:space="preserve">
+    <value>Startskjerm</value>
+  </data>
+  <data name="settings_DeleteAccount" xml:space="preserve">
+    <value>Slett konto</value>
+  </data>
+  <data name="smallTiles_Tooltip" xml:space="preserve">
+    <value>Små ikoner</value>
+  </data>
+  <data name="store_Header" xml:space="preserve">
+    <value>Butikk</value>
+  </data>
+  <data name="userInfoMenu_logout" xml:space="preserve">
+    <value>Logg av</value>
+  </data>
+  <data name="userInfoMenu_Settings" xml:space="preserve">
+    <value>Appinnstillinger</value>
+  </data>
+  <data name="gameSettingsMenu_Repair" xml:space="preserve">
+    <value>Reparere</value>
+  </data>
+  <data name="gameSettingsMenu_Uninstall" xml:space="preserve">
+    <value>Avinstaller</value>
+  </data>
+  <data name="gameSettingsMenu_Update" xml:space="preserve">
+    <value>Å oppdatere</value>
+  </data>
+  <data name="buy_Button" xml:space="preserve">
+    <value>Kjøp</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>kr</value>
+  </data>
+  <data name="currentCurrency" xml:space="preserve">
+    <value>Nåværende balanse</value>
+  </data>
+  <data name="currentGamePrice" xml:space="preserve">
+    <value>Spill pris</value>
+  </data>
+  <data name="buyGameSucess" xml:space="preserve">
+    <value>Spillet er kjøpt vellykket</value>
+  </data>
+  <data name="LibraryEmpty" xml:space="preserve">
+    <value>Ingen spill funnet i biblioteket</value>
+  </data>
+  <data name="StoreEmpty" xml:space="preserve">
+    <value>De har ikke funnet noen nye spill</value>
+  </data>
+  <data name="sendEmail_DeleteAccount" xml:space="preserve">
+    <value>Slette outlands Adventure kundekonto*Din konfimasjonskode er</value>
+  </data>
+  <data name="game_Download" xml:space="preserve">
+    <value>NEDLASTING</value>
+  </data>
+  <data name="game_DownloadError" xml:space="preserve">
+    <value>LAST NED FEIL</value>
+  </data>
+  <data name="game_DownloadSucess" xml:space="preserve">
+    <value>FULL NEDLASTING</value>
+  </data>
+  <data name="game_Install" xml:space="preserve">
+    <value>INSTALLERING</value>
+  </data>
+  <data name="game_InstallError" xml:space="preserve">
+    <value>FEIL NÅR DU INSTALLERER</value>
+  </data>
+  <data name="game_NoSpace" xml:space="preserve">
+    <value>TILFELDIG ROM</value>
+  </data>
+  <data name="download_Unavaible_Button" xml:space="preserve">
+    <value>Ikke tilgjengelig</value>
+  </data>
+  <data name="download_Avaible_Button" xml:space="preserve">
+    <value>å laste ned</value>
+  </data>
+  <data name="download_InProgress" xml:space="preserve">
+    <value>I prosess</value>
+  </data>
+  <data name="Uninstalling_Game" xml:space="preserve">
+    <value>Avinstallerer</value>
+  </data>
+  <data name="_Empty[1]" xml:space="preserve">
+    <value>Avinstallert</value>
+  </data>
+  <data name="Uninstalled_Game" xml:space="preserve">
+    <value>Avinstallert</value>
+  </data>
 </root>

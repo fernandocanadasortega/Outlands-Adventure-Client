@@ -40,7 +40,24 @@ namespace Outlands_Adventure_Launcher
 
         public ClientLogin()
         {
-            // cambiar el idioma usado en los archivos de recursos resx
+            InitializeComponent();
+        }
+
+        public void ReceiveClassInstance(ClientLogin clientLogin)
+        {
+            this.clientLogin = clientLogin;
+        }
+
+        #region Form Actions
+        private void LauncherLogin_Load(object sender, EventArgs e)
+        {
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            windowsRegisterManager.LoadWindowPosition(this);
+
+            LanguageManager languageManager = new LanguageManager();
+            languageManager.SelectCurrentAplicationWindow(clientLogin, null);
+            languageManager.ReadSelectedLanguage(true, LanguageSelected);
+
             targetPanel = "login";
             operationInProgress = false;
 
@@ -56,16 +73,23 @@ namespace Outlands_Adventure_Launcher
             passwordVisible = false;
             confirmPasswordVisible = false;
 
-            InitializeComponent();
-
             ImageGradient.BackColor = Color.FromArgb(190, 0, 0, 0);
             ConfigurationPanel.BackColor = Color.FromArgb(255, 0, 0, 0);
         }
 
-        public void ReceiveClassInstance(ClientLogin clientLogin)
+        private void LauncherLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.clientLogin = clientLogin;
+            if (operationInProgress)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                windowsRegisterManager.SaveWindowPosition(this);
+            }
         }
+        #endregion Form Actions
 
         #region Login Interface
         // Manage all items in the login panel
@@ -383,7 +407,7 @@ namespace Outlands_Adventure_Launcher
                         Hash_SHA2.InitialiceVariables(confirmationCode);
 
                         string[] messageInfo = ClientLanguage.sendEmail_NewAccount.Split('*');
-                        bool messageError = SendEmail.SendNewEmail(NewEmailTextbox, messageInfo[0], messageInfo[1], confirmationCode);
+                        bool messageError = SendEmail.SendNewEmail(NewEmailTextbox.Text, messageInfo[0], messageInfo[1], confirmationCode);
 
                         if (!messageError)
                         {
@@ -464,7 +488,7 @@ namespace Outlands_Adventure_Launcher
             OpenLoadingScreen(false);
             string sqlQuery = "INSERT INTO user_information VALUES ('" + NewEmailTextbox.Text + "', '"
                 + NewUserNameTextbox.Text + "', SHA('" + NewPasswordTextbox.Text + "'), null)";
-            string queryError = SQLManager.Insert_ModifyUser(sqlQuery);
+            string queryError = SQLManager.Insert_ModifyData(sqlQuery);
 
             if (queryError.Length > 0)
             {
@@ -623,7 +647,7 @@ namespace Outlands_Adventure_Launcher
                             if (userNameRecovered.Length > 0)
                             {
                                 string[] messageInfo = ClientLanguage.sendEmail_LostUsername.Split('*');
-                                messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, messageInfo[0], messageInfo[1],
+                                messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText.Text, messageInfo[0], messageInfo[1],
                                     userNameRecovered);
                             }
                         }
@@ -643,7 +667,7 @@ namespace Outlands_Adventure_Launcher
                             string confirmationCode = CreateConfirmationCode.CreateCode();
                             Hash_SHA2.InitialiceVariables(confirmationCode);
                             string[] messageInfo = ClientLanguage.sendEmail_LostPassword.Split('*');
-                            messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText, messageInfo[0], messageInfo[1], confirmationCode);
+                            messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText.Text, messageInfo[0], messageInfo[1], confirmationCode);
                         }
                     }
 
@@ -902,7 +926,7 @@ namespace Outlands_Adventure_Launcher
             OpenLoadingScreen(false);
             string sqlQuery = "UPDATE user_information SET user_password=SHA('" + ResetPasswordTextbox.Text + "')" +
                 " WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
-            string queryError = SQLManager.Insert_ModifyUser(sqlQuery);
+            string queryError = SQLManager.Insert_ModifyData(sqlQuery);
 
             if (queryError.Length > 0)
             {
@@ -1461,31 +1485,6 @@ namespace Outlands_Adventure_Launcher
         #endregion Enable / Disable Loading Screen
 
         #endregion Others
-
-        #region Form Actions
-        private void LauncherLogin_Load(object sender, EventArgs e)
-        {
-            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
-            windowsRegisterManager.LoadWindowPosition(this);
-
-            LanguageManager languageManager = new LanguageManager();
-            languageManager.SelectCurrentAplicationWindow(clientLogin, null);
-            languageManager.ReadSelectedLanguage(true, LanguageSelected);
-        }
-
-        private void LauncherLogin_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (operationInProgress)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
-                windowsRegisterManager.SaveWindowPosition(this);
-            }
-        }
-        #endregion Form Actions
 
         #region Combobox controls and Language manager
 

@@ -124,7 +124,7 @@
     <value>SENDEN</value>
   </data>
   <data name="eventCode_Error" xml:space="preserve">
-    <value>Falscher Code</value>
+    <value>Falscher code</value>
   </data>
   <data name="events_Database_ConnectionError" xml:space="preserve">
     <value>Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es später erneut</value>
@@ -254,5 +254,110 @@
   </data>
   <data name="textbox_Username" xml:space="preserve">
     <value>NUTZERNAME</value>
+  </data>
+  <data name="filterGame" xml:space="preserve">
+    <value>Filterbibliothek</value>
+  </data>
+  <data name="gameLibrary_Header" xml:space="preserve">
+    <value>Spielbibliothek</value>
+  </data>
+  <data name="largeTiles_Tooltip" xml:space="preserve">
+    <value>Große Icons</value>
+  </data>
+  <data name="mediumTiles_Tooltip" xml:space="preserve">
+    <value>Mittlere Icons</value>
+  </data>
+  <data name="play_Button" xml:space="preserve">
+    <value>Spielen</value>
+  </data>
+  <data name="randomDefaultScreen" xml:space="preserve">
+    <value>Zufällig</value>
+  </data>
+  <data name="settings_DefaultScreenHeader" xml:space="preserve">
+    <value>Startbildschirm</value>
+  </data>
+  <data name="settings_DefaultScreen" xml:space="preserve">
+    <value>Spielbibliothek*Geschäft*Zufällig</value>
+  </data>
+  <data name="settings_DeleteAccount" xml:space="preserve">
+    <value>Konto löschen</value>
+  </data>
+  <data name="smallTiles_Tooltip" xml:space="preserve">
+    <value>Kleine Icons</value>
+  </data>
+  <data name="userInfoMenu_Settings" xml:space="preserve">
+    <value>App Einstellungen</value>
+  </data>
+  <data name="userInfoMenu_logout" xml:space="preserve">
+    <value>Ausloggen</value>
+  </data>
+  <data name="store_Header" xml:space="preserve">
+    <value>Geschäft</value>
+  </data>
+  <data name="gameSettingsMenu_Repair" xml:space="preserve">
+    <value>Reparatur</value>
+  </data>
+  <data name="gameSettingsMenu_Uninstall" xml:space="preserve">
+    <value>Deinstallieren</value>
+  </data>
+  <data name="gameSettingsMenu_Update" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="buy_Button" xml:space="preserve">
+    <value>Kaufen</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>€</value>
+  </data>
+  <data name="currentCurrency" xml:space="preserve">
+    <value>Aktueller Saldo</value>
+  </data>
+  <data name="currentGamePrice" xml:space="preserve">
+    <value>Spielpreis</value>
+  </data>
+  <data name="buyGameSucess" xml:space="preserve">
+    <value>Spiel erfolgreich gekauft</value>
+  </data>
+  <data name="LibraryEmpty" xml:space="preserve">
+    <value>Keine Spiele in der Bibliothek gefunden</value>
+  </data>
+  <data name="StoreEmpty" xml:space="preserve">
+    <value>Sie haben keine neuen Spiele gefunden</value>
+  </data>
+  <data name="sendEmail_DeleteAccount" xml:space="preserve">
+    <value>Löschen outlands Adventure Kundenkonto*Ihr Konfigurationscode ist</value>
+  </data>
+  <data name="game_Download" xml:space="preserve">
+    <value>WIRD HERUNTERGELADEN</value>
+  </data>
+  <data name="game_DownloadError" xml:space="preserve">
+    <value>DOWNLOAD FEHLER</value>
+  </data>
+  <data name="game_DownloadSucess" xml:space="preserve">
+    <value>VOLLSTÄNDIGER DOWNLOAD</value>
+  </data>
+  <data name="game_Install" xml:space="preserve">
+    <value>INSTALLIEREN</value>
+  </data>
+  <data name="game_InstallError" xml:space="preserve">
+    <value>FEHLER BEI DER INSTALLATION</value>
+  </data>
+  <data name="game_NoSpace" xml:space="preserve">
+    <value>UNZUREICHENDER PLATZ</value>
+  </data>
+  <data name="download_Unavaible_Button" xml:space="preserve">
+    <value>Nicht verfügbar</value>
+  </data>
+  <data name="download_Avaible_Button" xml:space="preserve">
+    <value>Herunterladen</value>
+  </data>
+  <data name="download_InProgress" xml:space="preserve">
+    <value>IN BEARBEITUNG</value>
+  </data>
+  <data name="Uninstalling_Game" xml:space="preserve">
+    <value>Deinstallation</value>
+  </data>
+  <data name="Uninstalled_Game" xml:space="preserve">
+    <value>Deinstalliert</value>
   </data>
 </root>

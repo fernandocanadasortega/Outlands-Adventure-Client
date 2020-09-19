@@ -255,4 +255,109 @@
   <data name="textbox_Username" xml:space="preserve">
     <value>USERNAME</value>
   </data>
+  <data name="filterGame" xml:space="preserve">
+    <value>Filter library</value>
+  </data>
+  <data name="gameLibrary_Header" xml:space="preserve">
+    <value>Game Library</value>
+  </data>
+  <data name="largeTiles_Tooltip" xml:space="preserve">
+    <value>Large Icons</value>
+  </data>
+  <data name="mediumTiles_Tooltip" xml:space="preserve">
+    <value>Medium Icons</value>
+  </data>
+  <data name="play_Button" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="randomDefaultScreen" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="settings_DefaultScreen" xml:space="preserve">
+    <value>Game Library*Store*Random</value>
+  </data>
+  <data name="settings_DefaultScreenHeader" xml:space="preserve">
+    <value>Home screen</value>
+  </data>
+  <data name="settings_DeleteAccount" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
+  <data name="smallTiles_Tooltip" xml:space="preserve">
+    <value>Small Icons</value>
+  </data>
+  <data name="store_Header" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="userInfoMenu_logout" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="userInfoMenu_Settings" xml:space="preserve">
+    <value>App settings</value>
+  </data>
+  <data name="gameSettingsMenu_Repair" xml:space="preserve">
+    <value>Repair</value>
+  </data>
+  <data name="gameSettingsMenu_Uninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="gameSettingsMenu_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="buy_Button" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>$</value>
+  </data>
+  <data name="currentCurrency" xml:space="preserve">
+    <value>Current balance</value>
+  </data>
+  <data name="currentGamePrice" xml:space="preserve">
+    <value>Game price</value>
+  </data>
+  <data name="buyGameSucess" xml:space="preserve">
+    <value>Game purchased successfully</value>
+  </data>
+  <data name="LibraryEmpty" xml:space="preserve">
+    <value>No games found in the library</value>
+  </data>
+  <data name="StoreEmpty" xml:space="preserve">
+    <value>There are no more games in the store</value>
+  </data>
+  <data name="sendEmail_DeleteAccount" xml:space="preserve">
+    <value>Deleting outlands Adventure client account*Your confimation code is</value>
+  </data>
+  <data name="game_Download" xml:space="preserve">
+    <value>DOWNLOADING</value>
+  </data>
+  <data name="game_DownloadError" xml:space="preserve">
+    <value>DOWNLOAD ERROR</value>
+  </data>
+  <data name="game_DownloadSucess" xml:space="preserve">
+    <value>DOWNLOAD COMPLETE</value>
+  </data>
+  <data name="game_Install" xml:space="preserve">
+    <value>INSTALLING</value>
+  </data>
+  <data name="game_InstallError" xml:space="preserve">
+    <value>INSTALLING ERROR</value>
+  </data>
+  <data name="game_NoSpace" xml:space="preserve">
+    <value>INSUFFICIENT SPACE</value>
+  </data>
+  <data name="download_Unavaible_Button" xml:space="preserve">
+    <value>Not available</value>
+  </data>
+  <data name="download_Avaible_Button" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="download_InProgress" xml:space="preserve">
+    <value>In progress</value>
+  </data>
+  <data name="Uninstalling_Game" xml:space="preserve">
+    <value>Uninstalling</value>
+  </data>
+  <data name="Uninstalled_Game" xml:space="preserve">
+    <value>Uninstalled</value>
+  </data>
 </root>

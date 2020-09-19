@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +16,7 @@ namespace Outlands_Adventure_Launcher
     {
         private static string conectionRoute = @"server=localhost;user id=root;database=outlands_adventure_client";
 
-        public static string Insert_ModifyUser(string insertQuery)
+        public static string Insert_ModifyData(string insertQuery)
         {
             string queryError = "";
             try
@@ -93,6 +95,46 @@ namespace Outlands_Adventure_Launcher
             {
                 return -1;
             }
+        }
+
+        public static List<GameInfo> ReadGameList(string readOwnedGamesQuery)
+        {
+            List<GameInfo> gameList = new List<GameInfo>();
+
+            try
+            {
+                using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
+                {
+                    dbConnection.Open();
+                    MySqlCommand readGamesInfo = new MySqlCommand(readOwnedGamesQuery, dbConnection);
+                    MySqlDataReader gamesInfoReader = readGamesInfo.ExecuteReader();
+
+                    while (gamesInfoReader.Read())
+                    {
+                        string gameName = gamesInfoReader[0].ToString();
+                        Image gameImage = AssembleImage((byte[]) gamesInfoReader[1]);
+                        decimal gamePrice = (decimal)gamesInfoReader[2];
+                        string gameDownloadLink = gamesInfoReader[3].ToString();
+
+                        gameList.Add(new GameInfo(gameName, gameImage, gamePrice, gameDownloadLink));
+                    }
+
+                    return gameList;
+                }
+            }
+            catch (Exception)
+            {
+                return gameList;
+            }
+        }
+
+        private static Bitmap AssembleImage(byte[] imageBlob)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            memoryStream.Write(imageBlob, 0, Convert.ToInt32(imageBlob.Length));
+            Bitmap bitmapImage = new Bitmap(memoryStream, false);
+            memoryStream.Dispose();
+            return bitmapImage;
         }
     }
 }

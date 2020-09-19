@@ -93,7 +93,7 @@ namespace Outlands_Adventure_Launcher
     #region Send Email
     static class SendEmail
     {
-        public static bool SendNewEmail(TextBox emailTextBox, string emailSubject, string emailBody, string emailBodyData)
+        public static bool SendNewEmail(String emailDirection, string emailSubject, string emailBody, string emailBodyData)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Outlands_Adventure_Launcher
                 MailMessage mail = new MailMessage();
 
                 mail.From = new MailAddress("outlandsadventure@gmail.com");
-                mail.To.Add(emailTextBox.Text);
+                mail.To.Add(emailDirection);
                 mail.Subject = emailSubject;
 
                 mail.IsBodyHtml = true;
@@ -296,21 +296,21 @@ namespace Outlands_Adventure_Launcher
             string[] selectedLanguageArray = languageCombobox.SelectedItem.ToString().Split('(');
             string selectedLanguage = selectedLanguageArray[1].Remove(selectedLanguageArray[1].Length - 1);
 
-            ChangeCurrentLanguage(selectedLanguage);
-            ChangeAplicationLanguage();
-            CheckLanguageComboboxSelection(selectedLanguage, languageCombobox);
-
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
             key.SetValue("selectedLanguage", selectedLanguage);
             windowsRegisterManager.CloseWindowsRegister(key);
+
+            ChangeCurrentLanguage(selectedLanguage);
+            ChangeAplicationLanguage();
+            CheckLanguageComboboxSelection(selectedLanguage, languageCombobox);
         }
 
         /// <summary>
         /// Cambia el idioma del complilador por el solicitado y permite acceder a los recursos propios de ese idioma
         /// </summary>
         /// <param name="selectedLanguage"></param>
-        private void ChangeCurrentLanguage(string selectedLanguage)
+        public void ChangeCurrentLanguage(string selectedLanguage)
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
