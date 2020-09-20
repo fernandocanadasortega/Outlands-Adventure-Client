@@ -357,10 +357,19 @@
   <data name="Uninstalling_Game" xml:space="preserve">
     <value>Удаление</value>
   </data>
-  <data name="_Empty[1]" xml:space="preserve">
-    <value>Не установлен</value>
-  </data>
   <data name="Uninstalled_Game" xml:space="preserve">
     <value>Не установлен</value>
+  </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="exit_Header" xml:space="preserve">
+    <value>Завершить работу сейчас?</value>
+  </data>
+  <data name="exit_Label" xml:space="preserve">
+    <value>Вы хотите выйти или выйти?</value>
+  </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>Выйти</value>
   </data>
 </root>

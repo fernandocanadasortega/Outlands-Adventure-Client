@@ -193,7 +193,6 @@
             // 
             // DownloadInformation
             // 
-            this.DownloadInformation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.DownloadInformation.Controls.Add(this.DownloadInformationGameName);
             this.DownloadInformation.Controls.Add(this.DownloadInformationGameImage);
             this.DownloadInformation.Controls.Add(this.DownloadProgress);
@@ -268,7 +267,6 @@
             // 
             // Uninstall_Information
             // 
-            this.Uninstall_Information.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Uninstall_Information.Controls.Add(this.Uninstall_InformationGameName);
             this.Uninstall_Information.Controls.Add(this.Uninstall_InformationGameImage);
             this.Uninstall_Information.Controls.Add(this.UninstallProgress);
@@ -343,7 +341,6 @@
             // 
             // UserInformation
             // 
-            this.UserInformation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.UserInformation.Controls.Add(this.UserName);
             this.UserInformation.Controls.Add(this.UserConfigurationArrow);
             this.UserInformation.Controls.Add(this.UserPhoto);

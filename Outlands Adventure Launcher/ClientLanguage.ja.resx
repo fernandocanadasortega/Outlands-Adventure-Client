@@ -360,4 +360,16 @@
   <data name="Uninstalled_Game" xml:space="preserve">
     <value>アンインストール</value>
   </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>出発時</value>
+  </data>
+  <data name="exit_Header" xml:space="preserve">
+    <value>今すぐ出る？</value>
+  </data>
+  <data name="exit_Label" xml:space="preserve">
+    <value>終了またはログアウトしますか？</value>
+  </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>サインオフ</value>
+  </data>
 </root>

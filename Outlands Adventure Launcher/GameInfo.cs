@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Outlands_Adventure_Launcher
 {
+    /// <summary>
+    /// GameInfo class in charge of saving the data of every game in the database
+    /// </summary>
     class GameInfo
     {
         private string gameName;
@@ -14,6 +17,13 @@ namespace Outlands_Adventure_Launcher
         private decimal gamePrice;
         private string gameDownloadLink;
 
+        /// <summary>
+        /// Constructor of the GameInfo class
+        /// </summary>
+        /// <param name="gameName">String, game name</param>
+        /// <param name="gameImage">Image, game image</param>
+        /// <param name="gamePrice">Decimal, game price</param>
+        /// <param name="gameDownloadLink">String, game download link</param>
         public GameInfo(string gameName, Image gameImage, decimal gamePrice, string gameDownloadLink)
         {
             this.gameName = gameName;

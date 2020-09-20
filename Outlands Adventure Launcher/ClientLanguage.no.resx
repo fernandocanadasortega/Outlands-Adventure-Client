@@ -357,10 +357,19 @@
   <data name="Uninstalling_Game" xml:space="preserve">
     <value>Avinstallerer</value>
   </data>
-  <data name="_Empty[1]" xml:space="preserve">
-    <value>Avinstallert</value>
-  </data>
   <data name="Uninstalled_Game" xml:space="preserve">
     <value>Avinstallert</value>
+  </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>Avslutt</value>
+  </data>
+  <data name="exit_Header" xml:space="preserve">
+    <value>FORLAT NÅ?</value>
+  </data>
+  <data name="exit_Label" xml:space="preserve">
+    <value>Vil du avslutte eller logge ut?</value>
+  </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>Logg av</value>
   </data>
 </root>

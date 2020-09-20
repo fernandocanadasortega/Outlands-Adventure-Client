@@ -61,15 +61,6 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a En curso.
-        /// </summary>
-        internal static string action_InProgress {
-            get {
-                return ResourceManager.GetString("action_InProgress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a CERRAR.
         /// </summary>
         internal static string button_Close {
@@ -142,6 +133,15 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a En curso.
+        /// </summary>
+        internal static string download_InProgress {
+            get {
+                return ResourceManager.GetString("download_InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No disponible.
         /// </summary>
         internal static string download_Unavaible_Button {
@@ -201,6 +201,33 @@ namespace Outlands_Adventure_Launcher {
         internal static string events_SendEmailError {
             get {
                 return ResourceManager.GetString("events_SendEmailError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿SALIR AHORA?.
+        /// </summary>
+        internal static string exit_Header {
+            get {
+                return ResourceManager.GetString("exit_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Quieres salir o cerrar sesión?.
+        /// </summary>
+        internal static string exit_Label {
+            get {
+                return ResourceManager.GetString("exit_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Salir.
+        /// </summary>
+        internal static string ExitButton {
+            get {
+                return ResourceManager.GetString("ExitButton", resourceCulture);
             }
         }
         
@@ -426,6 +453,15 @@ namespace Outlands_Adventure_Launcher {
         internal static string loginProblems_UsernameHeader {
             get {
                 return ResourceManager.GetString("loginProblems_UsernameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cerrar sesión.
+        /// </summary>
+        internal static string LogoutButton {
+            get {
+                return ResourceManager.GetString("LogoutButton", resourceCulture);
             }
         }
         

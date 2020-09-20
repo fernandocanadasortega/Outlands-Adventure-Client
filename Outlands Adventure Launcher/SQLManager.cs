@@ -12,10 +12,19 @@ using MySql.Data.MySqlClient;
 
 namespace Outlands_Adventure_Launcher
 {
+    /// <summary>
+    /// Class in charge of manipulate read and write operations of the database
+    /// </summary>
     static class SQLManager
     {
-        private static string conectionRoute = @"server=localhost;user id=root;database=outlands_adventure_client";
+        private readonly static string conectionRoute = @"server=localhost;user id=root;database=outlands_adventure_client";
 
+        /// <summary>
+        /// Insert data in the database
+        /// Inserta datos en las base de datos
+        /// </summary>
+        /// <param name="insertQuery">String, SQL query</param>
+        /// <returns>String, return a string with the error if the query failed</returns>
         public static string Insert_ModifyData(string insertQuery)
         {
             string queryError = "";
@@ -40,7 +49,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
-        // Recupera un dato de la base de datos
+        /// <summary>
+        /// Fetch requested data of the database
+        /// Recupera datos de la base de datos
+        /// </summary>
+        /// <param name="readQuery">String, SQL query</param>
+        /// <returns>String, return the requested value or return a string with the error if the query failed</returns>
         public static string SearchQueryData(string readQuery)
         {
             string recoveredData = "";
@@ -69,7 +83,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
-        // Mira si existe un dato en la base de datos y retorna el número de filas que contienen el dato que buscas
+        /// <summary>
+        /// Check if some data if duplicated in the database and return the number of rows that contain that data
+        /// Mira si existe un dato en la base de datos y retorna el número de filas que contienen el dato que buscas
+        /// </summary>
+        /// <param name="readQuery">String, SQL query</param>
+        /// <returns>Int, number of duplicated data, -1 if there is an error</returns>
         public static int CheckDuplicatedData(string readQuery)
         {
             try
@@ -97,6 +116,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Get the information of a game requested in the SQL query
+        /// </summary>
+        /// <param name="readOwnedGamesQuery">String, SQL query</param>
+        /// <returns>List<GameInfo>, list with the information of the games</returns>
         public static List<GameInfo> ReadGameList(string readOwnedGamesQuery)
         {
             List<GameInfo> gameList = new List<GameInfo>();
@@ -128,6 +152,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Restore the image from bytes
+        /// </summary>
+        /// <param name="imageBlob">byte[], byte[] with the image information</param>
+        /// <returns>Bitmap, Image restored</returns>
         private static Bitmap AssembleImage(byte[] imageBlob)
         {
             MemoryStream memoryStream = new MemoryStream();

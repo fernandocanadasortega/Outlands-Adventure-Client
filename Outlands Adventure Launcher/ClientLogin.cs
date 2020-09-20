@@ -17,6 +17,7 @@ namespace Outlands_Adventure_Launcher
     public partial class ClientLogin : Form
     {
         ClientLogin clientLogin;
+        ClientAplication clientAplication;
 
         private string targetPanel;
         private bool operationInProgress;
@@ -51,6 +52,8 @@ namespace Outlands_Adventure_Launcher
         #region Form Actions
         private void LauncherLogin_Load(object sender, EventArgs e)
         {
+            clientAplication = new ClientAplication();
+
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             windowsRegisterManager.LoadWindowPosition(this);
 
@@ -87,6 +90,8 @@ namespace Outlands_Adventure_Launcher
             {
                 WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
                 windowsRegisterManager.SaveWindowPosition(this);
+
+                System.Windows.Forms.Application.Exit();
             }
         }
         #endregion Form Actions
@@ -210,10 +215,19 @@ namespace Outlands_Adventure_Launcher
 
                 if (loginAvaible && !loginErrors)
                 {
-                    System.Windows.MessageBox.Show("Logeado");
-                    // Cerrar este form y llamar a otro form cuando te logeas
+                    this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
 
+                    if (RememberMe.Checked)
+                    {
+                        WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                        Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+                        key.SetValue("KeepSessionOpen", RememberMe.Checked);
+                        key.SetValue("Username", UserNameTextbox.Text);
+                    }
 
+                    clientLogin.Hide();
+                    clientAplication.ReceiveClassInstance(clientAplication, UserNameTextbox.Text);
+                    clientAplication.ShowDialog();
                 }
             }
             else

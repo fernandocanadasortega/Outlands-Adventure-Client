@@ -361,4 +361,16 @@
   <data name="Uninstalled_Game" xml:space="preserve">
     <value>Désinstallé</value>
   </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+  <data name="exit_Header" xml:space="preserve">
+    <value>QUITTER MAINTENANT?</value>
+  </data>
+  <data name="exit_Label" xml:space="preserve">
+    <value>Voulez-vous quitter ou vous déconnecter?</value>
+  </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>Fermer la session</value>
+  </data>
 </root>

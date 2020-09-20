@@ -20,14 +20,15 @@ namespace Outlands_Adventure_Launcher
     public partial class ClientAplication : Form
     {
         private ClientAplication clientAplication;
-        private string userEmail;
+        public static bool aplicationClosing;
+        private string userEmail = "";
+        private string userName = "";
 
-        private string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+        private readonly string downloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
             "Outlands Adventure Client");
         private string downloadGameName = "";
         private string downloadState = "";
         private bool downloadInProgress;
-        private bool uninstallInProgress;
 
         private readonly int objectHighlighted = 30;
         private readonly int objectUnmarked = 0;
@@ -49,10 +50,11 @@ namespace Outlands_Adventure_Launcher
             InitializeComponent();
         }
 
-        public void ReceiveClassInstance(ClientAplication clientAplication)
+        public void ReceiveClassInstance(ClientAplication clientAplication, string userName)
         {
             this.clientAplication = clientAplication;
-            userEmail = "thenapo212@gmail.com"; // cambiar por nombre de usuario obtenido cuando te logeas
+            UserName.Text = userName;
+            this.userName = userName;
         }
 
         #region Form Actions
@@ -72,6 +74,7 @@ namespace Outlands_Adventure_Launcher
             GameInfoGradient.BackColor = Color.FromArgb(210, 0, 0, 0);
             toolTip = new ToolTip();
 
+            aplicationClosing = false;
             operationInProgress = false;
             canTriggerSelections = true;
 
@@ -85,19 +88,17 @@ namespace Outlands_Adventure_Launcher
 
         private void ClientAplication_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (operationInProgress)
+            if (!aplicationClosing)
             {
-                e.Cancel = true;
-            }
-            else
-            {
-                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
-                windowsRegisterManager.SaveWindowPosition(this);
-
-                Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
-                key.SetValue("selectedTileSize", tileSizeSelected);
-
-                windowsRegisterManager.CloseWindowsRegister(key);
+                if (operationInProgress)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    CloseClientAplicationPopUp closePopup = new CloseClientAplicationPopUp(this, tileSizeSelected, e);
+                    closePopup.ShowDialog();
+                }
             }
         }
         #endregion Form Actions
@@ -429,7 +430,7 @@ namespace Outlands_Adventure_Launcher
                             }
                             else // Descarga en curso
                             {
-                                Play_BuyGame.Text = ClientLanguage.download_Avaible_Button + " - " + ClientLanguage.action_InProgress;
+                                Play_BuyGame.Text = ClientLanguage.download_Avaible_Button + " - " + ClientLanguage.download_InProgress;
                             }
                         }
                         else
@@ -878,6 +879,8 @@ namespace Outlands_Adventure_Launcher
 
         private void FillGameList(int xSize, int ySize)
         {
+            this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
+
             currentGameInfoList.Clear();
             currentGameImagesListView.Items.Clear();
             GameImages.Images.Clear();
@@ -885,6 +888,8 @@ namespace Outlands_Adventure_Launcher
             GameImages.ImageSize = new Size(xSize, ySize);
             GameImages.ColorDepth = ColorDepth.Depth32Bit;
 
+            userEmail = GetUserEmail(userName);
+            if (userEmail.Equals("error")) userEmail = "";
 
             if (storeOpen) currentGameInfoList = CheckAvaibleGames();
             else if (libraryOpen) currentGameInfoList = CheckOwnedGames();
@@ -929,6 +934,8 @@ namespace Outlands_Adventure_Launcher
 
                 currentGameImagesListView.LargeImageList = GameImages;
             }
+
+            this.Cursor = System.Windows.Forms.Cursors.Default;
         }
 
         private void ResizeGameList(int xSize, int ySize)
@@ -1145,18 +1152,26 @@ namespace Outlands_Adventure_Launcher
                 {
                     if (queryError.Contains("Unable to connect"))
                     {
-                        // Pop up de falta de internet - No te puedes conectar a la base de datos
                         GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
                     }
                     else
                     {
-                        // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
                         GenericPopUpMessage(queryError);
                     }
                 }
                 else
                 {
-                    // "Log Out" - Devuelvele a la pantalla de login
+                    try
+                    {
+                        WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                        Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+                        key.DeleteValue("KeepSessionOpen");
+                        key.DeleteValue("Username");
+                    }
+                    catch (Exception)
+                    { }
+
+                    Application.Restart();
                 }
 
                 CloseLoadingScreen(false);
@@ -1271,13 +1286,23 @@ namespace Outlands_Adventure_Launcher
 
         private void UserSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if (ContextMenuStrip.Items[0] == e.ClickedItem)
+            if (e.ClickedItem.Text == ClientLanguage.userInfoMenu_Settings)
             {
                 OpenConfiguration();
             }
-            else if (ContextMenuStrip.Items[2] == e.ClickedItem)
+            else if (e.ClickedItem.Text == ClientLanguage.userInfoMenu_logout)
             {
-                // Cerrar sesión
+                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+                Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+                bool keepSessionOpen = Convert.ToBoolean(key.GetValue("KeepSessionOpen"));
+
+                if (keepSessionOpen)
+                {
+                    key.DeleteValue("KeepSessionOpen");
+                    key.DeleteValue("Username");
+                }
+
+                Application.Restart();
             }
         }
         #endregion User Settings Menu
@@ -1324,7 +1349,7 @@ namespace Outlands_Adventure_Launcher
                     else // Descarga en curso
                     {
                         ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Avaible_Button + " - " + 
-                            ClientLanguage.action_InProgress));
+                            ClientLanguage.download_InProgress));
                     }
                 }
                 else
@@ -1391,6 +1416,12 @@ namespace Outlands_Adventure_Launcher
                 "WHERE G_A.gameName = G_O.gameName AND G_O.user_email Like '" + userEmail + "')";
 
             return SQLManager.ReadGameList(sqlQuery);
+        }
+
+        private string GetUserEmail(string userName)
+        {
+            string sqlQuery = "SELECT user_email FROM user_information WHERE user_name LIKE '" + userName + "'";
+            return SQLManager.SearchQueryData(sqlQuery);
         }
         #endregion SQL Check games status
 
@@ -1524,7 +1555,6 @@ namespace Outlands_Adventure_Launcher
             {
                 CloseGameInfo_Click(null, EventArgs.Empty);
                 ContextMenuStrip.Hide();
-                uninstallInProgress = true;
 
                 if (DownloadInformation.Visible)
                 {
@@ -1556,7 +1586,6 @@ namespace Outlands_Adventure_Launcher
 
                 CloseGameInfo_Click(null, EventArgs.Empty);
                 ContextMenuStrip.Hide();
-                uninstallInProgress = false;
                 CloseUninstall_Information.Visible = true;
             }
         }

@@ -10,6 +10,8 @@ namespace Outlands_Adventure_Launcher
     {
         /// <summary>
         /// Punto de entrada principal para la aplicación.
+        /// Read from Windowns Register if you requested to keep your session open, if you requested it then open
+        /// the client application, if not then open the application login
         /// </summary>
         [STAThread]
         static void Main()
@@ -17,15 +19,24 @@ namespace Outlands_Adventure_Launcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //ClientLogin clientLogin = new ClientLogin();
-            //clientLogin.ReceiveClassInstance(clientLogin);
-            //Application.Run(clientLogin);
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+            bool keepSessionOpen = Convert.ToBoolean(key.GetValue("KeepSessionOpen"));
 
-            ClientAplication clientAplication = new ClientAplication();
-            clientAplication.ReceiveClassInstance(clientAplication);
-            Application.Run(clientAplication);
+            if (keepSessionOpen)
+            {
+                string username = key.GetValue("Username").ToString();
 
-            //Application.Run(new Form1());
+                ClientAplication clientAplication = new ClientAplication();
+                clientAplication.ReceiveClassInstance(clientAplication, username);
+                Application.Run(clientAplication);
+            }
+            else
+            {
+                ClientLogin clientLogin = new ClientLogin();
+                clientLogin.ReceiveClassInstance(clientLogin);
+                Application.Run(clientLogin);
+            }
         }
     }
 }

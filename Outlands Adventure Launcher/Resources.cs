@@ -15,8 +15,14 @@ using System.Data.Linq;
 namespace Outlands_Adventure_Launcher
 {
     #region Password Strenght
+    /// <summary>
+    /// Class in charge of checking a password strength
+    /// </summary>
     static class PasswordStrength
     {
+        /// <summary>
+        /// Values of a password
+        /// </summary>
         public enum PasswordScore
         {
             Empty = 0,
@@ -27,6 +33,11 @@ namespace Outlands_Adventure_Launcher
             VeryStrong = 5
         }
 
+        /// <summary>
+        /// Evaluate a password according to certain patterns
+        /// </summary>
+        /// <param name="password">String, Password to be evaluated</param>
+        /// <returns>PasswordScore, Value of a password</returns>
         public static PasswordScore CheckStrength(string password)
         {
             int score = 1;
@@ -45,6 +56,12 @@ namespace Outlands_Adventure_Launcher
             return (PasswordScore)score;
         }
 
+        /// <summary>
+        /// Show the value of security of a password after being evaluated
+        /// </summary>
+        /// <param name="NewPasswordTextbox">Textbox that contains the password</param>
+        /// <param name="NewPasswordStrengthProgressBar">Progressbar that indicate the value of password strength</param>
+        /// <param name="NewPasswordStrengthLabel">Label that indicate the value of password strength</param>
         public static void CheckPasswordStrength(TextBox NewPasswordTextbox, ProgressBar NewPasswordStrengthProgressBar,
             Label NewPasswordStrengthLabel)
         {
@@ -91,8 +108,19 @@ namespace Outlands_Adventure_Launcher
     #endregion Password Strenght
 
     #region Send Email
+    /// <summary>
+    /// Class in charge of sending emails
+    /// </summary>
     static class SendEmail
     {
+        /// <summary>
+        /// Sends an email
+        /// </summary>
+        /// <param name="emailDirection">String, Recipient address</param>
+        /// <param name="emailSubject">String message header</param>
+        /// <param name="emailBody">String, message body</param>
+        /// <param name="emailBodyData">String, message body data (in this case is the security code)</param>
+        /// <returns>Boolean, true if the email was sent correctly or false if not</returns>
         public static bool SendNewEmail(String emailDirection, string emailSubject, string emailBody, string emailBodyData)
         {
             try
@@ -126,10 +154,17 @@ namespace Outlands_Adventure_Launcher
     #endregion Send Email
 
     #region Confimation Code
+    /// <summary>
+    /// Class in charge of creating the security code
+    /// </summary>
     static class CreateConfirmationCode
     {
         static readonly int codeLenght = 8;
 
+        /// <summary>
+        /// Obtain the char of every random number generated
+        /// </summary>
+        /// <returns>String, security code</returns>
         public static string CreateCode()
         {
             string confirmationCode = "";
@@ -143,11 +178,18 @@ namespace Outlands_Adventure_Launcher
             return confirmationCode;
         }
 
+        /// <summary>
+        /// Create a random character (number or Upper case letter), excluding number from 58 to 64 
+        /// </summary>
+        /// <param name="randomNumber">Random class in charge of selecting a random number</param>
+        /// <returns>int, random number between 48 and 90</returns>
         private static int GiveMeANumber(Random randomNumber)
         {
+            // These numbers are excluded because they are special character in the ascii table
             List<int> exclude = new List<int>() { 58, 59, 60, 61, 62, 63, 64 };
             var range = Enumerable.Range(1, 100).Where(i => !exclude.Contains(i));
 
+            // numbers between 48 (number 0 in ascii table) and 90 (Z in ascii table)
             int index = randomNumber.Next(48, 90 - exclude.Count);
             return range.ElementAt(index);
         }
@@ -155,11 +197,18 @@ namespace Outlands_Adventure_Launcher
     #endregion Confimation Code
 
     #region Resume Manager
+    /// <summary>
+    /// Class in charge resuming text with SHA algorithm
+    /// </summary>
     static class Hash_SHA2
     {
         private static HashAlgorithm hashResume;
         private static Binary binaryOriginalHash;
 
+        /// <summary>
+        /// Initialice the SHA algorithm and resume the security code created
+        /// </summary>
+        /// <param name="confirmationCode">String, security code created</param>
         public static void InitialiceVariables(string confirmationCode)
         {
             hashResume = new SHA256Managed();
@@ -167,11 +216,21 @@ namespace Outlands_Adventure_Launcher
             binaryOriginalHash = new Binary(originalHash);
         }
 
+        /// <summary>
+        /// Resume an string using the SHA algorithm
+        /// </summary>
+        /// <param name="confirmationCode">String, security code created</param>
+        /// <returns>byte[], string summarized</returns>
         public static byte[] CreateResume(string confirmationCode)
         {
              return hashResume.ComputeHash(Encoding.UTF8.GetBytes(confirmationCode));
         }
 
+        /// <summary>
+        /// Verify if the security code created and the security code introduced by the user are the same
+        /// </summary>
+        /// <param name="confirmationCode">String, security code written by the user</param>
+        /// <returns>Bool, true if both codes are the same, false if not</returns>
         public static bool VerifyResume(string confirmationCode)
         {
             byte[] confirmationHash = Hash_SHA2.CreateResume(confirmationCode);
@@ -186,6 +245,9 @@ namespace Outlands_Adventure_Launcher
     #endregion Resume Manager
 
     #region Windows register manager
+    /// <summary>
+    /// Class in charge of opening, closing, writting and reding the windows register
+    /// </summary>
     public class WindowsRegisterManager
     {
         private readonly string windowsRegistry = "Outlands_Adventure_Launcher";
@@ -216,6 +278,10 @@ namespace Outlands_Adventure_Launcher
             key.Close();
         }
 
+        /// <summary>
+        /// Read from the windows register the position of the form and establish it the current form
+        /// </summary>
+        /// <param name="WindowApp">Form, Current form</param>
         public void LoadWindowPosition(Form WindowApp)
         {
             Microsoft.Win32.RegistryKey key = OpenWindowsRegister(false);
@@ -228,6 +294,10 @@ namespace Outlands_Adventure_Launcher
             CloseWindowsRegister(key);
         }
 
+        /// <summary>
+        /// Save in the windows register the position of the open form
+        /// </summary>
+        /// <param name="WindowApp">Form, Current form</param>
         public void SaveWindowPosition(Form WindowApp)
         {
             Microsoft.Win32.RegistryKey key = OpenWindowsRegister(true);
@@ -241,9 +311,16 @@ namespace Outlands_Adventure_Launcher
     #endregion Windows register manager
 
     #region Language / LanguageCombobox Manager
+    /// <summary>
+    /// Class in charge of change the visual appearance of comboboxs
+    /// </summary>
     public class ComboboxManager
     {
-        // Allow Combo Box to center aligned
+        /// <summary>
+        /// Allow Combo Box text to center aligned
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         public void Combobox_DrawItem(object sender, DrawItemEventArgs e)
         {
             // By using Sender, one method could handle multiple ComboBoxes
@@ -275,22 +352,30 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Close the combobox and lose the focus from the combobox
+        /// </summary>
+        /// <param name="configurationPanel">Panel, panel that will gain the focus</param>
         public void Combobox_DropDownClosed(Panel configurationPanel)
         {
             configurationPanel.Focus();
         }
     }
 
+    /// <summary>
+    /// Class in charge of change the aplication language
+    /// </summary>
     public class LanguageManager
     {
         private ClientLogin clientLogin;
         private ClientAplication clientAplication;
 
         /// <summary>
+        /// Change the language stored in the windows registry and change the language of the application
         /// Cambia el idioma del almacenado en la entrada del registro de windows y cambia el idioma de la aplicación
         /// </summary>
-        /// <param name="sender">Objeto que recibe los eventos</param>
-        /// <param name="e">Eventos que le ocurren al objeto</param>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         public void LanguageCombobox_LanguageChanged(ComboBox languageCombobox)
         {
             string[] selectedLanguageArray = languageCombobox.SelectedItem.ToString().Split('(');
@@ -307,9 +392,10 @@ namespace Outlands_Adventure_Launcher
         }
 
         /// <summary>
-        /// Cambia el idioma del complilador por el solicitado y permite acceder a los recursos propios de ese idioma
+        /// Changes the compiler language to the one requested and allows access to the resources of that language
+        /// Cambia el idioma del compilador por el solicitado y permite acceder a los recursos propios de ese idioma
         /// </summary>
-        /// <param name="selectedLanguage"></param>
+        /// <param name="selectedLanguage">String, selected language</param>
         public void ChangeCurrentLanguage(string selectedLanguage)
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo(selectedLanguage);
@@ -317,12 +403,16 @@ namespace Outlands_Adventure_Launcher
         }
 
         /// <summary>
+        /// It reads the language that is being used from the windows registry, if there is none, it sets Spanish by default.
+        /// If the application is opening then change the language of the application if it is not Spanish and if you enter
+        /// settings then set the language that is in use in the dropdown
+        /// 
         /// Lee el idioma que se está usando del registro del windows, si no hay ninguno establece el español por defecto.
         /// Si la aplicación se esta abriendo entonces cambia el idioma de la aplicación si no es español y si entras a
         /// ajustes entonces establece en el desplegable el idioma que está en uso 
         /// </summary>
-        /// <param name="appLoading">booleano que indica si la aplicación está cargando por primera vez o si estás entrando
-        /// al método una vez que toda la aplicación ya ha cargado</param>
+        /// <param name="appLoading">boolean that indicates if the application is loading for the first time or if you 
+        /// are entering the method after the entire application has loaded</param>
         public void ReadSelectedLanguage(bool appLoading, ComboBox languageCombobox)
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
@@ -362,10 +452,11 @@ namespace Outlands_Adventure_Launcher
         }
 
         /// <summary>
-        /// Establece en el desplegable del idiomas en el menú de ajustes qué idioma se está usando actualmente
+        /// Set the language currently being used in the language drop-down in the settings menu
+        /// Establece en el desplegable de idiomas en el menú de ajustes qué idioma se está usando actualmente
         /// </summary>
-        /// <param name="selectedLanguage">Idioma que se está usando actualmente</param>
-        /// <returns>Int, devuelve -1 si no se ha encontrado el idioma en el desplegable</returns>
+        /// <param name="selectedLanguage">Language currently being used</param>
+        /// <returns>Int, return -1 if the language was not found in the drop-down</returns>
         private int CheckLanguageComboboxSelection(string selectedLanguage, ComboBox languageCombobox)
         {
             for (int currentLanguageItem = 0; currentLanguageItem < languageCombobox.Items.Count; currentLanguageItem++)
@@ -381,10 +472,11 @@ namespace Outlands_Adventure_Launcher
         }
 
         /// <summary>
+        /// It establishes in which form the language will be changed
         /// Establece en que formulario se va a cambiar el idioma
         /// </summary>
-        /// <param name="clientLogin">Referencia de la clase ClientLogin</param>
-        /// <param name="clientAplication">Referencia de la clase ClientAplication</param>
+        /// <param name="clientLogin">ClientLogin class reference</param>
+        /// <param name="clientAplication">ClientAplication class reference</param>
         public void SelectCurrentAplicationWindow(ClientLogin clientLogin, ClientAplication clientAplication)
         {
             this.clientLogin = clientLogin;
@@ -392,6 +484,7 @@ namespace Outlands_Adventure_Launcher
         }
 
         /// <summary>
+        /// Calls methods that change the text of objects depending on the selected language
         /// Llama a los métodos que cambian el texto de los objetos dependiendo del idioma seleccionado
         /// </summary>
         private void ChangeAplicationLanguage()

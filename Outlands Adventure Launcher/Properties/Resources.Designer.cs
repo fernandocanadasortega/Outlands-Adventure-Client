@@ -103,6 +103,16 @@ namespace Outlands_Adventure_Launcher.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Dark_Close {
+            get {
+                object obj = ResourceManager.GetObject("Dark_Close", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap empty_store {
             get {
                 object obj = ResourceManager.GetObject("empty store", resourceCulture);

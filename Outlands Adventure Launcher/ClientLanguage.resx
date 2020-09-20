@@ -351,13 +351,25 @@
   <data name="download_Unavaible_Button" xml:space="preserve">
     <value>No disponible</value>
   </data>
-  <data name="action_InProgress" xml:space="preserve">
-    <value>En curso</value>
-  </data>
   <data name="Uninstalling_Game" xml:space="preserve">
     <value>Desinstalando</value>
   </data>
   <data name="Uninstalled_Game" xml:space="preserve">
     <value>Desinstalado</value>
+  </data>
+  <data name="download_InProgress" xml:space="preserve">
+    <value>En curso</value>
+  </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="exit_Header" xml:space="preserve">
+    <value>¿SALIR AHORA?</value>
+  </data>
+  <data name="exit_Label" xml:space="preserve">
+    <value>¿Quieres salir o cerrar sesión?</value>
+  </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>Cerrar sesión</value>
   </data>
 </root>

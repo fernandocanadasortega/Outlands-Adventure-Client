@@ -360,4 +360,16 @@
   <data name="Uninstalled_Game" xml:space="preserve">
     <value>Uninstalled</value>
   </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="exit_Header" xml:space="preserve">
+    <value>EXIT NOW?</value>
+  </data>
+  <data name="exit_Label" xml:space="preserve">
+    <value>Do you want to exit or log out?</value>
+  </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
 </root>
