@@ -13,10 +13,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-// Cuando cambies de idioma vete al registro de windows y cambia el texto de DefaultScreen antes de cerrar el registro de windows
 
 namespace Outlands_Adventure_Launcher
 {
+    /// <summary>
+    /// Class in charge of managing the main application form
+    /// </summary>
     public partial class ClientAplication : Form
     {
         private ClientAplication clientAplication;
@@ -45,11 +47,19 @@ namespace Outlands_Adventure_Launcher
         private ToolTip toolTip;
         private string tileSizeSelected = "";
 
+        /// <summary>
+        /// Constructor of the class
+        /// </summary>
         public ClientAplication()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Receive the instance of ClientAplication class and the username of the user
+        /// </summary>
+        /// <param name="clientAplication">Instance of ClientAplication class</param>
+        /// <param name="userName">String, user name of the user that logged in</param>
         public void ReceiveClassInstance(ClientAplication clientAplication, string userName)
         {
             this.clientAplication = clientAplication;
@@ -58,6 +68,12 @@ namespace Outlands_Adventure_Launcher
         }
 
         #region Form Actions
+        /// <summary>
+        /// Method that is executed when the form finish loading, read the windows register, the language in use, the size of the 
+        /// game images and initialize multiple variables
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ClientAplication_Load(object sender, EventArgs e)
         {
             CreateClientFolder();
@@ -86,6 +102,12 @@ namespace Outlands_Adventure_Launcher
             UninstallProgress.MarqueeAnimationSpeed = 40;
         }
 
+        /// <summary>
+        /// Method that is executed when the form is closing but not closed yet, check if an SQL operation is on going then cancel
+        /// the method, if there is no operation in progress then show a close pop-up to ask what the user want to do
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ClientAplication_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!aplicationClosing)
@@ -104,6 +126,12 @@ namespace Outlands_Adventure_Launcher
         #endregion Form Actions
 
         #region Side Menu Manager
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="backgroundPanel">Panel, panel that will change of color when you move the mouse in, out or when you
+        /// click on the panel</param>
+        /// <param name="colorOpacity">Int, opacity of the color depending of the action done</param>
         private void ChangeBackgroundColor(Object backgroundPanel, int colorOpacity)
         {
             if (backgroundPanel.GetType() == typeof(Panel))
@@ -117,6 +145,11 @@ namespace Outlands_Adventure_Launcher
         }
 
         #region User Information
+        /// <summary>
+        /// Triggered when you move the mouse in the sidemenu user information panel, change the color of the panel
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserInformation_MouseEnter(object sender, EventArgs e)
         {
             if (canTriggerSelections)
@@ -127,6 +160,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when you move the mouse out the sidemenu user information panel, change the color of the panel only if the mouse
+        /// left the container panel and not the label inside
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserInformation_MouseLeave(object sender, EventArgs e)
         {
             if (sender.GetType() == typeof(Panel))
@@ -146,6 +185,11 @@ namespace Outlands_Adventure_Launcher
         #endregion User Information
 
         #region Store
+        /// <summary>
+        /// Triggered when you move the mouse in the sidemenu store panel, change the color of the panel
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Store_MouseEnter(object sender, EventArgs e)
         {
             if (canTriggerSelections)
@@ -155,6 +199,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when you move the mouse out the sidemenu store panel, change the color of the panel only if the mouse
+        /// left the container panel and not the label inside
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Store_MouseLeave(object sender, EventArgs e)
         {
             if (sender != null && sender.GetType() == typeof(Panel))
@@ -172,6 +222,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when you right click the mouse in the sidemenu store panel, change the color of the panel when you click the panel
+        /// and change the visible panel to show the game store and charge the necessary games
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Store_MouseDown(object sender, MouseEventArgs e)
         {
             if (e == null || e.Button == MouseButtons.Left)
@@ -192,6 +248,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when the sidemenu store panel is visible, paint a line to indicate the active sidemenu option (store, game library...)
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Store_Paint(object sender, PaintEventArgs e)
         {
             if (storeOpen)
@@ -206,6 +267,11 @@ namespace Outlands_Adventure_Launcher
         #endregion Store
 
         #region Game Library
+        /// <summary>
+        /// Triggered when you move the mouse in the sidemenu game library panel, change the color of the panel
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void GameLibrary_MouseEnter(object sender, EventArgs e)
         {
             if (canTriggerSelections)
@@ -215,6 +281,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when you move the mouse out the sidemenu game library panel, change the color of the panel only if the mouse
+        /// left the container panel and not the label inside
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void GameLibrary_MouseLeave(object sender, EventArgs e)
         {
             if (sender != null && sender.GetType() == typeof(Panel))
@@ -232,6 +304,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when you right click the mouse in the sidemenu game library panel, change the color of the panel when you 
+        /// click the panel and change the visible panel to show the game library and charge the necessary games
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void GameLibrary_MouseDown(object sender, MouseEventArgs e)
         {
             if (e == null || e.Button == MouseButtons.Left)
@@ -252,6 +330,12 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when the sidemenu game library panel is visible, paint a line to indicate the active sidemenu option 
+        /// (store, game library...)
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void GameLibrary_Paint(object sender, PaintEventArgs e)
         {
             if (libraryOpen)
@@ -268,7 +352,10 @@ namespace Outlands_Adventure_Launcher
         #endregion Side Menu Manager
 
         #region Game Client Configuration
-        // These methods manage game client configuration button when you click on it
+        /// <summary>
+        /// Open the configuration panel read the current language and default screen in use, then assign the values in their corresponding
+        /// comboboxs
+        /// </summary>
         private void OpenConfiguration()
         {
             ShowImageGradient();
@@ -292,6 +379,12 @@ namespace Outlands_Adventure_Launcher
             ConfigurationPanel.Focus();
         }
 
+        /// <summary>
+        /// Create a code and pass it by email, then show a panel with a textbox requiring the code, if the code you introduced
+        /// is the same that the code passed by email then delete the current user account
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void DeleteAccount_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -323,33 +416,61 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when the mouse enter in the delete account label, change the style of the label text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void DeleteAccount_MouseEnter(object sender, EventArgs e)
         {
             ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
         }
 
+        /// <summary>
+        /// Triggered when the mouse leaves the delete account label, change the style of the label text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void DeleteAccount_MouseLeave(object sender, EventArgs e)
         {
             ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
         }
 
-        private void ConfigurationExitButton_Click(object sender, EventArgs e)
-        {
-            HideImageGradient();
-        }
-
+        /// <summary>
+        /// Triggered when the mouse enter in the configuration exit label, change the style of the label text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ConfigurationExitButton_MouseEnter(object sender, EventArgs e)
         {
             ConfigurationExitButton.Font = new Font("Oxygen", 12, FontStyle.Bold);
         }
 
+        /// <summary>
+        /// Triggered when the mouse leaves the configuration exit label, change the style of the label text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ConfigurationExitButton_MouseLeave(object sender, EventArgs e)
         {
             ConfigurationExitButton.Font = new Font("Oxygen", 12, FontStyle.Regular);
         }
+
+        /// <summary>
+        /// Triggered when the mouse click in the configuration exit label, close configuration panel
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
+        private void ConfigurationExitButton_Click(object sender, EventArgs e)
+        {
+            HideImageGradient();
+        }
         #endregion Game Client Configuration
 
         #region Set default screen and change screens
+        /// <summary>
+        /// Read from windows register the chosen default screen and open it when the form starts
+        /// </summary>
         private void SetDefaultScreen()
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
@@ -385,9 +506,14 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Change between screens (store, game library, game info...)
+        /// </summary>
+        /// <param name="selectedScreen">Boolean, Requested screen (store, game library, game info...)</param>
+        /// <param name="openGameInfo">Boolean, is only true when you open a game's info, if false then open the store or any other screen
+        /// excluding the game info screen</param>
         private void ChangeScreen(ref bool selectedScreen, bool openGameInfo)
         {
-            // Change between Screens (store, library...)
             if (!openGameInfo)
             {
                 storeOpen = libraryOpen = gameInfoOpen = false;
@@ -453,13 +579,21 @@ namespace Outlands_Adventure_Launcher
         #region Combobox controls, Language manager and Default Screen Manager
 
         #region Combobox controls
-        // Allow Combo Box to center aligned
+        /// <summary>
+        /// Allow Combo Box text to center aligned
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Combobox_DrawItem(object sender, DrawItemEventArgs e)
         {
             ComboboxManager comboboxManager = new ComboboxManager();
             comboboxManager.Combobox_DrawItem(sender, e);
         }
 
+        /// <summary>
+        /// Close the combobox and lose the focus from the combobox
+        /// </summary>
+        /// <param name="configurationPanel">Panel, panel that will gain the focus</param>
         private void Combobox_DropDownClosed(object sender, EventArgs e)
         {
             ComboboxManager comboboxManager = new ComboboxManager();
@@ -469,6 +603,7 @@ namespace Outlands_Adventure_Launcher
 
         #region Language manager
         /// <summary>
+        /// Change the language of all the objects in the application
         /// Cambia el idioma de todos los objetos que hay en la aplicación
         /// </summary>
         public void ChangeAplicationLanguage()
@@ -514,6 +649,9 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Change the game download information language when a download is in progress
+        /// </summary>
         private void CheckDownload_UninstallInformationLanguage()
         {
             LanguageManager languageManager = new LanguageManager();
@@ -563,7 +701,12 @@ namespace Outlands_Adventure_Launcher
             languageManager.ChangeCurrentLanguage(currentLanguage);
         }
 
-        // Cambia el idioma a español y devuelve el idioma que esta seleccionado originalmente por el usuario
+        /// <summary>
+        /// Changes the language to spanish and returns the originally selected language by the user
+        /// Cambia el idioma a español y devuelve el idioma que esta seleccionado originalmente por el usuario
+        /// </summary>
+        /// <param name="languageManager">LanguageManager, Class in charge of language changes in the application</param>
+        /// <returns>String, original language selected by the user</returns>
         private string ChangeLanguageTemporarily(LanguageManager languageManager)
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
@@ -576,6 +719,7 @@ namespace Outlands_Adventure_Launcher
         }
 
         /// <summary>
+        /// Change the language stored in the windows registry entry and change the application language
         /// Cambia el idioma almacenado en la entrada del registro de windows y cambia el idioma de la aplicación
         /// </summary>
         /// <param name="sender">Objeto que recibe los eventos</param>
@@ -595,7 +739,8 @@ namespace Outlands_Adventure_Launcher
 
         #region Default Screen manager
         /// <summary>
-        /// Cambia la pantalla por defecto almacenada en la entrada del registro de windows
+        /// Call a method that change the default screen stored in the windows register when you change the value in the 
+        /// default screen combobox
         /// </summary>
         /// <param name="sender">Objeto que recibe los eventos</param>
         /// <param name="e">Eventos que le ocurren al objeto</param>
@@ -604,6 +749,11 @@ namespace Outlands_Adventure_Launcher
             SaveDefaultScreen(DefaultScreen.SelectedIndex);
         }
 
+        /// <summary>
+        /// Change the default screen stored in the windows register
+        /// Cambia la pantalla por defecto almacenada en la entrada del registro de windows
+        /// </summary>
+        /// <param name="selectedItemIndex"></param>
         private void SaveDefaultScreen(int selectedItemIndex)
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
@@ -615,6 +765,7 @@ namespace Outlands_Adventure_Launcher
 
         #endregion Combobox controls and Language manager
 
+        // Seguir por aquí
         #region Tile Size - Game Filter - Figure Paint
 
         #region Paint Separative Line and Tile Size Icons
@@ -1425,19 +1576,9 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion SQL Check games status
 
-        private void CreateClientFolder()
-        {
-            if (!Directory.Exists(downloadPath))
-            {
-                try
-                {
-                    Directory.CreateDirectory(downloadPath);
-                }
-                catch (Exception)
-                { }
-            }
-        }
+        #region Downloads / Installations - Uninstallations - File manager
 
+        #region Downloads / Installations
         private async void Download_InstallGame()
         {
             long requeriedDriveSpace = 600000000; // 600 MB in bytes
@@ -1482,7 +1623,7 @@ namespace Outlands_Adventure_Launcher
                         {
                             await Task.Run(async () =>
                             {
-                            await DownloadGameFromMega();
+                                await DownloadGameFromMega();
                             });
                         }
                         catch (Exception)
@@ -1549,6 +1690,38 @@ namespace Outlands_Adventure_Launcher
             CloseDownloadInformation.Visible = true;
         }
 
+        private async Task DownloadGameFromMega()
+        {
+            MegaApiClient mega = new MegaApiClient();
+            mega.LoginAnonymous();
+
+            Uri fileLink = new Uri(currentGameInfo.GameDownloadLink);
+
+            INodeInfo node = mega.GetNodeFromLink(fileLink);
+
+            downloadGameName = node.Name;
+
+            if (File.Exists(Path.Combine(downloadPath, downloadGameName)))
+            {
+                File.Delete(Path.Combine(downloadPath, downloadGameName));
+            }
+
+            mega.DownloadFile(fileLink, Path.Combine(downloadPath, node.Name));
+            mega.Logout();
+        }
+
+        private async Task Install_Game()
+        {
+            string zipPath = Path.Combine(downloadPath, downloadGameName);
+            string extractPath = downloadPath;
+
+            ZipFile.ExtractToDirectory(zipPath, extractPath);
+
+            File.Delete(Path.Combine(downloadPath, downloadGameName));
+        }
+        #endregion Downloads / Installations
+
+        #region Uninstallations
         private async void UninstallGame()
         {
             if (Directory.Exists(downloadPath))
@@ -1589,30 +1762,19 @@ namespace Outlands_Adventure_Launcher
                 CloseUninstall_Information.Visible = true;
             }
         }
+        #endregion Uninstallations
 
-        private void CloseDownloadInformation_MouseClick(object sender, MouseEventArgs e)
+        #region File manager
+        private void CreateClientFolder()
         {
-            if (e.Button == MouseButtons.Left)
+            if (!Directory.Exists(downloadPath))
             {
-                DownloadInformation.Visible = false;
-
-                if (Uninstall_Information.Visible)
+                try
                 {
-                    Uninstall_Information.Location = new Point(0, 414);
-                    Store.Location = new Point(0, 150);
-                    GameLibrary.Location = new Point(0, 268);
+                    Directory.CreateDirectory(downloadPath);
                 }
-            }
-        }
-
-        private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Uninstall_Information.Visible = false;
-
-                Store.Location = new Point(0, 150);
-                GameLibrary.Location = new Point(0, 268);
+                catch (Exception)
+                { }
             }
         }
 
@@ -1646,35 +1808,36 @@ namespace Outlands_Adventure_Launcher
             catch (Exception)
             { }
         }
+        #endregion File manager
 
-        private async Task DownloadGameFromMega()
+        #region Others
+        private void CloseDownloadInformation_MouseClick(object sender, MouseEventArgs e)
         {
-            MegaApiClient mega = new MegaApiClient();
-            mega.LoginAnonymous();
-
-            Uri fileLink = new Uri(currentGameInfo.GameDownloadLink);
-
-            INodeInfo node = mega.GetNodeFromLink(fileLink);
-
-            downloadGameName = node.Name;
-
-            if (File.Exists(Path.Combine(downloadPath, downloadGameName)))
+            if (e.Button == MouseButtons.Left)
             {
-                File.Delete(Path.Combine(downloadPath, downloadGameName));
+                DownloadInformation.Visible = false;
+
+                if (Uninstall_Information.Visible)
+                {
+                    Uninstall_Information.Location = new Point(0, 414);
+                    Store.Location = new Point(0, 150);
+                    GameLibrary.Location = new Point(0, 268);
+                }
             }
-
-            mega.DownloadFile(fileLink, Path.Combine(downloadPath, node.Name));
-            mega.Logout();
         }
 
-        private async Task Install_Game()
+        private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
         {
-            string zipPath = Path.Combine(downloadPath, downloadGameName);
-            string extractPath = downloadPath;
+            if (e.Button == MouseButtons.Left)
+            {
+                Uninstall_Information.Visible = false;
 
-            ZipFile.ExtractToDirectory(zipPath, extractPath);
-
-            File.Delete(Path.Combine(downloadPath, downloadGameName));
+                Store.Location = new Point(0, 150);
+                GameLibrary.Location = new Point(0, 268);
+            }
         }
+        #endregion Others
+
+        #endregion Downloads - Instalations - File manager
     }
 }
