@@ -372,4 +372,19 @@
   <data name="LogoutButton" xml:space="preserve">
     <value>Logg av</value>
   </data>
+  <data name="download" xml:space="preserve">
+    <value>Nedlastinger</value>
+  </data>
+  <data name="download_cancel" xml:space="preserve">
+    <value>Avbryt nedlasting</value>
+  </data>
+  <data name="currentPriority" xml:space="preserve">
+    <value>Kø  --  Prioritet</value>
+  </data>
+  <data name="priorityDown" xml:space="preserve">
+    <value>Reduser nedlastingsprioriteten</value>
+  </data>
+  <data name="priorityUp" xml:space="preserve">
+    <value>Øk nedlastingsprioriteten</value>
+  </data>
 </root>

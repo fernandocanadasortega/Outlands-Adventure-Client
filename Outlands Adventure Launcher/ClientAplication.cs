@@ -31,20 +31,21 @@ namespace Outlands_Adventure_Launcher
         private string downloadGameName = "";
         private string downloadState = "";
         private bool downloadInProgress;
+        private GameInfo downloadingGame;
+        private List<GameInfo> queueGames;
 
         private readonly int objectHighlighted = 30;
         private readonly int objectUnmarked = 0;
         private readonly int objectSelected = 50;
-        private bool storeOpen, libraryOpen, gameInfoOpen;
+        private bool storeOpen, libraryOpen, gameInfoOpen, downloadsInfoOpen;
 
         private bool operationInProgress;
         private bool canTriggerSelections;
 
         private ListView currentGameImagesListView;
-        List<GameInfo> currentGameInfoList;
-        GameInfo currentGameInfo;
+        private List<GameInfo> currentGameInfoList;
+        private GameInfo currentGameInfo;
 
-        private ToolTip toolTip;
         private string tileSizeSelected = "";
 
         /// <summary>
@@ -86,9 +87,10 @@ namespace Outlands_Adventure_Launcher
             languageManager.ReadSelectedLanguage(true, LanguageSelected);
 
             currentGameInfoList = new List<GameInfo>();
+            queueGames = new List<GameInfo>();
+
             ImageGradient.BackColor = Color.FromArgb(190, 0, 0, 0);
             GameInfoGradient.BackColor = Color.FromArgb(210, 0, 0, 0);
-            toolTip = new ToolTip();
 
             aplicationClosing = false;
             operationInProgress = false;
@@ -98,7 +100,7 @@ namespace Outlands_Adventure_Launcher
             SelectTileSize(true, false, false); // Metodo 1
             SetDefaultScreen();
 
-            DownloadProgress.MarqueeAnimationSpeed = 40;
+            SideDownloadProgressbar.MarqueeAnimationSpeed = 40;
             UninstallProgress.MarqueeAnimationSpeed = 40;
         }
 
@@ -232,17 +234,14 @@ namespace Outlands_Adventure_Launcher
         {
             if (e == null || e.Button == MouseButtons.Left)
             {
-                if (!storeOpen)
-                {
-                    Store.Focus();
-                    ChangeScreen(ref storeOpen, false);
+                Store.Focus();
+                ChangeScreen(ref storeOpen, false);
 
-                    ChangeBackgroundColor(Store, objectSelected);
-                    ChangeBackgroundColor(GameLibrary, objectUnmarked);
+                ChangeBackgroundColor(Store, objectSelected);
+                ChangeBackgroundColor(GameLibrary, objectUnmarked);
 
-                    currentGameImagesListView = StoreAvailableGames;
-                    SelectTileSize(false, false, true);
-                }
+                currentGameImagesListView = StoreAvailableGames;
+                SelectTileSize(false, false, true);
 
                 Store.Invalidate();
             }
@@ -314,17 +313,14 @@ namespace Outlands_Adventure_Launcher
         {
             if (e == null || e.Button == MouseButtons.Left)
             {
-                if (!libraryOpen)
-                {
-                    GameLibrary.Focus();
-                    ChangeScreen(ref libraryOpen, false);
+                GameLibrary.Focus();
+                ChangeScreen(ref libraryOpen, false);
 
-                    ChangeBackgroundColor(GameLibrary, objectSelected);
-                    ChangeBackgroundColor(Store, objectUnmarked);
+                ChangeBackgroundColor(GameLibrary, objectSelected);
+                ChangeBackgroundColor(Store, objectUnmarked);
 
-                    currentGameImagesListView = GameLibraryAvailableGames;
-                    SelectTileSize(false, false, true);
-                }
+                currentGameImagesListView = GameLibraryAvailableGames;
+                SelectTileSize(false, false, true);
 
                 GameLibrary.Invalidate();
             }
@@ -516,17 +512,24 @@ namespace Outlands_Adventure_Launcher
         {
             if (!openGameInfo)
             {
-                storeOpen = libraryOpen = gameInfoOpen = false;
+                storeOpen = libraryOpen = gameInfoOpen = downloadsInfoOpen = false;
                 selectedScreen = true;
 
                 StoreMenu.Visible = storeOpen;
                 GameLibraryMenu.Visible = libraryOpen;
                 GameInfoMenu.Visible = gameInfoOpen;
+                DownloadsPanel.Visible = downloadsInfoOpen;
 
-                Store_MouseLeave(null, EventArgs.Empty);
-                GameLibrary_MouseLeave(null, EventArgs.Empty);
+                Store_MouseLeave(Store, EventArgs.Empty);
+                GameLibrary_MouseLeave(GameLibrary, EventArgs.Empty);
 
                 FilterGame.Text = "";
+
+                if (downloadsInfoOpen)
+                {
+                    Store.Invalidate();
+                    GameLibrary.Invalidate();
+                }
             }
             else
             {
@@ -660,42 +663,42 @@ namespace Outlands_Adventure_Launcher
             if (downloadState.Equals(ClientLanguage.game_Download))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.game_Download;
+                SideDownloadState.Text = ClientLanguage.game_Download;
             }
             else if (downloadState.Equals(ClientLanguage.game_Install))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.game_Install;
+                SideDownloadState.Text = ClientLanguage.game_Install;
             }
             else if (downloadState.Equals(ClientLanguage.game_DownloadError))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.game_DownloadError;
+                SideDownloadState.Text = ClientLanguage.game_DownloadError;
             }
             else if (downloadState.Equals(ClientLanguage.game_DownloadSucess))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.game_DownloadSucess;
+                SideDownloadState.Text = ClientLanguage.game_DownloadSucess;
             }
             else if (downloadState.Equals(ClientLanguage.game_InstallError))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.game_InstallError;
+                SideDownloadState.Text = ClientLanguage.game_InstallError;
             }
             else if (downloadState.Equals(ClientLanguage.Uninstalling_Game))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.Uninstalling_Game;
+                SideDownloadState.Text = ClientLanguage.Uninstalling_Game;
             }
             else if (downloadState.Equals(ClientLanguage.Uninstalled_Game))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.Uninstalled_Game;
+                SideDownloadState.Text = ClientLanguage.Uninstalled_Game;
             }
             else if (downloadState.Equals(ClientLanguage.game_NoSpace))
             {
                 languageManager.ChangeCurrentLanguage(currentLanguage);
-                DownloadState.Text = ClientLanguage.game_NoSpace;
+                SideDownloadState.Text = ClientLanguage.game_NoSpace;
             }
 
             languageManager.ChangeCurrentLanguage(currentLanguage);
@@ -857,12 +860,12 @@ namespace Outlands_Adventure_Launcher
         #region Tile Size Icons Manager
         private void SmallTiles_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTip(SmallTiles, ClientLanguage.smallTiles_Tooltip);
+            MultipleResources.ShowToolTip(SmallTiles, ClientLanguage.smallTiles_Tooltip);
         }
 
         private void SmallTiles_MouseLeave(object sender, EventArgs e)
         {
-            toolTip.Hide(SmallTiles);
+            MultipleResources.HideToolTip(SmallTiles);
         }
 
         private void SmallTiles_Click(object sender, EventArgs e)
@@ -877,12 +880,12 @@ namespace Outlands_Adventure_Launcher
 
         private void MediumTiles_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTip(MediumTiles, ClientLanguage.mediumTiles_Tooltip);
+            MultipleResources.ShowToolTip(MediumTiles, ClientLanguage.mediumTiles_Tooltip);
         }
 
         private void MediumTiles_MouseLeave(object sender, EventArgs e)
         {
-            toolTip.Hide(MediumTiles);
+            MultipleResources.HideToolTip(MediumTiles);
         }
 
         private void MediumTiles_Click(object sender, EventArgs e)
@@ -897,12 +900,12 @@ namespace Outlands_Adventure_Launcher
 
         private void LargeTiles_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTip(LargeTiles, ClientLanguage.largeTiles_Tooltip);
+            MultipleResources.ShowToolTip(LargeTiles, ClientLanguage.largeTiles_Tooltip);
         }
 
         private void LargeTiles_MouseLeave(object sender, EventArgs e)
         {
-            toolTip.Hide(LargeTiles);
+            MultipleResources.HideToolTip(LargeTiles);
         }
 
         private void LargeTiles_Click(object sender, EventArgs e)
@@ -1234,16 +1237,6 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion Lost Focus
 
-        #region ToolTip
-        private void ShowToolTip(Panel currentPanel, string toolTipText)
-        {
-            toolTip.UseFading = true;
-            toolTip.UseAnimation = true;
-            toolTip.IsBalloon = true;
-            toolTip.SetToolTip(currentPanel, toolTipText);
-        }
-        #endregion ToolTip
-
         #region Mouse is over control
         private bool MouseIsOverControl(Object currentObject)
         {
@@ -1422,6 +1415,8 @@ namespace Outlands_Adventure_Launcher
 
             ContextMenuStrip.Items.Add(ClientLanguage.userInfoMenu_Settings);
             ContextMenuStrip.Items.Add(new ToolStripSeparator());
+            ContextMenuStrip.Items.Add(ClientLanguage.download);
+            ContextMenuStrip.Items.Add(new ToolStripSeparator());
             ContextMenuStrip.Items.Add(ClientLanguage.userInfoMenu_logout);
 
             ContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserSettingsMenuStrip_ItemClicked);
@@ -1440,6 +1435,11 @@ namespace Outlands_Adventure_Launcher
             if (e.ClickedItem.Text == ClientLanguage.userInfoMenu_Settings)
             {
                 OpenConfiguration();
+            }
+            else if (e.ClickedItem.Text == ClientLanguage.download)
+            {
+                ChangeScreen(ref downloadsInfoOpen, false);
+                LoadDownloadsPanel();
             }
             else if (e.ClickedItem.Text == ClientLanguage.userInfoMenu_logout)
             {
@@ -1606,15 +1606,13 @@ namespace Outlands_Adventure_Launcher
                             GameLibrary.Location = new Point(0, 203);
                         }
 
-                        DownloadInformationGameImage.BackgroundImage = currentGameInfo.GameImage;
-                        DownloadInformationGameName.Text = currentGameInfo.GameName;
+                        SideDownloadInformationGameImage.BackgroundImage = currentGameInfo.GameImage;
+                        SideDownloadInformationGameName.Text = currentGameInfo.GameName;
 
-                        DownloadProgress.Style = ProgressBarStyle.Marquee;
-                        DownloadProgress.Value = 40;
                         DownloadInformation.Visible = true;
                         CloseDownloadInformation.Visible = false;
 
-                        DownloadState.ForeColor = Color.FromArgb(230, 230, 230);
+                        SideDownloadState.ForeColor = Color.FromArgb(230, 230, 230);
 
                         languageManager.ChangeCurrentLanguage("es-ES");
                         downloadState = ClientLanguage.game_Download;
@@ -1623,23 +1621,25 @@ namespace Outlands_Adventure_Launcher
                         {
                             await Task.Run(async () =>
                             {
-                                await DownloadGameFromMega();
+                                await DownloadGameFromMega(SideDownloadProgressbar, currentGameInfo);
                             });
                         }
                         catch (Exception)
                         {
-                            DownloadState.ForeColor = Color.Red;
+                            SideDownloadState.ForeColor = Color.Red;
                             languageManager.ChangeCurrentLanguage("es-ES");
                             downloadState = ClientLanguage.game_DownloadError;
                             CheckDownload_UninstallInformationLanguage();
 
-                            DownloadProgress.Style = ProgressBarStyle.Continuous;
-                            DownloadProgress.Value = 100;
+                            SideDownloadProgressbar.Style = ProgressBarStyle.Continuous;
+                            SideDownloadProgressbar.Value = 100;
 
                             DeleteCorruptedFiles();
                             break;
                         }
 
+                        SideDownloadProgressbar.Style = ProgressBarStyle.Marquee;
+                        SideDownloadProgressbar.Value = 40;
                         languageManager.ChangeCurrentLanguage("es-ES");
                         downloadState = ClientLanguage.game_Install;
                         CheckDownload_UninstallInformationLanguage();
@@ -1652,13 +1652,13 @@ namespace Outlands_Adventure_Launcher
                         }
                         catch (Exception)
                         {
-                            DownloadState.ForeColor = Color.Red;
+                            SideDownloadState.ForeColor = Color.Red;
                             languageManager.ChangeCurrentLanguage("es-ES");
                             downloadState = ClientLanguage.game_InstallError;
                             CheckDownload_UninstallInformationLanguage();
 
-                            DownloadProgress.Style = ProgressBarStyle.Continuous;
-                            DownloadProgress.Value = 100;
+                            SideDownloadProgressbar.Style = ProgressBarStyle.Continuous;
+                            SideDownloadProgressbar.Value = 100;
 
                             DeleteCorruptedFiles();
                             break;
@@ -1668,18 +1668,18 @@ namespace Outlands_Adventure_Launcher
                         downloadState = ClientLanguage.game_DownloadSucess;
                         CheckDownload_UninstallInformationLanguage();
 
-                        DownloadProgress.Style = ProgressBarStyle.Continuous;
-                        DownloadProgress.Value = 100;
+                        SideDownloadProgressbar.Style = ProgressBarStyle.Continuous;
+                        SideDownloadProgressbar.Value = 100;
                     }
                     else
                     {
-                        DownloadState.ForeColor = Color.Red;
+                        SideDownloadState.ForeColor = Color.Red;
                         languageManager.ChangeCurrentLanguage("es-ES");
                         downloadState = ClientLanguage.game_NoSpace;
                         CheckDownload_UninstallInformationLanguage();
 
-                        DownloadProgress.Style = ProgressBarStyle.Continuous;
-                        DownloadProgress.Value = 100;
+                        SideDownloadProgressbar.Style = ProgressBarStyle.Continuous;
+                        SideDownloadProgressbar.Value = 100;
                     }
                 }
             }
@@ -1690,7 +1690,7 @@ namespace Outlands_Adventure_Launcher
             CloseDownloadInformation.Visible = true;
         }
 
-        private async Task DownloadGameFromMega()
+        private async Task DownloadGameFromMega(ProgressBar downloadProgress, GameInfo downloadingGameInfo)
         {
             MegaApiClient mega = new MegaApiClient();
             mega.LoginAnonymous();
@@ -1698,7 +1698,6 @@ namespace Outlands_Adventure_Launcher
             Uri fileLink = new Uri(currentGameInfo.GameDownloadLink);
 
             INodeInfo node = mega.GetNodeFromLink(fileLink);
-
             downloadGameName = node.Name;
 
             if (File.Exists(Path.Combine(downloadPath, downloadGameName)))
@@ -1706,7 +1705,31 @@ namespace Outlands_Adventure_Launcher
                 File.Delete(Path.Combine(downloadPath, downloadGameName));
             }
 
-            mega.DownloadFile(fileLink, Path.Combine(downloadPath, node.Name));
+            Progress<double> progress = new Progress<double>();
+            progress.ProgressChanged += (s, progressValue) =>
+            {
+                //Update the UI with the progressValue 
+                Invoke(new MethodInvoker(() =>
+                {
+                    downloadProgress.Value = Convert.ToInt32(progressValue);
+                }));
+            };
+
+            // Reset cancel token in case it has been used
+            CancellationTokenSource downloadCancellationTokenSource = new CancellationTokenSource();
+            if (downloadCancellationTokenSource.IsCancellationRequested)
+            {
+                downloadCancellationTokenSource.Dispose();
+                downloadCancellationTokenSource = new CancellationTokenSource();
+            }
+
+            downloadingGameInfo.DownloadCancellationTokenSource = downloadCancellationTokenSource;
+            //queueGames.Add(downloadingGameInfo);
+            downloadingGame = downloadingGameInfo;
+
+            // Upload With progress bar
+            await mega.DownloadFileAsync(fileLink, Path.Combine(downloadPath, node.Name), progress, downloadCancellationTokenSource.Token);
+
             mega.Logout();
         }
 
@@ -1718,6 +1741,68 @@ namespace Outlands_Adventure_Launcher
             ZipFile.ExtractToDirectory(zipPath, extractPath);
 
             File.Delete(Path.Combine(downloadPath, downloadGameName));
+        }
+
+        private void CancelDownload_Click(object sender, EventArgs e)
+        {
+            //if (!downloadCancellationTokenSource.IsCancellationRequested)
+            //    downloadCancellationTokenSource.Cancel();
+        }
+
+        private void LoadDownloadsPanel()
+        {
+            // Poner un panel por encima con una imagen y un texto diciendo que está cargando y cuando se haga el foreach por completo quitar el panel
+            // Enseñar ese panel también cuando no se están descargando juegos pero que ponga que no hay juegos en descarga
+            DownloadingGameHeader.Visible = true;
+            QueueGameHeader.Visible = true;
+            DownloadsNoInfoPanel.Visible = false;
+            DownloadsNoInfoLabel.Visible = false;
+
+            if (downloadingGame != null)
+            {
+                Panel downloadingPanel = new DownloadingGameInformation(downloadingGame.GameImage, downloadingGame.GameName);
+                downloadingPanel.Location = new Point(30, 49);
+                DownloadsPanel.Controls.Add(downloadingPanel);
+
+                if (queueGames.Count > 0)
+                {
+                    foreach (GameInfo currentDownloadGameInfo in queueGames)
+                    {
+                        Panel queuePanel = new QueueGameInformation(currentDownloadGameInfo.GameImage, currentDownloadGameInfo.GameName);
+                        QueueLayout.Controls.Add(queuePanel);
+                    }
+                }
+                else
+                {
+                    DownloadsNoInfoPanel.Visible = true;
+                    MultipleResources.CalculateHalfSize(QueueLayout, DownloadsNoInfoPanel);
+                    MultipleResources.CalculateCenterLocation(QueueLayout, DownloadsNoInfoPanel, 190);
+                    DownloadsNoInfoPanel.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.NoDownloadQueue;
+
+                    DownloadsNoInfoLabel.Visible = true;
+                    DownloadsNoInfoLabel.AutoSize = true;
+                    DownloadsNoInfoLabel.Location = new Point(
+                        QueueLayout.Width / 2 - DownloadsNoInfoLabel.Size.Width / 2,
+                        DownloadsNoInfoPanel.Location.Y + DownloadsNoInfoPanel.Size.Height + 20);
+                    DownloadsNoInfoLabel.Text = "No hay juegos en la cola de descargas";
+                }
+            }
+            else
+            {
+                DownloadingGameHeader.Visible = false;
+                QueueGameHeader.Visible = false;
+                DownloadsNoInfoPanel.Visible = true;
+                MultipleResources.CalculateHalfSize(DownloadsPanel, DownloadsNoInfoPanel);
+                MultipleResources.CalculateCenterLocation(DownloadsPanel, DownloadsNoInfoPanel, 0);
+                DownloadsNoInfoPanel.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.NoCurrentDownloading;
+
+                DownloadsNoInfoLabel.Visible = true;
+                DownloadsNoInfoLabel.AutoSize = true;
+                DownloadsNoInfoLabel.Location = new Point(
+                    DownloadsPanel.Width / 2 - DownloadsNoInfoLabel.Size.Width / 2,
+                    DownloadsNoInfoPanel.Location.Y + DownloadsNoInfoPanel.Size.Height + 50);
+                DownloadsNoInfoLabel.Text = "No hay juegos descargandose";
+            }
         }
         #endregion Downloads / Installations
 

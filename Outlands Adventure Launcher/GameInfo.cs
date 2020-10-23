@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Outlands_Adventure_Launcher
@@ -16,6 +17,7 @@ namespace Outlands_Adventure_Launcher
         private Image gameImage;
         private decimal gamePrice;
         private string gameDownloadLink;
+        private CancellationTokenSource downloadCancellationTokenSource;
 
         /// <summary>
         /// Constructor of the GameInfo class
@@ -36,5 +38,6 @@ namespace Outlands_Adventure_Launcher
         public Image GameImage { get => gameImage; set => gameImage = value; }
         public decimal GamePrice { get => gamePrice; set => gamePrice = value; }
         public string GameDownloadLink { get => gameDownloadLink; set => gameDownloadLink = value; }
+        public CancellationTokenSource DownloadCancellationTokenSource { get => downloadCancellationTokenSource; set => downloadCancellationTokenSource = value; }
     }
 }

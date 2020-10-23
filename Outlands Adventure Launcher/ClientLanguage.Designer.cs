@@ -124,11 +124,38 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a En cola  --  Prioridad.
+        /// </summary>
+        internal static string currentPriority {
+            get {
+                return ResourceManager.GetString("currentPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descargas.
+        /// </summary>
+        internal static string download {
+            get {
+                return ResourceManager.GetString("download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descargar.
         /// </summary>
         internal static string download_Avaible_Button {
             get {
                 return ResourceManager.GetString("download_Avaible_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cancelar descarga.
+        /// </summary>
+        internal static string download_cancel {
+            get {
+                return ResourceManager.GetString("download_cancel", resourceCulture);
             }
         }
         
@@ -552,6 +579,24 @@ namespace Outlands_Adventure_Launcher {
         internal static string play_Button {
             get {
                 return ResourceManager.GetString("play_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Disminuir prioridad de la descarga.
+        /// </summary>
+        internal static string priorityDown {
+            get {
+                return ResourceManager.GetString("priorityDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Aumentar prioridad de la descarga.
+        /// </summary>
+        internal static string priorityUp {
+            get {
+                return ResourceManager.GetString("priorityUp", resourceCulture);
             }
         }
         

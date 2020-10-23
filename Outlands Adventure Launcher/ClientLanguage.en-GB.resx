@@ -352,4 +352,19 @@
   <data name="LogoutButton" xml:space="preserve">
     <value>Close session</value>
   </data>
+  <data name="download" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
+  <data name="download_cancel" xml:space="preserve">
+    <value>Cancel download</value>
+  </data>
+  <data name="currentPriority" xml:space="preserve">
+    <value>Queued  --  Priority</value>
+  </data>
+  <data name="priorityDown" xml:space="preserve">
+    <value>Decrease download priority</value>
+  </data>
+  <data name="priorityUp" xml:space="preserve">
+    <value>Increase download priority</value>
+  </data>
 </root>

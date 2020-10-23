@@ -372,4 +372,19 @@
   <data name="LogoutButton" xml:space="preserve">
     <value>サインオフ</value>
   </data>
+  <data name="download" xml:space="preserve">
+    <value>ダウンロード</value>
+  </data>
+  <data name="download_cancel" xml:space="preserve">
+    <value>ダウンロードをキャンセル</value>
+  </data>
+  <data name="currentPriority" xml:space="preserve">
+    <value>キュー  --  優先度</value>
+  </data>
+  <data name="priorityDown" xml:space="preserve">
+    <value>ダウンロードの優先度を下げる</value>
+  </data>
+  <data name="priorityUp" xml:space="preserve">
+    <value>ダウンロードの優先度を上げる</value>
+  </data>
 </root>

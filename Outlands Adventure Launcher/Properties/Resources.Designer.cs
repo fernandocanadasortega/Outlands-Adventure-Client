@@ -203,9 +203,49 @@ namespace Outlands_Adventure_Launcher.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap NoCurrentDownloading {
+            get {
+                object obj = ResourceManager.GetObject("NoCurrentDownloading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NoDownloadQueue {
+            get {
+                object obj = ResourceManager.GetObject("NoDownloadQueue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pantalla_launcher {
             get {
                 object obj = ResourceManager.GetObject("Pantalla_launcher", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RankGameDown {
+            get {
+                object obj = ResourceManager.GetObject("RankGameDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RankGameUp {
+            get {
+                object obj = ResourceManager.GetObject("RankGameUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

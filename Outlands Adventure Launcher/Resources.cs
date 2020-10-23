@@ -223,7 +223,7 @@ namespace Outlands_Adventure_Launcher
         /// <returns>byte[], string summarized</returns>
         public static byte[] CreateResume(string confirmationCode)
         {
-             return hashResume.ComputeHash(Encoding.UTF8.GetBytes(confirmationCode));
+            return hashResume.ComputeHash(Encoding.UTF8.GetBytes(confirmationCode));
         }
 
         /// <summary>
@@ -500,4 +500,45 @@ namespace Outlands_Adventure_Launcher
         }
     }
     #endregion Language Manager
+
+    #region Tooltip Manager
+    static class MultipleResources
+    {
+        static ToolTip toolTip = new ToolTip();
+        public static void ShowToolTip(Panel currentPanel, string toolTipText)
+        {
+            toolTip.UseFading = true;
+            toolTip.UseAnimation = true;
+            toolTip.IsBalloon = true;
+            toolTip.SetToolTip(currentPanel, toolTipText);
+        }
+
+        public static void HideToolTip(Panel currentPanel)
+        {
+            toolTip.Hide(currentPanel);
+        }
+
+        public static void CalculateCenterLocation(Control container, Control controlToCenter, int locationDifference)
+        {
+            int centerYLocation = (container.Height / 2 - controlToCenter.Size.Height / 2);
+
+            controlToCenter.Location = new Point(
+                container.Width / 2 - controlToCenter.Size.Width / 2,
+                centerYLocation / 2 + locationDifference);
+        }
+
+        public static void CalculateHalfSize(Control container, Control controlToHalfSize)
+        {
+            decimal width = container.Size.Width * 0.5m;
+            int truncatedWidth = Convert.ToInt32(Math.Truncate(width));
+
+            decimal height = container.Size.Height * 0.75m;
+            int truncatedHeight = Convert.ToInt32(Math.Truncate(height));
+
+            controlToHalfSize.Size = new Size(
+                truncatedWidth,
+                truncatedHeight);
+        }
+}
+    #endregion Show Tooltip
 }

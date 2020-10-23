@@ -372,4 +372,19 @@
   <data name="LogoutButton" xml:space="preserve">
     <value>Выйти</value>
   </data>
+  <data name="download" xml:space="preserve">
+    <value>Загрузки</value>
+  </data>
+  <data name="download_cancel" xml:space="preserve">
+    <value>Отменить скачивание</value>
+  </data>
+  <data name="currentPriority" xml:space="preserve">
+    <value>В очереди  --  Приоритет</value>
+  </data>
+  <data name="priorityDown" xml:space="preserve">
+    <value>Уменьшить приоритет загрузки</value>
+  </data>
+  <data name="priorityUp" xml:space="preserve">
+    <value>Увеличить приоритет загрузки</value>
+  </data>
 </root>

@@ -963,7 +963,6 @@
             "FRANCÉS (fr)",
             "ALEMÁN (de)",
             "RUSO (ru)",
-            "CHINO (zh)",
             "JAPONÉS (ja)",
             "NORUEGO (no)"});
             this.LanguageSelected.Location = new System.Drawing.Point(367, 210);
