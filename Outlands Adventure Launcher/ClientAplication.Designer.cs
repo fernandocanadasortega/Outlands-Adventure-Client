@@ -37,22 +37,33 @@
             this.GameLibraryLabel = new System.Windows.Forms.Label();
             this.DownloadInformation = new System.Windows.Forms.Panel();
             this.SideDownloadInformationGameName = new System.Windows.Forms.Label();
+            this.SideDownloadInformationGameImage = new System.Windows.Forms.Panel();
             this.SideDownloadProgressbar = new System.Windows.Forms.ProgressBar();
             this.SideDownloadState = new System.Windows.Forms.Label();
+            this.CloseShowDownloadInformation = new System.Windows.Forms.Panel();
             this.Uninstall_Information = new System.Windows.Forms.Panel();
             this.Uninstall_InformationGameName = new System.Windows.Forms.Label();
+            this.Uninstall_InformationGameImage = new System.Windows.Forms.Panel();
             this.UninstallProgress = new System.Windows.Forms.ProgressBar();
             this.UninstallState = new System.Windows.Forms.Label();
+            this.CloseUninstall_Information = new System.Windows.Forms.Panel();
             this.UserInformation = new System.Windows.Forms.Panel();
             this.UserName = new System.Windows.Forms.Label();
+            this.UserConfigurationArrow = new System.Windows.Forms.Panel();
+            this.UserPhoto = new System.Windows.Forms.Panel();
             this.MainMenu = new System.Windows.Forms.Panel();
             this.DownloadsPanel = new System.Windows.Forms.Panel();
+            this.DownloadsNoInfoLabel = new System.Windows.Forms.Label();
+            this.DownloadsNoInfoPanel = new System.Windows.Forms.Panel();
             this.DownloadingGameHeader = new System.Windows.Forms.Label();
             this.QueueGameHeader = new System.Windows.Forms.Label();
+            this.QueueLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.GameInfoMenu = new System.Windows.Forms.Panel();
             this.GameInfoGradient = new System.Windows.Forms.Panel();
             this.CloseGameInfoBackground = new System.Windows.Forms.Panel();
+            this.CloseGameInfo = new System.Windows.Forms.Panel();
             this.GameSettingsBackground = new System.Windows.Forms.Panel();
+            this.GameSettings = new System.Windows.Forms.Panel();
             this.MoneyPanel = new System.Windows.Forms.Panel();
             this.CurrentCurrencyHeader = new System.Windows.Forms.Label();
             this.CurrentCurrency = new System.Windows.Forms.Label();
@@ -66,26 +77,17 @@
             this.FilterGame = new System.Windows.Forms.TextBox();
             this.StoreMenu = new System.Windows.Forms.Panel();
             this.StoreEmpty = new System.Windows.Forms.Panel();
+            this.StoreEmptyImage = new System.Windows.Forms.Panel();
             this.StoreEmptyLabel = new System.Windows.Forms.Label();
             this.StoreAvailableGames = new System.Windows.Forms.ListView();
             this.GameLibraryMenu = new System.Windows.Forms.Panel();
             this.LibraryEmpty = new System.Windows.Forms.Panel();
+            this.LibraryEmptyImage = new System.Windows.Forms.Panel();
             this.LibraryEmptyLabel = new System.Windows.Forms.Label();
             this.GameLibraryAvailableGames = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.GameImages = new System.Windows.Forms.ImageList(this.components);
             this.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.QueueLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.CloseGameInfo = new System.Windows.Forms.Panel();
-            this.GameSettings = new System.Windows.Forms.Panel();
-            this.StoreEmptyImage = new System.Windows.Forms.Panel();
-            this.LibraryEmptyImage = new System.Windows.Forms.Panel();
-            this.SideDownloadInformationGameImage = new System.Windows.Forms.Panel();
-            this.CloseDownloadInformation = new System.Windows.Forms.Panel();
-            this.Uninstall_InformationGameImage = new System.Windows.Forms.Panel();
-            this.CloseUninstall_Information = new System.Windows.Forms.Panel();
-            this.UserConfigurationArrow = new System.Windows.Forms.Panel();
-            this.UserPhoto = new System.Windows.Forms.Panel();
             this.ImagePanel = new System.Windows.Forms.Panel();
             this.ImageGradient = new System.Windows.Forms.Panel();
             this.ConfigurationPanel = new System.Windows.Forms.Panel();
@@ -102,8 +104,6 @@
             this.EventCode = new System.Windows.Forms.TextBox();
             this.EventSendButton = new System.Windows.Forms.Label();
             this.EventExitButton = new System.Windows.Forms.Label();
-            this.DownloadsNoInfoPanel = new System.Windows.Forms.Panel();
-            this.DownloadsNoInfoLabel = new System.Windows.Forms.Label();
             this.SideMenu.SuspendLayout();
             this.Store.SuspendLayout();
             this.GameLibrary.SuspendLayout();
@@ -204,13 +204,15 @@
             this.DownloadInformation.Controls.Add(this.SideDownloadInformationGameImage);
             this.DownloadInformation.Controls.Add(this.SideDownloadProgressbar);
             this.DownloadInformation.Controls.Add(this.SideDownloadState);
-            this.DownloadInformation.Controls.Add(this.CloseDownloadInformation);
+            this.DownloadInformation.Controls.Add(this.CloseShowDownloadInformation);
             this.DownloadInformation.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.DownloadInformation.Location = new System.Drawing.Point(0, 510);
             this.DownloadInformation.Name = "DownloadInformation";
             this.DownloadInformation.Size = new System.Drawing.Size(375, 98);
             this.DownloadInformation.TabIndex = 3;
             this.DownloadInformation.Visible = false;
+            this.DownloadInformation.MouseEnter += new System.EventHandler(this.Download_UninstallInformation_MouseEnter);
+            this.DownloadInformation.MouseLeave += new System.EventHandler(this.Download_UninstallInformation_MouseLeave);
             // 
             // SideDownloadInformationGameName
             // 
@@ -225,9 +227,22 @@
             this.SideDownloadInformationGameName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.SideDownloadInformationGameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // SideDownloadInformationGameImage
+            // 
+            this.SideDownloadInformationGameImage.BackColor = System.Drawing.Color.Transparent;
+            this.SideDownloadInformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
+            this.SideDownloadInformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SideDownloadInformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.SideDownloadInformationGameImage.Enabled = false;
+            this.SideDownloadInformationGameImage.Location = new System.Drawing.Point(15, 9);
+            this.SideDownloadInformationGameImage.Name = "SideDownloadInformationGameImage";
+            this.SideDownloadInformationGameImage.Size = new System.Drawing.Size(80, 80);
+            this.SideDownloadInformationGameImage.TabIndex = 0;
+            // 
             // SideDownloadProgressbar
             // 
             this.SideDownloadProgressbar.Cursor = System.Windows.Forms.Cursors.Default;
+            this.SideDownloadProgressbar.Enabled = false;
             this.SideDownloadProgressbar.Location = new System.Drawing.Point(107, 45);
             this.SideDownloadProgressbar.Name = "SideDownloadProgressbar";
             this.SideDownloadProgressbar.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -238,7 +253,7 @@
             // 
             this.SideDownloadState.BackColor = System.Drawing.Color.Transparent;
             this.SideDownloadState.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SideDownloadState.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SideDownloadState.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SideDownloadState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.SideDownloadState.Location = new System.Drawing.Point(101, 65);
             this.SideDownloadState.Name = "SideDownloadState";
@@ -246,6 +261,20 @@
             this.SideDownloadState.TabIndex = 1;
             this.SideDownloadState.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.SideDownloadState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // CloseShowDownloadInformation
+            // 
+            this.CloseShowDownloadInformation.BackColor = System.Drawing.Color.Transparent;
+            this.CloseShowDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
+            this.CloseShowDownloadInformation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CloseShowDownloadInformation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseShowDownloadInformation.Location = new System.Drawing.Point(350, 5);
+            this.CloseShowDownloadInformation.Name = "CloseShowDownloadInformation";
+            this.CloseShowDownloadInformation.Size = new System.Drawing.Size(20, 20);
+            this.CloseShowDownloadInformation.TabIndex = 3;
+            this.CloseShowDownloadInformation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseShowDownloadInformation_MouseClick);
+            this.CloseShowDownloadInformation.MouseEnter += new System.EventHandler(this.DownloadShowInformation_MouseEnter);
+            this.CloseShowDownloadInformation.MouseLeave += new System.EventHandler(this.DownloadShowInformation_MouseLeave);
             // 
             // Uninstall_Information
             // 
@@ -260,6 +289,8 @@
             this.Uninstall_Information.Size = new System.Drawing.Size(375, 98);
             this.Uninstall_Information.TabIndex = 5;
             this.Uninstall_Information.Visible = false;
+            this.Uninstall_Information.MouseEnter += new System.EventHandler(this.Download_UninstallInformation_MouseEnter);
+            this.Uninstall_Information.MouseLeave += new System.EventHandler(this.Download_UninstallInformation_MouseLeave);
             // 
             // Uninstall_InformationGameName
             // 
@@ -274,9 +305,22 @@
             this.Uninstall_InformationGameName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.Uninstall_InformationGameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Uninstall_InformationGameImage
+            // 
+            this.Uninstall_InformationGameImage.BackColor = System.Drawing.Color.Transparent;
+            this.Uninstall_InformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
+            this.Uninstall_InformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Uninstall_InformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Uninstall_InformationGameImage.Enabled = false;
+            this.Uninstall_InformationGameImage.Location = new System.Drawing.Point(15, 9);
+            this.Uninstall_InformationGameImage.Name = "Uninstall_InformationGameImage";
+            this.Uninstall_InformationGameImage.Size = new System.Drawing.Size(80, 80);
+            this.Uninstall_InformationGameImage.TabIndex = 0;
+            // 
             // UninstallProgress
             // 
             this.UninstallProgress.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UninstallProgress.Enabled = false;
             this.UninstallProgress.Location = new System.Drawing.Point(107, 45);
             this.UninstallProgress.Name = "UninstallProgress";
             this.UninstallProgress.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -289,7 +333,7 @@
             // 
             this.UninstallState.BackColor = System.Drawing.Color.Transparent;
             this.UninstallState.Cursor = System.Windows.Forms.Cursors.Default;
-            this.UninstallState.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UninstallState.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UninstallState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.UninstallState.Location = new System.Drawing.Point(101, 65);
             this.UninstallState.Name = "UninstallState";
@@ -297,6 +341,21 @@
             this.UninstallState.TabIndex = 1;
             this.UninstallState.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.UninstallState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // CloseUninstall_Information
+            // 
+            this.CloseUninstall_Information.BackColor = System.Drawing.Color.Transparent;
+            this.CloseUninstall_Information.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
+            this.CloseUninstall_Information.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CloseUninstall_Information.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseUninstall_Information.Location = new System.Drawing.Point(350, 5);
+            this.CloseUninstall_Information.Name = "CloseUninstall_Information";
+            this.CloseUninstall_Information.Size = new System.Drawing.Size(20, 20);
+            this.CloseUninstall_Information.TabIndex = 3;
+            this.CloseUninstall_Information.Visible = false;
+            this.CloseUninstall_Information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseUninstall_Information_MouseClick);
+            this.CloseUninstall_Information.MouseEnter += new System.EventHandler(this.UninstallShowInformation_MouseEnter);
+            this.CloseUninstall_Information.MouseLeave += new System.EventHandler(this.UninstallShowInformation_MouseLeave);
             // 
             // UserInformation
             // 
@@ -323,6 +382,33 @@
             this.UserName.Size = new System.Drawing.Size(210, 23);
             this.UserName.TabIndex = 0;
             this.UserName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
+            this.UserName.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
+            // 
+            // UserConfigurationArrow
+            // 
+            this.UserConfigurationArrow.BackColor = System.Drawing.Color.Transparent;
+            this.UserConfigurationArrow.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("UserConfigurationArrow.BackgroundImage")));
+            this.UserConfigurationArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.UserConfigurationArrow.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.UserConfigurationArrow.Enabled = false;
+            this.UserConfigurationArrow.Location = new System.Drawing.Point(346, 35);
+            this.UserConfigurationArrow.Name = "UserConfigurationArrow";
+            this.UserConfigurationArrow.Size = new System.Drawing.Size(23, 23);
+            this.UserConfigurationArrow.TabIndex = 1;
+            this.UserConfigurationArrow.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
+            // 
+            // UserPhoto
+            // 
+            this.UserPhoto.BackColor = System.Drawing.Color.Transparent;
+            this.UserPhoto.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
+            this.UserPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.UserPhoto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.UserPhoto.Enabled = false;
+            this.UserPhoto.Location = new System.Drawing.Point(15, 9);
+            this.UserPhoto.Name = "UserPhoto";
+            this.UserPhoto.Size = new System.Drawing.Size(80, 80);
+            this.UserPhoto.TabIndex = 0;
+            this.UserPhoto.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
             // 
             // MainMenu
             // 
@@ -352,6 +438,27 @@
             this.DownloadsPanel.TabIndex = 19;
             this.DownloadsPanel.Visible = false;
             // 
+            // DownloadsNoInfoLabel
+            // 
+            this.DownloadsNoInfoLabel.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DownloadsNoInfoLabel.ForeColor = System.Drawing.Color.Black;
+            this.DownloadsNoInfoLabel.Location = new System.Drawing.Point(0, 0);
+            this.DownloadsNoInfoLabel.Name = "DownloadsNoInfoLabel";
+            this.DownloadsNoInfoLabel.Size = new System.Drawing.Size(0, 0);
+            this.DownloadsNoInfoLabel.TabIndex = 5;
+            this.DownloadsNoInfoLabel.Text = "No se han encontrado juegos nuevos";
+            this.DownloadsNoInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DownloadsNoInfoLabel.Visible = false;
+            // 
+            // DownloadsNoInfoPanel
+            // 
+            this.DownloadsNoInfoPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.DownloadsNoInfoPanel.Location = new System.Drawing.Point(3, 3);
+            this.DownloadsNoInfoPanel.Name = "DownloadsNoInfoPanel";
+            this.DownloadsNoInfoPanel.Size = new System.Drawing.Size(0, 0);
+            this.DownloadsNoInfoPanel.TabIndex = 0;
+            this.DownloadsNoInfoPanel.Visible = false;
+            // 
             // DownloadingGameHeader
             // 
             this.DownloadingGameHeader.AutoSize = true;
@@ -373,6 +480,18 @@
             this.QueueGameHeader.TabIndex = 4;
             this.QueueGameHeader.Text = "En cola";
             this.QueueGameHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // QueueLayout
+            // 
+            this.QueueLayout.AutoScroll = true;
+            this.QueueLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.QueueLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.QueueLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.QueueLayout.Location = new System.Drawing.Point(0, 234);
+            this.QueueLayout.Name = "QueueLayout";
+            this.QueueLayout.Size = new System.Drawing.Size(990, 474);
+            this.QueueLayout.TabIndex = 0;
+            this.QueueLayout.WrapContents = false;
             // 
             // GameInfoMenu
             // 
@@ -405,6 +524,18 @@
             this.CloseGameInfoBackground.Size = new System.Drawing.Size(42, 52);
             this.CloseGameInfoBackground.TabIndex = 1;
             // 
+            // CloseGameInfo
+            // 
+            this.CloseGameInfo.BackColor = System.Drawing.Color.Transparent;
+            this.CloseGameInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CloseGameInfo.BackgroundImage")));
+            this.CloseGameInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CloseGameInfo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseGameInfo.Location = new System.Drawing.Point(7, 15);
+            this.CloseGameInfo.Name = "CloseGameInfo";
+            this.CloseGameInfo.Size = new System.Drawing.Size(30, 30);
+            this.CloseGameInfo.TabIndex = 0;
+            this.CloseGameInfo.Click += new System.EventHandler(this.CloseGameInfo_Click);
+            // 
             // GameSettingsBackground
             // 
             this.GameSettingsBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
@@ -413,6 +544,18 @@
             this.GameSettingsBackground.Name = "GameSettingsBackground";
             this.GameSettingsBackground.Size = new System.Drawing.Size(42, 52);
             this.GameSettingsBackground.TabIndex = 2;
+            // 
+            // GameSettings
+            // 
+            this.GameSettings.BackColor = System.Drawing.Color.Transparent;
+            this.GameSettings.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_settings;
+            this.GameSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.GameSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.GameSettings.Location = new System.Drawing.Point(7, 15);
+            this.GameSettings.Name = "GameSettings";
+            this.GameSettings.Size = new System.Drawing.Size(30, 30);
+            this.GameSettings.TabIndex = 0;
+            this.GameSettings.Click += new System.EventHandler(this.GameSettings_Click);
             // 
             // MoneyPanel
             // 
@@ -574,6 +717,15 @@
             this.StoreEmpty.TabIndex = 1;
             this.StoreEmpty.Visible = false;
             // 
+            // StoreEmptyImage
+            // 
+            this.StoreEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.empty_store;
+            this.StoreEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.StoreEmptyImage.Location = new System.Drawing.Point(0, 0);
+            this.StoreEmptyImage.Name = "StoreEmptyImage";
+            this.StoreEmptyImage.Size = new System.Drawing.Size(390, 280);
+            this.StoreEmptyImage.TabIndex = 0;
+            // 
             // StoreEmptyLabel
             // 
             this.StoreEmptyLabel.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -622,6 +774,15 @@
             this.LibraryEmpty.TabIndex = 2;
             this.LibraryEmpty.Visible = false;
             // 
+            // LibraryEmptyImage
+            // 
+            this.LibraryEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_library_empty;
+            this.LibraryEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LibraryEmptyImage.Location = new System.Drawing.Point(0, 0);
+            this.LibraryEmptyImage.Name = "LibraryEmptyImage";
+            this.LibraryEmptyImage.Size = new System.Drawing.Size(390, 280);
+            this.LibraryEmptyImage.TabIndex = 0;
+            // 
             // LibraryEmptyLabel
             // 
             this.LibraryEmptyLabel.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -662,130 +823,6 @@
             this.ContextMenuStrip.ShowImageMargin = false;
             this.ContextMenuStrip.Size = new System.Drawing.Size(36, 4);
             this.ContextMenuStrip.MouseLeave += new System.EventHandler(this.ContextMenuStrip_MouseLeave);
-            // 
-            // QueueLayout
-            // 
-            this.QueueLayout.AutoScroll = true;
-            this.QueueLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.QueueLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.QueueLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.QueueLayout.Location = new System.Drawing.Point(0, 234);
-            this.QueueLayout.Name = "QueueLayout";
-            this.QueueLayout.Size = new System.Drawing.Size(990, 474);
-            this.QueueLayout.TabIndex = 0;
-            this.QueueLayout.WrapContents = false;
-            // 
-            // CloseGameInfo
-            // 
-            this.CloseGameInfo.BackColor = System.Drawing.Color.Transparent;
-            this.CloseGameInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CloseGameInfo.BackgroundImage")));
-            this.CloseGameInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CloseGameInfo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseGameInfo.Location = new System.Drawing.Point(7, 15);
-            this.CloseGameInfo.Name = "CloseGameInfo";
-            this.CloseGameInfo.Size = new System.Drawing.Size(30, 30);
-            this.CloseGameInfo.TabIndex = 0;
-            this.CloseGameInfo.Click += new System.EventHandler(this.CloseGameInfo_Click);
-            // 
-            // GameSettings
-            // 
-            this.GameSettings.BackColor = System.Drawing.Color.Transparent;
-            this.GameSettings.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_settings;
-            this.GameSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.GameSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.GameSettings.Location = new System.Drawing.Point(7, 15);
-            this.GameSettings.Name = "GameSettings";
-            this.GameSettings.Size = new System.Drawing.Size(30, 30);
-            this.GameSettings.TabIndex = 0;
-            this.GameSettings.Click += new System.EventHandler(this.GameSettings_Click);
-            // 
-            // StoreEmptyImage
-            // 
-            this.StoreEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.empty_store;
-            this.StoreEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.StoreEmptyImage.Location = new System.Drawing.Point(0, 0);
-            this.StoreEmptyImage.Name = "StoreEmptyImage";
-            this.StoreEmptyImage.Size = new System.Drawing.Size(390, 280);
-            this.StoreEmptyImage.TabIndex = 0;
-            // 
-            // LibraryEmptyImage
-            // 
-            this.LibraryEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_library_empty;
-            this.LibraryEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LibraryEmptyImage.Location = new System.Drawing.Point(0, 0);
-            this.LibraryEmptyImage.Name = "LibraryEmptyImage";
-            this.LibraryEmptyImage.Size = new System.Drawing.Size(390, 280);
-            this.LibraryEmptyImage.TabIndex = 0;
-            // 
-            // SideDownloadInformationGameImage
-            // 
-            this.SideDownloadInformationGameImage.BackColor = System.Drawing.Color.Transparent;
-            this.SideDownloadInformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
-            this.SideDownloadInformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.SideDownloadInformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SideDownloadInformationGameImage.Location = new System.Drawing.Point(15, 9);
-            this.SideDownloadInformationGameImage.Name = "SideDownloadInformationGameImage";
-            this.SideDownloadInformationGameImage.Size = new System.Drawing.Size(80, 80);
-            this.SideDownloadInformationGameImage.TabIndex = 0;
-            // 
-            // CloseDownloadInformation
-            // 
-            this.CloseDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
-            this.CloseDownloadInformation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CloseDownloadInformation.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseDownloadInformation.Location = new System.Drawing.Point(350, 5);
-            this.CloseDownloadInformation.Name = "CloseDownloadInformation";
-            this.CloseDownloadInformation.Size = new System.Drawing.Size(20, 20);
-            this.CloseDownloadInformation.TabIndex = 3;
-            this.CloseDownloadInformation.Visible = false;
-            this.CloseDownloadInformation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseDownloadInformation_MouseClick);
-            // 
-            // Uninstall_InformationGameImage
-            // 
-            this.Uninstall_InformationGameImage.BackColor = System.Drawing.Color.Transparent;
-            this.Uninstall_InformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
-            this.Uninstall_InformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Uninstall_InformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.Uninstall_InformationGameImage.Location = new System.Drawing.Point(15, 9);
-            this.Uninstall_InformationGameImage.Name = "Uninstall_InformationGameImage";
-            this.Uninstall_InformationGameImage.Size = new System.Drawing.Size(80, 80);
-            this.Uninstall_InformationGameImage.TabIndex = 0;
-            // 
-            // CloseUninstall_Information
-            // 
-            this.CloseUninstall_Information.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
-            this.CloseUninstall_Information.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CloseUninstall_Information.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseUninstall_Information.Location = new System.Drawing.Point(350, 5);
-            this.CloseUninstall_Information.Name = "CloseUninstall_Information";
-            this.CloseUninstall_Information.Size = new System.Drawing.Size(20, 20);
-            this.CloseUninstall_Information.TabIndex = 3;
-            this.CloseUninstall_Information.Visible = false;
-            this.CloseUninstall_Information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseUninstall_Information_MouseClick);
-            // 
-            // UserConfigurationArrow
-            // 
-            this.UserConfigurationArrow.BackColor = System.Drawing.Color.Transparent;
-            this.UserConfigurationArrow.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("UserConfigurationArrow.BackgroundImage")));
-            this.UserConfigurationArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.UserConfigurationArrow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UserConfigurationArrow.Enabled = false;
-            this.UserConfigurationArrow.Location = new System.Drawing.Point(346, 35);
-            this.UserConfigurationArrow.Name = "UserConfigurationArrow";
-            this.UserConfigurationArrow.Size = new System.Drawing.Size(23, 23);
-            this.UserConfigurationArrow.TabIndex = 1;
-            // 
-            // UserPhoto
-            // 
-            this.UserPhoto.BackColor = System.Drawing.Color.Transparent;
-            this.UserPhoto.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
-            this.UserPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.UserPhoto.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UserPhoto.Enabled = false;
-            this.UserPhoto.Location = new System.Drawing.Point(15, 9);
-            this.UserPhoto.Name = "UserPhoto";
-            this.UserPhoto.Size = new System.Drawing.Size(80, 80);
-            this.UserPhoto.TabIndex = 0;
             // 
             // ImagePanel
             // 
@@ -1026,27 +1063,6 @@
             this.EventExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
             this.EventExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
-            // DownloadsNoInfoPanel
-            // 
-            this.DownloadsNoInfoPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.DownloadsNoInfoPanel.Location = new System.Drawing.Point(3, 3);
-            this.DownloadsNoInfoPanel.Name = "DownloadsNoInfoPanel";
-            this.DownloadsNoInfoPanel.Size = new System.Drawing.Size(0, 0);
-            this.DownloadsNoInfoPanel.TabIndex = 0;
-            this.DownloadsNoInfoPanel.Visible = false;
-            // 
-            // DownloadsNoInfoLabel
-            // 
-            this.DownloadsNoInfoLabel.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DownloadsNoInfoLabel.ForeColor = System.Drawing.Color.Black;
-            this.DownloadsNoInfoLabel.Location = new System.Drawing.Point(326, 409);
-            this.DownloadsNoInfoLabel.Name = "DownloadsNoInfoLabel";
-            this.DownloadsNoInfoLabel.Size = new System.Drawing.Size(0, 0);
-            this.DownloadsNoInfoLabel.TabIndex = 5;
-            this.DownloadsNoInfoLabel.Text = "No se han encontrado juegos nuevos";
-            this.DownloadsNoInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DownloadsNoInfoLabel.Visible = false;
-            // 
             // ClientAplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1161,7 +1177,7 @@
         private System.Windows.Forms.Label SideDownloadInformationGameName;
         private System.Windows.Forms.Label SideDownloadState;
         private System.Windows.Forms.Panel SideDownloadInformationGameImage;
-        private System.Windows.Forms.Panel CloseDownloadInformation;
+        private System.Windows.Forms.Panel CloseShowDownloadInformation;
         private System.Windows.Forms.Panel Uninstall_Information;
         private System.Windows.Forms.Label Uninstall_InformationGameName;
         private System.Windows.Forms.Panel Uninstall_InformationGameImage;

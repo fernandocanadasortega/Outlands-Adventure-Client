@@ -120,7 +120,7 @@
   <data name="textbox_Username" xml:space="preserve">
     <value>BRUKERNAVN</value>
   </data>
-  <data name="button_Close" xml:space="preserve">
+  <data name="button_Close_Uppercase" xml:space="preserve">
     <value>Å LUKKE</value>
   </data>
   <data name="button_Confirm" xml:space="preserve">
@@ -327,7 +327,7 @@
   <data name="sendEmail_DeleteAccount" xml:space="preserve">
     <value>Slette outlands Adventure kundekonto*Din konfimasjonskode er</value>
   </data>
-  <data name="game_Download" xml:space="preserve">
+  <data name="game_Downloading_Uppercase" xml:space="preserve">
     <value>NEDLASTING</value>
   </data>
   <data name="game_DownloadError" xml:space="preserve">
@@ -386,5 +386,23 @@
   </data>
   <data name="priorityUp" xml:space="preserve">
     <value>Øk nedlastingsprioriteten</value>
+  </data>
+  <data name="button_Close_Lowercase" xml:space="preserve">
+    <value>Å lukke</value>
+  </data>
+  <data name="NoDownloadQueue" xml:space="preserve">
+    <value>Det er ingen spill i nedlastningskøen</value>
+  </data>
+  <data name="NoCurrentDownloading" xml:space="preserve">
+    <value>Ingen spill lastes ned</value>
+  </data>
+  <data name="Open_DownloadsInformation" xml:space="preserve">
+    <value>Gå til nedlastinger</value>
+  </data>
+  <data name="InQueue" xml:space="preserve">
+    <value>Kø</value>
+  </data>
+  <data name="game_Downloading_LowerCase" xml:space="preserve">
+    <value>Laster ned</value>
   </data>
 </root>

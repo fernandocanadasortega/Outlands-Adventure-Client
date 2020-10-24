@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="button_Close" xml:space="preserve">
+  <data name="button_Close_Uppercase" xml:space="preserve">
     <value>SCHLIESSEN</value>
   </data>
   <data name="button_Confirm" xml:space="preserve">
@@ -327,7 +327,7 @@
   <data name="sendEmail_DeleteAccount" xml:space="preserve">
     <value>Löschen outlands Adventure Kundenkonto*Ihr Konfigurationscode ist</value>
   </data>
-  <data name="game_Download" xml:space="preserve">
+  <data name="game_Downloading_Uppercase" xml:space="preserve">
     <value>WIRD HERUNTERGELADEN</value>
   </data>
   <data name="game_DownloadError" xml:space="preserve">
@@ -386,5 +386,23 @@
   </data>
   <data name="priorityUp" xml:space="preserve">
     <value>Erhöhen Sie die Download-Priorität</value>
+  </data>
+  <data name="button_Close_Lowercase" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="NoDownloadQueue" xml:space="preserve">
+    <value>Es befinden sich keine Spiele in der Download-Warteschlange</value>
+  </data>
+  <data name="NoCurrentDownloading" xml:space="preserve">
+    <value>Keine Spiele herunterladen</value>
+  </data>
+  <data name="Open_DownloadsInformation" xml:space="preserve">
+    <value>Gehen Sie zu Downloads</value>
+  </data>
+  <data name="InQueue" xml:space="preserve">
+    <value>Warteschlange</value>
+  </data>
+  <data name="game_Downloading_LowerCase" xml:space="preserve">
+    <value>Wird heruntergeladen</value>
   </data>
 </root>

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="button_Close" xml:space="preserve">
+  <data name="button_Close_Uppercase" xml:space="preserve">
     <value>ЗАКРЫВАТЬ</value>
   </data>
   <data name="button_Confirm" xml:space="preserve">
@@ -327,7 +327,7 @@
   <data name="sendEmail_DeleteAccount" xml:space="preserve">
     <value>Удаление учетной записи клиента Outlands Adventure*Ваш код подтверждения</value>
   </data>
-  <data name="game_Download" xml:space="preserve">
+  <data name="game_Downloading_Uppercase" xml:space="preserve">
     <value>ЗАГРУЗКА</value>
   </data>
   <data name="game_DownloadError" xml:space="preserve">
@@ -386,5 +386,23 @@
   </data>
   <data name="priorityUp" xml:space="preserve">
     <value>Увеличить приоритет загрузки</value>
+  </data>
+  <data name="button_Close_Lowercase" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="NoDownloadQueue" xml:space="preserve">
+    <value>В очереди загрузки нет игр</value>
+  </data>
+  <data name="NoCurrentDownloading" xml:space="preserve">
+    <value>Игры не скачиваются</value>
+  </data>
+  <data name="Open_DownloadsInformation" xml:space="preserve">
+    <value>Перейти к загрузкам</value>
+  </data>
+  <data name="InQueue" xml:space="preserve">
+    <value>В очереди</value>
+  </data>
+  <data name="game_Downloading_LowerCase" xml:space="preserve">
+    <value>Скачивание</value>
   </data>
 </root>

@@ -37,11 +37,12 @@
             // 
             // ExitButton
             // 
+            this.ExitButton.AutoSize = true;
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
             this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExitButton.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExitButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.ExitButton.Location = new System.Drawing.Point(32, 111);
+            this.ExitButton.Location = new System.Drawing.Point(12, 147);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(162, 41);
             this.ExitButton.TabIndex = 0;
@@ -53,11 +54,12 @@
             // 
             // LogoutButton
             // 
+            this.LogoutButton.AutoSize = true;
             this.LogoutButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
             this.LogoutButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LogoutButton.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogoutButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.LogoutButton.Location = new System.Drawing.Point(226, 111);
+            this.LogoutButton.Location = new System.Drawing.Point(326, 147);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(162, 41);
             this.LogoutButton.TabIndex = 1;
@@ -69,32 +71,33 @@
             // 
             // ExitHeader
             // 
-            this.ExitHeader.AutoSize = true;
             this.ExitHeader.Font = new System.Drawing.Font("Oxygen", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExitHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.ExitHeader.Location = new System.Drawing.Point(115, 13);
+            this.ExitHeader.Location = new System.Drawing.Point(22, 18);
             this.ExitHeader.Name = "ExitHeader";
-            this.ExitHeader.Size = new System.Drawing.Size(191, 31);
+            this.ExitHeader.Size = new System.Drawing.Size(429, 31);
             this.ExitHeader.TabIndex = 2;
             this.ExitHeader.Text = "¿SALIR AHORA?";
+            this.ExitHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ExitLabel
             // 
             this.ExitLabel.AutoSize = true;
             this.ExitLabel.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExitLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.ExitLabel.Location = new System.Drawing.Point(93, 60);
+            this.ExitLabel.Location = new System.Drawing.Point(134, 78);
             this.ExitLabel.Name = "ExitLabel";
             this.ExitLabel.Size = new System.Drawing.Size(233, 21);
             this.ExitLabel.TabIndex = 3;
             this.ExitLabel.Text = "¿Quieres salir o cerrar sesión?";
+            this.ExitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CancelExit
             // 
             this.CancelExit.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
             this.CancelExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelExit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CancelExit.Location = new System.Drawing.Point(390, 5);
+            this.CancelExit.Location = new System.Drawing.Point(470, 5);
             this.CancelExit.Name = "CancelExit";
             this.CancelExit.Size = new System.Drawing.Size(25, 25);
             this.CancelExit.TabIndex = 4;
@@ -108,7 +111,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(420, 164);
+            this.ClientSize = new System.Drawing.Size(500, 200);
             this.Controls.Add(this.ExitHeader);
             this.Controls.Add(this.ExitLabel);
             this.Controls.Add(this.CancelExit);

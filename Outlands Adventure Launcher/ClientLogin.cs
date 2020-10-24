@@ -1550,9 +1550,9 @@ namespace Outlands_Adventure_Launcher
 
             // Events
             EventSendButton.Text = ClientLanguage.button_Confirm;
-            EventExitButton.Text = ClientLanguage.button_Close;
+            EventExitButton.Text = ClientLanguage.button_Close_Uppercase;
             ResetPasswordSendButton.Text = ClientLanguage.button_Confirm;
-            ResetPasswordExitButton.Text = ClientLanguage.button_Close;
+            ResetPasswordExitButton.Text = ClientLanguage.button_Close_Uppercase;
 
             // Settings
             ConfigurationHeader.Text = ClientLanguage.settings_Header;
@@ -1565,7 +1565,7 @@ namespace Outlands_Adventure_Launcher
                 LanguageSelected.Items.Add(currentLanguage);
             }
 
-            ConfigurationExitButton.Text = ClientLanguage.button_Close;
+            ConfigurationExitButton.Text = ClientLanguage.button_Close_Uppercase;
         }
 
         /// <summary>

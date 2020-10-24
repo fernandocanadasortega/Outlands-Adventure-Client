@@ -527,12 +527,12 @@ namespace Outlands_Adventure_Launcher
                 centerYLocation / 2 + locationDifference);
         }
 
-        public static void CalculateHalfSize(Control container, Control controlToHalfSize)
+        public static void CalculateHalfSize(Control container, Control controlToHalfSize, decimal widthSize, decimal heightSize)
         {
-            decimal width = container.Size.Width * 0.5m;
+            decimal width = container.Size.Width * widthSize;
             int truncatedWidth = Convert.ToInt32(Math.Truncate(width));
 
-            decimal height = container.Size.Height * 0.75m;
+            decimal height = container.Size.Height * heightSize;
             int truncatedHeight = Convert.ToInt32(Math.Truncate(height));
 
             controlToHalfSize.Size = new Size(

@@ -33,6 +33,8 @@ namespace Outlands_Adventure_Launcher
             ExitLabel.Text = ClientLanguage.exit_Label;
             ExitButton.Text = ClientLanguage.ExitButton;
             LogoutButton.Text = ClientLanguage.LogoutButton;
+
+            MultipleResources.CalculateCenterLocation(this, ExitLabel, 30);
         }
 
         private void SaveData()
@@ -109,12 +111,14 @@ namespace Outlands_Adventure_Launcher
 
         private void CancelExit_MouseEnter(object sender, EventArgs e)
         {
+            MultipleResources.ShowToolTip(CancelExit, ClientLanguage.button_Close_Lowercase);
             CancelExit.BackColor = Color.FromArgb(230, 230, 230);
             CancelExit.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Dark_Close;
         }
 
         private void CancelExit_MouseLeave(object sender, EventArgs e)
         {
+            MultipleResources.HideToolTip(CancelExit);
             CancelExit.BackColor = Color.FromArgb(35, 35, 40);
             CancelExit.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
         }

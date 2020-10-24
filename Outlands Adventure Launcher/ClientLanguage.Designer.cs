@@ -61,11 +61,20 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cerrar.
+        /// </summary>
+        internal static string button_Close_Lowercase {
+            get {
+                return ResourceManager.GetString("button_Close_Lowercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a CERRAR.
         /// </summary>
-        internal static string button_Close {
+        internal static string button_Close_Uppercase {
             get {
-                return ResourceManager.GetString("button_Close", resourceCulture);
+                return ResourceManager.GetString("button_Close_Uppercase", resourceCulture);
             }
         }
         
@@ -268,20 +277,29 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a DESCARGANDO.
-        /// </summary>
-        internal static string game_Download {
-            get {
-                return ResourceManager.GetString("game_Download", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a ERROR AL DESCARGAR.
         /// </summary>
         internal static string game_DownloadError {
             get {
                 return ResourceManager.GetString("game_DownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descargando.
+        /// </summary>
+        internal static string game_Downloading_LowerCase {
+            get {
+                return ResourceManager.GetString("game_Downloading_LowerCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a DESCARGANDO.
+        /// </summary>
+        internal static string game_Downloading_Uppercase {
+            get {
+                return ResourceManager.GetString("game_Downloading_Uppercase", resourceCulture);
             }
         }
         
@@ -354,6 +372,15 @@ namespace Outlands_Adventure_Launcher {
         internal static string gameSettingsMenu_Update {
             get {
                 return ResourceManager.GetString("gameSettingsMenu_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a En cola.
+        /// </summary>
+        internal static string InQueue {
+            get {
+                return ResourceManager.GetString("InQueue", resourceCulture);
             }
         }
         
@@ -525,6 +552,33 @@ namespace Outlands_Adventure_Launcher {
         internal static string newPasswordSucessful {
             get {
                 return ResourceManager.GetString("newPasswordSucessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay juegos descargandose.
+        /// </summary>
+        internal static string NoCurrentDownloading {
+            get {
+                return ResourceManager.GetString("NoCurrentDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay juegos en la cola de descargas.
+        /// </summary>
+        internal static string NoDownloadQueue {
+            get {
+                return ResourceManager.GetString("NoDownloadQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ir a descargas.
+        /// </summary>
+        internal static string Open_DownloadsInformation {
+            get {
+                return ResourceManager.GetString("Open_DownloadsInformation", resourceCulture);
             }
         }
         
