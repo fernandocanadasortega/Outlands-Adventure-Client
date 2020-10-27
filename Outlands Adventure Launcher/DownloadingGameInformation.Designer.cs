@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.DownloadGameName = new System.Windows.Forms.Label();
-            this.DownloadState = new System.Windows.Forms.Label();
-            this.DownloadProgressLabel = new System.Windows.Forms.Label();
             this.DownloadProgressbar = new System.Windows.Forms.ProgressBar();
             this.DownloadGameImage = new System.Windows.Forms.Panel();
             this.DownloadCancelButton = new System.Windows.Forms.Panel();
@@ -46,33 +44,12 @@
             this.DownloadGameName.TabIndex = 0;
             this.DownloadGameName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // DownloadState
-            // 
-            this.DownloadState.AutoSize = true;
-            this.DownloadState.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DownloadState.Location = new System.Drawing.Point(0, 0);
-            this.DownloadState.Name = "DownloadState";
-            this.DownloadState.Size = new System.Drawing.Size(0, 21);
-            this.DownloadState.TabIndex = 0;
-            this.DownloadState.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // DownloadProgressLabel
-            // 
-            this.DownloadProgressLabel.AutoSize = true;
-            this.DownloadProgressLabel.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DownloadProgressLabel.Location = new System.Drawing.Point(0, 0);
-            this.DownloadProgressLabel.Name = "DownloadProgressLabel";
-            this.DownloadProgressLabel.Size = new System.Drawing.Size(0, 21);
-            this.DownloadProgressLabel.TabIndex = 0;
-            this.DownloadProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // DownloadProgressbar
             // 
             this.DownloadProgressbar.Location = new System.Drawing.Point(0, 0);
             this.DownloadProgressbar.Name = "DownloadProgressbar";
             this.DownloadProgressbar.Size = new System.Drawing.Size(100, 23);
             this.DownloadProgressbar.TabIndex = 0;
-            this.DownloadProgressbar.Value = 20;
             // 
             // DownloadGameImage
             // 
@@ -97,8 +74,6 @@
             // DownloadingGameInformation
             // 
             this.Controls.Add(this.DownloadGameName);
-            this.Controls.Add(this.DownloadState);
-            this.Controls.Add(this.DownloadProgressLabel);
             this.Controls.Add(this.DownloadProgressbar);
             this.Controls.Add(this.DownloadGameImage);
             this.Controls.Add(this.DownloadCancelButton);
@@ -111,8 +86,6 @@
 
         #endregion
         private System.Windows.Forms.Label DownloadGameName;
-        private System.Windows.Forms.Label DownloadState;
-        private System.Windows.Forms.Label DownloadProgressLabel;
         private System.Windows.Forms.ProgressBar DownloadProgressbar;
         private System.Windows.Forms.Panel DownloadGameImage;
         private System.Windows.Forms.Panel DownloadCancelButton;

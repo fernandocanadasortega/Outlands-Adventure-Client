@@ -405,4 +405,7 @@
   <data name="game_Downloading_LowerCase" xml:space="preserve">
     <value>Laster ned</value>
   </data>
+  <data name="download_canceled" xml:space="preserve">
+    <value>NEDLASTING AVBRYTT</value>
+  </data>
 </root>

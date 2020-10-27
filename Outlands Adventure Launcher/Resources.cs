@@ -501,7 +501,7 @@ namespace Outlands_Adventure_Launcher
     }
     #endregion Language Manager
 
-    #region Tooltip Manager
+    #region Multiple Resources
     static class MultipleResources
     {
         static ToolTip toolTip = new ToolTip();
@@ -539,6 +539,20 @@ namespace Outlands_Adventure_Launcher
                 truncatedWidth,
                 truncatedHeight);
         }
+
+        public static Label CreateGenericLabel(string controlName, bool autosize, int width, int height, int xPosition,
+            int yPosition, ContentAlignment textAlignment)
+        {
+            Label genericLabel = new Label();
+            genericLabel.Name = controlName;
+            genericLabel.AutoSize = autosize;
+            genericLabel.Size = new Size(width, height);
+            genericLabel.Location = new Point(xPosition, yPosition);
+            genericLabel.TextAlign = textAlignment;
+            genericLabel.Font = new Font("Oxygen", 10, FontStyle.Regular);
+
+            return genericLabel;
+        }
 }
-    #endregion Show Tooltip
+    #endregion Multiple Resources
 }

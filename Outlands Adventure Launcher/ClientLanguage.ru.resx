@@ -405,4 +405,7 @@
   <data name="game_Downloading_LowerCase" xml:space="preserve">
     <value>Скачивание</value>
   </data>
+  <data name="download_canceled" xml:space="preserve">
+    <value>СКАЧАТЬ ОТМЕНА</value>
+  </data>
 </root>

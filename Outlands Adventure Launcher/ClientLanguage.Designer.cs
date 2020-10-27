@@ -169,6 +169,15 @@ namespace Outlands_Adventure_Launcher {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a DESCARGA CANCELADA.
+        /// </summary>
+        internal static string download_canceled {
+            get {
+                return ResourceManager.GetString("download_canceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a En curso.
         /// </summary>
         internal static string download_InProgress {

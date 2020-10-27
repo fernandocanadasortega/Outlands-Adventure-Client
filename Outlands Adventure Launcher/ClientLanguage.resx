@@ -405,4 +405,7 @@
   <data name="InQueue" xml:space="preserve">
     <value>En cola</value>
   </data>
+  <data name="download_canceled" xml:space="preserve">
+    <value>DESCARGA CANCELADA</value>
+  </data>
 </root>

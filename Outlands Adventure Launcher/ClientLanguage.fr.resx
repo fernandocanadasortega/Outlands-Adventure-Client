@@ -406,4 +406,7 @@
   <data name="game_Downloading_LowerCase" xml:space="preserve">
     <value>Téléchargement</value>
   </data>
+  <data name="download_canceled" xml:space="preserve">
+    <value>TÉLÉCHARGEMENT ANNULÉ</value>
+  </data>
 </root>

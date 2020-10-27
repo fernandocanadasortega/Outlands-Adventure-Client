@@ -38,21 +38,11 @@ namespace Outlands_Adventure_Launcher
             DownloadGameName.TextAlign = ContentAlignment.MiddleLeft;
             DownloadGameName.Text = gameName;
 
-            DownloadState.Size = new Size(525, 19);
-            DownloadState.Location = new Point(82, 57);
-            DownloadState.TextAlign = ContentAlignment.MiddleLeft;
-            DownloadState.Text = "DESCARGANDO";
-
             DownloadCancelButton.Size = new Size(18, 18);
             DownloadCancelButton.Location = new Point(655, 5);
 
             DownloadProgressbar.Size = new Size(522, 16);
             DownloadProgressbar.Location = new Point(86, 34);
-
-            DownloadProgressLabel.Size = new Size(45, 19);
-            DownloadProgressLabel.Location = new Point(630, 32);
-            DownloadProgressLabel.TextAlign = ContentAlignment.MiddleRight;
-            DownloadProgressLabel.Text = "100 %";
         }
 
         protected override void OnPaint(PaintEventArgs pe)

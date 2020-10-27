@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.QueueGameName = new System.Windows.Forms.Label();
-            this.QueueState = new System.Windows.Forms.Label();
             this.QueueGameImage = new System.Windows.Forms.Panel();
             this.QueueCancelButton = new System.Windows.Forms.Panel();
             this.QueueRankUp = new System.Windows.Forms.Panel();
@@ -45,16 +44,6 @@
             this.QueueGameName.Size = new System.Drawing.Size(0, 26);
             this.QueueGameName.TabIndex = 0;
             this.QueueGameName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // QueueState
-            // 
-            this.QueueState.AutoSize = true;
-            this.QueueState.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.QueueState.Location = new System.Drawing.Point(0, 0);
-            this.QueueState.Name = "QueueState";
-            this.QueueState.Size = new System.Drawing.Size(0, 21);
-            this.QueueState.TabIndex = 0;
-            this.QueueState.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // QueueGameImage
             // 
@@ -103,7 +92,6 @@
             // QueueGameInformation
             // 
             this.Controls.Add(this.QueueGameName);
-            this.Controls.Add(this.QueueState);
             this.Controls.Add(this.QueueGameImage);
             this.Controls.Add(this.QueueCancelButton);
             this.Controls.Add(this.QueueRankUp);
@@ -117,7 +105,6 @@
 
         #endregion
         private System.Windows.Forms.Label QueueGameName;
-        private System.Windows.Forms.Label QueueState;
         private System.Windows.Forms.Panel QueueGameImage;
         private System.Windows.Forms.Panel QueueCancelButton;
         private System.Windows.Forms.Panel QueueRankUp;

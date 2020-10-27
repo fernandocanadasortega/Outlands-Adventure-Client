@@ -38,11 +38,6 @@ namespace Outlands_Adventure_Launcher
             QueueGameName.TextAlign = ContentAlignment.MiddleLeft;
             QueueGameName.Text = gameName;
 
-            QueueState.Size = new Size(420, 19);
-            QueueState.Location = new Point(84, 55);
-            QueueState.TextAlign = ContentAlignment.MiddleLeft;
-            QueueState.Text = ClientLanguage.currentPriority + " 1";
-
             QueueCancelButton.Size = new Size(18, 18);
             QueueCancelButton.Location = new Point(655, 5);
 
