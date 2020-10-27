@@ -53,7 +53,7 @@ namespace Outlands_Adventure_Launcher
 
         private void DownloadCancelButton_MouseEnter(object sender, EventArgs e)
         {
-            MultipleResources.ShowToolTip(DownloadCancelButton, ClientLanguage.download_cancel);
+            MultipleResources.ShowToolTip(DownloadCancelButton, LanguageResx.ClientLanguage.download_cancel);
         }
 
         private void DownloadCancelButton_MouseLeave(object sender, EventArgs e)

@@ -389,7 +389,7 @@ namespace Outlands_Adventure_Launcher
 				string confirmationCode = CreateConfirmationCode.CreateCode();
 				Hash_SHA2.InitialiceVariables(confirmationCode);
 
-				string[] messageInfo = ClientLanguage.sendEmail_DeleteAccount.Split('*');
+				string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_DeleteAccount.Split('*');
 				bool messageError = SendEmail.SendNewEmail(userEmail, messageInfo[0], messageInfo[1], confirmationCode);
 
 				if (!messageError)
@@ -399,13 +399,13 @@ namespace Outlands_Adventure_Launcher
 					EventSendButton.Visible = true;
 					EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
-					EventText.Text = ClientLanguage.events_Header_NewAccount;
+					EventText.Text = LanguageResx.ClientLanguage.events_Header_NewAccount;
 
 					EventsPanel.Visible = true;
 				}
 				else
 				{
-					GenericPopUpMessage(ClientLanguage.events_SendEmailError);
+					GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError);
 				}
 
 				CloseLoadingScreen(false);
@@ -475,20 +475,20 @@ namespace Outlands_Adventure_Launcher
 			string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
 			if (selectedDefaultScreen == null || selectedDefaultScreen.Equals(""))
 			{
-				key.SetValue("selectedDefaultScreen", ClientLanguage.store_Header);
+				key.SetValue("selectedDefaultScreen", LanguageResx.ClientLanguage.store_Header);
 			}
 
 			windowsRegisterManager.CloseWindowsRegister(key);
 
-			if (selectedDefaultScreen.Equals(ClientLanguage.store_Header))
+			if (selectedDefaultScreen.Equals(LanguageResx.ClientLanguage.store_Header))
 			{
 				Store_MouseDown(null, null);
 			}
-			else if (selectedDefaultScreen.Equals(ClientLanguage.gameLibrary_Header))
+			else if (selectedDefaultScreen.Equals(LanguageResx.ClientLanguage.gameLibrary_Header))
 			{
 				GameLibrary_MouseDown(null, null);
 			}
-			else if (selectedDefaultScreen.Equals(ClientLanguage.randomDefaultScreen))
+			else if (selectedDefaultScreen.Equals(LanguageResx.ClientLanguage.randomDefaultScreen))
 			{
 				Random random = new Random();
 				int randomNumer = random.Next(1, 3);
@@ -535,11 +535,11 @@ namespace Outlands_Adventure_Launcher
 			{
 				if (storeOpen)
 				{
-					Play_BuyGame.Text = ClientLanguage.buy_Button;
+					Play_BuyGame.Text = LanguageResx.ClientLanguage.buy_Button;
 
 					MoneyPanel.Visible = true;
-					CurrentCurrency.Text = "900 " + ClientLanguage.currency;
-					this.GamePrice.Text = currentGameInfo.GamePrice + " " + ClientLanguage.currency;
+					CurrentCurrency.Text = "900 " + LanguageResx.ClientLanguage.currency;
+					this.GamePrice.Text = currentGameInfo.GamePrice + " " + LanguageResx.ClientLanguage.currency;
 					GameSettingsBackground.Visible = false;
 
 				}
@@ -547,7 +547,7 @@ namespace Outlands_Adventure_Launcher
 				{
 					if (CheckGameFiles())
 					{
-						Play_BuyGame.Text = ClientLanguage.play_Button;
+						Play_BuyGame.Text = LanguageResx.ClientLanguage.play_Button;
 					}
 					else
 					{
@@ -555,7 +555,7 @@ namespace Outlands_Adventure_Launcher
 						{
 							if (downloadingGame == null)
 							{
-								Play_BuyGame.Text = ClientLanguage.download_Avaible_Button;
+								Play_BuyGame.Text = LanguageResx.ClientLanguage.download_Avaible_Button;
 							}
 							else
 							{
@@ -564,7 +564,7 @@ namespace Outlands_Adventure_Launcher
 								{
 									if (currentQueueGame.GameName == currentGameInfo.GameName)
 									{
-										Play_BuyGame.Text = ClientLanguage.InQueue;
+										Play_BuyGame.Text = LanguageResx.ClientLanguage.InQueue;
 										coincidences = true;
 									}
 								}
@@ -573,18 +573,18 @@ namespace Outlands_Adventure_Launcher
 								{
 									if (downloadingGame.GameName == currentGameInfo.GameName)
 									{
-										Play_BuyGame.Text = ClientLanguage.game_Downloading_LowerCase;
+										Play_BuyGame.Text = LanguageResx.ClientLanguage.game_Downloading_LowerCase;
 									}
 									else
 									{
-										Play_BuyGame.Text = ClientLanguage.download_Avaible_Button;
+										Play_BuyGame.Text = LanguageResx.ClientLanguage.download_Avaible_Button;
 									}
 								}
 							}
 						}
 						else
 						{
-							Play_BuyGame.Text = ClientLanguage.download_Unavaible_Button;
+							Play_BuyGame.Text = LanguageResx.ClientLanguage.download_Unavaible_Button;
 						}
 					}
 
@@ -632,44 +632,44 @@ namespace Outlands_Adventure_Launcher
 		public void ChangeAplicationLanguage()
 		{
 			// Events
-			EventSendButton.Text = ClientLanguage.button_Confirm;
-			EventExitButton.Text = ClientLanguage.button_Close_Uppercase;
-			EventCodeError.Text = ClientLanguage.eventCode_Error;
+			EventSendButton.Text = LanguageResx.ClientLanguage.button_Confirm;
+			EventExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
+			EventCodeError.Text = LanguageResx.ClientLanguage.eventCode_Error;
 
 			// Download - Uninstall
 			CheckDownload_UninstallInformationLanguage();
 
 			// Settings
-			ConfigurationHeader.Text = ClientLanguage.settings_Header;
-			ClientLanguageHeader.Text = ClientLanguage.settings_LanguageHeader;
-			DefaultScreenHeader.Text = ClientLanguage.settings_DefaultScreenHeader;
-			ConfigurationExitButton.Text = ClientLanguage.button_Close_Uppercase;
-			DeleteAccount.Text = ClientLanguage.settings_DeleteAccount;
+			ConfigurationHeader.Text = LanguageResx.ClientLanguage.settings_Header;
+			ClientLanguageHeader.Text = LanguageResx.ClientLanguage.settings_LanguageHeader;
+			DefaultScreenHeader.Text = LanguageResx.ClientLanguage.settings_DefaultScreenHeader;
+			ConfigurationExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
+			DeleteAccount.Text = LanguageResx.ClientLanguage.settings_DeleteAccount;
 
 			// Main menu
-			FilterGame.Text = ClientLanguage.filterGame;
-			CurrentCurrencyHeader.Text = ClientLanguage.currentCurrency;
-			GamePriceHeader.Text = ClientLanguage.currentGamePrice;
-			StoreEmptyLabel.Text = ClientLanguage.StoreEmpty;
-			LibraryEmptyLabel.Text = ClientLanguage.LibraryEmpty;
+			FilterGame.Text = LanguageResx.ClientLanguage.filterGame;
+			CurrentCurrencyHeader.Text = LanguageResx.ClientLanguage.currentCurrency;
+			GamePriceHeader.Text = LanguageResx.ClientLanguage.currentGamePrice;
+			StoreEmptyLabel.Text = LanguageResx.ClientLanguage.StoreEmpty;
+			LibraryEmptyLabel.Text = LanguageResx.ClientLanguage.LibraryEmpty;
 
 			// Side menu
-			StoreLabel.Text = ClientLanguage.store_Header;
-			GameLibraryLabel.Text = ClientLanguage.gameLibrary_Header;
+			StoreLabel.Text = LanguageResx.ClientLanguage.store_Header;
+			GameLibraryLabel.Text = LanguageResx.ClientLanguage.gameLibrary_Header;
 
 			// DownloadsPanel
-			DownloadingGameHeader.Text = ClientLanguage.game_Downloading_LowerCase;
-			QueueGameHeader.Text = ClientLanguage.InQueue;
+			DownloadingGameHeader.Text = LanguageResx.ClientLanguage.game_Downloading_LowerCase;
+			QueueGameHeader.Text = LanguageResx.ClientLanguage.InQueue;
 
 			LanguageSelected.Items.Clear();
-			string[] languagesAvaibles = ClientLanguage.settings_Languages.Split('*');
+			string[] languagesAvaibles = LanguageResx.ClientLanguage.settings_Languages.Split('*');
 			foreach (string currentLanguage in languagesAvaibles)
 			{
 				LanguageSelected.Items.Add(currentLanguage);
 			}
 
 			DefaultScreen.Items.Clear();
-			string[] ScreensAvaibles = ClientLanguage.settings_DefaultScreen.Split('*');
+			string[] ScreensAvaibles = LanguageResx.ClientLanguage.settings_DefaultScreen.Split('*');
 			foreach (string currentScreen in ScreensAvaibles)
 			{
 				DefaultScreen.Items.Add(currentScreen);
@@ -684,50 +684,50 @@ namespace Outlands_Adventure_Launcher
 			LanguageManager languageManager = new LanguageManager();
 			string currentLanguage = ChangeLanguageTemporarily(languageManager);
 
-			if (downloadState.Equals(ClientLanguage.game_Downloading_Uppercase))
+			if (downloadState.Equals(LanguageResx.ClientLanguage.game_Downloading_Uppercase))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.game_Downloading_Uppercase;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.game_Downloading_Uppercase;
 			}
-			else if (downloadState.Equals(ClientLanguage.download_canceled))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.download_canceled))
             {
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.download_canceled;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.download_canceled;
 			}
-			else if (downloadState.Equals(ClientLanguage.game_Install))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.game_Install))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.game_Install;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.game_Install;
 			}
-			else if (downloadState.Equals(ClientLanguage.game_DownloadError))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.game_DownloadError))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.game_DownloadError;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.game_DownloadError;
 			}
-			else if (downloadState.Equals(ClientLanguage.game_DownloadSucess))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.game_DownloadSucess))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.game_DownloadSucess;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.game_DownloadSucess;
 			}
-			else if (downloadState.Equals(ClientLanguage.game_InstallError))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.game_InstallError))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.game_InstallError;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.game_InstallError;
 			}
-			else if (downloadState.Equals(ClientLanguage.Uninstalling_Game))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.Uninstalling_Game))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.Uninstalling_Game;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.Uninstalling_Game;
 			}
-			else if (downloadState.Equals(ClientLanguage.Uninstalled_Game))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.Uninstalled_Game))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.Uninstalled_Game;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.Uninstalled_Game;
 			}
-			else if (downloadState.Equals(ClientLanguage.game_NoSpace))
+			else if (downloadState.Equals(LanguageResx.ClientLanguage.game_NoSpace))
 			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
-				SideDownloadState.Text = ClientLanguage.game_NoSpace;
+				SideDownloadState.Text = LanguageResx.ClientLanguage.game_NoSpace;
 			}
 
 			languageManager.ChangeCurrentLanguage(currentLanguage);
@@ -889,7 +889,7 @@ namespace Outlands_Adventure_Launcher
 		#region Tile Size Icons Manager
 		private void SmallTiles_MouseEnter(object sender, EventArgs e)
 		{
-			MultipleResources.ShowToolTip(SmallTiles, ClientLanguage.smallTiles_Tooltip);
+			MultipleResources.ShowToolTip(SmallTiles, LanguageResx.ClientLanguage.smallTiles_Tooltip);
 		}
 
 		private void SmallTiles_MouseLeave(object sender, EventArgs e)
@@ -909,7 +909,7 @@ namespace Outlands_Adventure_Launcher
 
 		private void MediumTiles_MouseEnter(object sender, EventArgs e)
 		{
-			MultipleResources.ShowToolTip(MediumTiles, ClientLanguage.mediumTiles_Tooltip);
+			MultipleResources.ShowToolTip(MediumTiles, LanguageResx.ClientLanguage.mediumTiles_Tooltip);
 		}
 
 		private void MediumTiles_MouseLeave(object sender, EventArgs e)
@@ -929,7 +929,7 @@ namespace Outlands_Adventure_Launcher
 
 		private void LargeTiles_MouseEnter(object sender, EventArgs e)
 		{
-			MultipleResources.ShowToolTip(LargeTiles, ClientLanguage.largeTiles_Tooltip);
+			MultipleResources.ShowToolTip(LargeTiles, LanguageResx.ClientLanguage.largeTiles_Tooltip);
 		}
 
 		private void LargeTiles_MouseLeave(object sender, EventArgs e)
@@ -951,7 +951,7 @@ namespace Outlands_Adventure_Launcher
 		#region Game Filter Manager
 		private void FilterGame_Click(object sender, EventArgs e)
 		{
-			if (FilterGame.Text.Equals(ClientLanguage.filterGame) && FilterGame.ForeColor == Color.FromArgb(130, 130, 130))
+			if (FilterGame.Text.Equals(LanguageResx.ClientLanguage.filterGame) && FilterGame.ForeColor == Color.FromArgb(130, 130, 130))
 				FilterGame.SelectionStart = 0;
 		}
 
@@ -977,7 +977,7 @@ namespace Outlands_Adventure_Launcher
 			{
 				FilterGame.TextChanged -= FilterGame_TextChanged;
 
-				FilterGame.Text = ClientLanguage.filterGame;
+				FilterGame.Text = LanguageResx.ClientLanguage.filterGame;
 				FilterGame.ForeColor = Color.FromArgb(130, 130, 130);
 				FilterGame.KeyDown += FilterGame_KeyDown;
 				FilterGame.SelectionStart = 0;
@@ -1019,21 +1019,21 @@ namespace Outlands_Adventure_Launcher
 					switch (tileSizeSelected)
 					{
 						case "SmallTile":
-							if (FilterGame.Text.Equals(ClientLanguage.filterGame))
+							if (FilterGame.Text.Equals(LanguageResx.ClientLanguage.filterGame))
 								ResizeGameList(80, 120);
 							else
 								RefillFilteredGames(FilterGame.Text, 80, 120);
 							break;
 
 						case "MediumTile":
-							if (FilterGame.Text.Equals(ClientLanguage.filterGame))
+							if (FilterGame.Text.Equals(LanguageResx.ClientLanguage.filterGame))
 								ResizeGameList(130, 196);
 							else
 								RefillFilteredGames(FilterGame.Text, 130, 196);
 							break;
 
 						case "LargeTile":
-							if (FilterGame.Text.Equals(ClientLanguage.filterGame))
+							if (FilterGame.Text.Equals(LanguageResx.ClientLanguage.filterGame))
 								ResizeGameList(196, 256);
 							else
 								RefillFilteredGames(FilterGame.Text, 196, 256);
@@ -1220,7 +1220,7 @@ namespace Outlands_Adventure_Launcher
 						if (queryError.Contains("Unable to connect"))
 						{
 							// Pop up de falta de internet - No te puedes conectar a la base de datos
-							GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+							GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
 						}
 						else
 						{
@@ -1232,20 +1232,20 @@ namespace Outlands_Adventure_Launcher
 					{
 						SelectTileSize(false, false, true);
 						ChangeScreen(ref storeOpen, false);
-						GenericPopUpMessage(ClientLanguage.buyGameSucess);
+						GenericPopUpMessage(LanguageResx.ClientLanguage.buyGameSucess);
 					}
 
 					CloseLoadingScreen(false);
 				}
-				else if (libraryOpen && !Play_BuyGame.Text.Equals(ClientLanguage.game_Downloading_LowerCase) &&
-					!Play_BuyGame.Text.Equals(ClientLanguage.InQueue))
+				else if (libraryOpen && !Play_BuyGame.Text.Equals(LanguageResx.ClientLanguage.game_Downloading_LowerCase) &&
+					!Play_BuyGame.Text.Equals(LanguageResx.ClientLanguage.InQueue))
 				{
-					if (Play_BuyGame.Text.Equals(ClientLanguage.play_Button))
+					if (Play_BuyGame.Text.Equals(LanguageResx.ClientLanguage.play_Button))
 					{
 						string gamePath = Path.Combine(downloadPath, currentGameInfo.GameName, currentGameInfo.GameName + ".exe");
 						Process.Start(gamePath);
 					}
-					else if (Play_BuyGame.Text.Equals(ClientLanguage.download_Avaible_Button))
+					else if (Play_BuyGame.Text.Equals(LanguageResx.ClientLanguage.download_Avaible_Button))
 					{
 						if (downloadingGame == null)
 						{
@@ -1273,7 +1273,7 @@ namespace Outlands_Adventure_Launcher
 						}
 						ChangeScreen(ref gameInfoOpen, true);
 					}
-					else if (Play_BuyGame.Text.Equals(ClientLanguage.gameSettingsMenu_Uninstall))
+					else if (Play_BuyGame.Text.Equals(LanguageResx.ClientLanguage.gameSettingsMenu_Uninstall))
 					{
 						UninstallGame();
 					}
@@ -1355,7 +1355,7 @@ namespace Outlands_Adventure_Launcher
 				{
 					if (queryError.Contains("Unable to connect"))
 					{
-						GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+						GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
 					}
 					else
 					{
@@ -1472,11 +1472,11 @@ namespace Outlands_Adventure_Launcher
 			ContextMenuStrip.Name = "UserInfoMenu";
 			ContextMenuStrip.Items.Clear();
 
-			ContextMenuStrip.Items.Add(ClientLanguage.userInfoMenu_Settings);
+			ContextMenuStrip.Items.Add(LanguageResx.ClientLanguage.userInfoMenu_Settings);
 			ContextMenuStrip.Items.Add(new ToolStripSeparator());
-			ContextMenuStrip.Items.Add(ClientLanguage.download);
+			ContextMenuStrip.Items.Add(LanguageResx.ClientLanguage.download);
 			ContextMenuStrip.Items.Add(new ToolStripSeparator());
-			ContextMenuStrip.Items.Add(ClientLanguage.userInfoMenu_logout);
+			ContextMenuStrip.Items.Add(LanguageResx.ClientLanguage.userInfoMenu_logout);
 
 			ContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserSettingsMenuStrip_ItemClicked);
 			ContextMenuStrip.Show(UserInformation, new Point(UserInformation.Width, +10));
@@ -1491,16 +1491,16 @@ namespace Outlands_Adventure_Launcher
 
 		private void UserSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
 		{
-			if (e.ClickedItem.Text == ClientLanguage.userInfoMenu_Settings)
+			if (e.ClickedItem.Text == LanguageResx.ClientLanguage.userInfoMenu_Settings)
 			{
 				OpenConfiguration();
 			}
-			else if (e.ClickedItem.Text == ClientLanguage.download)
+			else if (e.ClickedItem.Text == LanguageResx.ClientLanguage.download)
 			{
 				ChangeScreen(ref downloadsInfoOpen, false);
 				LoadDownloadsPanel();
 			}
-			else if (e.ClickedItem.Text == ClientLanguage.userInfoMenu_logout)
+			else if (e.ClickedItem.Text == LanguageResx.ClientLanguage.userInfoMenu_logout)
 			{
 				WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 				Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
@@ -1512,7 +1512,14 @@ namespace Outlands_Adventure_Launcher
 					key.DeleteValue("Username");
 				}
 
-				Application.Restart();
+                try
+                {
+                    Application.Restart();
+                }
+                catch (Exception)
+                {
+					Application.Exit();
+                }
 			}
 		}
 		#endregion User Settings Menu
@@ -1544,9 +1551,9 @@ namespace Outlands_Adventure_Launcher
 
 			if (CheckGameFiles())
 			{
-				ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.play_Button));
+				ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.play_Button));
 				ContextMenuStrip.Items.Add(new ToolStripSeparator());
-				ContextMenuStrip.Items.Add(ClientLanguage.gameSettingsMenu_Uninstall);
+				ContextMenuStrip.Items.Add(LanguageResx.ClientLanguage.gameSettingsMenu_Uninstall);
 			}
 			else
 			{
@@ -1554,7 +1561,7 @@ namespace Outlands_Adventure_Launcher
 				{
 					if (downloadingGame == null) // No hay juegos descargandose y el juego se puede descargar
 					{
-						ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Avaible_Button));
+						ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.download_Avaible_Button));
 					}
 					else
 					{
@@ -1562,7 +1569,7 @@ namespace Outlands_Adventure_Launcher
 						{
 							if (currentQueueGame.GameName == currentGameInfo.GameName) // El juego ya esta en la cola de descargas
 							{
-								ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.InQueue));
+								ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.InQueue));
 							}
 						}
 
@@ -1570,18 +1577,18 @@ namespace Outlands_Adventure_Launcher
 						{
 							if (downloadingGame.GameName == currentGameInfo.GameName) // El juego se esta descargando
                             {
-								ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.game_Downloading_LowerCase));
+								ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.game_Downloading_LowerCase));
 							}
 							else // El juego se puede descargar
                             {
-								ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Avaible_Button));
+								ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.download_Avaible_Button));
 							}
 						}
 					}
 				}
 				else
 				{
-					ContextMenuStrip.Items.Add(new ToolStripMenuItem(ClientLanguage.download_Unavaible_Button));
+					ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.download_Unavaible_Button));
 				}
 			}
 
@@ -1592,15 +1599,15 @@ namespace Outlands_Adventure_Launcher
 
 		private void GameSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
 		{
-			if (e.ClickedItem.Text.Equals(ClientLanguage.play_Button))
+			if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.play_Button))
 			{
 				string gamePath = Path.Combine(downloadPath, currentGameInfo.GameName, currentGameInfo.GameName + ".exe");
 				Process.Start(gamePath);
 			}
-			else if (e.ClickedItem.Text.Equals(ClientLanguage.download_Avaible_Button))
+			else if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.download_Avaible_Button))
 			{
-				if (!e.ClickedItem.Text.Equals(ClientLanguage.game_Downloading_LowerCase) &&
-					!e.ClickedItem.Text.Equals(ClientLanguage.InQueue))
+				if (!e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.game_Downloading_LowerCase) &&
+					!e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.InQueue))
 				{
 					if (downloadingGame == null)
 					{
@@ -1628,7 +1635,7 @@ namespace Outlands_Adventure_Launcher
 					}
 				}
 			}
-			else if (e.ClickedItem.Text.Equals(ClientLanguage.gameSettingsMenu_Uninstall))
+			else if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.gameSettingsMenu_Uninstall))
 			{
 				UninstallGame();
 			}
@@ -1691,7 +1698,7 @@ namespace Outlands_Adventure_Launcher
 
 			if (gameInfoOpen)
 			{
-				RefreshGameInfo_Click(ClientLanguage.game_Downloading_LowerCase);
+				RefreshGameInfo_Click(LanguageResx.ClientLanguage.game_Downloading_LowerCase);
 			}
 			ContextMenuStrip.Hide();
 
@@ -1722,7 +1729,7 @@ namespace Outlands_Adventure_Launcher
 						SideDownloadState.ForeColor = Color.FromArgb(230, 230, 230);
 
 						languageManager.ChangeCurrentLanguage("es-ES");
-						downloadState = ClientLanguage.game_Downloading_Uppercase;
+						downloadState = LanguageResx.ClientLanguage.game_Downloading_Uppercase;
 						await SetDownloadsPanelState(false, 100);
 						CheckDownload_UninstallInformationLanguage();
 						try
@@ -1735,7 +1742,7 @@ namespace Outlands_Adventure_Launcher
 						catch (OperationCanceledException)
                         {
 							languageManager.ChangeCurrentLanguage("es-ES");
-							downloadState = ClientLanguage.download_canceled;
+							downloadState = LanguageResx.ClientLanguage.download_canceled;
 							await SetDownloadsPanelState(false, 100);
 							CheckDownload_UninstallInformationLanguage();
 							downloadError = true;
@@ -1750,7 +1757,7 @@ namespace Outlands_Adventure_Launcher
 						{
 							SideDownloadState.ForeColor = Color.Red;
 							languageManager.ChangeCurrentLanguage("es-ES");
-							downloadState = ClientLanguage.game_DownloadError;
+							downloadState = LanguageResx.ClientLanguage.game_DownloadError;
 							await SetDownloadsPanelState(false, 100);
 							CheckDownload_UninstallInformationLanguage();
 							downloadError = true;
@@ -1765,7 +1772,7 @@ namespace Outlands_Adventure_Launcher
 						SideDownloadProgressbar.Style = ProgressBarStyle.Marquee;
 						SideDownloadProgressbar.Value = 40;
 						languageManager.ChangeCurrentLanguage("es-ES");
-						downloadState = ClientLanguage.game_Install;
+						downloadState = LanguageResx.ClientLanguage.game_Install;
 						await SetDownloadsPanelState(true, 40);
 						CheckDownload_UninstallInformationLanguage();
 						try
@@ -1779,7 +1786,7 @@ namespace Outlands_Adventure_Launcher
 						{
 							SideDownloadState.ForeColor = Color.Red;
 							languageManager.ChangeCurrentLanguage("es-ES");
-							downloadState = ClientLanguage.game_InstallError;
+							downloadState = LanguageResx.ClientLanguage.game_InstallError;
 							await SetDownloadsPanelState(false, 100);
 							CheckDownload_UninstallInformationLanguage();
 							downloadError = true;
@@ -1792,7 +1799,7 @@ namespace Outlands_Adventure_Launcher
 						}
 
 						languageManager.ChangeCurrentLanguage("es-ES");
-						downloadState = ClientLanguage.game_DownloadSucess;
+						downloadState = LanguageResx.ClientLanguage.game_DownloadSucess;
 						await SetDownloadsPanelState(false, 100);
 						CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
 
@@ -1803,7 +1810,7 @@ namespace Outlands_Adventure_Launcher
 					{
 						SideDownloadState.ForeColor = Color.Red;
 						languageManager.ChangeCurrentLanguage("es-ES");
-						downloadState = ClientLanguage.game_NoSpace;
+						downloadState = LanguageResx.ClientLanguage.game_NoSpace;
 						await SetDownloadsPanelState(false, 100);
 						CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
 						downloadError = true;
@@ -1816,11 +1823,11 @@ namespace Outlands_Adventure_Launcher
 
 			if (gameInfoOpen && !downloadError)
             {
-				RefreshGameInfo_Click(ClientLanguage.play_Button);
+				RefreshGameInfo_Click(LanguageResx.ClientLanguage.play_Button);
 			}
 			else if (gameInfoOpen && downloadError)
             {
-				RefreshGameInfo_Click(ClientLanguage.download_Avaible_Button);
+				RefreshGameInfo_Click(LanguageResx.ClientLanguage.download_Avaible_Button);
 			}
 			ContextMenuStrip.Hide();
 
@@ -2035,7 +2042,7 @@ namespace Outlands_Adventure_Launcher
 
 						Label queueStateLabel = MultipleResources.CreateGenericLabel("QueueState", true, 420, 19, 84, 55,
 							ContentAlignment.MiddleLeft);
-						queueStateLabel.Text = ClientLanguage.currentPriority + "  " + (currentDownloadGameInfo + 1);
+						queueStateLabel.Text = LanguageResx.ClientLanguage.currentPriority + "  " + (currentDownloadGameInfo + 1);
 						queuePanel.Controls.Add(queueStateLabel);
 
 						Panel cancelQueueDownload = queuePanel.Controls.Find("QueueCancelButton", false)[0] as Panel;
@@ -2063,7 +2070,7 @@ namespace Outlands_Adventure_Launcher
 
 					DownloadsNoInfoLabel.Visible = true;
 					DownloadsNoInfoLabel.AutoSize = true;
-					DownloadsNoInfoLabel.Text = ClientLanguage.NoDownloadQueue;
+					DownloadsNoInfoLabel.Text = LanguageResx.ClientLanguage.NoDownloadQueue;
 					DownloadsNoInfoLabel.MinimumSize = new Size(DownloadsNoInfoPanel.Size.Width, 0);
 
 					DownloadsNoInfoLabel.Location = new Point(
@@ -2082,7 +2089,7 @@ namespace Outlands_Adventure_Launcher
 
 				DownloadsNoInfoLabel.Visible = true;
 				DownloadsNoInfoLabel.AutoSize = true;
-				DownloadsNoInfoLabel.Text = ClientLanguage.NoCurrentDownloading;
+				DownloadsNoInfoLabel.Text = LanguageResx.ClientLanguage.NoCurrentDownloading;
 				DownloadsNoInfoLabel.MinimumSize = new Size(DownloadsNoInfoPanel.Size.Width, 0);
 
 				DownloadsNoInfoLabel.Location = new Point(
@@ -2099,7 +2106,7 @@ namespace Outlands_Adventure_Launcher
 			{
 				if (gameInfoOpen)
 				{
-					RefreshGameInfo_Click(ClientLanguage.Uninstalling_Game);
+					RefreshGameInfo_Click(LanguageResx.ClientLanguage.Uninstalling_Game);
 				}
 				ContextMenuStrip.Hide();
 
@@ -2123,14 +2130,14 @@ namespace Outlands_Adventure_Launcher
 				CloseUninstall_Information.Visible = false;
 
 				UninstallState.ForeColor = Color.FromArgb(230, 230, 230);
-				UninstallState.Text = ClientLanguage.Uninstalling_Game;
+				UninstallState.Text = LanguageResx.ClientLanguage.Uninstalling_Game;
 
 				if (Directory.Exists(Path.Combine(downloadPath, currentGameInfo.GameName)))
 				{
 					Directory.Delete(Path.Combine(downloadPath, currentGameInfo.GameName), true);
 				}
 
-				UninstallState.Text = ClientLanguage.Uninstalled_Game;
+				UninstallState.Text = LanguageResx.ClientLanguage.Uninstalled_Game;
 				UninstallProgress.Style = ProgressBarStyle.Continuous;
 				UninstallProgress.Value = 100;
 
@@ -2198,7 +2205,7 @@ namespace Outlands_Adventure_Launcher
 
 			if (e.Button == MouseButtons.Left)
 			{
-				if (downloadState.Equals(ClientLanguage.game_Downloading_Uppercase) || downloadState.Equals(ClientLanguage.game_Install))
+				if (downloadState.Equals(LanguageResx.ClientLanguage.game_Downloading_Uppercase) || downloadState.Equals(LanguageResx.ClientLanguage.game_Install))
 				{
 					CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
 					ChangeScreen(ref downloadsInfoOpen, false);
@@ -2296,15 +2303,15 @@ namespace Outlands_Adventure_Launcher
 			LanguageManager languageManager = new LanguageManager();
 			languageManager.ChangeCurrentLanguage("es-ES");
 
-			if (downloadState.Equals(ClientLanguage.game_Downloading_Uppercase) || downloadState.Equals(ClientLanguage.game_Install))
+			if (downloadState.Equals(LanguageResx.ClientLanguage.game_Downloading_Uppercase) || downloadState.Equals(LanguageResx.ClientLanguage.game_Install))
 			{
 				CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
-				MultipleResources.ShowToolTip(CloseShowDownloadInformation, ClientLanguage.Open_DownloadsInformation);
+				MultipleResources.ShowToolTip(CloseShowDownloadInformation, LanguageResx.ClientLanguage.Open_DownloadsInformation);
 			}
 			else
             {
 				CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
-				MultipleResources.ShowToolTip(CloseShowDownloadInformation, ClientLanguage.button_Close_Lowercase);
+				MultipleResources.ShowToolTip(CloseShowDownloadInformation, LanguageResx.ClientLanguage.button_Close_Lowercase);
             }
 		}
 
@@ -2315,7 +2322,7 @@ namespace Outlands_Adventure_Launcher
 
 		private void UninstallShowInformation_MouseEnter(object sender, EventArgs e)
 		{
-			MultipleResources.ShowToolTip(CloseUninstall_Information, ClientLanguage.button_Close_Lowercase);
+			MultipleResources.ShowToolTip(CloseUninstall_Information, LanguageResx.ClientLanguage.button_Close_Lowercase);
 		}
 
 		private void UninstallShowInformation_MouseLeave(object sender, EventArgs e)

@@ -56,7 +56,7 @@ namespace Outlands_Adventure_Launcher
 
         private void RankUp_MouseEnter(object sender, EventArgs e)
         {
-            MultipleResources.ShowToolTip(QueueRankUp, ClientLanguage.priorityUp);
+            MultipleResources.ShowToolTip(QueueRankUp, LanguageResx.ClientLanguage.priorityUp);
         }
 
         private void RankUp_MouseLeave(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace Outlands_Adventure_Launcher
 
         private void QueueRankDown_MouseEnter(object sender, EventArgs e)
         {
-            MultipleResources.ShowToolTip(QueueRankDown, ClientLanguage.priorityDown);
+            MultipleResources.ShowToolTip(QueueRankDown, LanguageResx.ClientLanguage.priorityDown);
         }
 
         private void QueueRankDown_MouseLeave(object sender, EventArgs e)
@@ -76,7 +76,7 @@ namespace Outlands_Adventure_Launcher
 
         private void QueueCancelButton_MouseEnter(object sender, EventArgs e)
         {
-            MultipleResources.ShowToolTip(QueueCancelButton, ClientLanguage.download_cancel);
+            MultipleResources.ShowToolTip(QueueCancelButton, LanguageResx.ClientLanguage.download_cancel);
         }
 
         private void QueueCancelButton_MouseLeave(object sender, EventArgs e)

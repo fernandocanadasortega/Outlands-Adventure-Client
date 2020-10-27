@@ -259,7 +259,7 @@ namespace Outlands_Adventure_Launcher
             else
             {
                 CloseLoadingScreen(false, "login");
-                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
                 loginErrors = true;
             }
         }
@@ -420,7 +420,7 @@ namespace Outlands_Adventure_Launcher
                         string confirmationCode = CreateConfirmationCode.CreateCode();
                         Hash_SHA2.InitialiceVariables(confirmationCode);
 
-                        string[] messageInfo = ClientLanguage.sendEmail_NewAccount.Split('*');
+                        string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_NewAccount.Split('*');
                         bool messageError = SendEmail.SendNewEmail(NewEmailTextbox.Text, messageInfo[0], messageInfo[1], confirmationCode);
 
                         if (!messageError)
@@ -430,7 +430,7 @@ namespace Outlands_Adventure_Launcher
                             EventSendButton.Visible = true;
                             EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
-                            EventText.Text = ClientLanguage.events_Header_NewAccount;
+                            EventText.Text = LanguageResx.ClientLanguage.events_Header_NewAccount;
 
                             targetPanel = "login";
                             registerErrors = false;
@@ -442,7 +442,7 @@ namespace Outlands_Adventure_Launcher
                         {
                             CloseLoadingScreen(false, "register");
                             registerErrors = true;
-                            GenericPopUpMessage(ClientLanguage.events_SendEmailError);
+                            GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError);
                         }
                     }
                 }
@@ -468,7 +468,7 @@ namespace Outlands_Adventure_Launcher
                 if (emailRowsRecovered > 0)
                 {
                     registerErrors = true;
-                    GenericError(NewEmailErrorLabel, ClientLanguage.textboxError_EmailRegistered);
+                    GenericError(NewEmailErrorLabel, LanguageResx.ClientLanguage.textboxError_EmailRegistered);
                     Login_RegisterButton(false, RegisterButton, ref registerAvaible);
                     CloseLoadingScreen(true, "register");
                 }
@@ -480,7 +480,7 @@ namespace Outlands_Adventure_Launcher
                 if (nameRowsRecovered > 0)
                 {
                     registerErrors = true;
-                    GenericError(NewUserNameErrorLabel, ClientLanguage.textboxError_UsernameRegistered);
+                    GenericError(NewUserNameErrorLabel, LanguageResx.ClientLanguage.textboxError_UsernameRegistered);
                     Login_RegisterButton(false, RegisterButton, ref registerAvaible);
                     CloseLoadingScreen(true, "register");
                 }
@@ -493,7 +493,7 @@ namespace Outlands_Adventure_Launcher
             {
                 CloseLoadingScreen(false, "register");
                 registerErrors = true;
-                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
             }
         }
 
@@ -509,7 +509,7 @@ namespace Outlands_Adventure_Launcher
                 if (queryError.Contains("Unable to connect"))
                 {
                     // Pop up de falta de internet - No te puedes conectar a la base de datos
-                    GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                    GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
                 }
 
                 else
@@ -568,14 +568,14 @@ namespace Outlands_Adventure_Launcher
                 usernameLost = true;
                 passwordLost = false;
 
-                ResetCredentialsHeader.Text = ClientLanguage.loginProblems_LostUsername;
+                ResetCredentialsHeader.Text = LanguageResx.ClientLanguage.loginProblems_LostUsername;
             }
             else
             {
                 usernameLost = false;
                 passwordLost = true;
 
-                ResetCredentialsHeader.Text = ClientLanguage.loginProblems_LostPassword;
+                ResetCredentialsHeader.Text = LanguageResx.ClientLanguage.loginProblems_LostPassword;
             }
 
             if (!ResetCredentialsHeader.Visible)
@@ -652,7 +652,7 @@ namespace Outlands_Adventure_Launcher
                         EventExitButton.Location = new Point(237, 105);
 
                         // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
-                        EventText.Text = ClientLanguage.events_Header_UsernameLost;
+                        EventText.Text = LanguageResx.ClientLanguage.events_Header_UsernameLost;
 
                         if (loginProblemsAvaible)
                         {
@@ -660,7 +660,7 @@ namespace Outlands_Adventure_Launcher
 
                             if (userNameRecovered.Length > 0)
                             {
-                                string[] messageInfo = ClientLanguage.sendEmail_LostUsername.Split('*');
+                                string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_LostUsername.Split('*');
                                 messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText.Text, messageInfo[0], messageInfo[1],
                                     userNameRecovered);
                             }
@@ -674,13 +674,13 @@ namespace Outlands_Adventure_Launcher
                         EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
                         // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
-                        EventText.Text = ClientLanguage.events_Header_PasswordLost;
+                        EventText.Text = LanguageResx.ClientLanguage.events_Header_PasswordLost;
 
                         if (loginProblemsAvaible)
                         {
                             string confirmationCode = CreateConfirmationCode.CreateCode();
                             Hash_SHA2.InitialiceVariables(confirmationCode);
-                            string[] messageInfo = ClientLanguage.sendEmail_LostPassword.Split('*');
+                            string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_LostPassword.Split('*');
                             messageError = SendEmail.SendNewEmail(ResetCredentialsEmailText.Text, messageInfo[0], messageInfo[1], confirmationCode);
                         }
                     }
@@ -690,7 +690,7 @@ namespace Outlands_Adventure_Launcher
                         loginProblemsErrors = true;
                         EventsPanel.Visible = true;
                         CloseLoadingScreen(false, "loginProblems");
-                        GenericPopUpMessage(ClientLanguage.events_SendEmailError);
+                        GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError);
                     }
                     else
                     {
@@ -722,7 +722,7 @@ namespace Outlands_Adventure_Launcher
             {
                 loginProblemsErrors = true;
                 CloseLoadingScreen(false, "loginProblems");
-                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
             }
         }
 
@@ -744,7 +744,7 @@ namespace Outlands_Adventure_Launcher
             {
                 loginProblemsErrors = true;
                 CloseLoadingScreen(false, "loginProblems");
-                GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
 
                 return "";
             }
@@ -858,7 +858,7 @@ namespace Outlands_Adventure_Launcher
                     if (!registerErrors)
                     {
                         ResetRegisterPanelValues();
-                        GenericPopUpMessage(ClientLanguage.registerSucessful);
+                        GenericPopUpMessage(LanguageResx.ClientLanguage.registerSucessful);
                     }
                 }
 
@@ -917,7 +917,7 @@ namespace Outlands_Adventure_Launcher
                     loginProblemsErrors = false;
 
                     targetPanel = "login";
-                    GenericPopUpMessage(ClientLanguage.newPasswordSucessful);
+                    GenericPopUpMessage(LanguageResx.ClientLanguage.newPasswordSucessful);
                     ResetPasswordEventPanel.Visible = false;
                     Reset_ResetPasswordEventValues();
                     ResetLoginProblemsPanelValues();
@@ -947,7 +947,7 @@ namespace Outlands_Adventure_Launcher
                 if (queryError.Contains("Unable to connect"))
                 {
                     // Pop up de falta de internet - No te puedes conectar a la base de datos
-                    GenericPopUpMessage(ClientLanguage.events_Database_ConnectionError);
+                    GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
                 }
 
                 else
@@ -1203,10 +1203,10 @@ namespace Outlands_Adventure_Launcher
                         EmptyTextbox(NewEmailLabel, NewEmailErrorLabel, null, null, null, null);
 
                     else if (NewEmailTextbox.Text.Length < 4)
-                        LessFourLetters(NewEmailErrorLabel, ClientLanguage.textboxError_LessFourLetters, null, null);
+                        LessFourLetters(NewEmailErrorLabel, LanguageResx.ClientLanguage.textboxError_LessFourLetters, null, null);
 
                     else if (!IsEmailValid(NewEmailTextbox.Text))
-                        GenericError(NewEmailErrorLabel, ClientLanguage.textboxError_WrongEmail);
+                        GenericError(NewEmailErrorLabel, LanguageResx.ClientLanguage.textboxError_WrongEmail);
 
                     else
                         NewEmailErrorLabel.Visible = false;
@@ -1217,7 +1217,7 @@ namespace Outlands_Adventure_Launcher
                         EmptyTextbox(NewUserNameLabel, NewUserNameErrorLabel, null, null, null, null);
 
                     else if (NewUserNameTextbox.Text.Length < 4)
-                        LessFourLetters(NewUserNameErrorLabel, ClientLanguage.textboxError_LessFourLetters, null, null);
+                        LessFourLetters(NewUserNameErrorLabel, LanguageResx.ClientLanguage.textboxError_LessFourLetters, null, null);
 
                     else
                         NewUserNameErrorLabel.Visible = false;
@@ -1232,7 +1232,7 @@ namespace Outlands_Adventure_Launcher
 
                     if (NewPasswordTextbox.Text.Length < 4 && NewPasswordTextbox.Text.Length > 0)
                     {
-                        LessFourLetters(NewPasswordErrorLabel, ClientLanguage.textboxError_LessFourLetters,
+                        LessFourLetters(NewPasswordErrorLabel, LanguageResx.ClientLanguage.textboxError_LessFourLetters,
                             NewPasswordStrengthProgressBar, NewPasswordStrengthLabel);
                     }
                     else
@@ -1242,7 +1242,7 @@ namespace Outlands_Adventure_Launcher
 
                     if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text) && ConfirmNewPasswordTextbox.Text.Length > 0)
                     {
-                        GenericError(ConfirmNewPasswordErrorLabel, ClientLanguage.textboxError_PasswordNotMatch);
+                        GenericError(ConfirmNewPasswordErrorLabel, LanguageResx.ClientLanguage.textboxError_PasswordNotMatch);
                     }
                     else
                     {
@@ -1261,11 +1261,11 @@ namespace Outlands_Adventure_Launcher
                     }
                     else if (!NewPasswordTextbox.Text.Equals(ConfirmNewPasswordTextbox.Text) && NewPasswordTextbox.Text.Length > 0)
                     {
-                        GenericError(ConfirmNewPasswordErrorLabel, ClientLanguage.textboxError_PasswordNotMatch);
+                        GenericError(ConfirmNewPasswordErrorLabel, LanguageResx.ClientLanguage.textboxError_PasswordNotMatch);
                     }
                     else if (ConfirmNewPasswordTextbox.Text.Length < 4)
                     {
-                        LessFourLetters(ConfirmNewPasswordErrorLabel, ClientLanguage.textboxError_LessFourLetters, null, null);
+                        LessFourLetters(ConfirmNewPasswordErrorLabel, LanguageResx.ClientLanguage.textboxError_LessFourLetters, null, null);
                     }
                     else
                     {
@@ -1284,7 +1284,7 @@ namespace Outlands_Adventure_Launcher
                     }
                     else if (ResetPasswordTextbox.Text.Length < 4)
                     {
-                        LessFourLetters(ResetPasswordEventErrorText, ClientLanguage.textboxError_LessFourLetters,
+                        LessFourLetters(ResetPasswordEventErrorText, LanguageResx.ClientLanguage.textboxError_LessFourLetters,
                             ResetPasswordStrengthProgressBar, ResetPasswordStrengthLabel);
                     }
                     else
@@ -1524,48 +1524,48 @@ namespace Outlands_Adventure_Launcher
         public void ChangeAplicationLanguage()
         {
             // Login Interface
-            LoginText.Text = ClientLanguage.login_Header;
-            WrongCredentials.Text = ClientLanguage.login_Error;
-            UserNameLabel.Text = ClientLanguage.textbox_Username;
-            PasswordLabel.Text = ClientLanguage.textbox_Password;
-            RememberMe.Text = ClientLanguage.login_RememberMe;
-            RegisterLabel.Text = ClientLanguage.login_Register;
-            LoginProblems.Text = ClientLanguage.login_LoginProblems;
+            LoginText.Text = LanguageResx.ClientLanguage.login_Header;
+            WrongCredentials.Text = LanguageResx.ClientLanguage.login_Error;
+            UserNameLabel.Text = LanguageResx.ClientLanguage.textbox_Username;
+            PasswordLabel.Text = LanguageResx.ClientLanguage.textbox_Password;
+            RememberMe.Text = LanguageResx.ClientLanguage.login_RememberMe;
+            RegisterLabel.Text = LanguageResx.ClientLanguage.login_Register;
+            LoginProblems.Text = LanguageResx.ClientLanguage.login_LoginProblems;
 
             // Register Interface
-            RegisterText.Text = ClientLanguage.register_Header;
-            NewEmailLabel.Text = ClientLanguage.textbox_Email;
-            NewUserNameLabel.Text = ClientLanguage.textbox_Username;
-            NewPasswordLabel.Text = ClientLanguage.textbox_Password;
-            ConfirmNewPasswordLabel.Text = ClientLanguage.textbox_ConfirmPassword;
-            LoginLabel.Text = ClientLanguage.register_Login;
+            RegisterText.Text = LanguageResx.ClientLanguage.register_Header;
+            NewEmailLabel.Text = LanguageResx.ClientLanguage.textbox_Email;
+            NewUserNameLabel.Text = LanguageResx.ClientLanguage.textbox_Username;
+            NewPasswordLabel.Text = LanguageResx.ClientLanguage.textbox_Password;
+            ConfirmNewPasswordLabel.Text = LanguageResx.ClientLanguage.textbox_ConfirmPassword;
+            LoginLabel.Text = LanguageResx.ClientLanguage.register_Login;
 
             // Login Problems Interface
-            LoginProblemsHeader_1.Text = ClientLanguage.loginProblems_Header;
-            LoginProblemsHeader_2.Text = ClientLanguage.loginProblems_Header2;
-            ForgottenUsernameHeader.Text = ClientLanguage.loginProblems_UsernameHeader;
-            ForgottenPasswordHeader.Text = ClientLanguage.loginProblems_PasswordHeader;
-            ResetCredentialsEmailLabel.Text = ClientLanguage.textbox_Email;
-            ReturnToLogin.Text = ClientLanguage.loginProblems_Login;
+            LoginProblemsHeader_1.Text = LanguageResx.ClientLanguage.loginProblems_Header;
+            LoginProblemsHeader_2.Text = LanguageResx.ClientLanguage.loginProblems_Header2;
+            ForgottenUsernameHeader.Text = LanguageResx.ClientLanguage.loginProblems_UsernameHeader;
+            ForgottenPasswordHeader.Text = LanguageResx.ClientLanguage.loginProblems_PasswordHeader;
+            ResetCredentialsEmailLabel.Text = LanguageResx.ClientLanguage.textbox_Email;
+            ReturnToLogin.Text = LanguageResx.ClientLanguage.loginProblems_Login;
 
             // Events
-            EventSendButton.Text = ClientLanguage.button_Confirm;
-            EventExitButton.Text = ClientLanguage.button_Close_Uppercase;
-            ResetPasswordSendButton.Text = ClientLanguage.button_Confirm;
-            ResetPasswordExitButton.Text = ClientLanguage.button_Close_Uppercase;
+            EventSendButton.Text = LanguageResx.ClientLanguage.button_Confirm;
+            EventExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
+            ResetPasswordSendButton.Text = LanguageResx.ClientLanguage.button_Confirm;
+            ResetPasswordExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
 
             // Settings
-            ConfigurationHeader.Text = ClientLanguage.settings_Header;
-            ClientLanguageHeader.Text = ClientLanguage.settings_LanguageHeader;
+            ConfigurationHeader.Text = LanguageResx.ClientLanguage.settings_Header;
+            ClientLanguageHeader.Text = LanguageResx.ClientLanguage.settings_LanguageHeader;
 
             LanguageSelected.Items.Clear();
-            string[] languagesAvaibles = ClientLanguage.settings_Languages.Split('*');
+            string[] languagesAvaibles = LanguageResx.ClientLanguage.settings_Languages.Split('*');
             foreach (string currentLanguage in languagesAvaibles)
             {
                 LanguageSelected.Items.Add(currentLanguage);
             }
 
-            ConfigurationExitButton.Text = ClientLanguage.button_Close_Uppercase;
+            ConfigurationExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
         }
 
         /// <summary>

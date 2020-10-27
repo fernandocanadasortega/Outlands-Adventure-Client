@@ -136,12 +136,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientLanguage.de.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.de.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClientLanguage.en-GB.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.en-GB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.en-GB.resx</DependentUpon>
@@ -152,27 +152,27 @@
     <Compile Include="ClientAplication.Designer.cs">
       <DependentUpon>ClientAplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClientLanguage.en-US.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.en-US.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClientLanguage.fr.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.fr.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClientLanguage.ja.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.ja.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.ja.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClientLanguage.no.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.no.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.no.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClientLanguage.ru.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.ru.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.ru.resx</DependentUpon>
@@ -204,7 +204,7 @@
     </Compile>
     <Compile Include="GameInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ClientLanguage.Designer.cs">
+    <Compile Include="LanguageResx\ClientLanguage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.resx</DependentUpon>
@@ -219,31 +219,31 @@
     <EmbeddedResource Include="ClientAplication.resx">
       <DependentUpon>ClientAplication.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.de.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.en-GB.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.en-GB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.en-GB.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.en-US.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.en-US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.fr.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.ja.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.no.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.no.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.no.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.ru.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -264,7 +264,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientLanguage.resx">
+    <EmbeddedResource Include="LanguageResx\ClientLanguage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientLanguage.Designer.cs</LastGenOutput>
     </EmbeddedResource>

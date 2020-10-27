@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Outlands_Adventure_Launcher {
+namespace Outlands_Adventure_Launcher.LanguageResx {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Outlands_Adventure_Launcher {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Outlands_Adventure_Launcher.ClientLanguage", typeof(ClientLanguage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Outlands_Adventure_Launcher.LanguageResx.ClientLanguage", typeof(ClientLanguage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
