@@ -408,4 +408,13 @@
   <data name="download_canceled" xml:space="preserve">
     <value>NEDLASTING AVBRYTT</value>
   </data>
+  <data name="settings_resolution" xml:space="preserve">
+    <value>800x600 piksler*1280x720 piksler</value>
+  </data>
+  <data name="RefreshResolution_Tooltip" xml:space="preserve">
+    <value>Endre oppløsning. Hvis du endrer oppløsningen, starter vinduet på nytt</value>
+  </data>
+  <data name="settings_ResolutionHeader" xml:space="preserve">
+    <value>Vedtak</value>
+  </data>
 </root>

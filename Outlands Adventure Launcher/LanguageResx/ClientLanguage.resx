@@ -408,4 +408,13 @@
   <data name="download_canceled" xml:space="preserve">
     <value>DESCARGA CANCELADA</value>
   </data>
+  <data name="settings_resolution" xml:space="preserve">
+    <value>800x600 píxeles*1280x720 píxeles</value>
+  </data>
+  <data name="RefreshResolution_Tooltip" xml:space="preserve">
+    <value>Cambiar resolución. Al cambiar la resolución se reiniciará la ventana</value>
+  </data>
+  <data name="settings_ResolutionHeader" xml:space="preserve">
+    <value>Resolución</value>
+  </data>
 </root>

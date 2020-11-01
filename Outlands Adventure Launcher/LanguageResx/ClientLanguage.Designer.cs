@@ -673,6 +673,15 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cambiar resolución. Al cambiar la resolución se reiniciará la ventana.
+        /// </summary>
+        internal static string RefreshResolution_Tooltip {
+            get {
+                return ResourceManager.GetString("RefreshResolution_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Crea tu cuenta de Outlands Adventure.
         /// </summary>
         internal static string register_Header {
@@ -786,6 +795,24 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         internal static string settings_Languages {
             get {
                 return ResourceManager.GetString("settings_Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a 800x600 píxeles*1280x720 píxeles.
+        /// </summary>
+        internal static string settings_resolution {
+            get {
+                return ResourceManager.GetString("settings_resolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Resolución.
+        /// </summary>
+        internal static string settings_ResolutionHeader {
+            get {
+                return ResourceManager.GetString("settings_ResolutionHeader", resourceCulture);
             }
         }
         

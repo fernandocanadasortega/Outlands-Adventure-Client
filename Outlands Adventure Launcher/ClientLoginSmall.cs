@@ -14,10 +14,9 @@ using System.Windows.Forms;
 
 namespace Outlands_Adventure_Launcher
 {
-    public partial class ClientLogin : Form
+    public partial class ClientLoginSmall : Form
     {
-        ClientLogin clientLogin;
-        ClientAplication clientAplication;
+        ClientLoginSmall clientLogin;
 
         private string targetPanel;
         private bool operationInProgress;
@@ -39,26 +38,24 @@ namespace Outlands_Adventure_Launcher
         private bool confirmPasswordVisible;
 
 
-        public ClientLogin()
+        public ClientLoginSmall()
         {
             InitializeComponent();
         }
 
-        public void ReceiveClassInstance(ClientLogin clientLogin)
+        public void ReceiveClassInstance(ClientLoginSmall clientLogin)
         {
             this.clientLogin = clientLogin;
         }
 
         #region Form Actions
         private void LauncherLogin_Load(object sender, EventArgs e)
-        {
-            clientAplication = new ClientAplication();
-
+        {            
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             windowsRegisterManager.LoadWindowPosition(this);
 
             LanguageManager languageManager = new LanguageManager();
-            languageManager.SelectCurrentAplicationWindow(clientLogin, null);
+            languageManager.SelectCurrentAplicationWindow(null, null, clientLogin, null);
             languageManager.ReadSelectedLanguage(true, LanguageSelected);
 
             targetPanel = "login";
@@ -194,11 +191,11 @@ namespace Outlands_Adventure_Launcher
         {
             if (RememberMe.Checked)
             {
-                RememberMe.Font = new Font("Oxygen", 9, FontStyle.Bold);
+                RememberMe.Font = new Font("Oxygen", 8, FontStyle.Bold);
             }
             else
             {
-                RememberMe.Font = new Font("Oxygen", 9, FontStyle.Regular);
+                RememberMe.Font = new Font("Oxygen", 8, FontStyle.Regular);
             }
         }
         #endregion
@@ -225,9 +222,8 @@ namespace Outlands_Adventure_Launcher
                         key.SetValue("Username", UserNameTextbox.Text);
                     }
 
-                    clientLogin.Hide();
-                    clientAplication.ReceiveClassInstance(clientAplication, UserNameTextbox.Text);
-                    clientAplication.ShowDialog();
+                    ResolutionManager resolutionManager = new ResolutionManager();
+                    resolutionManager.LoadWindowResolution(false, null, null, clientLogin, null, UserNameTextbox.Text);
                 }
             }
             else
@@ -763,6 +759,9 @@ namespace Outlands_Adventure_Launcher
 
             LanguageManager languageManager = new LanguageManager();
             languageManager.ReadSelectedLanguage(false, LanguageSelected);
+
+            ResolutionManager resolutionManager = new ResolutionManager();
+            resolutionManager.ReadSelectedResolution(ResolutionSelected);
         }
 
         #region Configuration Exit Button
@@ -781,6 +780,25 @@ namespace Outlands_Adventure_Launcher
             CheckTargetPanel();
         }
         #endregion Configuration Exit Button
+
+        #region Configuration Refresh Resolution
+        private void ResolutionRefresh_MouseEnter(object sender, EventArgs e)
+        {
+            MultipleResources.ShowToolTip(ResolutionRefresh, LanguageResx.ClientLanguage.RefreshResolution_Tooltip);
+        }
+
+        private void ResolutionRefresh_MouseLeave(object sender, EventArgs e)
+        {
+            MultipleResources.HideToolTip(ResolutionRefresh);
+        }
+
+        private void ResolutionRefresh_MouseClick(object sender, MouseEventArgs e)
+        {
+            ResolutionManager resolutionManager = new ResolutionManager();
+            resolutionManager.ResolutionCombobox_ResolutionChanged(ResolutionSelected);
+            resolutionManager.LoadWindowResolution(true, null, null, clientLogin, null, "");
+        }
+        #endregion Configuration Refresh Resolution
 
         #endregion Game Client Configuration
 
@@ -819,7 +837,7 @@ namespace Outlands_Adventure_Launcher
                 targetPanel = "loginProblems";
                 loginProblemsErrors = false;
             }
-            else
+            else if (loginErrors)
             {
                 targetPanel = "login";
             }
@@ -981,12 +999,12 @@ namespace Outlands_Adventure_Launcher
         #region Change Panel (ex: Change from login to register)
         private void ActionLabel_MouseEnter(object sender, EventArgs e)
         {
-            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Bold);
+            ((Label)sender).Font = new Font("Oxygen", 8, FontStyle.Bold);
         }
 
         private void ActionLabel_MouseLeave(object sender, EventArgs e)
         {
-            ((Label)sender).Font = new Font("Oxygen", 9, FontStyle.Regular);
+            ((Label)sender).Font = new Font("Oxygen", 8, FontStyle.Regular);
         }
 
         // Create New Account (Login Panel)
@@ -1155,7 +1173,7 @@ namespace Outlands_Adventure_Launcher
             // El método solo deberia tener este if
             if (currentTextbox.Text.Length == 0)
             {
-                currentTextboxLabel.Font = new Font("Perpetua Titling MT", 6, FontStyle.Bold);
+                currentTextboxLabel.Font = new Font("Perpetua Titling MT", 5, FontStyle.Bold);
                 currentTextboxLabel.Location = new Point(0, 2);
             }
 
@@ -1169,12 +1187,12 @@ namespace Outlands_Adventure_Launcher
                 if (Control.IsKeyLocked(Keys.CapsLock))
                 {
                     mayusLock.Visible = true;
-                    currentTextbox.Size = new Size(165, 22);
+                    currentTextbox.Size = new Size(150, 14);
                 }
                 else
                 {
                     mayusLock.Visible = false;
-                    currentTextbox.Size = new Size(195, 22);
+                    currentTextbox.Size = new Size(179, 14);
                 }
             }
         }
@@ -1300,8 +1318,8 @@ namespace Outlands_Adventure_Launcher
         private void EmptyTextbox(Label currentTextboxLabel, Label currentErrorLabel,
             Panel showPassword, Panel mayusLock, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
-            currentTextboxLabel.Font = new Font("Oxygen", 10);
-            currentTextboxLabel.Location = new Point(14, 10);
+            currentTextboxLabel.Font = new Font("Oxygen", 8);
+            currentTextboxLabel.Location = new Point(10, 8);
             if (currentErrorLabel != null) currentErrorLabel.Visible = false;
 
             if (showPassword != null)
@@ -1360,12 +1378,12 @@ namespace Outlands_Adventure_Launcher
                 if (Control.IsKeyLocked(Keys.CapsLock))
                 {
                     passwordMayusLock.Visible = true;
-                    currentTextbox.Size = new Size(165, 22);
+                    currentTextbox.Size = new Size(150, 14);
                 }
                 else if (!Control.IsKeyLocked(Keys.CapsLock))
                 {
                     passwordMayusLock.Visible = false;
-                    currentTextbox.Size = new Size(195, 22);
+                    currentTextbox.Size = new Size(179, 14);
                 }
             }
         }
@@ -1504,13 +1522,13 @@ namespace Outlands_Adventure_Launcher
 
         #region Combobox controls
         // Allow Combo Box to center aligned
-        private void LanguageSelected_DrawItem(object sender, DrawItemEventArgs e)
+        private void Language_ResolutionSelected_DrawItem(object sender, DrawItemEventArgs e)
         {
             ComboboxManager languageComboboxManager = new ComboboxManager();
             languageComboboxManager.Combobox_DrawItem(sender, e);
         }
 
-        private void LanguageSelected_DropDownClosed(object sender, EventArgs e)
+        private void Language_ResolutionSelected_DropDownClosed(object sender, EventArgs e)
         {
             ComboboxManager languageComboboxManager = new ComboboxManager();
             languageComboboxManager.Combobox_DropDownClosed(ConfigurationPanel);
@@ -1557,6 +1575,7 @@ namespace Outlands_Adventure_Launcher
             // Settings
             ConfigurationHeader.Text = LanguageResx.ClientLanguage.settings_Header;
             ClientLanguageHeader.Text = LanguageResx.ClientLanguage.settings_LanguageHeader;
+            ResolutionHeader.Text = LanguageResx.ClientLanguage.settings_ResolutionHeader;
 
             LanguageSelected.Items.Clear();
             string[] languagesAvaibles = LanguageResx.ClientLanguage.settings_Languages.Split('*');
@@ -1564,6 +1583,15 @@ namespace Outlands_Adventure_Launcher
             {
                 LanguageSelected.Items.Add(currentLanguage);
             }
+
+            ResolutionSelected.Items.Clear();
+            string[] resolutionsAvaibles = LanguageResx.ClientLanguage.settings_resolution.Split('*');
+            foreach (string currentResolution in resolutionsAvaibles)
+            {
+                ResolutionSelected.Items.Add(currentResolution);
+            }
+            ResolutionManager resolutionManager = new ResolutionManager();
+            resolutionManager.ReadSelectedResolution(ResolutionSelected);
 
             ConfigurationExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
         }
@@ -1576,7 +1604,7 @@ namespace Outlands_Adventure_Launcher
         private void LanguageSelected_SelectionChangeCommitted(object sender, EventArgs e)
         {
             LanguageManager languageManager = new LanguageManager();
-            languageManager.SelectCurrentAplicationWindow(clientLogin, null);
+            languageManager.SelectCurrentAplicationWindow(null, null, clientLogin, null);
             languageManager.LanguageCombobox_LanguageChanged(LanguageSelected);
         }
         #endregion Language manager

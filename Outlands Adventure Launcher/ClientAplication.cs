@@ -83,7 +83,7 @@ namespace Outlands_Adventure_Launcher
 			windowsRegisterManager.LoadWindowPosition(this);
 
 			LanguageManager languageManager = new LanguageManager();
-			languageManager.SelectCurrentAplicationWindow(null, clientAplication);
+			languageManager.SelectCurrentAplicationWindow(null, clientAplication, null, null);
 			languageManager.ReadSelectedLanguage(true, LanguageSelected);
 
 			currentGameInfoList = new List<GameInfo>();
@@ -761,7 +761,7 @@ namespace Outlands_Adventure_Launcher
 			int currentDefaultScreen = DefaultScreen.SelectedIndex;
 
 			LanguageManager languageManager = new LanguageManager();
-			languageManager.SelectCurrentAplicationWindow(null, clientAplication);
+			languageManager.SelectCurrentAplicationWindow(null, clientAplication, null, null);
 			languageManager.LanguageCombobox_LanguageChanged(LanguageSelected);
 
 			SaveDefaultScreen(currentDefaultScreen);
@@ -1514,7 +1514,8 @@ namespace Outlands_Adventure_Launcher
 
                 try
                 {
-                    Application.Restart();
+					// CAMBIAR 
+					Application.Restart();
                 }
                 catch (Exception)
                 {

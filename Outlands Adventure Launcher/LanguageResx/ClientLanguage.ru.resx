@@ -408,4 +408,13 @@
   <data name="download_canceled" xml:space="preserve">
     <value>СКАЧАТЬ ОТМЕНА</value>
   </data>
+  <data name="settings_resolution" xml:space="preserve">
+    <value>800x600 пиксели*1280x720 пиксели</value>
+  </data>
+  <data name="RefreshResolution_Tooltip" xml:space="preserve">
+    <value>Изменить разрешение. При изменении разрешения окно перезапускается</value>
+  </data>
+  <data name="settings_ResolutionHeader" xml:space="preserve">
+    <value>Разрешение</value>
+  </data>
 </root>

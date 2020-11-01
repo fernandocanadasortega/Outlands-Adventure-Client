@@ -408,4 +408,13 @@
   <data name="download_canceled" xml:space="preserve">
     <value>Download abgebrochen</value>
   </data>
+  <data name="settings_resolution" xml:space="preserve">
+    <value>800x600 pixel*1280x720 pixel</value>
+  </data>
+  <data name="RefreshResolution_Tooltip" xml:space="preserve">
+    <value>Auflösung ändern. Durch Ändern der Auflösung wird das Fenster neu gestartet</value>
+  </data>
+  <data name="settings_ResolutionHeader" xml:space="preserve">
+    <value>Auflösung</value>
+  </data>
 </root>

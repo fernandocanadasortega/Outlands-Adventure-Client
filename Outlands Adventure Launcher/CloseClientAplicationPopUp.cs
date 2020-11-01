@@ -71,7 +71,7 @@ namespace Outlands_Adventure_Launcher
         #endregion Exit Button
 
         #region Logout Button
-        private void LogoutButton_MouseClick(object sender, MouseEventArgs e)
+        public void LogoutButton_MouseClick(object sender, MouseEventArgs e)
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);

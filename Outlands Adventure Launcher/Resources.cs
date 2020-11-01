@@ -310,7 +310,9 @@ namespace Outlands_Adventure_Launcher
     }
     #endregion Windows register manager
 
-    #region Language / LanguageCombobox Manager
+    #region Language / Resolution / Combobox Manager
+
+    #region Combobox Manager
     /// <summary>
     /// Class in charge of change the visual appearance of comboboxs
     /// </summary>
@@ -361,21 +363,25 @@ namespace Outlands_Adventure_Launcher
             configurationPanel.Focus();
         }
     }
+    #endregion Combobox Manager
+
+    #region Language Manager
 
     /// <summary>
     /// Class in charge of change the aplication language
     /// </summary>
     public class LanguageManager
     {
-        private ClientLogin clientLogin;
-        private ClientAplication clientAplication;
+        private ClientLoginLarge clientLoginLarge;
+        private ClientLoginSmall clientLoginSmall;
+        private ClientAplication clientAplicationLarge;
+        private ClientAplication clientAplicationSmall;
 
         /// <summary>
         /// Change the language stored in the windows registry and change the language of the application
         /// Cambia el idioma del almacenado en la entrada del registro de windows y cambia el idioma de la aplicación
         /// </summary>
-        /// <param name="sender">Object that receive the events</param>
-        /// <param name="e">Events that occur to the object</param>
+        /// <param name="languageCombobox">Combobox with all the languages</param>
         public void LanguageCombobox_LanguageChanged(ComboBox languageCombobox)
         {
             string[] selectedLanguageArray = languageCombobox.SelectedItem.ToString().Split('(');
@@ -413,6 +419,7 @@ namespace Outlands_Adventure_Launcher
         /// </summary>
         /// <param name="appLoading">boolean that indicates if the application is loading for the first time or if you 
         /// are entering the method after the entire application has loaded</param>
+        /// <param name="languageCombobox">Combobox with all the languages</param>
         public void ReadSelectedLanguage(bool appLoading, ComboBox languageCombobox)
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
@@ -453,9 +460,10 @@ namespace Outlands_Adventure_Launcher
 
         /// <summary>
         /// Set the language currently being used in the language drop-down in the settings menu
-        /// Establece en el desplegable de idiomas en el menú de ajustes qué idioma se está usando actualmente
+        /// Establece en el desplegable de idiomas del menú de ajustes qué idioma se está usando actualmente
         /// </summary>
         /// <param name="selectedLanguage">Language currently being used</param>
+        /// <param name="languageCombobox">Combobox with all the languages</param>
         /// <returns>Int, return -1 if the language was not found in the drop-down</returns>
         private int CheckLanguageComboboxSelection(string selectedLanguage, ComboBox languageCombobox)
         {
@@ -475,12 +483,17 @@ namespace Outlands_Adventure_Launcher
         /// It establishes in which form the language will be changed
         /// Establece en que formulario se va a cambiar el idioma
         /// </summary>
-        /// <param name="clientLogin">ClientLogin class reference</param>
-        /// <param name="clientAplication">ClientAplication class reference</param>
-        public void SelectCurrentAplicationWindow(ClientLogin clientLogin, ClientAplication clientAplication)
+        /// <param name="clientLoginLarge">ClientLoginLarge class reference</param>
+        /// <param name="clientAplicationLarge">ClientAplicationLarge class reference</param>
+        /// <param name="clientLoginSmall">ClientLoginSmall class reference</param>
+        /// <param name="clientAplicationSmall">ClientAplicationSmall class reference</param>
+        public void SelectCurrentAplicationWindow(ClientLoginLarge clientLoginLarge, ClientAplication clientAplicationLarge,
+            ClientLoginSmall clientLoginSmall, ClientAplication clientAplicationSmall)
         {
-            this.clientLogin = clientLogin;
-            this.clientAplication = clientAplication;
+            this.clientLoginLarge = clientLoginLarge;
+            this.clientLoginSmall = clientLoginSmall;
+            this.clientAplicationLarge = clientAplicationLarge;
+            this.clientAplicationSmall = clientAplicationSmall;
         }
 
         /// <summary>
@@ -489,17 +502,165 @@ namespace Outlands_Adventure_Launcher
         /// </summary>
         private void ChangeAplicationLanguage()
         {
-            if (clientLogin != null)
+            if (clientLoginLarge != null)
             {
-                clientLogin.ChangeAplicationLanguage();
+                clientLoginLarge.ChangeAplicationLanguage();
             }
-            else if (clientAplication != null)
+            else if (clientLoginSmall != null)
             {
-                clientAplication.ChangeAplicationLanguage();
+                clientLoginSmall.ChangeAplicationLanguage();
+            }
+            else if (clientAplicationLarge != null)
+            {
+                clientAplicationLarge.ChangeAplicationLanguage();
+            }
+            else if (clientAplicationSmall != null)
+            {
+                clientAplicationSmall.ChangeAplicationLanguage();
             }
         }
     }
     #endregion Language Manager
+
+    #region Resolution Manager
+
+    #endregion Resolution Manager
+    public class ResolutionManager
+    {
+        /// <summary>
+        /// Read from the windows register the resolution of the form and establish it the current form
+        /// </summary>
+        /// <param name="clientLogin">Boolean that indicates if the current form is the login form or the aplication form</param>
+        public void LoadWindowResolution(bool clientLogin, ClientLoginLarge clientLoginLarge, ClientAplication clientAplicationLarge,
+            ClientLoginSmall clientLoginSmall, ClientAplication clientAplicationSmall, string username)
+        {
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+
+            if (key.GetValue("SelectedResolution") == null || key.GetValue("SelectedResolution").Equals(""))
+            {
+                key.SetValue("SelectedResolution", "1280x720");
+            }
+
+            if (clientLoginSmall != null) clientLoginSmall.Hide();
+            else if (clientLoginLarge != null) clientLoginLarge.Hide();
+            else if (clientAplicationSmall != null) clientAplicationSmall.Hide();
+            else if (clientAplicationLarge != null) clientAplicationLarge.Hide();
+
+            if (key.GetValue("SelectedResolution").ToString().Contains("800x600"))
+            {
+                if (clientLogin)
+                {
+                    // Cargar ClientLoginSmall
+                    ClientLoginSmall newClientLoginSmall = new ClientLoginSmall();
+                    newClientLoginSmall.ReceiveClassInstance(newClientLoginSmall);
+                    newClientLoginSmall.ShowDialog();
+                }
+                else
+                {
+                    // Cargar clientAplicationSmall
+                    // Cambiar
+                    ClientAplication newclientAplicationSmall = new ClientAplication();
+                    newclientAplicationSmall.ReceiveClassInstance(newclientAplicationSmall, username);
+                    newclientAplicationSmall.ShowDialog();
+                }
+            }
+            else
+            {
+                if (clientLogin)
+                {
+                    // Cargar ClientLoginLarge
+                    if (clientLoginLarge != null) clientLoginLarge.Hide();
+                    else if (clientLoginSmall != null) clientLoginSmall.Hide();
+                    ClientLoginLarge newClientLoginLarge = new ClientLoginLarge();
+                    newClientLoginLarge.ReceiveClassInstance(newClientLoginLarge);
+                    newClientLoginLarge.ShowDialog();
+                }
+                else
+                {
+                    // Cargar clientAplicationLarge
+                    // Cambiar
+                    ClientAplication newclientAplicationLarge = new ClientAplication();
+                    newclientAplicationLarge.ReceiveClassInstance(newclientAplicationLarge, username);
+                    newclientAplicationLarge.ShowDialog();
+                }
+            }
+
+            windowsRegisterManager.CloseWindowsRegister(key);
+        }
+
+        /// <summary>
+        /// Change the resolution stored in the windows registry and change the resolution of the application
+        /// Cambia la resolución del almacenado en la entrada del registro de windows y cambia la resolución de la aplicación
+        /// </summary>
+        /// <param name="resolutionCombobox">Combobox with all the resolutions</param>
+        /// <param name="clientLogin">Boolean that indicates if the current form is the login form or the aplication form</param>
+        public void ResolutionCombobox_ResolutionChanged(ComboBox resolutionCombobox)
+        {
+            string[] selectedResolutionArray = resolutionCombobox.SelectedItem.ToString().Split(' ');
+
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+            key.SetValue("SelectedResolution", selectedResolutionArray[0]);
+            windowsRegisterManager.CloseWindowsRegister(key);
+        }
+
+        /// <summary>
+        /// Set the current resolution in the windows registry the selected item in the resolution combobox, 
+        /// if there is no selected resolution set the 1280 x 720 pixels resolution
+        /// </summary>
+        /// <param name="resolutionCombobox"></param>
+        public void ReadSelectedResolution(ComboBox resolutionCombobox)
+        {
+            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+
+            string selectedResolution = "";
+            if (key.GetValue("SelectedResolution") != null)
+            {
+                selectedResolution = key.GetValue("SelectedResolution").ToString();
+            }
+
+            if (selectedResolution.Equals(""))
+            {
+                selectedResolution = "1280x720";
+                key.SetValue("SelectedResolution", selectedResolution);
+            }
+
+            if (CheckResolutionComboboxSelection(selectedResolution, resolutionCombobox) != -1)
+            {
+                CheckResolutionComboboxSelection(selectedResolution, resolutionCombobox);
+            }
+            else
+            {
+                resolutionCombobox.SelectedIndex = 0;
+            }
+
+            windowsRegisterManager.CloseWindowsRegister(key);
+        }
+
+        /// <summary>
+        /// Set the resolution currently being used in the resolution drop-down in the settings menu
+        /// Establece en el desplegable de resoluciones del menú de ajustes qué resolución se está usando actualmente
+        /// </summary>
+        /// <param name="selectedLanguage">Resolution currently being used</param>
+        /// <param name="resolutionCombobox">Combobox with all the resolutions</param>
+        /// <returns>Int, return -1 if the resolution was not found in the drop-down</returns>
+        private int CheckResolutionComboboxSelection(string selectedLanguage, ComboBox resolutionCombobox)
+        {
+            for (int currentLanguageItem = 0; currentLanguageItem < resolutionCombobox.Items.Count; currentLanguageItem++)
+            {
+                if (resolutionCombobox.Items[currentLanguageItem].ToString().Contains(selectedLanguage))
+                {
+                    resolutionCombobox.SelectedIndex = currentLanguageItem;
+                    return 0; // This 0 does nothing, but every route must return a number
+                }
+            }
+
+            return -1;
+        }
+    }
+    #endregion Language / Resolution / Combobox Manager
 
     #region Multiple Resources
     static class MultipleResources
@@ -553,6 +714,6 @@ namespace Outlands_Adventure_Launcher
 
             return genericLabel;
         }
-}
+    }
     #endregion Multiple Resources
 }
