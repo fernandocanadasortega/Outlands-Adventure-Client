@@ -1009,9 +1009,12 @@ namespace Outlands_Adventure_Launcher
 		{
 			FilterGame.TextChanged -= FilterGame_TextChanged;
 
-			FilterGame.Text = "";
-			FilterGame.ForeColor = Color.FromArgb(0, 0, 0);
-			FilterGame.KeyDown -= FilterGame_KeyDown;
+			if (e.KeyCode != Keys.Back && e.KeyCode != Keys.Enter)
+			{
+				FilterGame.Text = "";
+				FilterGame.ForeColor = Color.FromArgb(0, 0, 0);
+				FilterGame.KeyDown -= FilterGame_KeyDown;
+			}
 
 			FilterGame.TextChanged += FilterGame_TextChanged;
 		}
@@ -1023,6 +1026,21 @@ namespace Outlands_Adventure_Launcher
 				RefillFilteredGames(FilterGame.Text, 0, 0);
 			}
 
+			if (FilterGame.Text.Equals(""))
+			{
+				FilterGame.TextChanged -= FilterGame_TextChanged;
+
+				FilterGame.Text = LanguageResx.ClientLanguage.filterGame;
+				FilterGame.ForeColor = Color.FromArgb(130, 130, 130);
+				FilterGame.KeyDown += FilterGame_KeyDown;
+				FilterGame.SelectionStart = 0;
+
+				FilterGame.TextChanged += FilterGame_TextChanged;
+			}
+		}
+
+		private void FilterGame_Leave(object sender, EventArgs e)
+		{
 			if (FilterGame.Text.Equals(""))
 			{
 				FilterGame.TextChanged -= FilterGame_TextChanged;
@@ -1195,6 +1213,7 @@ namespace Outlands_Adventure_Launcher
 		{
 			currentGameImagesListView.Items.Clear();
 			GameImages.Images.Clear();
+			List<GameInfo> filteredGameInfoList = new List<GameInfo>();
 
 			if (xSize != 0 && ySize != 0)
 			{
@@ -1202,14 +1221,20 @@ namespace Outlands_Adventure_Launcher
 				GameImages.ColorDepth = ColorDepth.Depth32Bit;
 			}
 
-			int currentImage = 0;
 			foreach (GameInfo currentGameInfo in currentGameInfoList)
 			{
-				if (currentGameInfoList[currentImage].GameName.ToLower().Contains(filteredGameName.ToLower()) || filteredGameName.Equals(""))
+				if (currentGameInfo.GameName.ToLower().Contains(filteredGameName.ToLower()) || filteredGameName.Equals(""))
 				{
-					currentGameImagesListView.Items.Add(currentGameInfoList[currentImage].GameName, currentImage);
-					GameImages.Images.Add(currentGameInfoList[currentImage].GameImage);
+					filteredGameInfoList.Add(currentGameInfo);
 				}
+			}
+
+
+			int currentImage = 0;
+			foreach (GameInfo currentGameInfo in filteredGameInfoList)
+			{
+				currentGameImagesListView.Items.Add(currentGameInfo.GameName, currentImage);
+				GameImages.Images.Add(currentGameInfo.GameImage);
 
 				currentImage++;
 			}

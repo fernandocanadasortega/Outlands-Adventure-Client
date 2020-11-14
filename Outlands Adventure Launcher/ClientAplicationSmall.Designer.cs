@@ -700,6 +700,7 @@
             this.FilterGame.Click += new System.EventHandler(this.FilterGame_Click);
             this.FilterGame.TextChanged += new System.EventHandler(this.FilterGame_TextChanged);
             this.FilterGame.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterGame_KeyDown);
+            this.FilterGame.Leave += new System.EventHandler(this.FilterGame_Leave);
             // 
             // StoreMenu
             // 
