@@ -11,6 +11,7 @@ using System.Net.Mail;
 using System.Threading;
 using System.Security.Cryptography;
 using System.Data.Linq;
+using System.Diagnostics;
 
 namespace Outlands_Adventure_Launcher
 {
@@ -76,31 +77,31 @@ namespace Outlands_Adventure_Launcher
                 case PasswordScore.VeryWeak:
                     NewPasswordStrengthProgressBar.Value = 20;
                     NewPasswordStrengthLabel.ForeColor = Color.Red;
-                    NewPasswordStrengthLabel.Text = "Muy débil";
+                    NewPasswordStrengthLabel.Text = LanguageResx.ClientLanguage.passwordStrenght_VeryWeak;
                     break;
 
                 case PasswordScore.Weak:
                     NewPasswordStrengthProgressBar.Value = 40;
                     NewPasswordStrengthLabel.ForeColor = Color.Red;
-                    NewPasswordStrengthLabel.Text = "Débil";
+                    NewPasswordStrengthLabel.Text = LanguageResx.ClientLanguage.passwordStrenght_Weak;
                     break;
 
                 case PasswordScore.Medium:
                     NewPasswordStrengthProgressBar.Value = 60;
                     NewPasswordStrengthLabel.ForeColor = Color.DarkGoldenrod;
-                    NewPasswordStrengthLabel.Text = "Mediana";
+                    NewPasswordStrengthLabel.Text = LanguageResx.ClientLanguage.passwordStrenght_Medium;
                     break;
 
                 case PasswordScore.Strong:
                     NewPasswordStrengthProgressBar.Value = 80;
                     NewPasswordStrengthLabel.ForeColor = Color.Green;
-                    NewPasswordStrengthLabel.Text = "Fuerte";
+                    NewPasswordStrengthLabel.Text = LanguageResx.ClientLanguage.passwordStrenght_Strong;
                     break;
 
                 case PasswordScore.VeryStrong:
                     NewPasswordStrengthProgressBar.Value = 100;
                     NewPasswordStrengthLabel.ForeColor = Color.Green;
-                    NewPasswordStrengthLabel.Text = "Muy fuerte";
+                    NewPasswordStrengthLabel.Text = LanguageResx.ClientLanguage.passwordStrenght_VeryStrong;
                     break;
             }
         }
@@ -374,8 +375,8 @@ namespace Outlands_Adventure_Launcher
     {
         private ClientLoginLarge clientLoginLarge;
         private ClientLoginSmall clientLoginSmall;
-        private ClientAplication clientAplicationLarge;
-        private ClientAplication clientAplicationSmall;
+        private ClientAplicationLarge clientAplicationLarge;
+        private ClientAplicationSmall clientAplicationSmall;
 
         /// <summary>
         /// Change the language stored in the windows registry and change the language of the application
@@ -487,8 +488,8 @@ namespace Outlands_Adventure_Launcher
         /// <param name="clientAplicationLarge">ClientAplicationLarge class reference</param>
         /// <param name="clientLoginSmall">ClientLoginSmall class reference</param>
         /// <param name="clientAplicationSmall">ClientAplicationSmall class reference</param>
-        public void SelectCurrentAplicationWindow(ClientLoginLarge clientLoginLarge, ClientAplication clientAplicationLarge,
-            ClientLoginSmall clientLoginSmall, ClientAplication clientAplicationSmall)
+        public void SelectCurrentAplicationWindow(ClientLoginLarge clientLoginLarge, ClientAplicationLarge clientAplicationLarge,
+            ClientLoginSmall clientLoginSmall, ClientAplicationSmall clientAplicationSmall)
         {
             this.clientLoginLarge = clientLoginLarge;
             this.clientLoginSmall = clientLoginSmall;
@@ -528,11 +529,11 @@ namespace Outlands_Adventure_Launcher
     public class ResolutionManager
     {
         /// <summary>
-        /// Read from the windows register the resolution of the form and establish it the current form
+        /// Read from the windows register the resolution of the form and establish it the current form, also hide the form passed by param
         /// </summary>
         /// <param name="clientLogin">Boolean that indicates if the current form is the login form or the aplication form</param>
-        public void LoadWindowResolution(bool clientLogin, ClientLoginLarge clientLoginLarge, ClientAplication clientAplicationLarge,
-            ClientLoginSmall clientLoginSmall, ClientAplication clientAplicationSmall, string username)
+        public void LoadWindowResolution(bool clientLogin, ClientLoginLarge clientLoginLarge, ClientAplicationLarge clientAplicationLarge,
+            ClientLoginSmall clientLoginSmall, ClientAplicationSmall clientAplicationSmall, string username)
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
@@ -542,10 +543,26 @@ namespace Outlands_Adventure_Launcher
                 key.SetValue("SelectedResolution", "1280x720");
             }
 
-            if (clientLoginSmall != null) clientLoginSmall.Hide();
-            else if (clientLoginLarge != null) clientLoginLarge.Hide();
-            else if (clientAplicationSmall != null) clientAplicationSmall.Hide();
-            else if (clientAplicationLarge != null) clientAplicationLarge.Hide();
+            if (clientLoginSmall != null)
+            {
+                windowsRegisterManager.SaveWindowPosition(clientLoginSmall);
+                clientLoginSmall.Hide();
+            }
+            else if (clientLoginLarge != null)
+            {
+                windowsRegisterManager.SaveWindowPosition(clientLoginLarge);
+                clientLoginLarge.Hide();
+            }
+            else if (clientAplicationSmall != null)
+            {
+                windowsRegisterManager.SaveWindowPosition(clientAplicationSmall);
+                clientAplicationSmall.Hide();
+            }
+            else if (clientAplicationLarge != null)
+            {
+                windowsRegisterManager.SaveWindowPosition(clientAplicationLarge);
+                clientAplicationLarge.Hide();
+            }
 
             if (key.GetValue("SelectedResolution").ToString().Contains("800x600"))
             {
@@ -559,8 +576,7 @@ namespace Outlands_Adventure_Launcher
                 else
                 {
                     // Cargar clientAplicationSmall
-                    // Cambiar
-                    ClientAplication newclientAplicationSmall = new ClientAplication();
+                    ClientAplicationSmall newclientAplicationSmall = new ClientAplicationSmall();
                     newclientAplicationSmall.ReceiveClassInstance(newclientAplicationSmall, username);
                     newclientAplicationSmall.ShowDialog();
                 }
@@ -579,8 +595,7 @@ namespace Outlands_Adventure_Launcher
                 else
                 {
                     // Cargar clientAplicationLarge
-                    // Cambiar
-                    ClientAplication newclientAplicationLarge = new ClientAplication();
+                    ClientAplicationLarge newclientAplicationLarge = new ClientAplicationLarge();
                     newclientAplicationLarge.ReceiveClassInstance(newclientAplicationLarge, username);
                     newclientAplicationLarge.ShowDialog();
                 }
@@ -702,7 +717,7 @@ namespace Outlands_Adventure_Launcher
         }
 
         public static Label CreateGenericLabel(string controlName, bool autosize, int width, int height, int xPosition,
-            int yPosition, ContentAlignment textAlignment)
+            int yPosition, int textSize, ContentAlignment textAlignment)
         {
             Label genericLabel = new Label();
             genericLabel.Name = controlName;
@@ -710,9 +725,28 @@ namespace Outlands_Adventure_Launcher
             genericLabel.Size = new Size(width, height);
             genericLabel.Location = new Point(xPosition, yPosition);
             genericLabel.TextAlign = textAlignment;
-            genericLabel.Font = new Font("Oxygen", 10, FontStyle.Regular);
+            genericLabel.Font = new Font("Oxygen", textSize, FontStyle.Regular);
 
             return genericLabel;
+        }
+
+        public static void RestartApp(int pid, string applicationName)
+        {
+            // Wait for the process to terminate
+            Process process = null;
+            try
+            {
+                process = Process.GetProcessById(pid);
+                process.WaitForExit(1000);
+            }
+            catch (ArgumentException ex)
+            {
+                // ArgumentException to indicate that the 
+                // process doesn't exist?   LAME!!
+            }
+
+            Process.Start(applicationName, "");
+            process.Kill();
         }
     }
     #endregion Multiple Resources

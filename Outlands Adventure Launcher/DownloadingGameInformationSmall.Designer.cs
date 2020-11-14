@@ -1,6 +1,6 @@
 ﻿namespace Outlands_Adventure_Launcher
 {
-    partial class DownloadingGameInformation
+    partial class DownloadingGameInformationSmall
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -37,10 +37,10 @@
             // DownloadGameName
             // 
             this.DownloadGameName.AutoSize = true;
-            this.DownloadGameName.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DownloadGameName.Font = new System.Drawing.Font("Oxygen", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DownloadGameName.Location = new System.Drawing.Point(0, 0);
             this.DownloadGameName.Name = "DownloadGameName";
-            this.DownloadGameName.Size = new System.Drawing.Size(0, 21);
+            this.DownloadGameName.Size = new System.Drawing.Size(2, 21);
             this.DownloadGameName.TabIndex = 0;
             this.DownloadGameName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -71,7 +71,7 @@
             this.DownloadCancelButton.MouseEnter += new System.EventHandler(this.DownloadCancelButton_MouseEnter);
             this.DownloadCancelButton.MouseLeave += new System.EventHandler(this.DownloadCancelButton_MouseLeave);
             // 
-            // DownloadingGameInformation
+            // DownloadingGameInformationSmall
             // 
             this.Controls.Add(this.DownloadGameName);
             this.Controls.Add(this.DownloadProgressbar);

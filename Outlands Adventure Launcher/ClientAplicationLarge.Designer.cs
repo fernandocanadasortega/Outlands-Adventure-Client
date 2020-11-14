@@ -1,6 +1,6 @@
 ﻿namespace Outlands_Adventure_Launcher
 {
-    partial class ClientAplication
+    partial class ClientAplicationLarge
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientAplication));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientAplicationLarge));
             this.SideMenu = new System.Windows.Forms.Panel();
             this.Store = new System.Windows.Forms.Panel();
             this.StoreLabel = new System.Windows.Forms.Label();
@@ -37,20 +37,14 @@
             this.GameLibraryLabel = new System.Windows.Forms.Label();
             this.DownloadInformation = new System.Windows.Forms.Panel();
             this.SideDownloadInformationGameName = new System.Windows.Forms.Label();
-            this.SideDownloadInformationGameImage = new System.Windows.Forms.Panel();
             this.SideDownloadProgressbar = new System.Windows.Forms.ProgressBar();
             this.SideDownloadState = new System.Windows.Forms.Label();
-            this.CloseShowDownloadInformation = new System.Windows.Forms.Panel();
             this.Uninstall_Information = new System.Windows.Forms.Panel();
             this.Uninstall_InformationGameName = new System.Windows.Forms.Label();
-            this.Uninstall_InformationGameImage = new System.Windows.Forms.Panel();
             this.UninstallProgress = new System.Windows.Forms.ProgressBar();
             this.UninstallState = new System.Windows.Forms.Label();
-            this.CloseUninstall_Information = new System.Windows.Forms.Panel();
             this.UserInformation = new System.Windows.Forms.Panel();
             this.UserName = new System.Windows.Forms.Label();
-            this.UserConfigurationArrow = new System.Windows.Forms.Panel();
-            this.UserPhoto = new System.Windows.Forms.Panel();
             this.MainMenu = new System.Windows.Forms.Panel();
             this.DownloadsPanel = new System.Windows.Forms.Panel();
             this.DownloadsNoInfoLabel = new System.Windows.Forms.Label();
@@ -61,9 +55,7 @@
             this.GameInfoMenu = new System.Windows.Forms.Panel();
             this.GameInfoGradient = new System.Windows.Forms.Panel();
             this.CloseGameInfoBackground = new System.Windows.Forms.Panel();
-            this.CloseGameInfo = new System.Windows.Forms.Panel();
             this.GameSettingsBackground = new System.Windows.Forms.Panel();
-            this.GameSettings = new System.Windows.Forms.Panel();
             this.MoneyPanel = new System.Windows.Forms.Panel();
             this.CurrentCurrencyHeader = new System.Windows.Forms.Label();
             this.CurrentCurrency = new System.Windows.Forms.Label();
@@ -77,17 +69,25 @@
             this.FilterGame = new System.Windows.Forms.TextBox();
             this.StoreMenu = new System.Windows.Forms.Panel();
             this.StoreEmpty = new System.Windows.Forms.Panel();
-            this.StoreEmptyImage = new System.Windows.Forms.Panel();
             this.StoreEmptyLabel = new System.Windows.Forms.Label();
             this.StoreAvailableGames = new System.Windows.Forms.ListView();
             this.GameLibraryMenu = new System.Windows.Forms.Panel();
             this.LibraryEmpty = new System.Windows.Forms.Panel();
-            this.LibraryEmptyImage = new System.Windows.Forms.Panel();
             this.LibraryEmptyLabel = new System.Windows.Forms.Label();
             this.GameLibraryAvailableGames = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.GameImages = new System.Windows.Forms.ImageList(this.components);
             this.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CloseGameInfo = new System.Windows.Forms.Panel();
+            this.GameSettings = new System.Windows.Forms.Panel();
+            this.StoreEmptyImage = new System.Windows.Forms.Panel();
+            this.LibraryEmptyImage = new System.Windows.Forms.Panel();
+            this.SideDownloadInformationGameImage = new System.Windows.Forms.Panel();
+            this.CloseShowDownloadInformation = new System.Windows.Forms.Panel();
+            this.Uninstall_InformationGameImage = new System.Windows.Forms.Panel();
+            this.CloseUninstall_Information = new System.Windows.Forms.Panel();
+            this.UserConfigurationArrow = new System.Windows.Forms.Panel();
+            this.UserPhoto = new System.Windows.Forms.Panel();
             this.ImagePanel = new System.Windows.Forms.Panel();
             this.ImageGradient = new System.Windows.Forms.Panel();
             this.ConfigurationPanel = new System.Windows.Forms.Panel();
@@ -96,6 +96,9 @@
             this.LanguageSelected = new System.Windows.Forms.ComboBox();
             this.DefaultScreenHeader = new System.Windows.Forms.Label();
             this.DefaultScreen = new System.Windows.Forms.ComboBox();
+            this.ResolutionHeader = new System.Windows.Forms.Label();
+            this.ResolutionSelected = new System.Windows.Forms.ComboBox();
+            this.ResolutionRefresh = new System.Windows.Forms.Panel();
             this.DeleteAccount = new System.Windows.Forms.Label();
             this.ConfigurationExitButton = new System.Windows.Forms.Label();
             this.EventsPanel = new System.Windows.Forms.Panel();
@@ -227,18 +230,6 @@
             this.SideDownloadInformationGameName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.SideDownloadInformationGameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // SideDownloadInformationGameImage
-            // 
-            this.SideDownloadInformationGameImage.BackColor = System.Drawing.Color.Transparent;
-            this.SideDownloadInformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
-            this.SideDownloadInformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.SideDownloadInformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SideDownloadInformationGameImage.Enabled = false;
-            this.SideDownloadInformationGameImage.Location = new System.Drawing.Point(15, 9);
-            this.SideDownloadInformationGameImage.Name = "SideDownloadInformationGameImage";
-            this.SideDownloadInformationGameImage.Size = new System.Drawing.Size(80, 80);
-            this.SideDownloadInformationGameImage.TabIndex = 0;
-            // 
             // SideDownloadProgressbar
             // 
             this.SideDownloadProgressbar.Cursor = System.Windows.Forms.Cursors.Default;
@@ -261,20 +252,6 @@
             this.SideDownloadState.TabIndex = 1;
             this.SideDownloadState.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.SideDownloadState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // CloseShowDownloadInformation
-            // 
-            this.CloseShowDownloadInformation.BackColor = System.Drawing.Color.Transparent;
-            this.CloseShowDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
-            this.CloseShowDownloadInformation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CloseShowDownloadInformation.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseShowDownloadInformation.Location = new System.Drawing.Point(350, 5);
-            this.CloseShowDownloadInformation.Name = "CloseShowDownloadInformation";
-            this.CloseShowDownloadInformation.Size = new System.Drawing.Size(20, 20);
-            this.CloseShowDownloadInformation.TabIndex = 3;
-            this.CloseShowDownloadInformation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseShowDownloadInformation_MouseClick);
-            this.CloseShowDownloadInformation.MouseEnter += new System.EventHandler(this.DownloadShowInformation_MouseEnter);
-            this.CloseShowDownloadInformation.MouseLeave += new System.EventHandler(this.DownloadShowInformation_MouseLeave);
             // 
             // Uninstall_Information
             // 
@@ -305,18 +282,6 @@
             this.Uninstall_InformationGameName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.Uninstall_InformationGameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Uninstall_InformationGameImage
-            // 
-            this.Uninstall_InformationGameImage.BackColor = System.Drawing.Color.Transparent;
-            this.Uninstall_InformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
-            this.Uninstall_InformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Uninstall_InformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.Uninstall_InformationGameImage.Enabled = false;
-            this.Uninstall_InformationGameImage.Location = new System.Drawing.Point(15, 9);
-            this.Uninstall_InformationGameImage.Name = "Uninstall_InformationGameImage";
-            this.Uninstall_InformationGameImage.Size = new System.Drawing.Size(80, 80);
-            this.Uninstall_InformationGameImage.TabIndex = 0;
-            // 
             // UninstallProgress
             // 
             this.UninstallProgress.Cursor = System.Windows.Forms.Cursors.Default;
@@ -341,21 +306,6 @@
             this.UninstallState.TabIndex = 1;
             this.UninstallState.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.UninstallState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // CloseUninstall_Information
-            // 
-            this.CloseUninstall_Information.BackColor = System.Drawing.Color.Transparent;
-            this.CloseUninstall_Information.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
-            this.CloseUninstall_Information.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CloseUninstall_Information.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseUninstall_Information.Location = new System.Drawing.Point(350, 5);
-            this.CloseUninstall_Information.Name = "CloseUninstall_Information";
-            this.CloseUninstall_Information.Size = new System.Drawing.Size(20, 20);
-            this.CloseUninstall_Information.TabIndex = 3;
-            this.CloseUninstall_Information.Visible = false;
-            this.CloseUninstall_Information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseUninstall_Information_MouseClick);
-            this.CloseUninstall_Information.MouseEnter += new System.EventHandler(this.UninstallShowInformation_MouseEnter);
-            this.CloseUninstall_Information.MouseLeave += new System.EventHandler(this.UninstallShowInformation_MouseLeave);
             // 
             // UserInformation
             // 
@@ -383,32 +333,6 @@
             this.UserName.TabIndex = 0;
             this.UserName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.UserName.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
-            // 
-            // UserConfigurationArrow
-            // 
-            this.UserConfigurationArrow.BackColor = System.Drawing.Color.Transparent;
-            this.UserConfigurationArrow.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("UserConfigurationArrow.BackgroundImage")));
-            this.UserConfigurationArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.UserConfigurationArrow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UserConfigurationArrow.Enabled = false;
-            this.UserConfigurationArrow.Location = new System.Drawing.Point(346, 35);
-            this.UserConfigurationArrow.Name = "UserConfigurationArrow";
-            this.UserConfigurationArrow.Size = new System.Drawing.Size(23, 23);
-            this.UserConfigurationArrow.TabIndex = 1;
-            this.UserConfigurationArrow.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
-            // 
-            // UserPhoto
-            // 
-            this.UserPhoto.BackColor = System.Drawing.Color.Transparent;
-            this.UserPhoto.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
-            this.UserPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.UserPhoto.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UserPhoto.Enabled = false;
-            this.UserPhoto.Location = new System.Drawing.Point(15, 9);
-            this.UserPhoto.Name = "UserPhoto";
-            this.UserPhoto.Size = new System.Drawing.Size(80, 80);
-            this.UserPhoto.TabIndex = 0;
-            this.UserPhoto.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
             // 
             // MainMenu
             // 
@@ -524,18 +448,6 @@
             this.CloseGameInfoBackground.Size = new System.Drawing.Size(42, 52);
             this.CloseGameInfoBackground.TabIndex = 1;
             // 
-            // CloseGameInfo
-            // 
-            this.CloseGameInfo.BackColor = System.Drawing.Color.Transparent;
-            this.CloseGameInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CloseGameInfo.BackgroundImage")));
-            this.CloseGameInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CloseGameInfo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseGameInfo.Location = new System.Drawing.Point(7, 15);
-            this.CloseGameInfo.Name = "CloseGameInfo";
-            this.CloseGameInfo.Size = new System.Drawing.Size(30, 30);
-            this.CloseGameInfo.TabIndex = 0;
-            this.CloseGameInfo.Click += new System.EventHandler(this.CloseGameInfo_Click);
-            // 
             // GameSettingsBackground
             // 
             this.GameSettingsBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(40)))));
@@ -544,18 +456,6 @@
             this.GameSettingsBackground.Name = "GameSettingsBackground";
             this.GameSettingsBackground.Size = new System.Drawing.Size(42, 52);
             this.GameSettingsBackground.TabIndex = 2;
-            // 
-            // GameSettings
-            // 
-            this.GameSettings.BackColor = System.Drawing.Color.Transparent;
-            this.GameSettings.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_settings;
-            this.GameSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.GameSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.GameSettings.Location = new System.Drawing.Point(7, 15);
-            this.GameSettings.Name = "GameSettings";
-            this.GameSettings.Size = new System.Drawing.Size(30, 30);
-            this.GameSettings.TabIndex = 0;
-            this.GameSettings.Click += new System.EventHandler(this.GameSettings_Click);
             // 
             // MoneyPanel
             // 
@@ -717,15 +617,6 @@
             this.StoreEmpty.TabIndex = 1;
             this.StoreEmpty.Visible = false;
             // 
-            // StoreEmptyImage
-            // 
-            this.StoreEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.empty_store;
-            this.StoreEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.StoreEmptyImage.Location = new System.Drawing.Point(0, 0);
-            this.StoreEmptyImage.Name = "StoreEmptyImage";
-            this.StoreEmptyImage.Size = new System.Drawing.Size(390, 280);
-            this.StoreEmptyImage.TabIndex = 0;
-            // 
             // StoreEmptyLabel
             // 
             this.StoreEmptyLabel.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -774,15 +665,6 @@
             this.LibraryEmpty.TabIndex = 2;
             this.LibraryEmpty.Visible = false;
             // 
-            // LibraryEmptyImage
-            // 
-            this.LibraryEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_library_empty;
-            this.LibraryEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LibraryEmptyImage.Location = new System.Drawing.Point(0, 0);
-            this.LibraryEmptyImage.Name = "LibraryEmptyImage";
-            this.LibraryEmptyImage.Size = new System.Drawing.Size(390, 280);
-            this.LibraryEmptyImage.TabIndex = 0;
-            // 
             // LibraryEmptyLabel
             // 
             this.LibraryEmptyLabel.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -824,6 +706,127 @@
             this.ContextMenuStrip.Size = new System.Drawing.Size(36, 4);
             this.ContextMenuStrip.MouseLeave += new System.EventHandler(this.ContextMenuStrip_MouseLeave);
             // 
+            // CloseGameInfo
+            // 
+            this.CloseGameInfo.BackColor = System.Drawing.Color.Transparent;
+            this.CloseGameInfo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CloseGameInfo.BackgroundImage")));
+            this.CloseGameInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CloseGameInfo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseGameInfo.Location = new System.Drawing.Point(7, 15);
+            this.CloseGameInfo.Name = "CloseGameInfo";
+            this.CloseGameInfo.Size = new System.Drawing.Size(30, 30);
+            this.CloseGameInfo.TabIndex = 0;
+            this.CloseGameInfo.Click += new System.EventHandler(this.CloseGameInfo_Click);
+            // 
+            // GameSettings
+            // 
+            this.GameSettings.BackColor = System.Drawing.Color.Transparent;
+            this.GameSettings.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_settings;
+            this.GameSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.GameSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.GameSettings.Location = new System.Drawing.Point(7, 15);
+            this.GameSettings.Name = "GameSettings";
+            this.GameSettings.Size = new System.Drawing.Size(30, 30);
+            this.GameSettings.TabIndex = 0;
+            this.GameSettings.Click += new System.EventHandler(this.GameSettings_Click);
+            // 
+            // StoreEmptyImage
+            // 
+            this.StoreEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.empty_store;
+            this.StoreEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.StoreEmptyImage.Location = new System.Drawing.Point(0, 0);
+            this.StoreEmptyImage.Name = "StoreEmptyImage";
+            this.StoreEmptyImage.Size = new System.Drawing.Size(390, 280);
+            this.StoreEmptyImage.TabIndex = 0;
+            // 
+            // LibraryEmptyImage
+            // 
+            this.LibraryEmptyImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.game_library_empty;
+            this.LibraryEmptyImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LibraryEmptyImage.Location = new System.Drawing.Point(0, 0);
+            this.LibraryEmptyImage.Name = "LibraryEmptyImage";
+            this.LibraryEmptyImage.Size = new System.Drawing.Size(390, 280);
+            this.LibraryEmptyImage.TabIndex = 0;
+            // 
+            // SideDownloadInformationGameImage
+            // 
+            this.SideDownloadInformationGameImage.BackColor = System.Drawing.Color.Transparent;
+            this.SideDownloadInformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
+            this.SideDownloadInformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SideDownloadInformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.SideDownloadInformationGameImage.Enabled = false;
+            this.SideDownloadInformationGameImage.Location = new System.Drawing.Point(15, 9);
+            this.SideDownloadInformationGameImage.Name = "SideDownloadInformationGameImage";
+            this.SideDownloadInformationGameImage.Size = new System.Drawing.Size(80, 80);
+            this.SideDownloadInformationGameImage.TabIndex = 0;
+            // 
+            // CloseShowDownloadInformation
+            // 
+            this.CloseShowDownloadInformation.BackColor = System.Drawing.Color.Transparent;
+            this.CloseShowDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
+            this.CloseShowDownloadInformation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CloseShowDownloadInformation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseShowDownloadInformation.Location = new System.Drawing.Point(350, 5);
+            this.CloseShowDownloadInformation.Name = "CloseShowDownloadInformation";
+            this.CloseShowDownloadInformation.Size = new System.Drawing.Size(20, 20);
+            this.CloseShowDownloadInformation.TabIndex = 3;
+            this.CloseShowDownloadInformation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseShowDownloadInformation_MouseClick);
+            this.CloseShowDownloadInformation.MouseEnter += new System.EventHandler(this.DownloadShowInformation_MouseEnter);
+            this.CloseShowDownloadInformation.MouseLeave += new System.EventHandler(this.DownloadShowInformation_MouseLeave);
+            // 
+            // Uninstall_InformationGameImage
+            // 
+            this.Uninstall_InformationGameImage.BackColor = System.Drawing.Color.Transparent;
+            this.Uninstall_InformationGameImage.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
+            this.Uninstall_InformationGameImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Uninstall_InformationGameImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Uninstall_InformationGameImage.Enabled = false;
+            this.Uninstall_InformationGameImage.Location = new System.Drawing.Point(15, 9);
+            this.Uninstall_InformationGameImage.Name = "Uninstall_InformationGameImage";
+            this.Uninstall_InformationGameImage.Size = new System.Drawing.Size(80, 80);
+            this.Uninstall_InformationGameImage.TabIndex = 0;
+            // 
+            // CloseUninstall_Information
+            // 
+            this.CloseUninstall_Information.BackColor = System.Drawing.Color.Transparent;
+            this.CloseUninstall_Information.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
+            this.CloseUninstall_Information.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CloseUninstall_Information.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseUninstall_Information.Location = new System.Drawing.Point(350, 5);
+            this.CloseUninstall_Information.Name = "CloseUninstall_Information";
+            this.CloseUninstall_Information.Size = new System.Drawing.Size(20, 20);
+            this.CloseUninstall_Information.TabIndex = 3;
+            this.CloseUninstall_Information.Visible = false;
+            this.CloseUninstall_Information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CloseUninstall_Information_MouseClick);
+            this.CloseUninstall_Information.MouseEnter += new System.EventHandler(this.UninstallShowInformation_MouseEnter);
+            this.CloseUninstall_Information.MouseLeave += new System.EventHandler(this.UninstallShowInformation_MouseLeave);
+            // 
+            // UserConfigurationArrow
+            // 
+            this.UserConfigurationArrow.BackColor = System.Drawing.Color.Transparent;
+            this.UserConfigurationArrow.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("UserConfigurationArrow.BackgroundImage")));
+            this.UserConfigurationArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.UserConfigurationArrow.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.UserConfigurationArrow.Enabled = false;
+            this.UserConfigurationArrow.Location = new System.Drawing.Point(346, 35);
+            this.UserConfigurationArrow.Name = "UserConfigurationArrow";
+            this.UserConfigurationArrow.Size = new System.Drawing.Size(23, 23);
+            this.UserConfigurationArrow.TabIndex = 1;
+            this.UserConfigurationArrow.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
+            // 
+            // UserPhoto
+            // 
+            this.UserPhoto.BackColor = System.Drawing.Color.Transparent;
+            this.UserPhoto.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.anymous_user;
+            this.UserPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.UserPhoto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.UserPhoto.Enabled = false;
+            this.UserPhoto.Location = new System.Drawing.Point(15, 9);
+            this.UserPhoto.Name = "UserPhoto";
+            this.UserPhoto.Size = new System.Drawing.Size(80, 80);
+            this.UserPhoto.TabIndex = 0;
+            this.UserPhoto.MouseLeave += new System.EventHandler(this.UserInformation_MouseLeave);
+            // 
             // ImagePanel
             // 
             this.ImagePanel.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.Pantalla_launcher;
@@ -851,11 +854,14 @@
             this.ConfigurationPanel.Controls.Add(this.LanguageSelected);
             this.ConfigurationPanel.Controls.Add(this.DefaultScreenHeader);
             this.ConfigurationPanel.Controls.Add(this.DefaultScreen);
+            this.ConfigurationPanel.Controls.Add(this.ResolutionHeader);
+            this.ConfigurationPanel.Controls.Add(this.ResolutionSelected);
+            this.ConfigurationPanel.Controls.Add(this.ResolutionRefresh);
             this.ConfigurationPanel.Controls.Add(this.DeleteAccount);
             this.ConfigurationPanel.Controls.Add(this.ConfigurationExitButton);
-            this.ConfigurationPanel.Location = new System.Drawing.Point(291, 110);
+            this.ConfigurationPanel.Location = new System.Drawing.Point(203, 110);
             this.ConfigurationPanel.Name = "ConfigurationPanel";
-            this.ConfigurationPanel.Size = new System.Drawing.Size(800, 500);
+            this.ConfigurationPanel.Size = new System.Drawing.Size(976, 500);
             this.ConfigurationPanel.TabIndex = 1;
             this.ConfigurationPanel.Visible = false;
             // 
@@ -865,7 +871,7 @@
             this.ConfigurationHeader.BackColor = System.Drawing.Color.Transparent;
             this.ConfigurationHeader.Font = new System.Drawing.Font("Oxygen", 14F, System.Drawing.FontStyle.Bold);
             this.ConfigurationHeader.ForeColor = System.Drawing.Color.White;
-            this.ConfigurationHeader.Location = new System.Drawing.Point(338, 60);
+            this.ConfigurationHeader.Location = new System.Drawing.Point(433, 40);
             this.ConfigurationHeader.Name = "ConfigurationHeader";
             this.ConfigurationHeader.Size = new System.Drawing.Size(110, 31);
             this.ConfigurationHeader.TabIndex = 0;
@@ -878,7 +884,7 @@
             this.ClientLanguageHeader.BackColor = System.Drawing.Color.Transparent;
             this.ClientLanguageHeader.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientLanguageHeader.ForeColor = System.Drawing.Color.White;
-            this.ClientLanguageHeader.Location = new System.Drawing.Point(100, 160);
+            this.ClientLanguageHeader.Location = new System.Drawing.Point(80, 130);
             this.ClientLanguageHeader.Name = "ClientLanguageHeader";
             this.ClientLanguageHeader.Size = new System.Drawing.Size(181, 26);
             this.ClientLanguageHeader.TabIndex = 1;
@@ -891,7 +897,7 @@
             this.LanguageSelected.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.LanguageSelected.DropDownHeight = 160;
             this.LanguageSelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LanguageSelected.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LanguageSelected.Font = new System.Drawing.Font("Oxygen", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LanguageSelected.FormattingEnabled = true;
             this.LanguageSelected.IntegralHeight = false;
             this.LanguageSelected.ItemHeight = 40;
@@ -904,9 +910,9 @@
             "RUSO (ru)",
             "JAPONÉS (ja)",
             "NORUEGO (no)"});
-            this.LanguageSelected.Location = new System.Drawing.Point(377, 150);
+            this.LanguageSelected.Location = new System.Drawing.Point(347, 120);
             this.LanguageSelected.Name = "LanguageSelected";
-            this.LanguageSelected.Size = new System.Drawing.Size(333, 46);
+            this.LanguageSelected.Size = new System.Drawing.Size(542, 46);
             this.LanguageSelected.TabIndex = 11;
             this.LanguageSelected.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.Combobox_DrawItem);
             this.LanguageSelected.SelectionChangeCommitted += new System.EventHandler(this.LanguageSelected_SelectionChangeCommitted);
@@ -918,7 +924,7 @@
             this.DefaultScreenHeader.BackColor = System.Drawing.Color.Transparent;
             this.DefaultScreenHeader.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DefaultScreenHeader.ForeColor = System.Drawing.Color.White;
-            this.DefaultScreenHeader.Location = new System.Drawing.Point(100, 260);
+            this.DefaultScreenHeader.Location = new System.Drawing.Point(80, 230);
             this.DefaultScreenHeader.Name = "DefaultScreenHeader";
             this.DefaultScreenHeader.Size = new System.Drawing.Size(173, 26);
             this.DefaultScreenHeader.TabIndex = 12;
@@ -931,7 +937,7 @@
             this.DefaultScreen.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.DefaultScreen.DropDownHeight = 160;
             this.DefaultScreen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DefaultScreen.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DefaultScreen.Font = new System.Drawing.Font("Oxygen", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DefaultScreen.FormattingEnabled = true;
             this.DefaultScreen.IntegralHeight = false;
             this.DefaultScreen.ItemHeight = 40;
@@ -939,13 +945,59 @@
             "Libreria de juegos",
             "Tienda",
             "Aleatorio"});
-            this.DefaultScreen.Location = new System.Drawing.Point(377, 250);
+            this.DefaultScreen.Location = new System.Drawing.Point(347, 220);
             this.DefaultScreen.Name = "DefaultScreen";
-            this.DefaultScreen.Size = new System.Drawing.Size(333, 46);
+            this.DefaultScreen.Size = new System.Drawing.Size(542, 46);
             this.DefaultScreen.TabIndex = 13;
             this.DefaultScreen.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.Combobox_DrawItem);
             this.DefaultScreen.SelectionChangeCommitted += new System.EventHandler(this.DefaultScreen_SelectionChangeCommitted);
             this.DefaultScreen.DropDownClosed += new System.EventHandler(this.Combobox_DropDownClosed);
+            // 
+            // ResolutionHeader
+            // 
+            this.ResolutionHeader.AutoSize = true;
+            this.ResolutionHeader.BackColor = System.Drawing.Color.Transparent;
+            this.ResolutionHeader.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResolutionHeader.ForeColor = System.Drawing.Color.White;
+            this.ResolutionHeader.Location = new System.Drawing.Point(80, 330);
+            this.ResolutionHeader.Name = "ResolutionHeader";
+            this.ResolutionHeader.Size = new System.Drawing.Size(116, 26);
+            this.ResolutionHeader.TabIndex = 16;
+            this.ResolutionHeader.Text = "Resolución";
+            this.ResolutionHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ResolutionSelected
+            // 
+            this.ResolutionSelected.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResolutionSelected.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.ResolutionSelected.DropDownHeight = 160;
+            this.ResolutionSelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ResolutionSelected.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResolutionSelected.FormattingEnabled = true;
+            this.ResolutionSelected.IntegralHeight = false;
+            this.ResolutionSelected.ItemHeight = 40;
+            this.ResolutionSelected.Items.AddRange(new object[] {
+            "800x600 píxeles",
+            "1280x720 píxeles"});
+            this.ResolutionSelected.Location = new System.Drawing.Point(347, 320);
+            this.ResolutionSelected.Name = "ResolutionSelected";
+            this.ResolutionSelected.Size = new System.Drawing.Size(507, 46);
+            this.ResolutionSelected.TabIndex = 17;
+            this.ResolutionSelected.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.Combobox_DrawItem);
+            this.ResolutionSelected.DropDownClosed += new System.EventHandler(this.Combobox_DropDownClosed);
+            // 
+            // ResolutionRefresh
+            // 
+            this.ResolutionRefresh.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.refresh;
+            this.ResolutionRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ResolutionRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResolutionRefresh.Location = new System.Drawing.Point(880, 316);
+            this.ResolutionRefresh.Name = "ResolutionRefresh";
+            this.ResolutionRefresh.Size = new System.Drawing.Size(55, 55);
+            this.ResolutionRefresh.TabIndex = 18;
+            this.ResolutionRefresh.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ResolutionRefresh_MouseClick);
+            this.ResolutionRefresh.MouseEnter += new System.EventHandler(this.ResolutionRefresh_MouseEnter);
+            this.ResolutionRefresh.MouseLeave += new System.EventHandler(this.ResolutionRefresh_MouseLeave);
             // 
             // DeleteAccount
             // 
@@ -954,7 +1006,7 @@
             this.DeleteAccount.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DeleteAccount.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DeleteAccount.ForeColor = System.Drawing.Color.Red;
-            this.DeleteAccount.Location = new System.Drawing.Point(310, 360);
+            this.DeleteAccount.Location = new System.Drawing.Point(418, 400);
             this.DeleteAccount.Name = "DeleteAccount";
             this.DeleteAccount.Size = new System.Drawing.Size(140, 26);
             this.DeleteAccount.TabIndex = 14;
@@ -971,7 +1023,7 @@
             this.ConfigurationExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ConfigurationExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ConfigurationExitButton.ForeColor = System.Drawing.Color.White;
-            this.ConfigurationExitButton.Location = new System.Drawing.Point(340, 445);
+            this.ConfigurationExitButton.Location = new System.Drawing.Point(444, 455);
             this.ConfigurationExitButton.Name = "ConfigurationExitButton";
             this.ConfigurationExitButton.Size = new System.Drawing.Size(88, 26);
             this.ConfigurationExitButton.TabIndex = 3;
@@ -1063,7 +1115,7 @@
             this.EventExitButton.MouseEnter += new System.EventHandler(this.EventSend_ExitButton_MouseEnter);
             this.EventExitButton.MouseLeave += new System.EventHandler(this.EventSend_ExitButton_MouseLeave);
             // 
-            // ClientAplication
+            // ClientAplicationLarge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1077,7 +1129,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MaximizeBox = false;
-            this.Name = "ClientAplication";
+            this.Name = "ClientAplicationLarge";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientAplication_FormClosing);
             this.Load += new System.EventHandler(this.ClientAplication_Load);
@@ -1190,5 +1242,8 @@
         private System.Windows.Forms.Label QueueGameHeader;
         private System.Windows.Forms.Panel DownloadsNoInfoPanel;
         private System.Windows.Forms.Label DownloadsNoInfoLabel;
+        private System.Windows.Forms.Label ResolutionHeader;
+        private System.Windows.Forms.ComboBox ResolutionSelected;
+        private System.Windows.Forms.Panel ResolutionRefresh;
     }
 }

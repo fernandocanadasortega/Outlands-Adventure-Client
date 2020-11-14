@@ -136,11 +136,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientAplicationSmall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientAplicationSmall.Designer.cs">
+      <DependentUpon>ClientAplicationSmall.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClientLoginSmall.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ClientLoginSmall.Designer.cs">
       <DependentUpon>ClientLoginSmall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadingGameInformationSmall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DownloadingGameInformationSmall.Designer.cs">
+      <DependentUpon>DownloadingGameInformationSmall.cs</DependentUpon>
     </Compile>
     <Compile Include="LanguageResx\ClientLanguage.de.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -152,11 +164,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientLanguage.en-GB.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClientAplication.cs">
+    <Compile Include="ClientAplicationLarge.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClientAplication.Designer.cs">
-      <DependentUpon>ClientAplication.cs</DependentUpon>
+    <Compile Include="ClientAplicationLarge.Designer.cs">
+      <DependentUpon>ClientAplicationLarge.cs</DependentUpon>
     </Compile>
     <Compile Include="LanguageResx\ClientLanguage.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -196,17 +208,23 @@
     <Compile Include="CloseClientAplicationPopUp.Designer.cs">
       <DependentUpon>CloseClientAplicationPopUp.cs</DependentUpon>
     </Compile>
-    <Compile Include="QueueGameInformation.cs">
+    <Compile Include="QueueGameInformationSmall.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="QueueGameInformation.Designer.cs">
-      <DependentUpon>QueueGameInformation.cs</DependentUpon>
+    <Compile Include="QueueGameInformationSmall.Designer.cs">
+      <DependentUpon>QueueGameInformationSmall.cs</DependentUpon>
     </Compile>
-    <Compile Include="DownloadingGameInformation.cs">
+    <Compile Include="QueueGameInformationLarge.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DownloadingGameInformation.Designer.cs">
-      <DependentUpon>DownloadingGameInformation.cs</DependentUpon>
+    <Compile Include="QueueGameInformationLarge.Designer.cs">
+      <DependentUpon>QueueGameInformationLarge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadingGameInformationLarge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DownloadingGameInformationLarge.Designer.cs">
+      <DependentUpon>DownloadingGameInformationLarge.cs</DependentUpon>
     </Compile>
     <Compile Include="GameInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -222,11 +240,17 @@
     </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="SQLManager.cs" />
-    <EmbeddedResource Include="ClientAplication.resx">
-      <DependentUpon>ClientAplication.cs</DependentUpon>
+    <EmbeddedResource Include="ClientAplicationSmall.resx">
+      <DependentUpon>ClientAplicationSmall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientAplicationLarge.resx">
+      <DependentUpon>ClientAplicationLarge.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClientLoginSmall.resx">
       <DependentUpon>ClientLoginSmall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DownloadingGameInformationSmall.resx">
+      <DependentUpon>DownloadingGameInformationSmall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LanguageResx\ClientLanguage.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -262,11 +286,14 @@
     <EmbeddedResource Include="CloseClientAplicationPopUp.resx">
       <DependentUpon>CloseClientAplicationPopUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="QueueGameInformation.resx">
-      <DependentUpon>QueueGameInformation.cs</DependentUpon>
+    <EmbeddedResource Include="QueueGameInformationSmall.resx">
+      <DependentUpon>QueueGameInformationSmall.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DownloadingGameInformation.resx">
-      <DependentUpon>DownloadingGameInformation.cs</DependentUpon>
+    <EmbeddedResource Include="QueueGameInformationLarge.resx">
+      <DependentUpon>QueueGameInformationLarge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DownloadingGameInformationLarge.resx">
+      <DependentUpon>DownloadingGameInformationLarge.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -372,6 +399,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\anymous user.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

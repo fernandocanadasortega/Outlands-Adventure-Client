@@ -412,7 +412,7 @@
     <value>800x600 píxeles*1280x720 píxeles</value>
   </data>
   <data name="RefreshResolution_Tooltip" xml:space="preserve">
-    <value>Cambiar resolución. Al cambiar la resolución se reiniciará la ventana</value>
+    <value>Cambiar resolución. Al cambiar la resolución se reiniciará la ventana y todas las descargas se cancelarán</value>
   </data>
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>Resolución</value>

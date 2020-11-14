@@ -709,9 +709,9 @@
             // 
             this.ReturnToLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ReturnToLogin.Font = new System.Drawing.Font("Oxygen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ReturnToLogin.Location = new System.Drawing.Point(210, 20);
+            this.ReturnToLogin.Location = new System.Drawing.Point(176, 20);
             this.ReturnToLogin.Name = "ReturnToLogin";
-            this.ReturnToLogin.Size = new System.Drawing.Size(147, 19);
+            this.ReturnToLogin.Size = new System.Drawing.Size(181, 19);
             this.ReturnToLogin.TabIndex = 10;
             this.ReturnToLogin.Text = "Volver";
             this.ReturnToLogin.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -890,6 +890,7 @@
             // ImageGradient
             // 
             this.ImageGradient.BackColor = System.Drawing.Color.Transparent;
+            this.ImageGradient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ImageGradient.Controls.Add(this.ConfigurationPanel);
             this.ImageGradient.Controls.Add(this.EventsPanel);
             this.ImageGradient.Controls.Add(this.ResetPasswordEventPanel);

@@ -412,7 +412,7 @@
     <value>800x600 ピクセル*1280x720 ピクセル</value>
   </data>
   <data name="RefreshResolution_Tooltip" xml:space="preserve">
-    <value>解像度を変更します。 解像度を変更するとウィンドウが再起動します</value>
+    <value>解像度を変更します。 解像度を変更するとウィンドウが再起動し、すべてのダウンロードがキャンセルされます</value>
   </data>
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>解決</value>

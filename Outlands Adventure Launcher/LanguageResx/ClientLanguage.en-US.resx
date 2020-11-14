@@ -412,7 +412,7 @@
     <value>800x600 pixels*1280x720 pixels</value>
   </data>
   <data name="RefreshResolution_Tooltip" xml:space="preserve">
-    <value>Change resolution. Changing the resolution will restart the window</value>
+    <value>Change resolution. Changing the resolution will restart the window and stop all current downloads</value>
   </data>
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>Resolution</value>

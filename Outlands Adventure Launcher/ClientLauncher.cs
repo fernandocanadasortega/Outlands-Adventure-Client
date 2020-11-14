@@ -51,9 +51,18 @@ namespace Outlands_Adventure_Launcher
             {
                 string username = key.GetValue("Username").ToString();
 
-                ClientAplication clientAplication = new ClientAplication();
-                clientAplication.ReceiveClassInstance(clientAplication, username);
-                Application.Run(clientAplication);
+                if (selectedResolution.Equals("1280x720"))
+                {
+                    ClientAplicationLarge clientAplicationLarge = new ClientAplicationLarge();
+                    clientAplicationLarge.ReceiveClassInstance(clientAplicationLarge, username);
+                    Application.Run(clientAplicationLarge);
+                }
+                else
+                {
+                    ClientAplicationSmall clientAplicationSmall = new ClientAplicationSmall();
+                    clientAplicationSmall.ReceiveClassInstance(clientAplicationSmall, username);
+                    Application.Run(clientAplicationSmall);
+                }
             }
             else
             {

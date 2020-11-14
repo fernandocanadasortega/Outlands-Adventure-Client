@@ -1,6 +1,6 @@
 ﻿namespace Outlands_Adventure_Launcher
 {
-    partial class QueueGameInformation
+    partial class QueueGameInformationSmall
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -38,10 +38,10 @@
             // QueueGameName
             // 
             this.QueueGameName.AutoSize = true;
-            this.QueueGameName.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.QueueGameName.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.QueueGameName.Location = new System.Drawing.Point(0, 0);
             this.QueueGameName.Name = "QueueGameName";
-            this.QueueGameName.Size = new System.Drawing.Size(0, 26);
+            this.QueueGameName.Size = new System.Drawing.Size(0, 21);
             this.QueueGameName.TabIndex = 0;
             this.QueueGameName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -89,7 +89,7 @@
             this.QueueRankDown.MouseEnter += new System.EventHandler(this.QueueRankDown_MouseEnter);
             this.QueueRankDown.MouseLeave += new System.EventHandler(this.QueueRankDown_MouseLeave);
             // 
-            // QueueGameInformation
+            // QueueGameInformationSmall
             // 
             this.Controls.Add(this.QueueGameName);
             this.Controls.Add(this.QueueGameImage);

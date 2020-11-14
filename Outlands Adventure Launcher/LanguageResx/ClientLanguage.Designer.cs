@@ -673,7 +673,7 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cambiar resolución. Al cambiar la resolución se reiniciará la ventana.
+        ///   Busca una cadena traducida similar a Cambiar resolución. Al cambiar la resolución se reiniciará la ventana y todas las descargas se cancelarán.
         /// </summary>
         internal static string RefreshResolution_Tooltip {
             get {

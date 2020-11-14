@@ -412,7 +412,7 @@
     <value>800x600 piksler*1280x720 piksler</value>
   </data>
   <data name="RefreshResolution_Tooltip" xml:space="preserve">
-    <value>Endre oppløsning. Hvis du endrer oppløsningen, starter vinduet på nytt</value>
+    <value>Endre oppløsning. Hvis du endrer oppløsningen, starter vinduet på nytt, og alle nedlastinger blir kansellert</value>
   </data>
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>Vedtak</value>

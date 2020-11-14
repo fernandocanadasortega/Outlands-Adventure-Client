@@ -88,7 +88,7 @@ namespace Outlands_Adventure_Launcher
                 WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
                 windowsRegisterManager.SaveWindowPosition(this);
 
-                System.Windows.Forms.Application.Exit();
+                Environment.Exit(0);
             }
         }
         #endregion Form Actions
@@ -1563,6 +1563,8 @@ namespace Outlands_Adventure_Launcher
             LoginProblemsHeader_2.Text = LanguageResx.ClientLanguage.loginProblems_Header2;
             ForgottenUsernameHeader.Text = LanguageResx.ClientLanguage.loginProblems_UsernameHeader;
             ForgottenPasswordHeader.Text = LanguageResx.ClientLanguage.loginProblems_PasswordHeader;
+            if (usernameLost) ResetCredentialsHeader.Text = LanguageResx.ClientLanguage.loginProblems_LostUsername;
+            else if (passwordLost) ResetCredentialsHeader.Text = LanguageResx.ClientLanguage.loginProblems_LostPassword;
             ResetCredentialsEmailLabel.Text = LanguageResx.ClientLanguage.textbox_Email;
             ReturnToLogin.Text = LanguageResx.ClientLanguage.loginProblems_Login;
 
@@ -1576,6 +1578,7 @@ namespace Outlands_Adventure_Launcher
             ConfigurationHeader.Text = LanguageResx.ClientLanguage.settings_Header;
             ClientLanguageHeader.Text = LanguageResx.ClientLanguage.settings_LanguageHeader;
             ResolutionHeader.Text = LanguageResx.ClientLanguage.settings_ResolutionHeader;
+            ConfigurationExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
 
             LanguageSelected.Items.Clear();
             string[] languagesAvaibles = LanguageResx.ClientLanguage.settings_Languages.Split('*');
@@ -1593,7 +1596,27 @@ namespace Outlands_Adventure_Launcher
             ResolutionManager resolutionManager = new ResolutionManager();
             resolutionManager.ReadSelectedResolution(ResolutionSelected);
 
-            ConfigurationExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
+
+            if (NewEmailTextbox.Text.Length > 0)
+            {
+                CheckRegister_ResetTexboxErrors(NewEmailTextbox);
+            }
+
+            if (NewUserNameTextbox.Text.Length > 0)
+            {
+                CheckRegister_ResetTexboxErrors(NewUserNameTextbox);
+            }
+
+            if (NewPasswordTextbox.Text.Length > 0)
+            {
+                CheckRegister_ResetTexboxErrors(NewEmailTextbox);
+                PasswordStrength.CheckPasswordStrength(NewPasswordTextbox, NewPasswordStrengthProgressBar, NewPasswordStrengthLabel);
+            }
+
+            if (ConfirmNewPasswordTextbox.Text.Length > 0)
+            {
+                CheckRegister_ResetTexboxErrors(ConfirmNewPasswordTextbox);
+            }
         }
 
         /// <summary>

@@ -19,9 +19,9 @@ namespace Outlands_Adventure_Launcher
 	/// <summary>
 	/// Class in charge of managing the main application form
 	/// </summary>
-	public partial class ClientAplication : Form
+	public partial class ClientAplicationLarge : Form
 	{
-		private ClientAplication clientAplication;
+		private ClientAplicationLarge clientAplication;
 		public static bool aplicationClosing;
 		private string userEmail = "";
 		private string userName = "";
@@ -51,7 +51,7 @@ namespace Outlands_Adventure_Launcher
 		/// <summary>
 		/// Constructor of the class
 		/// </summary>
-		public ClientAplication()
+		public ClientAplicationLarge()
 		{
 			InitializeComponent();
 		}
@@ -61,7 +61,7 @@ namespace Outlands_Adventure_Launcher
 		/// </summary>
 		/// <param name="clientAplication">Instance of ClientAplication class</param>
 		/// <param name="userName">String, user name of the user that logged in</param>
-		public void ReceiveClassInstance(ClientAplication clientAplication, string userName)
+		public void ReceiveClassInstance(ClientAplicationLarge clientAplication, string userName)
 		{
 			this.clientAplication = clientAplication;
 			UserName.Text = userName;
@@ -120,7 +120,15 @@ namespace Outlands_Adventure_Launcher
 				}
 				else
 				{
-					CloseClientAplicationPopUp closePopup = new CloseClientAplicationPopUp(this, tileSizeSelected, e);
+					CloseClientAplicationPopUp closePopup;
+					if (downloadingGame != null)
+					{
+						closePopup = new CloseClientAplicationPopUp(this, tileSizeSelected, e, downloadingGame.DownloadCancellationTokenSource);
+					}
+					else
+					{
+						closePopup = new CloseClientAplicationPopUp(this, tileSizeSelected, e, null);
+					}
 					closePopup.ShowDialog();
 				}
 			}
@@ -372,9 +380,13 @@ namespace Outlands_Adventure_Launcher
 			if (DefaultScreen.SelectedItem == null || DefaultScreen.SelectedIndex == -1)
 				DefaultScreen.SelectedIndex = 0;
 
+			ResolutionManager resolutionManager = new ResolutionManager();
+			resolutionManager.ReadSelectedResolution(ResolutionSelected);
+
 			ConfigurationPanel.Focus();
 		}
 
+		#region Configuration Delete Account
 		/// <summary>
 		/// Create a code and pass it by email, then show a panel with a textbox requiring the code, if the code you introduced
 		/// is the same that the code passed by email then delete the current user account
@@ -390,7 +402,9 @@ namespace Outlands_Adventure_Launcher
 				Hash_SHA2.InitialiceVariables(confirmationCode);
 
 				string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_DeleteAccount.Split('*');
-				bool messageError = SendEmail.SendNewEmail(userEmail, messageInfo[0], messageInfo[1], confirmationCode);
+				bool messageError = false;
+				if (userEmail.Equals("error")) messageError = true;
+				else messageError = SendEmail.SendNewEmail(userEmail, messageInfo[0], messageInfo[1], confirmationCode);
 
 				if (!messageError)
 				{
@@ -431,7 +445,9 @@ namespace Outlands_Adventure_Launcher
 		{
 			((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
 		}
+		#endregion Configuration Delete Account
 
+		#region Configuration Exit Button
 		/// <summary>
 		/// Triggered when the mouse enter in the configuration exit label, change the style of the label text
 		/// </summary>
@@ -461,6 +477,31 @@ namespace Outlands_Adventure_Launcher
 		{
 			HideImageGradient();
 		}
+		#endregion Configuration Exit Button
+
+		#region Configuration Refresh Resolution
+		private void ResolutionRefresh_MouseEnter(object sender, EventArgs e)
+		{
+			MultipleResources.ShowToolTip(ResolutionRefresh, LanguageResx.ClientLanguage.RefreshResolution_Tooltip);
+		}
+
+		private void ResolutionRefresh_MouseLeave(object sender, EventArgs e)
+		{
+			MultipleResources.HideToolTip(ResolutionRefresh);
+		}
+
+		private void ResolutionRefresh_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (downloadingGame != null)
+			{
+				CancelDownload_Click(null, EventArgs.Empty);
+			}
+			ResolutionManager resolutionManager = new ResolutionManager();
+			resolutionManager.ResolutionCombobox_ResolutionChanged(ResolutionSelected);
+			resolutionManager.LoadWindowResolution(false, null, clientAplication, null, null, userName);
+		}
+		#endregion Configuration Refresh Resolution
+
 		#endregion Game Client Configuration
 
 		#region Set default screen and change screens
@@ -645,6 +686,7 @@ namespace Outlands_Adventure_Launcher
 			DefaultScreenHeader.Text = LanguageResx.ClientLanguage.settings_DefaultScreenHeader;
 			ConfigurationExitButton.Text = LanguageResx.ClientLanguage.button_Close_Uppercase;
 			DeleteAccount.Text = LanguageResx.ClientLanguage.settings_DeleteAccount;
+			ResolutionHeader.Text = LanguageResx.ClientLanguage.settings_ResolutionHeader;
 
 			// Main menu
 			FilterGame.Text = LanguageResx.ClientLanguage.filterGame;
@@ -674,6 +716,15 @@ namespace Outlands_Adventure_Launcher
 			{
 				DefaultScreen.Items.Add(currentScreen);
 			}
+
+			ResolutionSelected.Items.Clear();
+			string[] resolutionsAvaibles = LanguageResx.ClientLanguage.settings_resolution.Split('*');
+			foreach (string currentResolution in resolutionsAvaibles)
+			{
+				ResolutionSelected.Items.Add(currentResolution);
+			}
+			ResolutionManager resolutionManager = new ResolutionManager();
+			resolutionManager.ReadSelectedResolution(ResolutionSelected);
 		}
 
 		/// <summary>
@@ -690,7 +741,7 @@ namespace Outlands_Adventure_Launcher
 				SideDownloadState.Text = LanguageResx.ClientLanguage.game_Downloading_Uppercase;
 			}
 			else if (downloadState.Equals(LanguageResx.ClientLanguage.download_canceled))
-            {
+			{
 				languageManager.ChangeCurrentLanguage(currentLanguage);
 				SideDownloadState.Text = LanguageResx.ClientLanguage.download_canceled;
 			}
@@ -1155,13 +1206,14 @@ namespace Outlands_Adventure_Launcher
 			int currentImage = 0;
 			foreach (GameInfo currentGameInfo in currentGameInfoList)
 			{
+				// El currentImage va mal, cambiar por for normal mejor
 				if (currentGameInfoList[currentImage].GameName.ToLower().Contains(filteredGameName.ToLower()) || filteredGameName.Equals(""))
 				{
 					currentGameImagesListView.Items.Add(currentGameInfoList[currentImage].GameName, currentImage);
 					GameImages.Images.Add(currentGameInfoList[currentImage].GameImage);
-
-					currentImage++;
 				}
+
+				currentImage++;
 			}
 
 			currentGameImagesListView.LargeImageList = GameImages;
@@ -1320,7 +1372,7 @@ namespace Outlands_Adventure_Launcher
 		}
 
 		private void RefreshGameInfo_Click(string state)
-        {
+		{
 			Play_BuyGame.Text = state;
 		}
 		#endregion Close Game Info
@@ -1374,7 +1426,7 @@ namespace Outlands_Adventure_Launcher
 					catch (Exception)
 					{ }
 
-					Application.Restart();
+					MultipleResources.RestartApp(Process.GetCurrentProcess().Id, Process.GetCurrentProcess().ProcessName);
 				}
 
 				CloseLoadingScreen(false);
@@ -1502,9 +1554,12 @@ namespace Outlands_Adventure_Launcher
 			}
 			else if (e.ClickedItem.Text == LanguageResx.ClientLanguage.userInfoMenu_logout)
 			{
+				aplicationClosing = true;
 				WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 				Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
+
 				bool keepSessionOpen = Convert.ToBoolean(key.GetValue("KeepSessionOpen"));
+				key.SetValue("selectedTileSize", tileSizeSelected);
 
 				if (keepSessionOpen)
 				{
@@ -1512,15 +1567,8 @@ namespace Outlands_Adventure_Launcher
 					key.DeleteValue("Username");
 				}
 
-                try
-                {
-					// CAMBIAR 
-					Application.Restart();
-                }
-                catch (Exception)
-                {
-					Application.Exit();
-                }
+				MultipleResources.RestartApp(Process.GetCurrentProcess().Id, Process.GetCurrentProcess().ProcessName);
+				this.Close();
 			}
 		}
 		#endregion User Settings Menu
@@ -1577,11 +1625,11 @@ namespace Outlands_Adventure_Launcher
 						if (ContextMenuStrip.Items.Count <= 0) // No hay juegos en la cola
 						{
 							if (downloadingGame.GameName == currentGameInfo.GameName) // El juego se esta descargando
-                            {
+							{
 								ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.game_Downloading_LowerCase));
 							}
 							else // El juego se puede descargar
-                            {
+							{
 								ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.download_Avaible_Button));
 							}
 						}
@@ -1618,7 +1666,7 @@ namespace Outlands_Adventure_Launcher
 					else
 					{
 						if (currentGameInfo.GameName != downloadingGame.GameName)
-                        {
+						{
 							bool coincidences = false;
 							foreach (GameInfo currentQueueGame in queueGames)
 							{
@@ -1629,7 +1677,7 @@ namespace Outlands_Adventure_Launcher
 							}
 
 							if (!coincidences)
-                            {
+							{
 								queueGames.Add(currentGameInfo);
 							}
 						}
@@ -1741,7 +1789,7 @@ namespace Outlands_Adventure_Launcher
 							});
 						}
 						catch (OperationCanceledException)
-                        {
+						{
 							languageManager.ChangeCurrentLanguage("es-ES");
 							downloadState = LanguageResx.ClientLanguage.download_canceled;
 							await SetDownloadsPanelState(false, 100);
@@ -1823,22 +1871,22 @@ namespace Outlands_Adventure_Launcher
 			}
 
 			if (gameInfoOpen && !downloadError)
-            {
+			{
 				RefreshGameInfo_Click(LanguageResx.ClientLanguage.play_Button);
 			}
 			else if (gameInfoOpen && downloadError)
-            {
+			{
 				RefreshGameInfo_Click(LanguageResx.ClientLanguage.download_Avaible_Button);
 			}
 			ContextMenuStrip.Hide();
 
 			if (queueGames.Count == 0)
-            {
+			{
 				downloadingGame = null;
 				CloseShowDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.close;
 			}
 			else
-            {
+			{
 				downloadingGame = queueGames[0];
 				queueGames.RemoveAt(0);
 
@@ -1878,7 +1926,7 @@ namespace Outlands_Adventure_Launcher
 					downloadProgress.Value = Convert.ToInt32(progressValue);
 
 					if (DownloadsPanel.Visible)
-                    {
+					{
 						// Consigo la referencia del progressbar del panel de descargas y creo un label de porcentaje
 						Control[] downloadingPanelControls = DownloadsPanel.Controls.Find("DownloadingPanel", true);
 
@@ -1890,17 +1938,18 @@ namespace Outlands_Adventure_Launcher
 						Label downloadInfoProgress = null;
 
 						try
-                        {
+						{
 							Control[] downloadProgressControl = downloadingPanelControls[0].Controls.Find("DownloadProgress", false);
 							downloadInfoProgress = (Label)downloadProgressControl[0];
-						} catch (Exception)
-                        {
-							downloadInfoProgress = MultipleResources.CreateGenericLabel("DownloadProgress", true, 45, 19, 630, 32, 
+						}
+						catch (Exception)
+						{
+							downloadInfoProgress = MultipleResources.CreateGenericLabel("DownloadProgress", true, 45, 19, 630, 32, 10,
 								ContentAlignment.MiddleRight);
 							downloadingPanelControls[0].Controls.Add(downloadInfoProgress);
 						}
-                        finally
-                        {
+						finally
+						{
 							downloadInfoProgress.Text = Convert.ToInt32(progressValue).ToString() + " %";
 						}
 
@@ -1942,7 +1991,7 @@ namespace Outlands_Adventure_Launcher
 		}
 
 		private void CancelQueue_Click(object sender, EventArgs e)
-        {
+		{
 			string controlName = ((Panel)sender).Name;
 			int arrayPosition = Convert.ToInt32(controlName.Split('_')[1]);
 			queueGames.RemoveAt(arrayPosition);
@@ -1955,9 +2004,9 @@ namespace Outlands_Adventure_Launcher
 			int arrayPosition = Convert.ToInt32(controlName.Split('_')[1]);
 
 			if (arrayPosition > 0)
-            {
+			{
 				queueGames.Reverse(arrayPosition - 1, 2);
-				LoadDownloadsPanel();
+				ReloadQueue();
 			}
 		}
 
@@ -1967,9 +2016,9 @@ namespace Outlands_Adventure_Launcher
 			int arrayPosition = Convert.ToInt32(controlName.Split('_')[1]);
 
 			if ((arrayPosition + 1) < queueGames.Count)
-            {
+			{
 				queueGames.Reverse(arrayPosition, 2);
-				LoadDownloadsPanel();
+				ReloadQueue();
 			}
 		}
 
@@ -2021,7 +2070,8 @@ namespace Outlands_Adventure_Launcher
 
 			if (downloadingGame != null)
 			{
-				Panel downloadingPanel = new DownloadingGameInformation(downloadingGame.GameImage, downloadingGame.GameName);
+				Debug.WriteLine(DownloadsPanel.Size.Width + " " + DownloadsPanel.Size.Height);
+				Panel downloadingPanel = new DownloadingGameInformationLarge(downloadingGame.GameImage, downloadingGame.GameName);
 				downloadingPanel.Location = new Point(30, 49);
 				downloadingPanel.Name = "DownloadingPanel";
 				DownloadsPanel.Controls.Add(downloadingPanel);
@@ -2029,7 +2079,7 @@ namespace Outlands_Adventure_Launcher
 				Panel cancelDownload = downloadingPanel.Controls.Find("DownloadCancelButton", false)[0] as Panel;
 				cancelDownload.Click += new EventHandler(CancelDownload_Click);
 
-				Label downloadStateLabel = MultipleResources.CreateGenericLabel("DownloadState", true, 525, 19, 82, 57, 
+				Label downloadStateLabel = MultipleResources.CreateGenericLabel("DownloadState", true, 525, 19, 82, 57, 10,
 					ContentAlignment.MiddleLeft);
 				downloadStateLabel.Text = downloadState;
 				downloadingPanel.Controls.Add(downloadStateLabel);
@@ -2037,11 +2087,11 @@ namespace Outlands_Adventure_Launcher
 				if (queueGames.Count > 0)
 				{
 					for (int currentDownloadGameInfo = 0; currentDownloadGameInfo < queueGames.Count; currentDownloadGameInfo++)
-                    {
-						Panel queuePanel = new QueueGameInformation(queueGames[currentDownloadGameInfo].GameImage,
+					{
+						Panel queuePanel = new QueueGameInformationLarge(queueGames[currentDownloadGameInfo].GameImage,
 							queueGames[currentDownloadGameInfo].GameName);
 
-						Label queueStateLabel = MultipleResources.CreateGenericLabel("QueueState", true, 420, 19, 84, 55,
+						Label queueStateLabel = MultipleResources.CreateGenericLabel("QueueState", true, 420, 19, 84, 55, 10,
 							ContentAlignment.MiddleLeft);
 						queueStateLabel.Text = LanguageResx.ClientLanguage.currentPriority + "  " + (currentDownloadGameInfo + 1);
 						queuePanel.Controls.Add(queueStateLabel);
@@ -2096,6 +2146,37 @@ namespace Outlands_Adventure_Launcher
 				DownloadsNoInfoLabel.Location = new Point(
 					DownloadsPanel.Width / 2 - DownloadsNoInfoLabel.Size.Width / 2,
 					DownloadsNoInfoPanel.Location.Y + DownloadsNoInfoPanel.Size.Height + 50);
+			}
+		}
+
+		private void ReloadQueue()
+		{
+			QueueLayout.Controls.Clear();
+
+			for (int currentDownloadGameInfo = 0; currentDownloadGameInfo < queueGames.Count; currentDownloadGameInfo++)
+			{
+				Panel queuePanel = new QueueGameInformationLarge(queueGames[currentDownloadGameInfo].GameImage,
+					queueGames[currentDownloadGameInfo].GameName);
+
+				Label queueStateLabel = MultipleResources.CreateGenericLabel("QueueState", true, 420, 19, 84, 55, 10,
+					ContentAlignment.MiddleLeft);
+				queueStateLabel.Text = LanguageResx.ClientLanguage.currentPriority + "  " + (currentDownloadGameInfo + 1);
+				queuePanel.Controls.Add(queueStateLabel);
+
+				Panel cancelQueueDownload = queuePanel.Controls.Find("QueueCancelButton", false)[0] as Panel;
+				cancelQueueDownload.Name = "QueueCancelButton_" + currentDownloadGameInfo;
+
+				Panel rankUpQueueDownload = queuePanel.Controls.Find("QueueRankUp", false)[0] as Panel;
+				rankUpQueueDownload.Name = "QueueRankUp_" + currentDownloadGameInfo;
+
+				Panel rankDownQueueDownload = queuePanel.Controls.Find("QueueRankDown", false)[0] as Panel;
+				rankDownQueueDownload.Name = "QueueRankDown_" + currentDownloadGameInfo;
+
+				cancelQueueDownload.Click += new EventHandler(CancelQueue_Click);
+				rankUpQueueDownload.Click += new EventHandler(RankUpQueue_Click);
+				rankDownQueueDownload.Click += new EventHandler(RankDownQueue_Click);
+
+				QueueLayout.Controls.Add(queuePanel);
 			}
 		}
 		#endregion Downloads / Installations
@@ -2177,7 +2258,7 @@ namespace Outlands_Adventure_Launcher
 			return false;
 		}
 
-        private void DeleteCorruptedFiles()
+		private void DeleteCorruptedFiles()
 		{
 			try
 			{
@@ -2213,7 +2294,7 @@ namespace Outlands_Adventure_Launcher
 					LoadDownloadsPanel();
 				}
 				else
-                {
+				{
 					CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
 					DownloadInformation.Visible = false;
 
@@ -2228,7 +2309,7 @@ namespace Outlands_Adventure_Launcher
 			CheckDownload_UninstallInformationLanguage();
 		}
 
-        private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
+		private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
@@ -2287,7 +2368,7 @@ namespace Outlands_Adventure_Launcher
 					{
 						if (!MouseIsOverControl(Uninstall_InformationGameName) &&
 							!MouseIsOverControl(Uninstall_InformationGameImage) &&
-							!MouseIsOverControl(UninstallProgress) && 
+							!MouseIsOverControl(UninstallProgress) &&
 							!MouseIsOverControl(UninstallState) &&
 							!MouseIsOverControl(CloseUninstall_Information))
 						{
@@ -2310,13 +2391,13 @@ namespace Outlands_Adventure_Launcher
 				MultipleResources.ShowToolTip(CloseShowDownloadInformation, LanguageResx.ClientLanguage.Open_DownloadsInformation);
 			}
 			else
-            {
+			{
 				CheckDownload_UninstallInformationLanguage(); // Devuelve la aplicación al idioma elegido por el usuario
 				MultipleResources.ShowToolTip(CloseShowDownloadInformation, LanguageResx.ClientLanguage.button_Close_Lowercase);
-            }
+			}
 		}
 
-        private void DownloadShowInformation_MouseLeave(object sender, EventArgs e)
+		private void DownloadShowInformation_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(CloseShowDownloadInformation);
 		}

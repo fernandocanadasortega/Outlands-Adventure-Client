@@ -412,7 +412,7 @@
     <value>800x600 pixel*1280x720 pixel</value>
   </data>
   <data name="RefreshResolution_Tooltip" xml:space="preserve">
-    <value>Auflösung ändern. Durch Ändern der Auflösung wird das Fenster neu gestartet</value>
+    <value>Auflösung ändern. Durch Ändern der Auflösung wird das Fenster neu gestartet und alle Downloads werden abgebrochen</value>
   </data>
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>Auflösung</value>

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,16 +17,25 @@ namespace Outlands_Adventure_Launcher
         private Form windowApp;
         private string tileSizeSelected;
         private FormClosingEventArgs closeEvent;
+        private CancellationTokenSource downloadCancellationTokenSource;
 
-        public CloseClientAplicationPopUp(Form windowApp, string tileSizeSelected, FormClosingEventArgs closeEvent)
+        public CloseClientAplicationPopUp(Form windowApp, string tileSizeSelected, FormClosingEventArgs closeEvent, 
+            CancellationTokenSource downloadCancellationTokenSource)
         {
             InitializeComponent();
 
             this.windowApp = windowApp;
             this.tileSizeSelected = tileSizeSelected;
             this.closeEvent = closeEvent;
+            this.downloadCancellationTokenSource = downloadCancellationTokenSource;
 
             ExitHeader.Focus();
+        }
+
+        public CloseClientAplicationPopUp(Form windowApp, string tileSizeSelected)
+        {
+            this.windowApp = windowApp;
+            this.tileSizeSelected = tileSizeSelected;
         }
 
         private void CloseClientAplicationPopUp_Load(object sender, EventArgs e)
@@ -37,7 +48,7 @@ namespace Outlands_Adventure_Launcher
             MultipleResources.CalculateCenterLocation(this, ExitLabel, 30);
         }
 
-        private void SaveData()
+        private string SaveData()
         {
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             windowsRegisterManager.SaveWindowPosition(windowApp);
@@ -45,16 +56,33 @@ namespace Outlands_Adventure_Launcher
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
             key.SetValue("selectedTileSize", tileSizeSelected);
 
+            string resolution = key.GetValue("SelectedResolution").ToString();
+
             windowsRegisterManager.CloseWindowsRegister(key);
+
+            return resolution;
         }
 
         #region Exit Button
         private void ExitButton_MouseClick(object sender, MouseEventArgs e)
         {
-            SaveData();
-            ClientAplication.aplicationClosing = true;
-            Application.Exit();
-            this.Close();
+            if (downloadCancellationTokenSource != null)
+            {
+                if (!downloadCancellationTokenSource.IsCancellationRequested)
+                    downloadCancellationTokenSource.Cancel();
+            }
+
+            string resolution = SaveData();
+            if (resolution.Equals("1280x720"))
+            {
+                ClientAplicationLarge.aplicationClosing = true;
+            }
+            else
+            {
+                ClientAplicationSmall.aplicationClosing = true;
+            }
+
+            Environment.Exit(0);
         }
 
         private void ExitButton_MouseEnter(object sender, EventArgs e)
@@ -73,6 +101,12 @@ namespace Outlands_Adventure_Launcher
         #region Logout Button
         public void LogoutButton_MouseClick(object sender, MouseEventArgs e)
         {
+            if (downloadCancellationTokenSource != null)
+            {
+                if (!downloadCancellationTokenSource.IsCancellationRequested)
+                    downloadCancellationTokenSource.Cancel();
+            }
+
             WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
             Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
             bool keepSessionOpen = Convert.ToBoolean(key.GetValue("KeepSessionOpen"));
@@ -83,10 +117,17 @@ namespace Outlands_Adventure_Launcher
                 key.DeleteValue("Username");
             }
 
-            ClientAplication.aplicationClosing = true;
-            SaveData();
-            Application.Restart();
-            this.Close();
+            string resolution = SaveData();
+            if (resolution.Equals("1280x720"))
+            {
+                ClientAplicationLarge.aplicationClosing = true;
+            }
+            else
+            {
+                ClientAplicationSmall.aplicationClosing = true;
+            }
+
+            MultipleResources.RestartApp(Process.GetCurrentProcess().Id, Process.GetCurrentProcess().ProcessName);
         }
 
         private void LogoutButton_MouseEnter(object sender, EventArgs e)

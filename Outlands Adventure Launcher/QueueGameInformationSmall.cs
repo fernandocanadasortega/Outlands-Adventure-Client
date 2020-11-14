@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace Outlands_Adventure_Launcher
 {
-    public partial class QueueGameInformation : Panel
+    public partial class QueueGameInformationSmall : Panel
     {
         private Image gameImage;
         private string gameName;
 
-        public QueueGameInformation(Image gameImage, string gameName)
+        public QueueGameInformationSmall(Image gameImage, string gameName)
         {
             this.gameImage = gameImage;
             this.gameName = gameName;
@@ -25,27 +25,27 @@ namespace Outlands_Adventure_Launcher
 
         private void SetControlsProperties()
         {
-            this.Size = new Size(682, 81);
-            this.Margin = new Padding(30, 16, 8, 8);
+            this.Size = new Size(476, 59);
+            this.Margin = new Padding(20, 8, 8, 4);
             this.BackColor = Color.White;
 
-            QueueGameImage.Size = new Size(60, 65);
-            QueueGameImage.Location = new Point(8, 8);
+            QueueGameImage.Size = new Size(41, 47);
+            QueueGameImage.Location = new Point(5, 5);
             QueueGameImage.BackgroundImage = gameImage;
 
-            QueueGameName.Size = new Size(420, 23);
-            QueueGameName.Location = new Point(82, 21);
+            QueueGameName.Size = new Size(293, 14);
+            QueueGameName.Location = new Point(57, 10);
             QueueGameName.TextAlign = ContentAlignment.MiddleLeft;
             QueueGameName.Text = gameName;
 
-            QueueCancelButton.Size = new Size(18, 18);
-            QueueCancelButton.Location = new Point(655, 5);
+            QueueCancelButton.Size = new Size(12, 12);
+            QueueCancelButton.Location = new Point(457, 3);
 
-            QueueRankUp.Size = new Size(18, 18);
-            QueueRankUp.Location = new Point(655, 56);
+            QueueRankUp.Size = new Size(12, 12);
+            QueueRankUp.Location = new Point(457, 41);
 
-            QueueRankDown.Size = new Size(18, 18);
-            QueueRankDown.Location = new Point(625, 56);
+            QueueRankDown.Size = new Size(12, 12);
+            QueueRankDown.Location = new Point(436, 41);
         }
 
         protected override void OnPaint(PaintEventArgs pe)

@@ -137,6 +137,7 @@ namespace Outlands_Adventure_Launcher
                     {
                         string gameName = gamesInfoReader[0].ToString();
                         Image gameImage = AssembleImage((byte[]) gamesInfoReader[1]);
+                        gameImage.Tag = gameName;
                         decimal gamePrice = (decimal)gamesInfoReader[2];
                         string gameDownloadLink = gamesInfoReader[3].ToString();
 

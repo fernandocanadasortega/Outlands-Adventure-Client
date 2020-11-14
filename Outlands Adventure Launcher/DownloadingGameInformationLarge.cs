@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace Outlands_Adventure_Launcher
 {
-    public partial class DownloadingGameInformation : Panel
+    public partial class DownloadingGameInformationLarge : Panel
     {
         private Image gameImage;
         private string gameName;
 
-        public DownloadingGameInformation(Image gameImage, string gameName)
+        public DownloadingGameInformationLarge(Image gameImage, string gameName)
         {
             this.gameImage = gameImage;
             this.gameName = gameName;

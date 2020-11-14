@@ -707,14 +707,14 @@
             // 
             // ReturnToLogin
             // 
-            this.ReturnToLogin.AutoSize = true;
             this.ReturnToLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ReturnToLogin.Font = new System.Drawing.Font("Oxygen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ReturnToLogin.Location = new System.Drawing.Point(305, 20);
+            this.ReturnToLogin.Location = new System.Drawing.Point(203, 20);
             this.ReturnToLogin.Name = "ReturnToLogin";
-            this.ReturnToLogin.Size = new System.Drawing.Size(52, 19);
+            this.ReturnToLogin.Size = new System.Drawing.Size(196, 19);
             this.ReturnToLogin.TabIndex = 10;
             this.ReturnToLogin.Text = "Volver";
+            this.ReturnToLogin.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ReturnToLogin.Click += new System.EventHandler(this.ReturnToLogin_Click);
             this.ReturnToLogin.MouseEnter += new System.EventHandler(this.ActionLabel_MouseEnter);
             this.ReturnToLogin.MouseLeave += new System.EventHandler(this.ActionLabel_MouseLeave);
@@ -1295,9 +1295,9 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1365, 708);
             this.Controls.Add(this.ConfigurationButton);
+            this.Controls.Add(this.LoginProblemsPanel);
             this.Controls.Add(this.LoginPanel);
             this.Controls.Add(this.RegisterPanel);
-            this.Controls.Add(this.LoginProblemsPanel);
             this.Controls.Add(this.BackgroundPanel);
             this.Controls.Add(this.ImagePanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1325,7 +1325,6 @@
             this.ConfirmNewPasswordPanel.ResumeLayout(false);
             this.ConfirmNewPasswordPanel.PerformLayout();
             this.LoginProblemsPanel.ResumeLayout(false);
-            this.LoginProblemsPanel.PerformLayout();
             this.ResetCredentialsEmailPanel.ResumeLayout(false);
             this.ResetCredentialsEmailPanel.PerformLayout();
             this.ImagePanel.ResumeLayout(false);
