@@ -1793,8 +1793,8 @@ namespace Outlands_Adventure_Launcher
 						}
 
 						CloseShowDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.arrow;
-						SideDownloadInformationGameImage.BackgroundImage = currentGameInfo.GameImage;
-						SideDownloadInformationGameName.Text = currentGameInfo.GameName;
+						SideDownloadInformationGameImage.BackgroundImage = downloadingGame.GameImage;
+						SideDownloadInformationGameName.Text = downloadingGame.GameName;
 
 						DownloadInformation.Visible = true;
 
@@ -1808,7 +1808,7 @@ namespace Outlands_Adventure_Launcher
 						{
 							await Task.Run(async () =>
 							{
-								await DownloadGameFromMega(SideDownloadProgressbar, currentGameInfo);
+								await DownloadGameFromMega(SideDownloadProgressbar, downloadingGame);
 							});
 						}
 						catch (OperationCanceledException)
@@ -1930,7 +1930,7 @@ namespace Outlands_Adventure_Launcher
 			MegaApiClient mega = new MegaApiClient();
 			mega.LoginAnonymous();
 
-			Uri fileLink = new Uri(currentGameInfo.GameDownloadLink);
+			Uri fileLink = new Uri(downloadingGame.GameDownloadLink);
 
 			INodeInfo node = mega.GetNodeFromLink(fileLink);
 			downloadGameName = node.Name;
@@ -2104,6 +2104,14 @@ namespace Outlands_Adventure_Launcher
 					ContentAlignment.MiddleLeft);
 				downloadStateLabel.Text = downloadState;
 				downloadingPanel.Controls.Add(downloadStateLabel);
+
+				LanguageManager languageManager = new LanguageManager();
+				string currentLanguage = ChangeLanguageTemporarily(languageManager);
+				if (downloadState.Equals(LanguageResx.ClientLanguage.game_Install))
+				{
+					languageManager.ChangeCurrentLanguage(currentLanguage);
+					SetDownloadsPanelState(true, 40);
+				}
 
 				if (queueGames.Count > 0)
 				{
