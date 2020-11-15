@@ -417,4 +417,10 @@
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>Auflösung</value>
   </data>
+  <data name="gameSettingsMenu_SynchronizeProgress" xml:space="preserve">
+    <value>Spielfortschritt speichern</value>
+  </data>
+  <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
+    <value>Spielfortschritt herunterladen</value>
+  </data>
 </root>

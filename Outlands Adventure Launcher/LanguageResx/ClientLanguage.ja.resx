@@ -417,4 +417,10 @@
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>解決</value>
   </data>
+  <data name="gameSettingsMenu_SynchronizeProgress" xml:space="preserve">
+    <value>ゲームの進行状況を保存する</value>
+  </data>
+  <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
+    <value>ゲームの進行状況をダウンロードする</value>
+  </data>
 </root>

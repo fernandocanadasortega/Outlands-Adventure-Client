@@ -417,4 +417,10 @@
   <data name="settings_ResolutionHeader" xml:space="preserve">
     <value>Vedtak</value>
   </data>
+  <data name="gameSettingsMenu_SynchronizeProgress" xml:space="preserve">
+    <value>Lagre spillfremdrift</value>
+  </data>
+  <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
+    <value>Last ned spillfremdrift</value>
+  </data>
 </root>

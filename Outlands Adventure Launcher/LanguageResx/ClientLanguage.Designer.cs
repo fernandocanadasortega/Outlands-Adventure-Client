@@ -358,11 +358,29 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Descargar progreso del juego.
+        /// </summary>
+        internal static string gameSettingsMenu_DownloadProgress {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_DownloadProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Reparar.
         /// </summary>
         internal static string gameSettingsMenu_Repair {
             get {
                 return ResourceManager.GetString("gameSettingsMenu_Repair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Guardar progreso del juego.
+        /// </summary>
+        internal static string gameSettingsMenu_SynchronizeProgress {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_SynchronizeProgress", resourceCulture);
             }
         }
         

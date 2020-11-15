@@ -1625,7 +1625,26 @@ namespace Outlands_Adventure_Launcher
 			{
 				ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.play_Button));
 				ContextMenuStrip.Items.Add(new ToolStripSeparator());
+				ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.gameSettingsMenu_SynchronizeProgress));
+				ContextMenuStrip.Items.Add(new ToolStripSeparator());
+				ContextMenuStrip.Items.Add(new ToolStripMenuItem(LanguageResx.ClientLanguage.gameSettingsMenu_DownloadProgress));
+				ContextMenuStrip.Items.Add(new ToolStripSeparator());
 				ContextMenuStrip.Items.Add(LanguageResx.ClientLanguage.gameSettingsMenu_Uninstall);
+
+				string directoryPath = Path.Combine(downloadPath, currentGameInfo.GameName, "Files");
+				if (Directory.Exists(directoryPath))
+				{
+					if (!File.Exists(Path.Combine(directoryPath, "PlayerInventory.json")))
+					{
+						ContextMenuStrip.Items[2].Enabled = false;
+						ContextMenuStrip.Items[4].Enabled = false;
+					}
+				}
+				else
+				{
+					ContextMenuStrip.Items[2].Enabled = false;
+					ContextMenuStrip.Items[4].Enabled = false;
+				}
 			}
 			else
 			{
