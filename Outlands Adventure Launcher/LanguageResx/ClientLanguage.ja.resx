@@ -423,4 +423,13 @@
   <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
     <value>ゲームの進行状況をダウンロードする</value>
   </data>
+  <data name="gameSettingsMenu_DownloadedProgress" xml:space="preserve">
+    <value>ゲームの進行状況をダウンロード</value>
+  </data>
+  <data name="gameSettingsMenu_SynchronizedProgress" xml:space="preserve">
+    <value>ゲームの進行状況が保存されました</value>
+  </data>
+  <data name="fileError" xml:space="preserve">
+    <value>進行状況ファイルの作成中にエラーが発生しました</value>
+  </data>
 </root>

@@ -403,4 +403,13 @@
   <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
     <value>Download game progress</value>
   </data>
+  <data name="gameSettingsMenu_DownloadedProgress" xml:space="preserve">
+    <value>Game progress downloaded</value>
+  </data>
+  <data name="gameSettingsMenu_SynchronizedProgress" xml:space="preserve">
+    <value>Game progress saved</value>
+  </data>
+  <data name="fileError" xml:space="preserve">
+    <value>Error creating progress file</value>
+  </data>
 </root>

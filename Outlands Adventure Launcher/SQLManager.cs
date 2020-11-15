@@ -153,6 +153,62 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        public static string WriteGameProgress(byte[] gameProgress, string userEmail, string gameName)
+        {
+            try
+            {
+                using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
+                {
+                    dbConnection.Open();
+                    //MySqlCommand updateCommand = new MySqlCommand(updateQuery, dbConnection);
+
+                    //UPDATE games_owned SET gameProgression = value WHERE user_email LIKE '' AND gameName LIKE ''
+
+                    using (MySqlCommand updateCommand = new MySqlCommand("UPDATE games_owned SET gameProgression = @gameProgress " +
+                        "WHERE user_email LIKE '" + userEmail + "' AND gameName LIKE '" + gameName + "'",
+                      dbConnection))
+                    {
+                        updateCommand.Parameters.Add("@gameProgress", MySqlDbType.Blob).Value = gameProgress;
+
+                        if (updateCommand.ExecuteNonQuery() == 1)
+                        {
+                            return "";
+                        }
+                    }
+
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public static byte[] ReadGameProgress(string gameProgressQuery)
+        {
+            try
+            {
+                using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
+                {
+                    dbConnection.Open();
+                    MySqlCommand readGameProgress = new MySqlCommand(gameProgressQuery, dbConnection);
+                    MySqlDataReader gamesInfoReader = readGameProgress.ExecuteReader();
+
+                    while (gamesInfoReader.Read())
+                    {
+                        return (byte[])gamesInfoReader[0];
+                    }
+
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Restore the image from bytes
         /// </summary>

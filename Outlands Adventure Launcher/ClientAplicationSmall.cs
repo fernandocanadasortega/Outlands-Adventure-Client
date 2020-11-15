@@ -1637,7 +1637,6 @@ namespace Outlands_Adventure_Launcher
 					if (!File.Exists(Path.Combine(directoryPath, "PlayerInventory.json")))
 					{
 						ContextMenuStrip.Items[2].Enabled = false;
-						ContextMenuStrip.Items[4].Enabled = false;
 					}
 				}
 				else
@@ -1726,6 +1725,79 @@ namespace Outlands_Adventure_Launcher
 					}
 				}
 			}
+			// Guardar progreso en la base de datos
+			else if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.gameSettingsMenu_SynchronizeProgress))
+			{
+				string filePath = Path.Combine(downloadPath, currentGameInfo.GameName, "Files", "PlayerInventory.json");
+				if (File.Exists(filePath))
+				{
+					OpenLoadingScreen();
+					byte[] gameProgressBytes = System.IO.File.ReadAllBytes(filePath);
+					string queryError = SaveGameProgress(gameProgressBytes, currentGameInfo.GameName);
+
+					if (queryError.Length > 0)
+					{
+						if (queryError.Contains("Unable to connect"))
+						{
+							// Pop up de falta de internet - No te puedes conectar a la base de datos
+							GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+						}
+
+						else
+						{
+							// Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
+							GenericPopUpMessage(queryError);
+						}
+					}
+					else
+					{
+						GenericPopUpMessage(LanguageResx.ClientLanguage.gameSettingsMenu_SynchronizedProgress);
+					}
+					CloseLoadingScreen(false);
+				}
+			}
+			// Descargar Progreso de la base de datos
+			else if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.gameSettingsMenu_DownloadProgress))
+			{
+				OpenLoadingScreen();
+				string filePath = Path.Combine(downloadPath, currentGameInfo.GameName, "Files", "PlayerInventory.json");
+				byte[] gameProgressBytes = DownloadGameProgress(currentGameInfo.GameName, filePath);
+
+				if (gameProgressBytes == null)
+				{
+					GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+				}
+				else
+				{
+					if (File.Exists(filePath))
+					{
+						if (File.ReadAllBytes(filePath).Length == gameProgressBytes.Length)
+						{
+							File.WriteAllBytes(filePath, gameProgressBytes);
+						}
+						else
+						{
+							File.WriteAllText(filePath, String.Empty);
+							File.WriteAllBytes(filePath, gameProgressBytes);
+						}
+						GenericPopUpMessage(LanguageResx.ClientLanguage.gameSettingsMenu_DownloadedProgress);
+					}
+					else
+					{
+						File.Create(filePath).Close();
+						if (File.Exists(filePath))
+						{
+							File.WriteAllBytes(filePath, gameProgressBytes);
+							GenericPopUpMessage(LanguageResx.ClientLanguage.gameSettingsMenu_DownloadedProgress);
+						}
+						else
+						{
+							GenericPopUpMessage(LanguageResx.ClientLanguage.fileError);
+						}
+					}
+				}
+				CloseLoadingScreen(false);
+			}
 			else if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.gameSettingsMenu_Uninstall))
 			{
 				UninstallGame();
@@ -1752,7 +1824,7 @@ namespace Outlands_Adventure_Launcher
 		}
 		#endregion Context Menu Strip Manager (Drop-down menu)
 
-		#region SQL Check games status
+		#region SQL Querys
 		private List<GameInfo> CheckOwnedGames()
 		{
 			string sqlQuery = "SELECT G_A.gameName, G_A.gameCover, G_A.gamePrice, G_A.gameDownloadLink " +
@@ -1776,7 +1848,19 @@ namespace Outlands_Adventure_Launcher
 			string sqlQuery = "SELECT user_email FROM user_information WHERE user_name LIKE '" + userName + "'";
 			return SQLManager.SearchQueryData(sqlQuery);
 		}
-		#endregion SQL Check games status
+
+		private string SaveGameProgress(byte[] gameProgress, string gameName)
+		{
+			return SQLManager.WriteGameProgress(gameProgress, userEmail, gameName);
+		}
+
+		private byte[] DownloadGameProgress(string gameName, string filePath)
+		{
+			string sqlQuery = "SELECT gameProgression FROM games_owned WHERE user_email LIKE '" + userEmail + "' AND gameName LIKE '" + gameName + "'";
+			return SQLManager.ReadGameProgress(sqlQuery);
+
+		}
+		#endregion SQL Querys
 
 		#region Downloads / Installations - Uninstallations - File manager
 

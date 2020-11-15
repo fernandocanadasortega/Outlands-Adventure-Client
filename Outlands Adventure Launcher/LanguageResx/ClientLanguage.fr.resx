@@ -424,4 +424,13 @@
   <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
     <value>Télécharger la progression du jeu</value>
   </data>
+  <data name="gameSettingsMenu_DownloadedProgress" xml:space="preserve">
+    <value>Progression du jeu téléchargée</value>
+  </data>
+  <data name="gameSettingsMenu_SynchronizedProgress" xml:space="preserve">
+    <value>Progression du jeu enregistrée</value>
+  </data>
+  <data name="fileError" xml:space="preserve">
+    <value>Erreur lors de la création du fichier de progression</value>
+  </data>
 </root>

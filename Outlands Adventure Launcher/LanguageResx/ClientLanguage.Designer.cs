@@ -277,6 +277,15 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error al crear el archivo de progreso.
+        /// </summary>
+        internal static string fileError {
+            get {
+                return ResourceManager.GetString("fileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Filtrar biblioteca.
         /// </summary>
         internal static string filterGame {
@@ -358,6 +367,15 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Progreso del juego descargado.
+        /// </summary>
+        internal static string gameSettingsMenu_DownloadedProgress {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_DownloadedProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Descargar progreso del juego.
         /// </summary>
         internal static string gameSettingsMenu_DownloadProgress {
@@ -372,6 +390,15 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         internal static string gameSettingsMenu_Repair {
             get {
                 return ResourceManager.GetString("gameSettingsMenu_Repair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Progreso del juego guardado.
+        /// </summary>
+        internal static string gameSettingsMenu_SynchronizedProgress {
+            get {
+                return ResourceManager.GetString("gameSettingsMenu_SynchronizedProgress", resourceCulture);
             }
         }
         

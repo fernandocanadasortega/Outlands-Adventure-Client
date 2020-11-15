@@ -423,4 +423,13 @@
   <data name="gameSettingsMenu_DownloadProgress" xml:space="preserve">
     <value>Last ned spillfremdrift</value>
   </data>
+  <data name="gameSettingsMenu_DownloadedProgress" xml:space="preserve">
+    <value>Spillfremdrift lastet ned</value>
+  </data>
+  <data name="gameSettingsMenu_SynchronizedProgress" xml:space="preserve">
+    <value>Spillfremdrift lagret</value>
+  </data>
+  <data name="fileError" xml:space="preserve">
+    <value>Feil ved oppretting av fremdriftsfil</value>
+  </data>
 </root>
