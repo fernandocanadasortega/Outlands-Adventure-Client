@@ -17,7 +17,14 @@ namespace Outlands_Adventure_Launcher
     /// </summary>
     static class SQLManager
     {
-        private readonly static string conectionRoute = @"server=localhost;user id=root;database=outlands_adventure_client";
+        // Cual es el server al que me conecto?
+        // Si no he pagado un dominio pero si he pagado el hosting puedo usar la base de datos?
+        private readonly static string server = "sql364.main-hosting.eu";
+        private readonly static string database = "u273393391_Outlands_ADV";
+        private readonly static string uid = "u273393391_Napo";
+        private readonly static string password = "Outlands_Client_Password2";
+        private readonly static string conectionRoute = "Server=" + server + "; Database=" + database + "; Uid=" + uid + "; Pwd=" + password;
+        //private readonly static string conectionRoute = "server=127.0.0.1:3306; uid=u273393391_Napo; pwd=Outlands_Client_Password2; database=u273393391_Outlands_ADV";
 
         /// <summary>
         /// Insert data in the database

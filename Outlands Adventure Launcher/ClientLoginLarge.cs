@@ -497,7 +497,7 @@ namespace Outlands_Adventure_Launcher
         {
             OpenLoadingScreen(false);
             string sqlQuery = "INSERT INTO user_information VALUES ('" + NewEmailTextbox.Text + "', '"
-                + NewUserNameTextbox.Text + "', SHA('" + NewPasswordTextbox.Text + "'), null)";
+                + NewUserNameTextbox.Text + "', SHA('" + NewPasswordTextbox.Text + "'))";
             string queryError = SQLManager.Insert_ModifyData(sqlQuery);
 
             if (queryError.Length > 0)
