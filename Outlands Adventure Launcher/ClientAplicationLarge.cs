@@ -22,6 +22,7 @@ namespace Outlands_Adventure_Launcher
 	public partial class ClientAplicationLarge : Form
 	{
 		private ClientAplicationLarge clientAplication;
+		private WindowsRegisterManager windowsRegisterManager;
 		public static bool aplicationClosing;
 		private string userEmail = "";
 		private string userName = "";
@@ -77,9 +78,9 @@ namespace Outlands_Adventure_Launcher
 		/// <param name="e">Events that occur to the object</param>
 		private void ClientAplication_Load(object sender, EventArgs e)
 		{
+			windowsRegisterManager = new WindowsRegisterManager();
 			CreateClientFolder();
 
-			WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 			windowsRegisterManager.LoadWindowPosition(this);
 
 			LanguageManager languageManager = new LanguageManager();
@@ -370,7 +371,6 @@ namespace Outlands_Adventure_Launcher
 			LanguageManager languageManager = new LanguageManager();
 			languageManager.ReadSelectedLanguage(false, LanguageSelected);
 
-			WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 			Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(false);
 			string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
 
@@ -510,12 +510,12 @@ namespace Outlands_Adventure_Launcher
 		/// </summary>
 		private void SetDefaultScreen()
 		{
-			WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 			Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 
 			string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
 			if (selectedDefaultScreen == null || selectedDefaultScreen.Equals(""))
 			{
+				selectedDefaultScreen = LanguageResx.ClientLanguage.store_Header;
 				key.SetValue("selectedDefaultScreen", LanguageResx.ClientLanguage.store_Header);
 			}
 
@@ -792,7 +792,6 @@ namespace Outlands_Adventure_Launcher
 		/// <returns>String, original language selected by the user</returns>
 		private string ChangeLanguageTemporarily(LanguageManager languageManager)
 		{
-			WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 			Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 			string currentLanguage = (string)key.GetValue("selectedLanguage");
 
@@ -839,7 +838,6 @@ namespace Outlands_Adventure_Launcher
 		/// <param name="selectedItemIndex"></param>
 		private void SaveDefaultScreen(int selectedItemIndex)
 		{
-			WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 			Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 			key.SetValue("selectedDefaultScreen", DefaultScreen.Items[selectedItemIndex]);
 			windowsRegisterManager.CloseWindowsRegister(key);
@@ -1063,7 +1061,6 @@ namespace Outlands_Adventure_Launcher
 		{
 			if (formStarting)
 			{
-				WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 				Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 
 				string selectedTileSize = (string)key.GetValue("selectedTileSize");
@@ -1442,7 +1439,6 @@ namespace Outlands_Adventure_Launcher
 				{
 					try
 					{
-						WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 						Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 						key.DeleteValue("KeepSessionOpen");
 						key.DeleteValue("Username");
@@ -1579,7 +1575,6 @@ namespace Outlands_Adventure_Launcher
 			else if (e.ClickedItem.Text == LanguageResx.ClientLanguage.userInfoMenu_logout)
 			{
 				aplicationClosing = true;
-				WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
 				Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
 
 				bool keepSessionOpen = Convert.ToBoolean(key.GetValue("KeepSessionOpen"));

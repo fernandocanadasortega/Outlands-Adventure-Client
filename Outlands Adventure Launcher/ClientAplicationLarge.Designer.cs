@@ -825,7 +825,7 @@
             this.ContextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ContextMenuStrip.Name = "contextMenuStrip";
             this.ContextMenuStrip.ShowImageMargin = false;
-            this.ContextMenuStrip.Size = new System.Drawing.Size(186, 32);
+            this.ContextMenuStrip.Size = new System.Drawing.Size(36, 4);
             this.ContextMenuStrip.MouseLeave += new System.EventHandler(this.ContextMenuStrip_MouseLeave);
             // 
             // ImagePanel

@@ -178,7 +178,7 @@
             this.UserNameTextbox.MaxLength = 30;
             this.UserNameTextbox.Name = "UserNameTextbox";
             this.UserNameTextbox.Size = new System.Drawing.Size(290, 22);
-            this.UserNameTextbox.TabIndex = 12;
+            this.UserNameTextbox.TabIndex = 11;
             this.UserNameTextbox.TextChanged += new System.EventHandler(this.UserName_PasswordTextbox_TextChanged);
             this.UserNameTextbox.Enter += new System.EventHandler(this.UserNameTextBox_Enter);
             this.UserNameTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.UserNameTextbox_KeyUp);
@@ -253,7 +253,7 @@
             this.PasswordTextbox.Name = "PasswordTextbox";
             this.PasswordTextbox.PasswordChar = '•';
             this.PasswordTextbox.Size = new System.Drawing.Size(260, 22);
-            this.PasswordTextbox.TabIndex = 11;
+            this.PasswordTextbox.TabIndex = 12;
             this.PasswordTextbox.TextChanged += new System.EventHandler(this.UserName_PasswordTextbox_TextChanged);
             this.PasswordTextbox.Enter += new System.EventHandler(this.PasswordTextbox_Enter);
             this.PasswordTextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PasswordTextbox_KeyUp);
@@ -292,7 +292,7 @@
             this.RememberMe.Location = new System.Drawing.Point(53, 415);
             this.RememberMe.Name = "RememberMe";
             this.RememberMe.Size = new System.Drawing.Size(195, 23);
-            this.RememberMe.TabIndex = 7;
+            this.RememberMe.TabIndex = 14;
             this.RememberMe.Text = "Mantener sesión abierta";
             this.RememberMe.UseVisualStyleBackColor = true;
             this.RememberMe.CheckedChanged += new System.EventHandler(this.RememberMe_CheckedChanged);
@@ -305,7 +305,8 @@
             this.LoginButton.Location = new System.Drawing.Point(160, 480);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(82, 70);
-            this.LoginButton.TabIndex = 8;
+            this.LoginButton.TabIndex = 15;
+            this.LoginButton.TabStop = true;
             this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
             // RegisterLabel
@@ -669,7 +670,8 @@
             this.RegisterButton.Location = new System.Drawing.Point(160, 566);
             this.RegisterButton.Name = "RegisterButton";
             this.RegisterButton.Size = new System.Drawing.Size(82, 70);
-            this.RegisterButton.TabIndex = 8;
+            this.RegisterButton.TabIndex = 17;
+            this.RegisterButton.TabStop = true;
             this.RegisterButton.Click += new System.EventHandler(this.RegisterButton_Click);
             // 
             // LoginLabel
@@ -1295,9 +1297,9 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1365, 708);
             this.Controls.Add(this.ConfigurationButton);
-            this.Controls.Add(this.LoginProblemsPanel);
-            this.Controls.Add(this.LoginPanel);
             this.Controls.Add(this.RegisterPanel);
+            this.Controls.Add(this.LoginPanel);
+            this.Controls.Add(this.LoginProblemsPanel);
             this.Controls.Add(this.BackgroundPanel);
             this.Controls.Add(this.ImagePanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

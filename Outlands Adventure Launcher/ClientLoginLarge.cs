@@ -16,7 +16,8 @@ namespace Outlands_Adventure_Launcher
 {
     public partial class ClientLoginLarge : Form
     {
-        ClientLoginLarge clientLogin;
+        private ClientLoginLarge clientLogin;
+        private WindowsRegisterManager windowsRegisterManager;
 
         private string targetPanel;
         private bool operationInProgress;
@@ -51,7 +52,7 @@ namespace Outlands_Adventure_Launcher
         #region Form Actions
         private void LauncherLogin_Load(object sender, EventArgs e)
         {
-            WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
+            windowsRegisterManager = new WindowsRegisterManager();
             windowsRegisterManager.LoadWindowPosition(this);
 
             LanguageManager languageManager = new LanguageManager();
@@ -85,7 +86,6 @@ namespace Outlands_Adventure_Launcher
             }
             else
             {
-                WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
                 windowsRegisterManager.SaveWindowPosition(this);
 
                 Environment.Exit(0);
@@ -216,7 +216,6 @@ namespace Outlands_Adventure_Launcher
 
                     if (RememberMe.Checked)
                     {
-                        WindowsRegisterManager windowsRegisterManager = new WindowsRegisterManager();
                         Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
                         key.SetValue("KeepSessionOpen", RememberMe.Checked);
                         key.SetValue("Username", UserNameTextbox.Text);
