@@ -412,4 +412,7 @@
   <data name="fileError" xml:space="preserve">
     <value>Error creating progress file</value>
   </data>
+  <data name="game_DownloadStarting" xml:space="preserve">
+    <value>PREPARING DOWNLOAD</value>
+  </data>
 </root>

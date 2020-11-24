@@ -322,6 +322,15 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a PREPARANDO DESCARGA.
+        /// </summary>
+        internal static string game_DownloadStarting {
+            get {
+                return ResourceManager.GetString("game_DownloadStarting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a DESCARGA COMPLETA.
         /// </summary>
         internal static string game_DownloadSucess {

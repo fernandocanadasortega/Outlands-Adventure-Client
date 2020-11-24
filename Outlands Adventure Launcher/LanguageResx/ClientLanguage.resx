@@ -432,4 +432,7 @@
   <data name="fileError" xml:space="preserve">
     <value>Error al crear el archivo de progreso</value>
   </data>
+  <data name="game_DownloadStarting" xml:space="preserve">
+    <value>PREPARANDO DESCARGA</value>
+  </data>
 </root>

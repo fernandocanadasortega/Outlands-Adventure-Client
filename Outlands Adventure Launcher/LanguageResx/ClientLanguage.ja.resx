@@ -432,4 +432,7 @@
   <data name="fileError" xml:space="preserve">
     <value>進行状況ファイルの作成中にエラーが発生しました</value>
   </data>
+  <data name="game_DownloadStarting" xml:space="preserve">
+    <value>放電の準備</value>
+  </data>
 </root>

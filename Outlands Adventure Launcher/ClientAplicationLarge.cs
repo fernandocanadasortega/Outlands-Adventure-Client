@@ -31,6 +31,7 @@ namespace Outlands_Adventure_Launcher
 			"Outlands Adventure Client");
 		private string downloadGameName = "";
 		private string downloadState = "";
+		private int downloadProgress = 0;
 		private bool downloadError;
 		private GameInfo downloadingGame;
 		private List<GameInfo> queueGames;
@@ -1891,6 +1892,7 @@ namespace Outlands_Adventure_Launcher
 							GameLibrary.Location = new Point(0, 203);
 						}
 
+						this.downloadProgress = 0;
 						CloseShowDownloadInformation.BackgroundImage = global::Outlands_Adventure_Launcher.Properties.Resources.arrow;
 						SideDownloadInformationGameImage.BackgroundImage = downloadingGame.GameImage;
 						SideDownloadInformationGameName.Text = downloadingGame.GameName;
@@ -1901,7 +1903,7 @@ namespace Outlands_Adventure_Launcher
 
 						languageManager.ChangeCurrentLanguage("es-ES");
 						downloadState = LanguageResx.ClientLanguage.game_Downloading_Uppercase;
-						await SetDownloadsPanelState(false, 100);
+						await SetDownloadsPanelState(false, this.downloadProgress);
 						CheckDownload_UninstallInformationLanguage();
 						try
 						{
@@ -2046,6 +2048,7 @@ namespace Outlands_Adventure_Launcher
 				Invoke(new MethodInvoker(() =>
 				{
 					downloadProgress.Value = Convert.ToInt32(progressValue);
+					this.downloadProgress = Convert.ToInt32(progressValue);
 
 					if (DownloadsPanel.Visible)
 					{
@@ -2074,7 +2077,6 @@ namespace Outlands_Adventure_Launcher
 						{
 							downloadInfoProgress.Text = Convert.ToInt32(progressValue).ToString() + " %";
 						}
-
 					}
 				}));
 			};
@@ -2205,12 +2207,33 @@ namespace Outlands_Adventure_Launcher
 				downloadStateLabel.Text = downloadState;
 				downloadingPanel.Controls.Add(downloadStateLabel);
 
+				Label downloadInfoProgress = null;
+				try
+				{
+					downloadInfoProgress = downloadingPanel.Controls.Find("DownloadProgress", false)[0] as Label;
+				}
+				catch (Exception)
+				{
+					downloadInfoProgress = MultipleResources.CreateGenericLabel("DownloadProgress", true, 45, 19, 630, 32, 10,
+						ContentAlignment.MiddleRight);
+					downloadingPanel.Controls.Add(downloadInfoProgress);
+				}
+				finally
+				{
+					downloadInfoProgress.Text = downloadProgress.ToString() + " %";
+				}
+
 				LanguageManager languageManager = new LanguageManager();
 				string currentLanguage = ChangeLanguageTemporarily(languageManager);
 				if (downloadState.Equals(LanguageResx.ClientLanguage.game_Install))
 				{
 					languageManager.ChangeCurrentLanguage(currentLanguage);
                     SetDownloadsPanelState(true, 40);
+				}
+				else
+                {
+					languageManager.ChangeCurrentLanguage(currentLanguage);
+					SetDownloadsPanelState(false, this.downloadProgress);
 				}
 
 				if (queueGames.Count > 0)

@@ -432,4 +432,7 @@
   <data name="fileError" xml:space="preserve">
     <value>Feil ved oppretting av fremdriftsfil</value>
   </data>
+  <data name="game_DownloadStarting" xml:space="preserve">
+    <value>FORBEREDELSE AV UTSLIPP</value>
+  </data>
 </root>

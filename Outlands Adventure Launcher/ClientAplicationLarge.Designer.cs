@@ -227,7 +227,6 @@
             this.SideDownloadInformationGameName.Name = "SideDownloadInformationGameName";
             this.SideDownloadInformationGameName.Size = new System.Drawing.Size(243, 23);
             this.SideDownloadInformationGameName.TabIndex = 0;
-            this.SideDownloadInformationGameName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.SideDownloadInformationGameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SideDownloadInformationGameImage
@@ -262,7 +261,6 @@
             this.SideDownloadState.Name = "SideDownloadState";
             this.SideDownloadState.Size = new System.Drawing.Size(243, 23);
             this.SideDownloadState.TabIndex = 1;
-            this.SideDownloadState.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.SideDownloadState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CloseShowDownloadInformation
@@ -305,7 +303,6 @@
             this.Uninstall_InformationGameName.Name = "Uninstall_InformationGameName";
             this.Uninstall_InformationGameName.Size = new System.Drawing.Size(243, 23);
             this.Uninstall_InformationGameName.TabIndex = 0;
-            this.Uninstall_InformationGameName.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.Uninstall_InformationGameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Uninstall_InformationGameImage
@@ -342,7 +339,6 @@
             this.UninstallState.Name = "UninstallState";
             this.UninstallState.Size = new System.Drawing.Size(243, 23);
             this.UninstallState.TabIndex = 1;
-            this.UninstallState.Text = "qwertyuiopasdfghjklñzxcvbnmqwe\r\n\r\n";
             this.UninstallState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // CloseUninstall_Information

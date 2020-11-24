@@ -433,4 +433,7 @@
   <data name="fileError" xml:space="preserve">
     <value>Erreur lors de la création du fichier de progression</value>
   </data>
+  <data name="game_DownloadStarting" xml:space="preserve">
+    <value>PRÉPARATION DU TÉLÉCHARGEMENT</value>
+  </data>
 </root>
