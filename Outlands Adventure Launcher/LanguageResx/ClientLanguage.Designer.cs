@@ -214,6 +214,15 @@ namespace Outlands_Adventure_Launcher.LanguageResx {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No tienes progreso guardado en la base de datos.
+        /// </summary>
+        internal static string events_Database_NoProgressFound {
+            get {
+                return ResourceManager.GetString("events_Database_NoProgressFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Hemos mandado un código de confirmación a tu correo electrónico, dirígete a tu correo e introduce el código para confirmar tu cuenta.
         /// </summary>
         internal static string events_Header_NewAccount {

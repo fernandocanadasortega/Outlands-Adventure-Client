@@ -435,4 +435,7 @@
   <data name="game_DownloadStarting" xml:space="preserve">
     <value>放電の準備</value>
   </data>
+  <data name="events_Database_NoProgressFound" xml:space="preserve">
+    <value>データベースに進行状況が保存されていません</value>
+  </data>
 </root>

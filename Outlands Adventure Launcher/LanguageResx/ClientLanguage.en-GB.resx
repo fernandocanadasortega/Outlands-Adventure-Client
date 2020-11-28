@@ -415,4 +415,7 @@
   <data name="game_DownloadStarting" xml:space="preserve">
     <value>PREPARING DOWNLOAD</value>
   </data>
+  <data name="events_Database_NoProgressFound" xml:space="preserve">
+    <value>You have no progress saved in the database</value>
+  </data>
 </root>

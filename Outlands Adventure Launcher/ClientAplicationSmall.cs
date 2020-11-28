@@ -1761,6 +1761,10 @@ namespace Outlands_Adventure_Launcher
 				{
 					GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
 				}
+				else if (gameProgressBytes.Length == 0)
+				{
+					GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_NoProgressFound);
+				}
 				else
 				{
 					if (File.Exists(filePath))

@@ -194,6 +194,7 @@ namespace Outlands_Adventure_Launcher
 
         public static byte[] ReadGameProgress(string gameProgressQuery)
         {
+            bool conectionOk = false; // Se usa para saber si el catch es de error de conexión o por que no hay archivos de guardado en la nube
             try
             {
                 using (MySqlConnection dbConnection = new MySqlConnection(conectionRoute))
@@ -202,8 +203,9 @@ namespace Outlands_Adventure_Launcher
                     MySqlCommand readGameProgress = new MySqlCommand(gameProgressQuery, dbConnection);
                     MySqlDataReader gamesInfoReader = readGameProgress.ExecuteReader();
 
-                    while (gamesInfoReader.Read())
+                    if (gamesInfoReader.Read())
                     {
+                        conectionOk = true;
                         return (byte[])gamesInfoReader[0];
                     }
 
@@ -212,7 +214,8 @@ namespace Outlands_Adventure_Launcher
             }
             catch (Exception)
             {
-                return null;
+                if (conectionOk) return new byte[0];
+                else return null;
             }
         }
 
