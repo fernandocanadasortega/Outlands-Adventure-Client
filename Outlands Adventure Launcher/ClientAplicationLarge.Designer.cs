@@ -194,9 +194,9 @@
             this.GameLibraryLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.GameLibraryLabel.Location = new System.Drawing.Point(40, 22);
             this.GameLibraryLabel.Name = "GameLibraryLabel";
-            this.GameLibraryLabel.Size = new System.Drawing.Size(248, 36);
+            this.GameLibraryLabel.Size = new System.Drawing.Size(281, 36);
             this.GameLibraryLabel.TabIndex = 0;
-            this.GameLibraryLabel.Text = "Librería de juegos";
+            this.GameLibraryLabel.Text = "Biblioteca de juegos";
             this.GameLibraryLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GameLibrary_MouseDown);
             this.GameLibraryLabel.MouseEnter += new System.EventHandler(this.GameLibrary_MouseEnter);
             this.GameLibraryLabel.MouseLeave += new System.EventHandler(this.GameLibrary_MouseLeave);
@@ -939,7 +939,7 @@
             this.DefaultScreen.IntegralHeight = false;
             this.DefaultScreen.ItemHeight = 40;
             this.DefaultScreen.Items.AddRange(new object[] {
-            "Libreria de juegos",
+            "Biblioteca de juegos",
             "Tienda",
             "Aleatorio"});
             this.DefaultScreen.Location = new System.Drawing.Point(347, 220);

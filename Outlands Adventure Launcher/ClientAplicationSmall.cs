@@ -1,14 +1,10 @@
 ﻿using CG.Web.MegaApiClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1685,8 +1681,10 @@ namespace Outlands_Adventure_Launcher
 		{
 			if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.play_Button))
 			{
-				string gamePath = Path.Combine(downloadPath, currentGameInfo.GameName, currentGameInfo.GameName + ".exe");
-				Process.Start(gamePath);
+				var process = new System.Diagnostics.Process();
+				process.StartInfo.WorkingDirectory = Path.Combine(downloadPath, currentGameInfo.GameName);
+				process.StartInfo.FileName = currentGameInfo.GameName + ".exe";
+				process.Start();
 			}
 			else if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.download_Avaible_Button))
 			{
