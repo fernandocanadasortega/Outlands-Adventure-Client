@@ -62,6 +62,7 @@ namespace Outlands_Adventure_Launcher
 		public void ReceiveClassInstance(ClientAplicationSmall clientAplication, string userName)
 		{
 			this.clientAplication = clientAplication;
+			UserName.Text = userName;
 			this.userName = userName;
 		}
 
@@ -133,7 +134,7 @@ namespace Outlands_Adventure_Launcher
 
 		#region Side Menu Manager
 		/// <summary>
-		/// 
+		/// Change the background color of the object the cursor is on
 		/// </summary>
 		/// <param name="backgroundPanel">Panel, panel that will change of color when you move the mouse in, out or when you
 		/// click on the panel</param>
@@ -369,7 +370,18 @@ namespace Outlands_Adventure_Launcher
 			Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(false);
 			string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
 
-			DefaultScreen.SelectedItem = selectedDefaultScreen;
+			if (selectedDefaultScreen.Equals("Biblioteca de juegos"))
+			{
+				DefaultScreen.SelectedIndex = 0;
+			}
+			else if (selectedDefaultScreen.Equals("Tienda"))
+			{
+				DefaultScreen.SelectedIndex = 1;
+			}
+			else
+			{
+				DefaultScreen.SelectedIndex = 2;
+			}
 			windowsRegisterManager.CloseWindowsRegister(key);
 
 			if (DefaultScreen.SelectedItem == null || DefaultScreen.SelectedIndex == -1)
@@ -390,6 +402,7 @@ namespace Outlands_Adventure_Launcher
 		/// <param name="e">Events that occur to the object</param>
 		private void DeleteAccount_MouseClick(object sender, MouseEventArgs e)
 		{
+			
 			if (e.Button == MouseButtons.Left)
 			{
 				OpenLoadingScreen();
@@ -397,24 +410,17 @@ namespace Outlands_Adventure_Launcher
 				Hash_SHA2.InitialiceVariables(confirmationCode);
 
 				string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_DeleteAccount.Split('*');
-				bool messageError = false;
-				if (userEmail.Equals("error")) messageError = true;
-				else messageError = SendEmail.SendNewEmail(GetUserEmail(userName), messageInfo[0], messageInfo[1], confirmationCode);
+				string messageError = "";
+				if (userEmail.Equals("error")) messageError = "Email direction not found";
+				//else messageError = SendEmail.SendNewEmail(userEmail, messageInfo[0], messageInfo[1], confirmationCode);
 
-				if (!messageError)
+				if (messageError.Equals(""))
 				{
-					EventText.Location = new Point(20, 10);
-					EventCode.Visible = true;
-					EventSendButton.Visible = true;
-					EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
-
-					EventText.Text = LanguageResx.ClientLanguage.events_Header_NewAccount;
-
-					EventsPanel.Visible = true;
+					GenericPopUpCode(LanguageResx.ClientLanguage.events_Header_NewAccount);
 				}
 				else
 				{
-					GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError);
+					GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError + "\n \n" + messageError);
 				}
 
 				CloseLoadingScreen(false);
@@ -510,20 +516,21 @@ namespace Outlands_Adventure_Launcher
 			string selectedDefaultScreen = (string)key.GetValue("selectedDefaultScreen");
 			if (selectedDefaultScreen == null || selectedDefaultScreen.Equals(""))
 			{
-				key.SetValue("selectedDefaultScreen", LanguageResx.ClientLanguage.store_Header);
+				key.SetValue("selectedDefaultScreen", "Tienda");
+				selectedDefaultScreen = "Tienda";
 			}
 
 			windowsRegisterManager.CloseWindowsRegister(key);
 
-			if (selectedDefaultScreen.Equals(LanguageResx.ClientLanguage.store_Header))
+			if (selectedDefaultScreen.Equals("Tienda"))
 			{
 				Store_MouseDown(null, null);
 			}
-			else if (selectedDefaultScreen.Equals(LanguageResx.ClientLanguage.gameLibrary_Header))
+			else if (selectedDefaultScreen.Equals("Biblioteca de juegos"))
 			{
 				GameLibrary_MouseDown(null, null);
 			}
-			else if (selectedDefaultScreen.Equals(LanguageResx.ClientLanguage.randomDefaultScreen))
+			else if (selectedDefaultScreen.Equals("Aleatorio"))
 			{
 				Random random = new Random();
 				int randomNumer = random.Next(1, 3);
@@ -808,7 +815,6 @@ namespace Outlands_Adventure_Launcher
 			languageManager.SelectCurrentAplicationWindow(null, null, null, clientAplication);
 			languageManager.LanguageCombobox_LanguageChanged(LanguageSelected);
 
-			SaveDefaultScreen(currentDefaultScreen);
 			DefaultScreen.SelectedIndex = currentDefaultScreen;
 		}
 		#endregion Language manager
@@ -832,8 +838,23 @@ namespace Outlands_Adventure_Launcher
 		/// <param name="selectedItemIndex"></param>
 		private void SaveDefaultScreen(int selectedItemIndex)
 		{
+			string selectedDefaultScreen = "";
+
+			if (selectedItemIndex == 0)
+            {
+				selectedDefaultScreen = "Biblioteca de juegos";
+			}
+			else if (selectedItemIndex == 1)
+            {
+				selectedDefaultScreen = "Tienda";
+			}
+			else
+            {
+				selectedDefaultScreen = "Aleatorio";
+			}
+
 			Microsoft.Win32.RegistryKey key = windowsRegisterManager.OpenWindowsRegister(true);
-			key.SetValue("selectedDefaultScreen", DefaultScreen.Items[selectedItemIndex]);
+			key.SetValue("selectedDefaultScreen", selectedDefaultScreen);
 			windowsRegisterManager.CloseWindowsRegister(key);
 		}
 		#endregion Default Screen manager
@@ -1397,10 +1418,22 @@ namespace Outlands_Adventure_Launcher
 		#region Popup events
 		private void GenericPopUpMessage(string eventText)
 		{
-			EventText.Location = new Point(20, 25);
+			EventText.Location = new Point(20, 15);
+			EventText.Size = new Size(560, 120);
 			EventCode.Visible = false;
 			EventSendButton.Visible = false;
-			EventExitButton.Location = new Point(237, 105);
+			EventExitButton.Location = new Point(237, 145);
+			EventText.Text = eventText;
+			EventsPanel.Visible = true;
+		}
+
+		private void GenericPopUpCode(string eventText)
+		{
+			EventText.Location = new Point(20, 10);
+			EventText.Size = new Size(560, 57);
+			EventCode.Visible = true;
+			EventSendButton.Visible = true;
+			EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 			EventText.Text = eventText;
 			EventsPanel.Visible = true;
 		}
@@ -1466,12 +1499,12 @@ namespace Outlands_Adventure_Launcher
 
 		private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
 		{
-			((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
+			((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Bold);
 		}
 
 		private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
 		{
-			((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
+			((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Regular);
 		}
 
 		private void EventSendButton_MouseClick(object sender, MouseEventArgs e)

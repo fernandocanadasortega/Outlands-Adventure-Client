@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Net.Mail;
-using System.Threading;
 using System.Security.Cryptography;
 using System.Data.Linq;
 using System.Diagnostics;
@@ -122,14 +119,14 @@ namespace Outlands_Adventure_Launcher
         /// <param name="emailBody">String, message body</param>
         /// <param name="emailBodyData">String, message body data (in this case is the security code)</param>
         /// <returns>Boolean, true if the email was sent correctly or false if not</returns>
-        public static bool SendNewEmail(String emailDirection, string emailSubject, string emailBody, string emailBodyData)
+        public static string SendNewEmail(String emailDirection, string emailSubject, string emailBody, string emailBodyData)
         {
             try
             {
                 SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
                 MailMessage mail = new MailMessage();
 
-                mail.From = new MailAddress("outlandsadventure@gmail.com");
+                mail.From = new MailAddress("outlandsadventure@gmail.com", "Outlands Adventures Inc");
                 mail.To.Add(emailDirection);
                 mail.Subject = emailSubject;
 
@@ -140,15 +137,16 @@ namespace Outlands_Adventure_Launcher
 
                 smtpServer.Port = 587;
                 smtpServer.UseDefaultCredentials = false;
+                smtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpServer.Credentials = new System.Net.NetworkCredential("outlandsadventure@gmail.com", "Outlands_Client_Password");
                 smtpServer.EnableSsl = true;
                 smtpServer.Send(mail);
 
-                return false;
+                return "";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return true;
+                return ex.Message;
             }
         }
     }

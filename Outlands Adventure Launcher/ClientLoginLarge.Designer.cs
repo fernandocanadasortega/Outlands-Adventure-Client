@@ -561,7 +561,7 @@
             // 
             this.NewPasswordStrengthLabel.BackColor = System.Drawing.Color.White;
             this.NewPasswordStrengthLabel.Font = new System.Drawing.Font("Oxygen", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NewPasswordStrengthLabel.Location = new System.Drawing.Point(284, 434);
+            this.NewPasswordStrengthLabel.Location = new System.Drawing.Point(284, 432);
             this.NewPasswordStrengthLabel.Name = "NewPasswordStrengthLabel";
             this.NewPasswordStrengthLabel.Size = new System.Drawing.Size(90, 23);
             this.NewPasswordStrengthLabel.TabIndex = 14;
@@ -1052,14 +1052,15 @@
             this.EventsPanel.Controls.Add(this.EventCode);
             this.EventsPanel.Controls.Add(this.EventSendButton);
             this.EventsPanel.Controls.Add(this.EventExitButton);
-            this.EventsPanel.Location = new System.Drawing.Point(291, 260);
+            this.EventsPanel.Location = new System.Drawing.Point(291, 240);
             this.EventsPanel.Name = "EventsPanel";
-            this.EventsPanel.Size = new System.Drawing.Size(800, 185);
+            this.EventsPanel.Size = new System.Drawing.Size(800, 225);
             this.EventsPanel.TabIndex = 14;
             this.EventsPanel.Visible = false;
             // 
             // EventText
             // 
+            this.EventText.BackColor = System.Drawing.Color.Black;
             this.EventText.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EventText.ForeColor = System.Drawing.Color.White;
             this.EventText.Location = new System.Drawing.Point(20, 15);
@@ -1075,7 +1076,7 @@
             this.EventCodeError.AutoSize = true;
             this.EventCodeError.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EventCodeError.ForeColor = System.Drawing.Color.Red;
-            this.EventCodeError.Location = new System.Drawing.Point(560, 100);
+            this.EventCodeError.Location = new System.Drawing.Point(560, 115);
             this.EventCodeError.Name = "EventCodeError";
             this.EventCodeError.Size = new System.Drawing.Size(134, 21);
             this.EventCodeError.TabIndex = 18;
@@ -1086,7 +1087,7 @@
             // 
             this.EventCode.Font = new System.Drawing.Font("Oxygen", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EventCode.ForeColor = System.Drawing.Color.Black;
-            this.EventCode.Location = new System.Drawing.Point(298, 95);
+            this.EventCode.Location = new System.Drawing.Point(298, 110);
             this.EventCode.MaxLength = 8;
             this.EventCode.Name = "EventCode";
             this.EventCode.Size = new System.Drawing.Size(203, 29);
@@ -1101,7 +1102,7 @@
             this.EventSendButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EventSendButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EventSendButton.ForeColor = System.Drawing.Color.White;
-            this.EventSendButton.Location = new System.Drawing.Point(255, 142);
+            this.EventSendButton.Location = new System.Drawing.Point(255, 182);
             this.EventSendButton.Name = "EventSendButton";
             this.EventSendButton.Size = new System.Drawing.Size(133, 31);
             this.EventSendButton.TabIndex = 16;
@@ -1117,7 +1118,7 @@
             this.EventExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EventExitButton.Font = new System.Drawing.Font("Oxygen", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EventExitButton.ForeColor = System.Drawing.Color.White;
-            this.EventExitButton.Location = new System.Drawing.Point(417, 142);
+            this.EventExitButton.Location = new System.Drawing.Point(417, 182);
             this.EventExitButton.Name = "EventExitButton";
             this.EventExitButton.Size = new System.Drawing.Size(133, 31);
             this.EventExitButton.TabIndex = 14;
@@ -1297,8 +1298,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1365, 708);
             this.Controls.Add(this.ConfigurationButton);
-            this.Controls.Add(this.RegisterPanel);
             this.Controls.Add(this.LoginPanel);
+            this.Controls.Add(this.RegisterPanel);
             this.Controls.Add(this.LoginProblemsPanel);
             this.Controls.Add(this.BackgroundPanel);
             this.Controls.Add(this.ImagePanel);

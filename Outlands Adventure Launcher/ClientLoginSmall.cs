@@ -253,8 +253,7 @@ namespace Outlands_Adventure_Launcher
             }
             else
             {
-                CloseLoadingScreen(false, "login");
-                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError, false, "login");
                 loginErrors = true;
             }
         }
@@ -416,9 +415,9 @@ namespace Outlands_Adventure_Launcher
                         Hash_SHA2.InitialiceVariables(confirmationCode);
 
                         string[] messageInfo = LanguageResx.ClientLanguage.sendEmail_NewAccount.Split('*');
-                        bool messageError = SendEmail.SendNewEmail(NewEmailTextbox.Text, messageInfo[0], messageInfo[1], confirmationCode);
+                        string messageError = SendEmail.SendNewEmail(NewEmailTextbox.Text, messageInfo[0], messageInfo[1], confirmationCode);
 
-                        if (!messageError)
+                        if (messageError.Equals(""))
                         {
                             EventText.Location = new Point(40, 5);
                             EventCode.Visible = true;
@@ -435,9 +434,8 @@ namespace Outlands_Adventure_Launcher
                         }
                         else
                         {
-                            CloseLoadingScreen(false, "register");
                             registerErrors = true;
-                            GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError);
+                            GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError + "\n \n" + messageError, false, "register");
                         }
                     }
                 }
@@ -486,9 +484,8 @@ namespace Outlands_Adventure_Launcher
             }
             else
             {
-                CloseLoadingScreen(false, "register");
                 registerErrors = true;
-                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError, false, "register");
             }
         }
 
@@ -504,19 +501,17 @@ namespace Outlands_Adventure_Launcher
                 if (queryError.Contains("Unable to connect"))
                 {
                     // Pop up de falta de internet - No te puedes conectar a la base de datos
-                    GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+                    GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError, false, "register");
                 }
 
                 else
                 {
                     // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
-                    GenericPopUpMessage(queryError);
+                    GenericPopUpMessage(queryError, false, "register");
                 }
 
                 registerErrors = true;
             }
-
-            CloseLoadingScreen(false, "register");
         }
         #endregion
 
@@ -637,7 +632,7 @@ namespace Outlands_Adventure_Launcher
 
                 if (!loginProblemsErrors)
                 {
-                    bool messageError = false;
+                    string messageError = "";
 
                     if (usernameLost)
                     {
@@ -646,7 +641,6 @@ namespace Outlands_Adventure_Launcher
                         EventSendButton.Visible = false;
                         EventExitButton.Location = new Point(237, 105);
 
-                        // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
                         EventText.Text = LanguageResx.ClientLanguage.events_Header_UsernameLost;
 
                         if (loginProblemsAvaible)
@@ -668,7 +662,6 @@ namespace Outlands_Adventure_Launcher
                         EventSendButton.Visible = true;
                         EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 
-                        // Buscar en firebase para ver si existe el correo, si existe, mandar dicho correo
                         EventText.Text = LanguageResx.ClientLanguage.events_Header_PasswordLost;
 
                         if (loginProblemsAvaible)
@@ -680,18 +673,16 @@ namespace Outlands_Adventure_Launcher
                         }
                     }
 
-                    if (messageError)
+                    if (!messageError.Equals(""))
                     {
                         loginProblemsErrors = true;
-                        EventsPanel.Visible = true;
-                        CloseLoadingScreen(false, "loginProblems");
-                        GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError);
+                        GenericPopUpMessage(LanguageResx.ClientLanguage.events_SendEmailError + "\n \n" + messageError, false, "loginProblems");
                     }
                     else
                     {
                         targetPanel = "login";
-                        CloseLoadingScreen(false, "loginProblems");
-                        EventsPanel.Visible = true;
+                        if (usernameLost) GenericPopUpMessage(LanguageResx.ClientLanguage.events_Header_UsernameLost, false, "loginProblems");
+                        else if (passwordLost) GenericPopUpCode(LanguageResx.ClientLanguage.events_Header_PasswordLost, false, "loginProblems");
                     }
                 }
             }
@@ -716,8 +707,7 @@ namespace Outlands_Adventure_Launcher
             else
             {
                 loginProblemsErrors = true;
-                CloseLoadingScreen(false, "loginProblems");
-                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError, false, "loginProblems");
             }
         }
 
@@ -738,8 +728,7 @@ namespace Outlands_Adventure_Launcher
             else
             {
                 loginProblemsErrors = true;
-                CloseLoadingScreen(false, "loginProblems");
-                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+                GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError, false, "loginProblems");
 
                 return "";
             }
@@ -806,12 +795,12 @@ namespace Outlands_Adventure_Launcher
         #region Events Panel
         private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
         {
-            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Bold);
+            ((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Bold);
         }
 
         private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
         {
-            ((Label)sender).Font = new Font("Oxygen", 12, FontStyle.Regular);
+            ((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Regular);
         }
 
         private void EventSendButton_Click(object sender, EventArgs e)
@@ -964,33 +953,66 @@ namespace Outlands_Adventure_Launcher
                 if (queryError.Contains("Unable to connect"))
                 {
                     // Pop up de falta de internet - No te puedes conectar a la base de datos
-                    GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError);
+                    GenericPopUpMessage(LanguageResx.ClientLanguage.events_Database_ConnectionError, false, "loginProblems");
                 }
 
                 else
                 {
                     // Cualquier otro tipo de error de la base de datos que tendra que salir en el pop up
-                    GenericPopUpMessage(queryError);
+                    GenericPopUpMessage(queryError, false, "loginProblems");
                 }
                 loginProblemsErrors = true;
             }
-
-            CloseLoadingScreen(false, "loginProblems");
         }
 
         #endregion Reset Password Event
 
         private void GenericPopUpMessage(string eventText)
         {
-            EventText.Location = new Point(23, 25);
+            EventText.Location = new Point(20, 15);
+            EventText.Size = new Size(560, 120);
             EventCode.Visible = false;
             EventSendButton.Visible = false;
-            EventExitButton.Location = new Point(237, 105);
-
+            EventExitButton.Location = new Point(237, 145);
             EventText.Text = eventText;
-
             ResetPasswordEventPanel.Visible = false;
             EventsPanel.Visible = true;
+        }
+
+        private void GenericPopUpMessage(string eventText, bool hideImageGradient, string targetPanel)
+        {
+            EventText.Location = new Point(20, 15);
+            EventText.Size = new Size(560, 120);
+            EventCode.Visible = false;
+            EventSendButton.Visible = false;
+            EventExitButton.Location = new Point(237, 145);
+            EventText.Text = eventText;
+            ResetPasswordEventPanel.Visible = false;
+            EventsPanel.Visible = true;
+            CloseLoadingScreen(hideImageGradient, targetPanel);
+        }
+
+        private void GenericPopUpCode(string eventText)
+        {
+            EventText.Location = new Point(20, 10);
+            EventText.Size = new Size(560, 57);
+            EventCode.Visible = true;
+            EventSendButton.Visible = true;
+            EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+            EventText.Text = eventText;
+            EventsPanel.Visible = true;
+        }
+
+        private void GenericPopUpCode(string eventText, bool hideImageGradient, string targetPanel)
+        {
+            EventText.Location = new Point(20, 10);
+            EventText.Size = new Size(560, 57);
+            EventCode.Visible = true;
+            EventSendButton.Visible = true;
+            EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
+            EventText.Text = eventText;
+            EventsPanel.Visible = true;
+            CloseLoadingScreen(hideImageGradient, targetPanel);
         }
 
         #endregion Popup Events
