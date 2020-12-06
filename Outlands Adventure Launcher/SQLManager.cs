@@ -160,6 +160,13 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Write in the database the game progress of that user
+        /// </summary>
+        /// <param name="gameProgress">byte[], json file game progress</param>
+        /// <param name="userEmail">String, user email attached to the game progress</param>
+        /// <param name="gameName">String, game name attached to the game progress</param>
+        /// <returns></returns>
         public static string WriteGameProgress(byte[] gameProgress, string userEmail, string gameName)
         {
             try
@@ -192,6 +199,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Get the user's game progress
+        /// </summary>
+        /// <param name="gameProgressQuery">String, SQL query</param>
+        /// <returns>byte[], json file game progress</returns>
         public static byte[] ReadGameProgress(string gameProgressQuery)
         {
             bool conectionOk = false; // Se usa para saber si el catch es de error de conexión o por que no hay archivos de guardado en la nube

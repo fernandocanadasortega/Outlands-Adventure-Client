@@ -1585,7 +1585,7 @@ namespace Outlands_Adventure_Launcher
 
 		#region Popup events
 		/// <summary>
-		/// Shows a popup with a custom message and other controls when needed
+		/// Shows a popup with a custom message
 		/// </summary>
 		/// <param name="eventText">String, custom message</param>
 		private void GenericPopUpMessage(string eventText)
@@ -1599,6 +1599,10 @@ namespace Outlands_Adventure_Launcher
 			EventsPanel.Visible = true;
 		}
 
+		/// <summary>
+		/// Shows a popup with a custom message and other controls
+		/// </summary>
+		/// <param name="eventText">String, custom message</param>
 		private void GenericPopUpCode(string eventText)
         {
 			EventText.Location = new Point(20, 10);
@@ -2165,6 +2169,10 @@ namespace Outlands_Adventure_Launcher
 		#region Downloads / Installations - Uninstallations - File manager
 
 		#region Downloads / Installations
+		/// <summary>
+		/// Async Task, Check if you have enough space in your disk, manage all download states (like downloading or catching all type of errors)
+		/// and manage the download queue and the game download process, also show the download the download info side panel
+		/// </summary>
 		private async void Download_InstallGame()
 		{
 			long requeriedDriveSpace = 600000000; // 600 MB in bytes
@@ -2329,6 +2337,13 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Async Task, Connect to Mega API to start the download of a game,enables the posibility to cancel the download and refresh the download
+		/// state values (download percentage and state, preparing download, downloading...)
+		/// </summary>
+		/// <param name="downloadProgress">Progress bar, indicates the download progress</param>
+		/// <param name="downloadingGameInfo">GameInfo, information of the game downloading (game name, download link...)</param>
+		/// <returns>Task, task in execution</returns>
 		private async Task DownloadGameFromMega(ProgressBar downloadProgress, GameInfo downloadingGameInfo)
 		{
 			MegaApiClient mega = new MegaApiClient();
@@ -2401,6 +2416,10 @@ namespace Outlands_Adventure_Launcher
 			mega.Logout();
 		}
 
+		/// <summary>
+		/// Async Task, unzip the downloaded game and when the zip is unzipped deletes the zip
+		/// </summary>
+		/// <returns>Task, task in execution</returns>
 		private async Task Install_Game()
 		{
 			string zipPath = Path.Combine(downloadPath, downloadGameName);
@@ -2411,12 +2430,22 @@ namespace Outlands_Adventure_Launcher
 			File.Delete(Path.Combine(downloadPath, downloadGameName));
 		}
 
+		/// <summary>
+		/// Cancel the current download
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void CancelDownload_Click(object sender, EventArgs e)
 		{
 			if (!downloadingGame.DownloadCancellationTokenSource.IsCancellationRequested)
 				downloadingGame.DownloadCancellationTokenSource.Cancel();
 		}
 
+		/// <summary>
+		/// Cancel a game in the queue
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void CancelQueue_Click(object sender, EventArgs e)
 		{
 			string controlName = ((Panel)sender).Name;
@@ -2425,6 +2454,11 @@ namespace Outlands_Adventure_Launcher
 			LoadDownloadsPanel();
 		}
 
+		/// <summary>
+		/// Raise the download priority of a queued game
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void RankUpQueue_Click(object sender, EventArgs e)
 		{
 			string controlName = ((Panel)sender).Name;
@@ -2437,6 +2471,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Lower the download priority of a queued game
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void RankDownQueue_Click(object sender, EventArgs e)
 		{
 			string controlName = ((Panel)sender).Name;
@@ -2449,6 +2488,12 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Async Task, Refresh the download information panel when the download change the current state (like from downloading to installing)
+		/// </summary>
+		/// <param name="infiniteProgressbar">Bool, true if the state is installing and false if the progress bar have a certain value (like 90%)</param>
+		/// <param name="progressbarValue">Int, set the value of the progress bar</param>
+		/// <returns>Task, task in execution</returns>
 		private async Task SetDownloadsPanelState(bool infiniteProgressbar, int progressbarValue)
 		{
 			Invoke(new MethodInvoker(() =>
@@ -2485,6 +2530,10 @@ namespace Outlands_Adventure_Launcher
 			}));
 		}
 
+		/// <summary>
+		/// Shows the downloads panel when you can see the current download and every queued game, adds tooltips to some buttons and
+		/// notice the user when there is no game in the queue or currently downloanding
+		/// </summary>
 		private void LoadDownloadsPanel()
 		{
 			QueueLayout.Controls.Clear();
@@ -2604,6 +2653,9 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Reload the Queue panel when you change the download priority of any game
+		/// </summary>
 		private void ReloadQueue()
 		{
 			QueueLayout.Controls.Clear();
@@ -2637,6 +2689,9 @@ namespace Outlands_Adventure_Launcher
 		#endregion Downloads / Installations
 
 		#region Uninstallations
+		/// <summary>
+		/// Async task, Uninstall the desired game and show the progress in a panel in the side menu
+		/// </summary>
 		private async void UninstallGame()
 		{
 			if (Directory.Exists(downloadPath))
@@ -2689,6 +2744,9 @@ namespace Outlands_Adventure_Launcher
 		#endregion Uninstallations
 
 		#region File manager
+		/// <summary>
+		/// Create the folder 'Outlands Adventure Client' where the games will be installed
+		/// </summary>
 		private void CreateClientFolder()
 		{
 			if (!Directory.Exists(downloadPath))
@@ -2702,9 +2760,13 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
-		// Check if the game is already installed
+		/// <summary>
+		/// Check if the game is already installed
+		/// </summary>
+		/// <returns>Boolean, true if installed already</returns>
 		private bool CheckGameFiles()
 		{
+			string path = Path.Combine(downloadPath, currentGameInfo.GameName);
 			if (Directory.Exists(Path.Combine(downloadPath, currentGameInfo.GameName)))
 			{
 				return true;
@@ -2713,6 +2775,9 @@ namespace Outlands_Adventure_Launcher
 			return false;
 		}
 
+		/// <summary>
+		/// Delete the game zip if the download went wrong or when needed
+		/// </summary>
 		private void DeleteCorruptedFiles()
 		{
 			try
@@ -2735,6 +2800,12 @@ namespace Outlands_Adventure_Launcher
 		#endregion File manager
 
 		#region Others
+		/// <summary>
+		/// Opens the screen where you can see the current download and every queued game or close DownloadInformation side panel when
+		/// the download is completed
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void CloseShowDownloadInformation_MouseClick(object sender, MouseEventArgs e)
 		{
 			LanguageManager languageManager = new LanguageManager();
@@ -2764,6 +2835,11 @@ namespace Outlands_Adventure_Launcher
 			CheckDownload_UninstallInformationLanguage();
 		}
 
+		/// <summary>
+		/// Close the uninstall side panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
@@ -2775,6 +2851,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Color change animation when the mouse enter the DownloadInformation panel or Uninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void Download_UninstallInformation_MouseEnter(object sender, EventArgs e)
 		{
 			if (sender == DownloadInformation)
@@ -2795,6 +2876,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Color change animation when the mouse exit the DownloadInformation panel or Uninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void Download_UninstallInformation_MouseLeave(object sender, EventArgs e)
 		{
 			if (sender == DownloadInformation)
@@ -2835,6 +2921,12 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Show the tooltip that appers when mouse enter CloseShowDownloadInformation panel, el texto cambia si el juego se está 
+		/// descargando / instalando o si la descarga ha terminado
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void DownloadShowInformation_MouseEnter(object sender, EventArgs e)
 		{
 			LanguageManager languageManager = new LanguageManager();
@@ -2852,16 +2944,31 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
-        private void DownloadShowInformation_MouseLeave(object sender, EventArgs e)
+		/// <summary>
+		/// Hide the tooltip that appers when mouse exit CloseShowDownloadInformation panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
+		private void DownloadShowInformation_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(CloseShowDownloadInformation);
 		}
 
+		/// <summary>
+		/// Show the tooltip that appers when mouse enter CloseUninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void UninstallShowInformation_MouseEnter(object sender, EventArgs e)
 		{
 			MultipleResources.ShowToolTip(CloseUninstall_Information, LanguageResx.ClientLanguage.button_Close_Lowercase);
 		}
 
+		/// <summary>
+		/// Hide the tooltip that appers when mouse exit CloseUninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void UninstallShowInformation_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(CloseUninstall_Information);

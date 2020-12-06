@@ -676,9 +676,18 @@ namespace Outlands_Adventure_Launcher
     #endregion Language / Resolution / Combobox Manager
 
     #region Multiple Resources
+    /// <summary>
+    /// Class in charge of managing the multiple resolutions of the application
+    /// </summary>
     static class MultipleResources
     {
         static ToolTip toolTip = new ToolTip();
+
+        /// <summary>
+        /// Shows a tooltip attached to a certain panel and with a custom message
+        /// </summary>
+        /// <param name="currentPanel">Panel to which the tooltip will be attached</param>
+        /// <param name="toolTipText">String, custom text</param>
         public static void ShowToolTip(Panel currentPanel, string toolTipText)
         {
             toolTip.UseFading = true;
@@ -687,11 +696,21 @@ namespace Outlands_Adventure_Launcher
             toolTip.SetToolTip(currentPanel, toolTipText);
         }
 
+        /// <summary>
+        /// Hide the tooltip attached to a certain panel
+        /// </summary>
+        /// <param name="currentPanel">Panel to which the tooltip will be attached</param>
         public static void HideToolTip(Panel currentPanel)
         {
             toolTip.Hide(currentPanel);
         }
 
+        /// <summary>
+        /// Calculate the center of the given container
+        /// </summary>
+        /// <param name="container">Control, desired container</param>
+        /// <param name="controlToCenter">Control to be centered</param>
+        /// <param name="locationDifference">Integer, bias difference</param>
         public static void CalculateCenterLocation(Control container, Control controlToCenter, int locationDifference)
         {
             int centerYLocation = (container.Height / 2 - controlToCenter.Size.Height / 2);
@@ -701,6 +720,13 @@ namespace Outlands_Adventure_Launcher
                 centerYLocation / 2 + locationDifference);
         }
 
+        /// <summary>
+        /// Calculate the half size of the given container
+        /// </summary>
+        /// <param name="container">Control, desired container</param>
+        /// <param name="controlToHalfSize">Control to be resized</param>
+        /// <param name="widthSize">Decimal, bias difference</param>
+        /// <param name="heightSize">Decimal, bias difference</param>
         public static void CalculateHalfSize(Control container, Control controlToHalfSize, decimal widthSize, decimal heightSize)
         {
             decimal width = container.Size.Width * widthSize;
@@ -714,6 +740,18 @@ namespace Outlands_Adventure_Launcher
                 truncatedHeight);
         }
 
+        /// <summary>
+        /// Create a custom label with the given attributes
+        /// </summary>
+        /// <param name="controlName">String, set the control name</param>
+        /// <param name="autosize">Boolean, set if the label can autosize</param>
+        /// <param name="width">Integer, label width</param>
+        /// <param name="height">Integer, label height</param>
+        /// <param name="xPosition">Integer, label x location</param>
+        /// <param name="yPosition">Integer, label y location</param>
+        /// <param name="textSize">Integer, label text size</param>
+        /// <param name="textAlignment">ContentAlignment, label text alignment</param>
+        /// <returns></returns>
         public static Label CreateGenericLabel(string controlName, bool autosize, int width, int height, int xPosition,
             int yPosition, int textSize, ContentAlignment textAlignment)
         {
@@ -728,6 +766,11 @@ namespace Outlands_Adventure_Launcher
             return genericLabel;
         }
 
+        /// <summary>
+        /// Restart the application and go back to logging menu. Get the process id, start the same application from the start and kill the old process
+        /// </summary>
+        /// <param name="pid">Integer, process id to be killed</param>
+        /// <param name="applicationName">String, application name to be started</param>
         public static void RestartApp(int pid, string applicationName)
         {
             // Wait for the process to terminate

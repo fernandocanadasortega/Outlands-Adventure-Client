@@ -481,16 +481,31 @@ namespace Outlands_Adventure_Launcher
 		#endregion Configuration Exit Button
 
 		#region Configuration Refresh Resolution
+		/// <summary>
+		/// Show a tooltip when the mouse enter the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void ResolutionRefresh_MouseEnter(object sender, EventArgs e)
 		{
 			MultipleResources.ShowToolTip(ResolutionRefresh, LanguageResx.ClientLanguage.RefreshResolution_Tooltip);
 		}
 
+		/// <summary>
+		/// Hide the tooltip when the mouse exit the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void ResolutionRefresh_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(ResolutionRefresh);
 		}
 
+		/// <summary>
+		/// Change the resolution of the application
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void ResolutionRefresh_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (downloadingGame != null)
@@ -861,10 +876,14 @@ namespace Outlands_Adventure_Launcher
 
 		#endregion Combobox controls and Language manager
 
-		// Seguir por aquí
 		#region Tile Size - Game Filter - Figure Paint
 
 		#region Paint Separative Line and Tile Size Icons
+		/// <summary>
+		/// Draw a separative line between Tile Size Icons and the games imageview
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">PaintEvents that occur to the object</param>
 		private void TileSize_Paint(object sender, PaintEventArgs e)
 		{
 			Pen colorPen = new Pen(Color.FromArgb(130, 130, 130));
@@ -873,6 +892,11 @@ namespace Outlands_Adventure_Launcher
 			e.Graphics.DrawLine(colorPen, p1, p2);
 		}
 
+		/// <summary>
+		/// Draw the Small Tiles Icon (4 small boxes)
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">PaintEvents that occur to the object</param>
 		private void SmallTiles_Paint(object sender, PaintEventArgs e)
 		{
 			Rectangle rectangleLeftUp = new Rectangle(7, 9, 5, 5);
@@ -893,6 +917,11 @@ namespace Outlands_Adventure_Launcher
 			AddGraphics(e, rectangleLeftUp, rectangleRightUp, rectangleLeftDown, rectangleRightDown, rectangleColor);
 		}
 
+		/// <summary>
+		/// Draw the Medium Tiles Icon (4 medium boxes)
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">PaintEvents that occur to the object</param>
 		private void MediumTiles_Paint(object sender, PaintEventArgs e)
 		{
 			Rectangle rectangleLeftUp = new Rectangle(5, 7, 7, 7);
@@ -913,6 +942,11 @@ namespace Outlands_Adventure_Launcher
 			AddGraphics(e, rectangleLeftUp, rectangleRightUp, rectangleLeftDown, rectangleRightDown, rectangleColor);
 		}
 
+		/// <summary>
+		/// Draw the Large Tiles Icon (4 large boxes)
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">PaintEvents that occur to the object</param>
 		private void LargeTiles_Paint(object sender, PaintEventArgs e)
 		{
 			Rectangle rectangleLeftUp = new Rectangle(4, 5, 9, 9);
@@ -933,6 +967,15 @@ namespace Outlands_Adventure_Launcher
 			AddGraphics(e, rectangleLeftUp, rectangleRightUp, rectangleLeftDown, rectangleRightDown, rectangleColor);
 		}
 
+		/// <summary>
+		/// Fill the box with an opaque color
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="rectangleLeftUp">Rectangle left up of the icon</param>
+		/// <param name="rectangleRightUp">Rectangle right up of the icon</param>
+		/// <param name="rectangleLeftDown">Rectangle left down of the icon</param>
+		/// <param name="rectangleRightDown">Rectangle right down of the icon</param>
+		/// <param name="rectangleColor">Color of the filed rectangles</param>
 		private void AddGraphics(PaintEventArgs e, Rectangle rectangleLeftUp, Rectangle rectangleRightUp, Rectangle rectangleLeftDown,
 			Rectangle rectangleRightDown, Brush rectangleColor)
 		{
@@ -942,6 +985,9 @@ namespace Outlands_Adventure_Launcher
 			e.Graphics.FillRectangle(rectangleColor, rectangleRightDown);
 		}
 
+		/// <summary>
+		/// Invalidate the icons and force them to reload
+		/// </summary>
 		private void TileSizeButtonsColor()
 		{
 			SmallTiles.Invalidate();
@@ -951,16 +997,31 @@ namespace Outlands_Adventure_Launcher
 		#endregion Paint Separative Line and Tile Size Icons
 
 		#region Tile Size Icons Manager
+		/// <summary>
+		/// Show a tooltip when the mouse enter the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void SmallTiles_MouseEnter(object sender, EventArgs e)
 		{
 			MultipleResources.ShowToolTip(SmallTiles, LanguageResx.ClientLanguage.smallTiles_Tooltip);
 		}
 
+		/// <summary>
+		/// Hide the tooltip when the mouse exit the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void SmallTiles_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(SmallTiles);
 		}
 
+		/// <summary>
+		/// Change the game images size to small
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void SmallTiles_Click(object sender, EventArgs e)
 		{
 			if (!tileSizeSelected.Equals("SmallTile"))
@@ -971,16 +1032,31 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Show a tooltip when the mouse enter the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void MediumTiles_MouseEnter(object sender, EventArgs e)
 		{
 			MultipleResources.ShowToolTip(MediumTiles, LanguageResx.ClientLanguage.mediumTiles_Tooltip);
 		}
 
+		/// <summary>
+		/// Hide the tooltip when the mouse exit the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void MediumTiles_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(MediumTiles);
 		}
 
+		/// <summary>
+		/// Change the game images size to medium
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void MediumTiles_Click(object sender, EventArgs e)
 		{
 			if (!tileSizeSelected.Equals("MediumTile"))
@@ -991,16 +1067,31 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Show a tooltip when the mouse enter the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void LargeTiles_MouseEnter(object sender, EventArgs e)
 		{
 			MultipleResources.ShowToolTip(LargeTiles, LanguageResx.ClientLanguage.largeTiles_Tooltip);
 		}
 
+		/// <summary>
+		/// Hide the tooltip when the mouse exit the icon
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void LargeTiles_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(LargeTiles);
 		}
 
+		/// <summary>
+		/// Change the game images size to large
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void LargeTiles_Click(object sender, EventArgs e)
 		{
 			if (!tileSizeSelected.Equals("LargeTile"))
@@ -1013,12 +1104,22 @@ namespace Outlands_Adventure_Launcher
 		#endregion Tile Size Icons Manager
 
 		#region Game Filter Manager
+		/// <summary>
+		/// Put the mouse cursor to the start of the filter textbox
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void FilterGame_Click(object sender, EventArgs e)
 		{
 			if (FilterGame.Text.Equals(LanguageResx.ClientLanguage.filterGame) && FilterGame.ForeColor == Color.FromArgb(130, 130, 130))
 				FilterGame.SelectionStart = 0;
 		}
 
+		/// <summary>
+		/// Remove the hint text of the filter textbox
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">KeyEvents that occur to the object</param>
 		private void FilterGame_KeyDown(object sender, KeyEventArgs e)
 		{
 			FilterGame.TextChanged -= FilterGame_TextChanged;
@@ -1033,6 +1134,11 @@ namespace Outlands_Adventure_Launcher
 			FilterGame.TextChanged += FilterGame_TextChanged;
 		}
 
+		/// <summary>
+		/// Filter the game list by the selected text or put back the hint text if the game filter textbox is empty
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void FilterGame_TextChanged(object sender, EventArgs e)
 		{
 			if (currentGameImagesListView != null)
@@ -1053,6 +1159,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Put back the hint text if the filter textbox is empty when the game filter textbox lose focus
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void FilterGame_Leave(object sender, EventArgs e)
 		{
 			if (FilterGame.Text.Equals(""))
@@ -1072,6 +1183,13 @@ namespace Outlands_Adventure_Launcher
 		#endregion Tile Size - Game Filter - Figure Paint
 
 		#region Fill Games Listview and Resize Listview Images
+		/// <summary>
+		/// Set the size and the number of game images shown in the imageview
+		/// </summary>
+		/// <param name="formStarting">Boolean that indicates if you are changing the game tiles size at the start of the application 
+		/// or in the middle of the runtime</param>
+		/// <param name="changeSize">Boolean indicating if the user if resizing the game list images</param>
+		/// <param name="chargeImages">Boolean indicating if the user if reloading the game list images</param>
 		private void SelectTileSize(bool formStarting, bool changeSize, bool chargeImages)
 		{
 			if (formStarting)
@@ -1141,6 +1259,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Fill the game imageview with all the games
+		/// </summary>
+		/// <param name="xSize">Int, Width of the game image</param>
+		/// <param name="ySize">Int, Height of the game image</param>
 		private void FillGameList(int xSize, int ySize)
 		{
 			this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
@@ -1202,6 +1325,11 @@ namespace Outlands_Adventure_Launcher
 			this.Cursor = System.Windows.Forms.Cursors.Default;
 		}
 
+		/// <summary>
+		/// Refill the game imageview with another size
+		/// </summary>
+		/// <param name="xSize">Int, Width of the game image</param>
+		/// <param name="ySize">Int, Height of the game image</param>
 		private void ResizeGameList(int xSize, int ySize)
 		{
 			currentGameImagesListView.Items.Clear();
@@ -1222,6 +1350,11 @@ namespace Outlands_Adventure_Launcher
 			currentGameImagesListView.LargeImageList = GameImages;
 		}
 
+		/// <summary>
+		/// Refill the game imageview only with the games that match the filter
+		/// </summary>
+		/// <param name="xSize">Int, Width of the game image</param>
+		/// <param name="ySize">Int, Height of the game image</param>
 		private void RefillFilteredGames(string filteredGameName, int xSize, int ySize)
 		{
 			currentGameImagesListView.Items.Clear();
@@ -1257,6 +1390,12 @@ namespace Outlands_Adventure_Launcher
 		#endregion Fill Games Listview and Resize Listview Images
 
 		#region Listview Manager and Game Info Button (Play - Download - Buy Button)
+		/// <summary>
+		/// Show the game information panel when you leftclick on the game image in the imageview or open a dropdown menu when
+		/// you rightclick
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void GamesListView_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
@@ -1287,11 +1426,22 @@ namespace Outlands_Adventure_Launcher
 				}
 		}
 
+		/// <summary>
+		/// Install or launch the game when you double click (Useless)
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void GamesListView_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			//if (libraryOpen) Launch / Install game
 		}
 
+		/// <summary>
+		/// Buy the game if you entered the game information panel from the store or allow you to download / play / uninstall
+		/// the game if you entered the game information panel from the game library
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void Play_BuyGame_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
@@ -1375,6 +1525,11 @@ namespace Outlands_Adventure_Launcher
 		#region Others
 
 		#region Lost Focus
+		/// <summary>
+		/// Focus the SideMenu to enable the funtionality of focus lose
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void LostFocus_Click(object sender, EventArgs e)
 		{
 			SideMenu.Focus();
@@ -1382,6 +1537,11 @@ namespace Outlands_Adventure_Launcher
 		#endregion Lost Focus
 
 		#region Mouse is over control
+		/// <summary>
+		/// Catch if the mouse entered certain object passed by param
+		/// </summary>
+		/// <param name="currentObject">Object we want to know if the mouse is over it</param>
+		/// <returns>Boolean that indicates if the mouse is over the control or not</returns>
 		private bool MouseIsOverControl(Object currentObject)
 		{
 			// Check if the mouse is over a panel or label
@@ -1403,12 +1563,21 @@ namespace Outlands_Adventure_Launcher
 		#endregion Mouse is over control
 
 		#region Close Game Info
+		/// <summary>
+		/// Close the game information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void CloseGameInfo_Click(object sender, EventArgs e)
 		{
 			gameInfoOpen = false;
 			GameInfoMenu.Visible = gameInfoOpen;
 		}
 
+		/// <summary>
+		/// Refresh the game information panel button text according to the current state of the game (downloading, installing, play...)
+		/// </summary>
+		/// <param name="state">String, state of the game (downloading, installing, play...)</param>
 		private void RefreshGameInfo_Click(string state)
         {
 			Play_BuyGame.Text = state;
@@ -1416,6 +1585,10 @@ namespace Outlands_Adventure_Launcher
 		#endregion Close Game Info
 
 		#region Popup events
+		/// <summary>
+		/// Shows a popup with a custom message
+		/// </summary>
+		/// <param name="eventText">String, custom message</param>
 		private void GenericPopUpMessage(string eventText)
 		{
 			EventText.Location = new Point(20, 15);
@@ -1427,6 +1600,10 @@ namespace Outlands_Adventure_Launcher
 			EventsPanel.Visible = true;
 		}
 
+		/// <summary>
+		/// Shows a popup with a custom message and other controls
+		/// </summary>
+		/// <param name="eventText">String, custom message</param>
 		private void GenericPopUpCode(string eventText)
 		{
 			EventText.Location = new Point(20, 10);
@@ -1438,6 +1615,9 @@ namespace Outlands_Adventure_Launcher
 			EventsPanel.Visible = true;
 		}
 
+		/// <summary>
+		/// Check if the code you writted, if it is right then delete the account and takes you to the login screen
+		/// </summary>
 		private void CheckHashResumes()
 		{
 			if (Hash_SHA2.VerifyResume(EventCode.Text))
@@ -1486,6 +1666,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Close the popup
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void EventExitButton_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
@@ -1497,16 +1682,31 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Enlighten the send / exit button text in the popup
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
 		{
 			((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Bold);
 		}
 
+		/// <summary>
+		/// De-Enlighten the send / exit button text in the popup
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>	
 		private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
 		{
 			((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Regular);
 		}
 
+		/// <summary>
+		/// Call the method to check the entered code when you click on send button
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>	
 		private void EventSendButton_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
@@ -1515,6 +1715,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Call the method to check the entered code when you press enter key
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">KeyEvents that occur to the object</param>
 		private void EventCode_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
@@ -1526,6 +1731,9 @@ namespace Outlands_Adventure_Launcher
 
 		#region Show and Hide Image Gradient Panel
 		// Methods to show Image Gradient Panel
+		/// <summary>
+		/// Show darkened image and popup
+		/// </summary>
 		private void ShowImageGradient()
 		{
 			ConfigurationPanel.Visible = false;
@@ -1535,6 +1743,9 @@ namespace Outlands_Adventure_Launcher
 			MainMenu.Visible = false;
 		}
 
+		/// <summary>
+		/// Hide darkened image and popup
+		/// </summary
 		private void HideImageGradient()
 		{
 			ConfigurationPanel.Visible = false;
@@ -1548,6 +1759,9 @@ namespace Outlands_Adventure_Launcher
 		#endregion Show and Hide Image Gradient Panel
 
 		#region Enable / Disable Loading Screen
+		/// <summary>
+		/// Show darkened image and set wait cursor
+		/// </summary>
 		private void OpenLoadingScreen()
 		{
 			ShowImageGradient();
@@ -1555,6 +1769,9 @@ namespace Outlands_Adventure_Launcher
 			operationInProgress = true;
 		}
 
+		/// <summary>
+		/// Hide darkened image if desired and set default cursor
+		/// </summary>
 		private void CloseLoadingScreen(bool hideImageGradient)
 		{
 			if (hideImageGradient) HideImageGradient();
@@ -1568,6 +1785,9 @@ namespace Outlands_Adventure_Launcher
 		#region Context Menu Strip Manager (Drop-down menu)
 
 		#region User Settings Menu
+		/// <summary>
+		/// Show user settings dropdown menu
+		/// </summary>
 		private void ShowUserInfoMenu()
 		{
 			ContextMenuStrip.Name = "UserInfoMenu";
@@ -1583,6 +1803,9 @@ namespace Outlands_Adventure_Launcher
 			ContextMenuStrip.Show(UserInformation, new Point(UserInformation.Width, +10));
 		}
 
+		/// <summary>
+		/// Hide user settings dropdown menu
+		/// </summary>
 		private void HideUserInfoMenu()
 		{
 			ContextMenuStrip.ItemClicked -= this.UserSettingsMenuStrip_ItemClicked;
@@ -1590,6 +1813,11 @@ namespace Outlands_Adventure_Launcher
 			ContextMenuStrip.Items.Clear();
 		}
 
+		/// <summary>
+		/// Executes the desired action depending on the option pressed
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">ToolStripClickEvents that occur to the object</param>
 		private void UserSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
 		{
 			if (e.ClickedItem.Text == LanguageResx.ClientLanguage.userInfoMenu_Settings)
@@ -1622,11 +1850,20 @@ namespace Outlands_Adventure_Launcher
 		#endregion User Settings Menu
 
 		#region Game Settings Menu
+		/// <summary>
+		/// Show game settings dropdown menu
+		/// </summary>
 		private void GameSettings_Click(object sender, EventArgs e)
 		{
 			ShowGameSettingsMenu(GameSettingsBackground.Width + 3, 3, GameSettingsBackground);
 		}
 
+		/// <summary>
+		/// Show the game settings dropdown menu according to the current state of the game (downloading, installing, play...)
+		/// </summary>
+		/// <param name="pointX">Int, xPosition where the dropdown menu will be shown</param>
+		/// <param name="pointY">Int, yPosition where the dropdown menu will be shown</param>
+		/// <param name="panelAttached">Panel in which the dropdown menu appears</param>
 		private void ShowGameSettingsMenu(int pointX, int pointY, Panel panelAttached)
 		{
 			ContextMenuStrip.Name = "GameSettingsMenu";
@@ -1712,6 +1949,11 @@ namespace Outlands_Adventure_Launcher
 			if (panelAttached != null) ContextMenuStrip.Show(panelAttached, new Point(pointX, pointY));
 		}
 
+		/// <summary>
+		/// Executes the desired action depending on the option pressed
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">ToolStripClickEvents that occur to the object</param>
 		private void GameSettingsMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
 		{
 			if (e.ClickedItem.Text.Equals(LanguageResx.ClientLanguage.play_Button))
@@ -1836,6 +2078,11 @@ namespace Outlands_Adventure_Launcher
 		}
 		#endregion Game Settings Menu
 
+		/// <summary>
+		/// Hide user settings dropdown menu if the cursor exit the dropdown menu
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void ContextMenuStrip_MouseLeave(object sender, EventArgs e)
 		{
 			if (ContextMenuStrip.Name.Equals("UserInfoMenu"))
@@ -1856,6 +2103,10 @@ namespace Outlands_Adventure_Launcher
 		#endregion Context Menu Strip Manager (Drop-down menu)
 
 		#region SQL Querys
+		/// <summary>
+		/// Check from the database the owned games of the user
+		/// </summary>
+		/// <returns>List<GameInfo> with all the owned games of the user</returns>
 		private List<GameInfo> CheckOwnedGames()
 		{
 			string sqlQuery = "SELECT G_A.gameName, G_A.gameCover, G_A.gamePrice, G_A.gameDownloadLink " +
@@ -1865,6 +2116,10 @@ namespace Outlands_Adventure_Launcher
 			return SQLManager.ReadGameList(sqlQuery);
 		}
 
+		/// <summary>
+		/// Check from the database the games that the user don't own
+		/// </summary>
+		/// <returns>List<GameInfo> with all the avaible games</returns>
 		private List<GameInfo> CheckAvaibleGames()
 		{
 			string sqlQuery = "SELECT G_A.gameName, G_A.gameCover, G_A.gamePrice, G_A.gameDownloadLink FROM games_avaibles G_A " +
@@ -1874,17 +2129,33 @@ namespace Outlands_Adventure_Launcher
 			return SQLManager.ReadGameList(sqlQuery);
 		}
 
+		/// <summary>
+		/// Get the user email from the username
+		/// </summary>
+		/// <param name="userName">string, username</param>
+		/// <returns>string, query state</returns>
 		private string GetUserEmail(string userName)
 		{
 			string sqlQuery = "SELECT user_email FROM user_information WHERE user_name LIKE '" + userName + "'";
 			return SQLManager.SearchQueryData(sqlQuery);
 		}
 
+		/// <summary>
+		/// Save user game progress in the database
+		/// </summary>
+		/// <param name="gameProgress">byte[], file content</param>
+		/// <param name="gameName">string, game name</param>
+		/// <returns>string, query state</returns>
 		private string SaveGameProgress(byte[] gameProgress, string gameName)
 		{
 			return SQLManager.WriteGameProgress(gameProgress, userEmail, gameName);
 		}
 
+		/// <summary>
+		/// Download the user game progress from the database
+		/// </summary>
+		/// <param name="gameName">string, game name</param>
+		/// <returns>byte[], file content</returns>
 		private byte[] DownloadGameProgress(string gameName, string filePath)
 		{
 			string sqlQuery = "SELECT gameProgression FROM games_owned WHERE user_email LIKE '" + userEmail + "' AND gameName LIKE '" + gameName + "'";
@@ -1896,6 +2167,10 @@ namespace Outlands_Adventure_Launcher
 		#region Downloads / Installations - Uninstallations - File manager
 
 		#region Downloads / Installations
+		/// <summary>
+		/// Async Task, Check if you have enough space in your disk, manage all download states (like downloading or catching all type of errors)
+		/// and manage the download queue and the game download process, also show the download the download info side panel
+		/// </summary>
 		private async void Download_InstallGame()
 		{
 			long requeriedDriveSpace = 600000000; // 600 MB in bytes
@@ -2060,6 +2335,13 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Async Task, Connect to Mega API to start the download of a game,enables the posibility to cancel the download and refresh the download
+		/// state values (download percentage and state, preparing download, downloading...)
+		/// </summary>
+		/// <param name="downloadProgress">Progress bar, indicates the download progress</param>
+		/// <param name="downloadingGameInfo">GameInfo, information of the game downloading (game name, download link...)</param>
+		/// <returns>Task, task in execution</returns>
 		private async Task DownloadGameFromMega(ProgressBar downloadProgress, GameInfo downloadingGameInfo)
 		{
 			MegaApiClient mega = new MegaApiClient();
@@ -2132,6 +2414,10 @@ namespace Outlands_Adventure_Launcher
 			mega.Logout();
 		}
 
+		/// <summary>
+		/// Async Task, unzip the downloaded game and when the zip is unzipped deletes the zip
+		/// </summary>
+		/// <returns>Task, task in execution</returns>
 		private async Task Install_Game()
 		{
 			string zipPath = Path.Combine(downloadPath, downloadGameName);
@@ -2142,12 +2428,22 @@ namespace Outlands_Adventure_Launcher
 			File.Delete(Path.Combine(downloadPath, downloadGameName));
 		}
 
+		/// <summary>
+		/// Cancel the current download
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void CancelDownload_Click(object sender, EventArgs e)
 		{
 			if (!downloadingGame.DownloadCancellationTokenSource.IsCancellationRequested)
 				downloadingGame.DownloadCancellationTokenSource.Cancel();
 		}
 
+		/// <summary>
+		/// Cancel a game in the queue
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void CancelQueue_Click(object sender, EventArgs e)
         {
 			string controlName = ((Panel)sender).Name;
@@ -2156,6 +2452,11 @@ namespace Outlands_Adventure_Launcher
 			LoadDownloadsPanel();
 		}
 
+		/// <summary>
+		/// Raise the download priority of a queued game
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void RankUpQueue_Click(object sender, EventArgs e)
 		{
 			string controlName = ((Panel)sender).Name;
@@ -2168,6 +2469,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Lower the download priority of a queued game
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void RankDownQueue_Click(object sender, EventArgs e)
 		{
 			string controlName = ((Panel)sender).Name;
@@ -2180,6 +2486,12 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Async Task, Refresh the download information panel when the download change the current state (like from downloading to installing)
+		/// </summary>
+		/// <param name="infiniteProgressbar">Bool, true if the state is installing and false if the progress bar have a certain value (like 90%)</param>
+		/// <param name="progressbarValue">Int, set the value of the progress bar</param>
+		/// <returns>Task, task in execution</returns>
 		private async Task SetDownloadsPanelState(bool infiniteProgressbar, int progressbarValue)
 		{
 			Invoke(new MethodInvoker(() =>
@@ -2216,6 +2528,10 @@ namespace Outlands_Adventure_Launcher
 			}));
 		}
 
+		/// <summary>
+		/// Shows the downloads panel when you can see the current download and every queued game, adds tooltips to some buttons and
+		/// notice the user when there is no game in the queue or currently downloanding
+		/// </summary>
 		private void LoadDownloadsPanel()
 		{
 			QueueLayout.Controls.Clear();
@@ -2335,6 +2651,9 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Reload the Queue panel when you change the download priority of any game
+		/// </summary>
 		private void ReloadQueue()
         {
 			QueueLayout.Controls.Clear();
@@ -2368,6 +2687,9 @@ namespace Outlands_Adventure_Launcher
 		#endregion Downloads / Installations
 
 		#region Uninstallations
+		/// <summary>
+		/// Async task, Uninstall the desired game and show the progress in a panel in the side menu
+		/// </summary>
 		private async void UninstallGame()
 		{
 			if (Directory.Exists(downloadPath))
@@ -2422,6 +2744,9 @@ namespace Outlands_Adventure_Launcher
 		#endregion Uninstallations
 
 		#region File manager
+		/// <summary>
+		/// Create the folder 'Outlands Adventure Client' where the games will be installed
+		/// </summary>
 		private void CreateClientFolder()
 		{
 			if (!Directory.Exists(downloadPath))
@@ -2435,7 +2760,10 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
-		// Check if the game is already installed
+		/// <summary>
+		/// Check if the game is already installed
+		/// </summary>
+		/// <returns>Boolean, true if installed already</returns>
 		private bool CheckGameFiles()
 		{
 			if (Directory.Exists(Path.Combine(downloadPath, currentGameInfo.GameName)))
@@ -2446,7 +2774,10 @@ namespace Outlands_Adventure_Launcher
 			return false;
 		}
 
-        private void DeleteCorruptedFiles()
+		/// <summary>
+		/// Delete the game zip if the download went wrong or when needed
+		/// </summary>
+		private void DeleteCorruptedFiles()
 		{
 			try
 			{
@@ -2468,6 +2799,12 @@ namespace Outlands_Adventure_Launcher
 		#endregion File manager
 
 		#region Others
+		/// <summary>
+		/// Opens the screen where you can see the current download and every queued game or close DownloadInformation side panel when
+		/// the download is completed
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
 		private void CloseShowDownloadInformation_MouseClick(object sender, MouseEventArgs e)
 		{
 			LanguageManager languageManager = new LanguageManager();
@@ -2497,7 +2834,12 @@ namespace Outlands_Adventure_Launcher
 			CheckDownload_UninstallInformationLanguage();
 		}
 
-        private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
+		/// <summary>
+		/// Close the uninstall side panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">MouseEvents that occur to the object</param>
+		private void CloseUninstall_Information_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
@@ -2508,6 +2850,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Color change animation when the mouse enter the DownloadInformation panel or Uninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void Download_UninstallInformation_MouseEnter(object sender, EventArgs e)
 		{
 			if (sender == DownloadInformation)
@@ -2528,6 +2875,11 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Color change animation when the mouse exit the DownloadInformation panel or Uninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void Download_UninstallInformation_MouseLeave(object sender, EventArgs e)
 		{
 			if (sender == DownloadInformation)
@@ -2568,6 +2920,12 @@ namespace Outlands_Adventure_Launcher
 			}
 		}
 
+		/// <summary>
+		/// Show the tooltip that appers when mouse enter CloseShowDownloadInformation panel, el texto cambia si el juego se está 
+		/// descargando / instalando o si la descarga ha terminado
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void DownloadShowInformation_MouseEnter(object sender, EventArgs e)
 		{
 			LanguageManager languageManager = new LanguageManager();
@@ -2585,16 +2943,31 @@ namespace Outlands_Adventure_Launcher
             }
 		}
 
-        private void DownloadShowInformation_MouseLeave(object sender, EventArgs e)
+		/// <summary>
+		/// Hide the tooltip that appers when mouse exit CloseShowDownloadInformation panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
+		private void DownloadShowInformation_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(CloseShowDownloadInformation);
 		}
 
+		/// <summary>
+		/// Show the tooltip that appers when mouse enter CloseUninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void UninstallShowInformation_MouseEnter(object sender, EventArgs e)
 		{
 			MultipleResources.ShowToolTip(CloseUninstall_Information, LanguageResx.ClientLanguage.button_Close_Lowercase);
 		}
 
+		/// <summary>
+		/// Hide the tooltip that appers when mouse exit CloseUninstall_Information panel
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void UninstallShowInformation_MouseLeave(object sender, EventArgs e)
 		{
 			MultipleResources.HideToolTip(CloseUninstall_Information);
