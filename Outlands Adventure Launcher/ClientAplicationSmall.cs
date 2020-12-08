@@ -1616,7 +1616,7 @@ namespace Outlands_Adventure_Launcher
 		}
 
 		/// <summary>
-		/// Check if the code you writted, if it is right then delete the account and takes you to the login screen
+		/// Check if the code you writted is correct, if it is right then delete the account and takes you to the login screen
 		/// </summary>
 		private void CheckHashResumes()
 		{

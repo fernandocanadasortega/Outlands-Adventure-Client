@@ -673,7 +673,8 @@ namespace Outlands_Adventure_Launcher
 		/// <summary>
 		/// Close the combobox and lose the focus from the combobox
 		/// </summary>
-		/// <param name="configurationPanel">Panel, panel that will gain the focus</param>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
 		private void Combobox_DropDownClosed(object sender, EventArgs e)
 		{
 			ComboboxManager comboboxManager = new ComboboxManager();
@@ -1615,7 +1616,7 @@ namespace Outlands_Adventure_Launcher
 		}
 
 		/// <summary>
-		/// Check if the code you writted, if it is right then delete the account and takes you to the login screen
+		/// Check if the code you writted is correct, if it is right then delete the account and takes you to the login screen
 		/// </summary>
 		private void CheckHashResumes()
 		{
@@ -1730,6 +1731,7 @@ namespace Outlands_Adventure_Launcher
 
 		#region Show and Hide Image Gradient Panel
 		// Methods to show Image Gradient Panel
+
 		/// <summary>
 		/// Show darkened image and popup
 		/// </summary>
