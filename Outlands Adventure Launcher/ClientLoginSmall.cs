@@ -44,12 +44,22 @@ namespace Outlands_Adventure_Launcher
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Receive the instance of ClientLogin class
+        /// </summary>
+        /// <param name="clientLogin">Instance of ClientLogin class</param>
         public void ReceiveClassInstance(ClientLoginSmall clientLogin)
         {
             this.clientLogin = clientLogin;
         }
 
         #region Form Actions
+        /// <summary>
+        /// Method that is executed when the form finish loading, read the windows register, the language in use, 
+        /// and initialize multiple variables
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void LauncherLogin_Load(object sender, EventArgs e)
         {            
             windowsRegisterManager = new WindowsRegisterManager();
@@ -78,6 +88,12 @@ namespace Outlands_Adventure_Launcher
             ConfigurationPanel.BackColor = Color.FromArgb(255, 0, 0, 0);
         }
 
+        /// <summary>
+        /// Method that is executed when the form is closing but not closed yet, check if an SQL operation is on going then cancel
+        /// the method, if there is no operation in progress then close the application
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void LauncherLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (operationInProgress)
@@ -98,6 +114,11 @@ namespace Outlands_Adventure_Launcher
 
         #region UserName Textbox Focus
         // These methods make UserName Textbox gain the focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserNamePanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
@@ -105,6 +126,11 @@ namespace Outlands_Adventure_Launcher
         }
 
         // This method manage the focus gain
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserNameTextBox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
@@ -112,6 +138,11 @@ namespace Outlands_Adventure_Launcher
         }
 
         // This method manage the focus lose
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserNameTextBox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -121,12 +152,22 @@ namespace Outlands_Adventure_Launcher
 
         #region Password Textbox Focus
         // These methods make Password Textbox gain the focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void PasswordPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
             PasswordTextbox.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void PasswordTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
@@ -134,6 +175,11 @@ namespace Outlands_Adventure_Launcher
         }
 
         // This method manage the focus lose
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void PasswordTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -143,6 +189,11 @@ namespace Outlands_Adventure_Launcher
 
         #region Write Login Textboxs
         // These methods check username and password, if the is more that 4 characters in each textbox then enable the login button
+        /// <summary>
+        /// Check textbox values or login in after you lift your finger from the key
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserNameTextbox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -155,6 +206,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check textbox values or login in after you lift your finger from the key
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void PasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -167,11 +223,19 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check textbox values after the text is changed
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void UserName_PasswordTextbox_TextChanged(object sender, EventArgs e)
         {
             CheckLoginTextboxs();
         }
 
+        /// <summary>
+        /// Check if the textboxes in the register menu has atleast four letters
+        /// </summary>
         private void CheckLoginTextboxs()
         {
             if (UserNameTextbox.Text.Length >= 4 && PasswordTextbox.Text.Length >= 4)
@@ -187,6 +251,11 @@ namespace Outlands_Adventure_Launcher
 
         #region Keep My Session Open
         // This method manage rememberMe checkbox state
+        /// <summary>
+        /// Enlighten / De-Enlighten the remember me checkbox
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void RememberMe_CheckedChanged(object sender, EventArgs e)
         {
             if (RememberMe.Checked)
@@ -202,6 +271,11 @@ namespace Outlands_Adventure_Launcher
 
         #region Login in
         // This method manage login button when you click on it
+        /// <summary>
+        /// Check if the credentials you writted match the credentials in the database and login in the application or show an error message
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void LoginButton_Click(object sender, EventArgs e)
         {
             if (loginAvaible)
@@ -231,6 +305,9 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check if the credentials you writted match the credentials in the database
+        /// </summary>
         private void CheckLoginCredentials()
         {
             OpenLoadingScreen(true);
@@ -266,18 +343,33 @@ namespace Outlands_Adventure_Launcher
 
         #region New Email Textbox Focus
         // These methods make New Email Textbox gain and loose the focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewEmailPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
             NewEmailTextbox.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewEmailTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
             TextboxGainFocusAnimation(NewEmailTextbox, NewEmailLabel, null, null);
         }
 
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewEmailTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -287,18 +379,33 @@ namespace Outlands_Adventure_Launcher
 
         #region New UserName Textbox Focus
         // These methods make New UserName Textbox gain and loose the focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewUserNamePanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
             NewUserNameTextbox.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewUserNameTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
             TextboxGainFocusAnimation(NewUserNameTextbox, NewUserNameLabel, null, null);
         }
 
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewUserNameTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -308,18 +415,33 @@ namespace Outlands_Adventure_Launcher
 
         #region New Password Textbox Focus
         // These methods make New Password Textbox gain and loose the focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewPasswordPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
             NewPasswordTextbox.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewPasswordTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
             TextboxGainFocusAnimation(NewPasswordTextbox, NewPasswordLabel, ShowNewPassword, NewPasswordMayusLock);
         }
 
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewPasswordTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -329,12 +451,22 @@ namespace Outlands_Adventure_Launcher
 
         #region Confirm New Password Textbox Focus
         // These methods make Confirm New Password Textbox gain and loose the focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ConfirmNewPasswordPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
             ConfirmNewPasswordTextbox.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ConfirmNewPasswordTextbox_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
@@ -342,6 +474,11 @@ namespace Outlands_Adventure_Launcher
                 ConfirmNewPasswordMayusLock);
         }
 
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ConfirmNewPasswordTextbox_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -352,26 +489,52 @@ namespace Outlands_Adventure_Launcher
         #region Write Register Textboxs
         // These methods check email, username and passwords, if there are any errors in any textbox then unable the register button
         // In password textboxes check if the key pressed is Lock Capital to show a warning to the user
+
+        /// <summary>
+        /// Check textbox values after you lift your finger from the key
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewEmail_UserNameTextbox_KeyUp(object sender, KeyEventArgs e)
         {
             TextboxKeyUp(e, RegisterPanel, null, null);
         }
 
+        /// <summary>
+        /// Check textbox values after you lift your finger from the key
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
             TextboxKeyUp(e, RegisterPanel, NewPasswordTextbox, NewPasswordMayusLock);
         }
 
+        /// <summary>
+        /// Check textbox values after you lift your finger from the key
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ConfirmNewPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
             TextboxKeyUp(e, RegisterPanel, ConfirmNewPasswordTextbox, ConfirmNewPasswordMayusLock);
         }
 
+        /// <summary>
+        /// Check textbox values after the text is changed
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void RegisterTextboxes_TextChanged(object sender, EventArgs e)
         {
             CheckRegisterTextboxs();
         }
 
+        /// <summary>
+        /// Check textbox values and the password strength after the text is changed
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void NewPasswordTextbox_TextChanged(object sender, EventArgs e)
         {
             CheckTextboxPasswordStrength(NewPasswordTextbox, NewPasswordErrorLabel, NewPasswordStrengthProgressBar,
@@ -380,6 +543,9 @@ namespace Outlands_Adventure_Launcher
         }
 
         // Check the textboxes contents
+        /// <summary>
+        /// Check if the textboxes in the register menu has atleast four letters
+        /// </summary>
         private void CheckRegisterTextboxs()
         {
             // If all textboxes has at least 4 caracters then enable the register button
@@ -397,6 +563,12 @@ namespace Outlands_Adventure_Launcher
 
         #region Register in
         // This method manage login button when you click on it
+        /// <summary>
+        /// Check the user credentials before allowing the user to register, if all the credentials are correct then send a code to
+        /// the user email to complete the register
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void RegisterButton_Click(object sender, EventArgs e)
         {
             RegisterButton.Focus();
@@ -446,6 +618,10 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check if the register credentials are correct, (if the email and the username already picked by another user show an
+        /// error message)
+        /// </summary>
         private void CheckRegisterCredentials()
         {
             OpenLoadingScreen(true);
@@ -489,6 +665,9 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Register a new user in the database
+        /// </summary>
         private void RegisterNewUser()
         {
             OpenLoadingScreen(false);
@@ -521,36 +700,70 @@ namespace Outlands_Adventure_Launcher
         // Manage all items in login problems panel
 
         #region Forgotten Username / Password Button
+        /// <summary>
+        /// Enlighten the forgotten button button text in the login problems menu
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ForgottenUsernameButton_MouseEnter(object sender, EventArgs e)
         {
             ForgottenUsernameButton.BackColor = Color.FromArgb(25, 0, 203, 255);
         }
 
+        /// <summary>
+        /// De-Enlighten the forgotten button button text in the login problems menu
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ForgottenUsernameButton_MouseLeave(object sender, EventArgs e)
         {
             ForgottenUsernameButton.BackColor = Color.FromArgb(0, 0, 203, 255);
         }
 
+        /// <summary>
+        /// Enlighten the forgotten button button text in the login problems menu
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ForgottenPasswordButton_MouseEnter(object sender, EventArgs e)
         {
             ForgottenPasswordButton.BackColor = Color.FromArgb(25, 0, 203, 255);
         }
 
+        /// <summary>
+        /// De-Enlighten the forgotten button button text in the login problems menu
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ForgottenPasswordButton_MouseLeave(object sender, EventArgs e)
         {
             ForgottenPasswordButton.BackColor = Color.FromArgb(0, 0, 203, 255);
         }
 
+        /// <summary>
+        /// Show username forgotten hints
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ForgottenUsernameButton_Header_Click(object sender, EventArgs e)
         {
             SetForgottenUsername_PasswordRecover(true);
         }
 
+        /// <summary>
+        /// Show password forgotten hints
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ForgottenPasswordButton_Header_Click(object sender, EventArgs e)
         {
             SetForgottenUsername_PasswordRecover(false);
         }
 
+        /// <summary>
+        /// Change the user hints depending if they chosed username forgotten or password forgotten
+        /// </summary>
+        /// <param name="forgottenUsername">Boolean, true if username forgotten</param>
         private void SetForgottenUsername_PasswordRecover(bool forgottenUsername)
         {
             if (forgottenUsername)
@@ -581,18 +794,33 @@ namespace Outlands_Adventure_Launcher
         #endregion
 
         #region Reset Credentials Textbox Focus
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetCredentialsEmailPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el panel contenedor o en el label
             ResetCredentialsEmailText.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetCredentialsEmailText_Enter(object sender, EventArgs e)
         {
             // Cuando el textbox coge el foco
             TextboxGainFocusAnimation(ResetCredentialsEmailText, ResetCredentialsEmailLabel, null, null);
         }
 
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetCredentialsEmailText_Leave(object sender, EventArgs e)
         {
             // Cuando el textbox pierde el foco
@@ -601,6 +829,11 @@ namespace Outlands_Adventure_Launcher
         #endregion
 
         #region Write Reset Credentials Textbox
+        /// <summary>
+        /// Get the username or change the password when enter button is pressed
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">KeyEvents that occur to the object</param>
         private void ResetCredentialsEmailText_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -609,6 +842,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check if the user email textbox has more than more letters and is a valid email direction
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetCredentialsEmailText_TextChanged(object sender, EventArgs e)
         {
             if (ResetCredentialsEmailText.Text.Length > 4 && IsEmailValid(ResetCredentialsEmailText.Text))
@@ -623,6 +861,11 @@ namespace Outlands_Adventure_Launcher
         #endregion
 
         #region Reset Credentials Button
+        /// <summary>
+        /// Recover from the database the username and send it to the user email or send a code to the user email to change the account password
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetCredentialsButton_Click(object sender, EventArgs e)
         {
             if (loginProblemsAvaible)
@@ -692,6 +935,9 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check if the user email is registered in the database
+        /// </summary>
         private void CheckLoginProblemsEmail()
         {
             string sqlQuery = "SELECT COUNT(*) FROM user_information WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
@@ -711,6 +957,10 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Get the username from the user email if the user email is already registered in the database
+        /// </summary>
+        /// <returns>String, username, if the user email is not registered returns empty string</returns>
         private string CheckUserName()
         {
             string sqlQuery = "SELECT user_name FROM user_information WHERE user_email LIKE '" + ResetCredentialsEmailText.Text + "'";
@@ -739,6 +989,11 @@ namespace Outlands_Adventure_Launcher
 
         #region Game Client Configuration
         // These methods manage game client configuration button when you click on it
+        /// <summary>
+        /// Open the configuration menu, get the selected language and resolution and set the selected values in the comboboxs
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Configuration_Click(object sender, EventArgs e)
         {
             ConfigurationButton.Focus();
@@ -753,16 +1008,31 @@ namespace Outlands_Adventure_Launcher
         }
 
         #region Configuration Exit Button
+        /// <summary>
+        /// Enlighten the exit button text in the configuration menu
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ExitButton_MouseEnter(object sender, EventArgs e)
         {
             ConfigurationExitButton.Font = new Font("Oxygen", 12, FontStyle.Bold);
         }
 
+        /// <summary>
+        /// De-Enlighten the exit button text in the configuration menu
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ExitButton_MouseLeave(object sender, EventArgs e)
         {
             ConfigurationExitButton.Font = new Font("Oxygen", 12, FontStyle.Regular);
         }
 
+        /// <summary>
+        /// Triggered when the mouse click in the event popup exit label, close configuration menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitButton_Click(object sender, EventArgs e)
         {
             CheckTargetPanel();
@@ -770,16 +1040,31 @@ namespace Outlands_Adventure_Launcher
         #endregion Configuration Exit Button
 
         #region Configuration Refresh Resolution
+        /// <summary>
+        /// Show a tooltip when the mouse enter the icon
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResolutionRefresh_MouseEnter(object sender, EventArgs e)
         {
             MultipleResources.ShowToolTip(ResolutionRefresh, LanguageResx.ClientLanguage.RefreshResolution_Tooltip);
         }
 
+        /// <summary>
+        /// Hide the tooltip when the mouse exit the icon
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResolutionRefresh_MouseLeave(object sender, EventArgs e)
         {
             MultipleResources.HideToolTip(ResolutionRefresh);
         }
 
+        /// <summary>
+        /// Change the resolution of the application
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">MouseEvents that occur to the object</param>
         private void ResolutionRefresh_MouseClick(object sender, MouseEventArgs e)
         {
             ResolutionManager resolutionManager = new ResolutionManager();
@@ -793,21 +1078,41 @@ namespace Outlands_Adventure_Launcher
         #region Popup Events
 
         #region Events Panel
+        /// <summary>
+        /// Enlighten the send / exit button text in the event popup
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void EventSend_ExitButton_MouseEnter(object sender, EventArgs e)
         {
             ((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Bold);
         }
 
+        /// <summary>
+        /// De-Enlighten the send / exit button text in the event popup
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void EventSend_ExitButton_MouseLeave(object sender, EventArgs e)
         {
             ((Label)sender).Font = new Font("Oxygen", 10, FontStyle.Regular);
         }
 
+        /// <summary>
+        /// Triggered when the mouse click in the event popup send label, check the code you writted
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void EventSendButton_Click(object sender, EventArgs e)
         {
             CheckHashResumes();
         }
 
+        /// <summary>
+        /// Triggered when the mouse click in the event popup exit label, exit the event popup
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void EventExitButton_Click(object sender, EventArgs e)
         {
             if (usernameLost && !loginProblemsErrors)
@@ -834,6 +1139,11 @@ namespace Outlands_Adventure_Launcher
             ResetEventsValue();
         }
 
+        /// <summary>
+        /// Check the code you writted when you press enter
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">KeyEvents that occur to the object</param>
         private void EventCode_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -842,12 +1152,20 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Make every letter you write in the code textbox uppercase
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void EventCode_TextChanged(object sender, EventArgs e)
         {
             EventCode.Text = EventCode.Text.ToUpper();
             EventCode.Select(EventCode.Text.Length, 0);
         }
 
+        /// <summary>
+        /// Register a new account or change the password of your account if the code you writted is correct
+        /// </summary>
         private void CheckHashResumes()
         {
             if (Hash_SHA2.VerifyResume(EventCode.Text))
@@ -880,29 +1198,53 @@ namespace Outlands_Adventure_Launcher
         #region Reset Password Event
 
         #region Reset Password Textbox
+        /// <summary>
+        /// Make ResetPasswordTextbox textbox gain the focus
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordPanel_Label_Click(object sender, EventArgs e)
         {
             // Cuando haces click en el label o en el panel contenedor
             ResetPasswordTextbox.Focus();
         }
 
+        /// <summary>
+        /// Start textbox gain focus animation
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordTextbox_Enter(object sender, EventArgs e)
         {
             TextboxGainFocusAnimation(ResetPasswordTextbox, ResetPasswordLabel, ShowResetPassword, ResetPasswordMayusLock);
         }
 
+        /// <summary>
+        /// Start textbox lose focus animation and check textbox values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordTextbox_Leave(object sender, EventArgs e)
         {
             CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
         }
 
-
+        /// <summary>
+        /// Check textbox's password strenght when you change the text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordTextbox_TextChanged(object sender, EventArgs e)
         {
             CheckTextboxPasswordStrength(ResetPasswordTextbox, ResetPasswordEventErrorText, ResetPasswordStrengthProgressBar,
                 ResetPasswordStrengthLabel);
         }
 
+        /// <summary>
+        /// Check textbox values after you lift your finger from the key
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordTextbox_KeyUp(object sender, KeyEventArgs e)
         {
             TextboxKeyUp(e, ResetPasswordPanel, ResetPasswordTextbox, ResetPasswordMayusLock);
@@ -910,6 +1252,11 @@ namespace Outlands_Adventure_Launcher
         #endregion Reset Password Textbox
 
         #region Send and Exit Button
+        /// <summary>
+        /// Triggered when the mouse click in the reset password popup send label, check textbox values and change user password
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordSendButton_Click(object sender, EventArgs e)
         {
             CheckRegister_ResetTexboxErrors(ResetPasswordTextbox);
@@ -931,6 +1278,11 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Triggered when the mouse click in the reset password popup exit label, close popup
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ResetPasswordExitButton_Click(object sender, EventArgs e)
         {
             targetPanel = "loginProblems";
@@ -941,6 +1293,9 @@ namespace Outlands_Adventure_Launcher
         }
         #endregion Send and Exit Button
 
+        /// <summary>
+        /// Change the user password in the database and manage the errors
+        /// </summary>
         private void ChangeUserPassword()
         {
             OpenLoadingScreen(false);
@@ -966,7 +1321,10 @@ namespace Outlands_Adventure_Launcher
         }
 
         #endregion Reset Password Event
-
+        /// <summary>
+        /// Shows a popup with a custom message
+        /// </summary>
+        /// <param name="eventText">String, custom message</param>
         private void GenericPopUpMessage(string eventText)
         {
             EventText.Location = new Point(20, 15);
@@ -979,6 +1337,12 @@ namespace Outlands_Adventure_Launcher
             EventsPanel.Visible = true;
         }
 
+        /// <summary>
+        /// Shows a popup with a custom message
+        /// </summary>
+        /// <param name="eventText">String, custom message</param>
+        /// <param name="hideImageGradient">Boolean, true to hide the image gradient</param>
+        /// <param name="targetPanel">String, destination panel</param>
         private void GenericPopUpMessage(string eventText, bool hideImageGradient, string targetPanel)
         {
             EventText.Location = new Point(20, 15);
@@ -992,6 +1356,10 @@ namespace Outlands_Adventure_Launcher
             CloseLoadingScreen(hideImageGradient, targetPanel);
         }
 
+        /// <summary>
+        /// Shows a popup with a custom message and other controls
+        /// </summary>
+        /// <param name="eventText">String, custom message</param>
         private void GenericPopUpCode(string eventText)
         {
             EventText.Location = new Point(20, 10);
@@ -1003,6 +1371,12 @@ namespace Outlands_Adventure_Launcher
             EventsPanel.Visible = true;
         }
 
+        /// <summary>
+        /// Shows a popup with a custom message and other controls
+        /// </summary>
+        /// <param name="eventText">String, custom message</param>
+        /// <param name="hideImageGradient">Boolean, true to hide the image gradient</param>
+        /// <param name="targetPanel">String, destination panel</param>
         private void GenericPopUpCode(string eventText, bool hideImageGradient, string targetPanel)
         {
             EventText.Location = new Point(20, 10);
@@ -1018,18 +1392,31 @@ namespace Outlands_Adventure_Launcher
         #endregion Popup Events
 
         #region Change Panel (ex: Change from login to register)
+        /// <summary>
+        /// Enlighten return to login button text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ActionLabel_MouseEnter(object sender, EventArgs e)
         {
             ((Label)sender).Font = new Font("Oxygen", 8, FontStyle.Bold);
         }
 
+        /// <summary>
+        /// De-Enlighten return to login button text
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ActionLabel_MouseLeave(object sender, EventArgs e)
         {
             ((Label)sender).Font = new Font("Oxygen", 8, FontStyle.Regular);
         }
 
-        // Create New Account (Login Panel)
-        // Reset all values
+        /// <summary>
+        /// Navigate to register (from Login) and reset all values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void RegisterLabel_Click(object sender, EventArgs e)
         {
             ResetLoginPanelValues();
@@ -1038,8 +1425,11 @@ namespace Outlands_Adventure_Launcher
             CheckTargetPanel();
         }
 
-        // Login Problems (Login Panel)
-        // Reset all values
+        /// <summary>
+        /// Navigate to Login Problems (from Login) and reset all values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void LoginProblems_Click(object sender, EventArgs e)
         {
             ResetLoginPanelValues();
@@ -1048,8 +1438,11 @@ namespace Outlands_Adventure_Launcher
             CheckTargetPanel();
         }
 
-        // Login Existing Account (Register Panel)
-        // Reset all values
+        /// <summary>
+        /// Navigate to Login (from Register) and reset all values
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void LoginLabel_Click(object sender, EventArgs e)
         {
             ResetRegisterPanelValues();
@@ -1058,8 +1451,11 @@ namespace Outlands_Adventure_Launcher
             CheckTargetPanel();
         }
 
-        // Return to Login (Login Problems Panel)
-        // Reset all values
+        /// <summary>
+        /// Navigate to Login (from Login Problems) and reset all values
+        /// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
         private void ReturnToLogin_Click(object sender, EventArgs e)
         {
             ResetLoginProblemsPanelValues();
@@ -1072,6 +1468,9 @@ namespace Outlands_Adventure_Launcher
         #region Set destination panel  -  Reset current panel  -  Enable Loading Panel
 
         #region Check Target Panel
+        /// <summary>
+        /// Check the destination panel and load that panel
+        /// </summary>
         private void CheckTargetPanel()
         {
             if (targetPanel.Equals("login"))
@@ -1101,6 +1500,9 @@ namespace Outlands_Adventure_Launcher
         #endregion Check Target Panel
 
         #region Reset Panel Values
+        /// <summary>
+        /// Reset all the values in the login menu
+        /// </summary>
         private void ResetLoginPanelValues()
         {
             UserNameTextbox.Text = "";
@@ -1119,6 +1521,9 @@ namespace Outlands_Adventure_Launcher
             TextboxLoseFocusAnimation(PasswordTextbox, PasswordLabel, null, ShowLoginPassword, LoginMayusLock, null, null);
         }
 
+        /// <summary>
+        /// Reset all the values in the register menu
+        /// </summary>
         private void ResetRegisterPanelValues()
         {
             NewEmailTextbox.Text = "";
@@ -1147,6 +1552,9 @@ namespace Outlands_Adventure_Launcher
             registerErrors = false;
         }
 
+        /// <summary>
+        /// Reset all the values in the login problems menu
+        /// </summary>
         private void ResetLoginProblemsPanelValues()
         {
             ResetCredentialsEmailText.Text = "";
@@ -1158,12 +1566,18 @@ namespace Outlands_Adventure_Launcher
             TextboxLoseFocusAnimation(ResetCredentialsEmailText, ResetCredentialsEmailLabel, null, null, null, null, null);
         }
 
+        /// <summary>
+        /// Reset all the values in the event popup
+        /// </summary>
         private void ResetEventsValue()
         {
             EventCode.Text = "";
             EventCodeError.Visible = false;
         }
 
+        /// <summary>
+        /// Reset all the values in the reset password event popup
+        /// </summary>
         private void Reset_ResetPasswordEventValues()
         {
             ResetPasswordTextbox.Text = "";
@@ -1218,6 +1632,16 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check the texbox value when lose the focus, if the textbox is empty then return it to the original values
+        /// </summary>
+        /// <param name="currentTextbox">Textbox to be evaluated</param>
+        /// <param name="currentTextboxLabel">Textbox hint label</param>
+        /// <param name="currentErrorLabel">Textbox error label</param>
+        /// <param name="showPassword">Show password panel (Will be null if the selected textbox is not password textbox)</param>
+        /// <param name="mayusLock">Mayus block panel (Will be null if the selected textbox is not password textbox)</param>
+        /// <param name="passwordStrength">Password strength progressbar</param>
+        /// <param name="passwordStrengthLabel">Password strength label</param>
         private void TextboxLoseFocusAnimation(TextBox currentTextbox, Label currentTextboxLabel, Label currentErrorLabel,
             Panel showPassword, Panel mayusLock, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
@@ -1233,6 +1657,10 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Check all the posible errors of all the textboxes in the register and reset password menus
+        /// </summary>
+        /// <param name="currentTextbox">Textbox to be evaluated</param>
         private void CheckRegister_ResetTexboxErrors(TextBox currentTextbox)
         {
             switch (currentTextbox.Name)
@@ -1334,8 +1762,16 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
-        /// Hace más grande el texto que indica para que sirve la caja de texto, oculta el ojo, quita el aviso de que está el
-        /// bloque de mayúsculas activado y quita la barra y la etiqueta que te indica la fuerza de la contraseña
+        /// <summary> 
+        /// Makes the text that indicates what the text box is for, hides the eye, removes the notice that the uppercase block 
+        /// is activated and removes the bar and the label that indicates the strength of the password
+        /// </summary>
+        /// <param name="currentTextboxLabel">Textbox hint label</param>
+        /// <param name="currentErrorLabel">Textbox error label</param>
+        /// <param name="showPassword">Show password panel (Will be null if the selected textbox is not password textbox)</param>
+        /// <param name="mayusLock">Mayus block panel (Will be null if the selected textbox is not password textbox)</param>
+        /// <param name="passwordStrength">Password strength progressbar</param>
+        /// <param name="passwordStrengthLabel">Password strength label</param>
         private void EmptyTextbox(Label currentTextboxLabel, Label currentErrorLabel,
             Panel showPassword, Panel mayusLock, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
@@ -1356,6 +1792,13 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Shows an message error in the textbox error label when the value introduced in the textbox has less than four letters
+        /// </summary>
+        /// <param name="currentErrorLabel">Textbox error label</param>
+        /// <param name="errorText">String, custom message error</param>
+        /// <param name="passwordStrength">Password strength progressbar</param>
+        /// <param name="passwordStrengthLabel">Password strength label</param>
         private void LessFourLetters(Label currentErrorLabel, string errorText, ProgressBar passwordStrength, Label passwordStrengthLabel)
         {
             if (passwordStrength != null)
@@ -1368,12 +1811,22 @@ namespace Outlands_Adventure_Launcher
             currentErrorLabel.Text = errorText;
         }
 
+        /// <summary>
+        /// Shows a custom message error in an error label
+        /// </summary>
+        /// <param name="currentErrorLabel">Error label</param>
+        /// <param name="errorText">String, custom message error</param>
         private void GenericError(Label currentErrorLabel, string errorText)
         {
             currentErrorLabel.Visible = true;
             currentErrorLabel.Text = errorText;
         }
 
+        /// <summary>
+        /// Check if the email address is valid
+        /// </summary>
+        /// <param name="emailAddress">String, email address to be evaluated</param>
+        /// <returns>Boolean, true if the email address is valid</returns>
         private bool IsEmailValid(string emailAddress)
         {
             try
@@ -1387,6 +1840,13 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Make the control lose the focus if the pressed key is enter or show a warning of mayus block if the selected control is a password textbox
+        /// </summary>
+        /// <param name="e">KeyEvents that occur to the object</param>
+        /// <param name="currentMainPanel">Panel to be focused</param>
+        /// <param name="currentTextbox">Selected Textbox</param>
+        /// <param name="passwordMayusLock">Mayus block panel (Will be null if the selected textbox is not password textbox)</param>
         private void TextboxKeyUp(KeyEventArgs e, Panel currentMainPanel, TextBox currentTextbox, Panel passwordMayusLock)
         {
             if (e.KeyCode == Keys.Enter)
@@ -1409,6 +1869,13 @@ namespace Outlands_Adventure_Launcher
             }
         }
 
+        /// <summary>
+        /// Hide all the passwords errors and evalue the password strength
+        /// </summary>
+        /// <param name="currentTextbox">Password textbox</param>
+        /// <param name="currentErrorLabel">Password textbox error label</param>
+        /// <param name="passwordStrength">Password strength progressbar</param>
+        /// <param name="passwordStrengthLabel">Password strength label</param>
         private void CheckTextboxPasswordStrength(TextBox currentTextbox, Label currentErrorLabel, ProgressBar passwordStrength,
             Label passwordStrengthLabel)
         {
@@ -1425,11 +1892,22 @@ namespace Outlands_Adventure_Launcher
         // Miscellany of methods and functions for various things
         #region Lose Focus
         // These methods lose focus to any box  -- Hace que todas las cajas de texto pierdan el foco
+
+        /// <summary>
+        /// Focus the BackgroundPanel to enable the funtionality of focus lose
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void OrdinaryFocusLose(object sender, EventArgs e)
         {
             BackgroundPanel.Focus();
         }
 
+        /// <summary>
+        /// Focus the ImagePanel to enable the funtionality of focus lose when an event is up
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void EventFocusLose(object sender, EventArgs e)
         {
             ImagePanel.Focus();
@@ -1438,6 +1916,10 @@ namespace Outlands_Adventure_Launcher
 
         #region Show and Hide Image Gradient Panel
         // Methods to show Image Gradient Panel
+
+        /// <summary>
+        /// Show darkened image and popup
+        /// </summary>
         private void ShowImageGradient()
         {
             BackgroundPanel.Visible = false;
@@ -1452,6 +1934,9 @@ namespace Outlands_Adventure_Launcher
             LoginProblemsPanel.Visible = false;
         }
 
+        /// <summary>
+        /// Hide darkened image and popup
+        /// </summary
         private void HideImageGradient()
         {
             BackgroundPanel.Visible = true;
@@ -1465,21 +1950,41 @@ namespace Outlands_Adventure_Launcher
 
         #region Show Hide Password
         // These methods are used to show and hide the password in password textboxes
+
+        /// <summary>
+        /// Call Show_HidePassword to show / hide the password from the login password textbox
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ShowPassword_Click(object sender, EventArgs e)
         {
             Show_HidePassword(ref passwordVisible);
         }
 
+        /// <summary>
+        /// Call Show_HidePassword to show / hide the password from the register password textbox
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ShowConfirmPassword_Click(object sender, EventArgs e)
         {
             Show_HidePassword(ref confirmPasswordVisible);
         }
 
+        /// <summary>
+        /// Call Show_HidePassword to show / hide the password from the reset password textbox
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void ShowResetPassword_Click(object sender, EventArgs e)
         {
             Show_HidePassword(ref confirmPasswordVisible);
         }
 
+        /// <summary>
+        /// Show or hide the password in password textboxes
+        /// </summary>
+        /// <param name="currentPasswordVisibleIndicator">ref boolean, true if the password if visible</param>
         private void Show_HidePassword(ref bool currentPasswordVisibleIndicator)
         {
             currentPasswordVisibleIndicator = currentPasswordVisibleIndicator ? false : true;
@@ -1498,6 +2003,12 @@ namespace Outlands_Adventure_Launcher
         #endregion
 
         #region Enable / Disable Access button
+        /// <summary>
+        /// Enable or disable the access button action (Login, Register, Login Problems button)
+        /// </summary>
+        /// <param name="buttonEnabled">Boolean, true if the button is enabled</param>
+        /// <param name="login_RegisterButton">Panel, access button</param>
+        /// <param name="currentActionState">ref boolean, true if the button is enabled</param>
         private void Login_RegisterButton(bool buttonEnabled, Panel login_RegisterButton, ref bool currentActionState)
         {
             if (buttonEnabled)
@@ -1516,6 +2027,9 @@ namespace Outlands_Adventure_Launcher
         #endregion
 
         #region Enable / Disable Loading Screen
+        /// <summary>
+        /// Show darkened image and set wait cursor
+        /// </summary>
         private void OpenLoadingScreen(bool showImageGradient)
         {
             if (showImageGradient) ShowImageGradient();
@@ -1523,6 +2037,9 @@ namespace Outlands_Adventure_Launcher
             operationInProgress = true;
         }
 
+        /// <summary>
+        /// Hide darkened image if desired and set default cursor
+        /// </summary>
         private void CloseLoadingScreen(bool hideImageGradient, string targetPanel)
         {
             ImageGradient.Cursor = System.Windows.Forms.Cursors.Default;
@@ -1542,13 +2059,22 @@ namespace Outlands_Adventure_Launcher
         #region Combobox controls and Language manager
 
         #region Combobox controls
-        // Allow Combo Box to center aligned
+        /// <summary>
+        /// Allow Combo Box text to center aligned
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Language_ResolutionSelected_DrawItem(object sender, DrawItemEventArgs e)
         {
             ComboboxManager languageComboboxManager = new ComboboxManager();
             languageComboboxManager.Combobox_DrawItem(sender, e);
         }
 
+        /// <summary>
+        /// Close the combobox and lose the focus from the combobox
+        /// </summary>
+        /// <param name="sender">Object that receive the events</param>
+        /// <param name="e">Events that occur to the object</param>
         private void Language_ResolutionSelected_DropDownClosed(object sender, EventArgs e)
         {
             ComboboxManager languageComboboxManager = new ComboboxManager();
