@@ -1369,6 +1369,7 @@ namespace Outlands_Adventure_Launcher
             EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
             EventText.Text = eventText;
             EventsPanel.Visible = true;
+            EventCode.Focus();
         }
 
         /// <summary>
@@ -1386,6 +1387,7 @@ namespace Outlands_Adventure_Launcher
             EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
             EventText.Text = eventText;
             EventsPanel.Visible = true;
+            EventCode.Focus();
             CloseLoadingScreen(hideImageGradient, targetPanel);
         }
 

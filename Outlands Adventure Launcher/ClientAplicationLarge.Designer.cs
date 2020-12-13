@@ -1079,6 +1079,7 @@
             this.EventCode.TabIndex = 15;
             this.EventCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.EventCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EventCode_KeyUp);
+            this.EventCode.TextChanged += new System.EventHandler(this.EventCode_TextChanged);
             // 
             // EventSendButton
             // 

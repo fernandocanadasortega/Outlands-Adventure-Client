@@ -1613,6 +1613,7 @@ namespace Outlands_Adventure_Launcher
 			EventExitButton.Location = new Point(305, EventSendButton.Location.Y);
 			EventText.Text = eventText;
 			EventsPanel.Visible = true;
+			EventCode.Focus();
 		}
 
 		/// <summary>
@@ -1726,6 +1727,17 @@ namespace Outlands_Adventure_Launcher
 			{
 				CheckHashResumes();
 			}
+		}
+
+		/// <summary>
+		/// Make every letter you write in the code textbox uppercase
+		/// </summary>
+		/// <param name="sender">Object that receive the events</param>
+		/// <param name="e">Events that occur to the object</param>
+		private void EventCode_TextChanged(object sender, EventArgs e)
+		{
+			EventCode.Text = EventCode.Text.ToUpper();
+			EventCode.Select(EventCode.Text.Length, 0);
 		}
 		#endregion Popup events
 
